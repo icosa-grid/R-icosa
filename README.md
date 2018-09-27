@@ -22,7 +22,7 @@ and the package will be installed. In case you would like to experiment with the
 2. If you have a compiler installed, you can install the latest version from the source tarball, with
 ```
 install.packages(
-  "https://github.com/adamkocsis/icosa/raw/master/_archive/source/icosa.0.9.82.tar.gz", 
+  "https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.9.82.tar.gz", 
   repos=NULL, type="source")
 ```
 3. I will also provide binaries for Windows. If you want to, you can try them. 
