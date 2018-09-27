@@ -1,0 +1,813 @@
+---
+title: "Introduction to the R package 'icosa' v0.9 for global triangular and hexagonal gridding"
+author: "Ádám T. Kocsis"
+date: '`r Sys.Date()`'
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{The R package 'icosa' for global triangular and hexagonal griding}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(icosa)
+library(rgl)
+knit_hooks$set(rgl = hook_rgl)
+```
+
+# Introduction
+
+The purpose of this vignette is to demonstrate the basic usage of the ’\verb@icosa@’ package, explain object structures and basic functionalities. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point coordinate data. This is just a brief introduction to the package's capabilities and will be expanded substantially in the future.
+
+## The grids
+
+The primary problem with ecological samples is that due to density and uniformity issues, the data points are to be aggregated to distinct units. As coordinate recording is very efficient on the 2d surface of a polar coordinate system (i.e. latiude and longitude data), this was primarly achieved by rectangular gridding of the surface (for instance 1°×1° grid cells). Unfortunately, this method suffers from systematic biasing effects: as the poles are approached, the cells become smaller in area, and come closer together. 
+
+The ’\verb@icosa@’ package approaches this problem from one of the most straightforward ways, by tessellation of a regular icosahedron to a given resolution. This procedure ends up with a polyhedral object of triangular faces of higly isometric properties: very similar shapes of cells which are roughly equally distanced, and similar in cell area.
+
+## Basic procedures
+
+### Grid creation
+
+To create a triangular grid use the function ’\verb@trigrid()@’:
+
+```{r first, rgl=TRUE,dev='png',dpi=300, fig.width=6, fig.height=4}
+library(icosa)
+# create a trigrid class object
+tri <- trigrid()
+
+# the show() method displays basic information
+tri
+
+# plot the object in 3d
+plot3d(tri, guides=F)
+```
+
+Without any specified additional entry, the first line will create an icosahedron with the center of ’\verb@c(0,0,0)@’ Cartesian coordinates and the 'R2' (authalic, as defined by IUGG (1)) radius of Earth between the object center and the vertices. These can be altered by setting the ’\verb@radius@’ and ’\verb@center@’ arguments if necessary. When dealing with properly georeferenced data, the model ellipsoid (or in this case, the sphere) is to be taken into account when the data and the grid interact. Therefore a slot called ’\verb@proj4strig@’ is added to the grid object, which contains a CRS class string generated automatically from the input radius. With the default settings this is:
+
+```{r crs, rgl=TRUE,dev='png',dpi=300}
+tri@proj4string
+```
+
+Setting the first argument of the ’\verb@trigrid()@’ function will create more complex objects that have tessellated faces:
+
+```{r trigrid, rgl=TRUE,dev='png',dpi=300}
+# create a trigrid class object
+gLow <- trigrid(tessellation=c(4,4))
+
+# plot the object in 3d
+plot3d(gLow, guides=F)
+```
+
+The result is another ’\verb@trigrid@’ class object with the tessellation vector of ’\verb@c(4,4)@’. The tessellation vector is the primary argument influencing grid resolution. It consists of integer values which are larger than 1. These values will be passed in sequence to the tessellation function, using the result of the previous round as an input. In the example of the ’\verb@c(4,4)@’ grid, the icosahedron will be tessellated with the value of 4 in the first round, meaning that every edge of the 20 faces are split to 4, which then results in 4×4 new triangular faces instead of the one original (4×4×20 new faces in total). The second round will be repeated for every newly formed face as well, so the total resolution of the grid will be 4×4×4×4×20 faces. 
+
+The obvious question is then: what is the difference between the ’\verb@c(2,2,2,2))@’, ’\verb@c(4,4)@’, ’\verb@c(8,2)@’, ’\verb@c(2,8)@’ and ’\verb@c(16)@’ grids? The answer depends on the applied tessellation method. The icosahedron itself is smaller in surface area and volume than the sphere. The points created between the faces need to be projected to the sphere, which can be done in a number of different ways.
+
+The current version of the ’\verb@icosa@’ package uses a single tessellation method, which requires the least amount of information to provide a consistent output: The ’\verb@"meanGC"@’ method uses spherical functions to calculate new points directly on the great circles that connect points which are on a single edge without any sort of projection. The internal points are calculated by connecting the newly formed points on the edges. This results in some scatter for these internal points, as their position depends on the pair of edges that are connected. In this method, the points are defined as their centroids projected to the surface of the sphere, which results in a systematic increase in cell area as the center of the tessellated face is approached. Therefore, the answer to the question of the different tessellation vectors is: the number of faces will be equal as that is set by the total product of the tessellation vector, but as every tessellation round includes the above described procedure, the cell areas, cell shapes will be somewhat different with these. In the future, multiple tessellation methods are to be incorporated that produce grid cells with exactly the same areas just to mention one.
+
+As grid complexity increases the time to create the structure increases as well (The highest resolution grid so far was the ’\verb@c(10,10,4)@’ trigrid, which took about 2,500 seconds using a single thread of an Intel Xeon E5-1620 processor, it had 3,200,000 faces, the mean edge length of 0.17 degrees (20km) and its size was almost 2GB). 
+Performance also becomes an issue with very large tessellation values, as they currently incorporate distance matrix calculations (will be updated later, if required). 
+
+A rectangular grid has an additional problem that is not solved by triangular replacement, which is the definition of neighbouring cells. With both the rectangular and the triangular grid, two types of possible connections exist: cells can share either one or two vertices (an edge), which leads to problems with cell to cell relationship calculations. The inversion of the triangular grid solves this problem: if every center of the face becomes a new vertex a hexagonal pattern emerges, which creates a neighbourhood pattern where the neighbouring faces can share exactly two vertices only. Every resolution triangular grid can be turned to a penta-hexagonal one, which is directly created by the ’\verb@hexagrid()@’ function.
+
+```{r hexagrid1, rgl=TRUE,dev='png',dpi=300}
+# create a hexagrid object
+hLow <- hexagrid()
+
+# plot it in 3d
+plot3d(hLow, guides=F)
+```
+
+By default (’\verb@tessellation=1@’), the ’\verb@hexagrid()@’ function inverts the regular icosahedron, creating a regular pentagonal-dodecahedron. This object paradoxically has no hexagonal faces. Increasing the tessellation vector, however, will add these, while keeping the 12 pentagonal faces at the positions which were originally containing the icosahedron's vertices.
+
+```{r hexagrid, rgl=TRUE,dev='png',dpi=300}
+# create a hexagrid object
+hLow <- hexagrid(c(4,4))
+
+# plot it in 3d
+plot3d(hLow)
+```
+
+The function of the tessellation vector is exactly the same as for the ’\verb@trigrid()@’ function, which is invoked by the ’\verb@hexagrid()@’ function before the inversion is implemented. This naturally leads to an equality between the vertex numbers of the hexagrid and face numbers of the trigrid, and the face numbers of the trigrid and the vertex numbers of the hexagrid objects.
+
+All methods that are implemented for the trigrid are implemented for the hexagrid as well. The examples that follow use the two types of grids at random, and work interchangably.
+
+### Grid structure
+
+The grids implented by this package represent compound objects that have different 'dimensions'. For example, grids represent both a regular 3d object structure and an object of interconnected cells. The primary 3d structure of the grid is similar to a generic 3d .obj file structure. There are two main tables: one contains the grid vertex coordinates and the other contains which coordinates form which faces. This information is stored by the vertices and faces slots, respectively:
+
+```{r tri2, rgl=TRUE,dev='png',dpi=300}
+# the beginning of the vertices matrix
+head(gLow@vertices)
+
+# the beginning of the faces matrix
+head(gLow@faces)
+```
+
+
+The information content is stored and all the calculations are executed in XYZ Cartesian space instead of a polar coordinate system. This facilitates the definition of additional projection methods, potential grid-grid interaction, 3d plotting and calculations, and it also permits higher overall flexibility. The Cartesian coordinates are based on the value of the grid radius and center.
+
+```{r tri3, rgl=TRUE,dev='png',dpi=300}
+# grid radius
+gLow@r
+
+# grid center
+gLow@center
+```
+
+
+The centers of the faces can also be directly accessed in a format that is similar to the grid vertices format:
+
+```{r tri5, rgl=TRUE,dev='png',dpi=300}
+head(gLow@faceCenters)
+```
+
+Both the ’\verb@vertices@’ and the ’\verb@faceCenters()@’ slots are accessible using the shorthand functions ’\verb@vertices()@’ and ’\verb@centers()@’, which also do coordinate transformations, if requested. 
+
+The vertices forming the edges (these are not ordered in the current version) can be extracted from the ’\verb@edges@’ slot:
+```{r tri7, rgl=TRUE,dev='png',dpi=300}
+head(gLow@edges)
+```
+
+Each grid has an orientation which is stored in the ’\verb@orientation@’ slot. The values are in radians, and denote the xyz rotation relative to the default. The faces and vertices table are organized so that both vertices and faces spiral down from the zenith point to the nadir. This can be visualized in 3d using the ’\verb@gridlabs3d()@’ function.
+
+```{r tri6, rgl=TRUE,dev='png',dpi=300}
+plot3d(gLow)
+gridlabs3d(gLow, type="v", col="blue", cex=0.6)
+```
+
+The grid orientation can be changed using the ’\verb@rotate()@’ function. To see the effect of this on the 3d plots, compare the orientations of the grids using the ’\verb@guides3d()@’ function that displays the polar gridding oriented to match the cartesian coordinate system.
+
+```{r tri8, rgl=TRUE,dev='png',dpi=300}
+gLow2 <- rotate(gLow) # random rotation
+plot3d(gLow2)
+guides3d(col="green")
+```
+
+Subsetting
+
+In case only one part of the grid is required for a certain calculation, procedure or analysis, the subset function can be used on the grid.
+```{r tri9, rgl=TRUE,dev='png',dpi=300}
+# select faces F1000 through F1800
+gLowSub <- subset(gLow, paste("F",1000:1800, sep=""))
+plot3d(gLowSub)
+```
+
+Even though the grid faces are ordered in a spiral from higher to lower latitudes, it can be somewhat difficult to find the subsets of a grid based on the indices alone. Therefore the ’\verb@subset()@’ function accepts one additional type of numeric subscripting, by setting the minimum/maximum latitude/longitude values of the face centers. Let's suppose that you need all grid cells below the latitude of 30 degrees. In this case the subscript vector should contain an element which is named ’\verb@lamax@’:
+
+```{r tri9e, rgl=TRUE,dev='png',dpi=300}
+# numeric subscript: polar coordinates
+gLowSub3<-gLow[c(lamax=30)]
+plot3d(gLowSub3)
+```
+
+If you want the subset to be confined between -30°, 30° latitudes and -120°, 60° longitudes:
+
+```{r tri9d, rgl=TRUE,dev='png',dpi=300}
+# numeric subscript: polar coordinates
+gLowSub4<-gLow[c(lamax=30, lamin=-30, lomin=-120,lomax=-60)]
+plot3d(gLowSub4)
+```
+
+Spatial positions of the cells is somewhat different than the longitudinal-latitudinal structure that we are accustomed to, which is the reason for the jagged edges in these subsets. Still, the cells are forming latitudinal bands, which in can be accessed using the ’\verb@belts@’ slot. This slot contains the number of latitudinal belt the face belongs to.
+
+```{r belts, rgl=TRUE,dev='png',dpi=300}
+# logical subscript
+gLowSub5<-gLow[gLow@belts==17]
+
+# the 17th belt
+plot3d(gLow)
+faces3d(gLowSub5, col="blue")
+```
+
+The package was designed so that an intermediately skilled R user can get all the wanted data at a somewhat lower level of programming. For instance, the average latitude of the belt selected above can be calculated with a combination of basic functions and slot access:
+
+```{r belts2, rgl=TRUE,dev='png',dpi=300}
+# transform the faceCenter coordinates
+longLat <- CarToPol(gLowSub5@faceCenters, norad=T)
+mean(longLat[,2])
+```
+
+
+The Grid Skeleton
+
+The grid structure contains a skeleton slot which is a list containing most information that is represented in the other slots (UI, or „user interface"). As resolution increases, the iterative methods implemented in R become less and less effective, so most of the calculations are done with C or C++ (Rcpp). The tessellation procedure also results in a hierarchical ordering of faces and vertices which can make handling data that are assigned to the indices very difficult to handle. Therefore, the information present in the grid is doubled: one for the R user (1-based indexing, character –rownames,colnames- references, north-south ordering) and one for the functions of the package (0-based indexing, integer row/column indices, hierarchical ordering). 
+
+```{r tri9c, rgl=TRUE,dev='png',dpi=300}
+str(gLow@skeleton)
+```
+
+The ’\verb@subset()@’ function will also affect the grid skeleton and the UI differently: the information will be omitted from the UI during subsetting, but everything will be kept in the grid skeleton. 
+
+### Plotting
+
+Both 3d and 2d plotting are incorporated in the package. As the grid structure exists in 3d space, 3d is the default plotting scheme which is implemented with the package ’\verb@rgl@’'. All 3d plotting functions pass arguments to either the ’\verb@points3d()@’, ’\verb@segments3d()@’, ’\verb@triangles3d()@’ and ’\verb@text3d()@’ functions.
+
+The ’\verb@plot3d()@’ method of the grids call for either the border plotting function ’\verb@lines3d()@’ or the face plotting function ’\verb@faces3d()@’. In a workflow involving 3d plotting, these functions are used usually to create a compound plot representing different types of information. Experiment with these to optimize the 3d plotting experience. 
+
+The inner sphere is plotted by default, but can be turned off by setting the ’\verb@sphere@’ argument of the ’\verb@plot3d()@’ function to ’\verb@FALSE@’. The radius of the sphere can also be set using this argument. In case it is not set by the user, it defaults to the distance of the planar face center from the center of the grid. 
+
+The 3d plots so far showed only linear edges, but the plotting of arcs can be forced by setting the ’\verb@arcs@’ argument to ’\verb@TRUE@’.
+
+```{r first2, rgl=TRUE,dev='png',dpi=300, fig.width=6, fig.height=4}
+plot3d(tri, guides=F, arcs=T, sphere=6300)
+```
+
+The nature of the triangular/hexagonal grids is that they are intuitive in 3 dimensions, but behave cumbersome in 2d projections. Still, in any sort of printed or software publications, maps are the primary way to publish geographic data, which renders the projections very important. This part of the package is linked to the ’\verb@sp@’ and ’\verb@rgdal@’ packages, which deal with the projection of data.
+
+Each grid can be converted to either a ’\verb@SpatialLines@’ or a ’\verb@SpatialPolygons@’ object defined by the ’\verb@sp@’ package. Two dimensional plotting can only happen if the 2d representation is calculated, which is (to save computation time) not automatic, but can be called for on demand.
+
+The function ’\verb@SpPolygons()@’ and ’\verb@SpLines@’ will create separate objects, while the ’\verb@newsp()@’ function will append the SpatialPolygons object to the grid structure to the predefined ’\verb@sp@’ slot. If requested, this procedure can be run when the grid is created (by setting the ’\verb@sp@’ argument of the ’\verb@trigrid()@’ and ’\verb@hexagrid@’ functions), but it is turned off by default to increase performance.
+
+```{r tri10, plot=TRUE, ,dev='png',dpi=300}
+hLow <- newsp(hLow)
+# After this procedure finishes, a regular 2d plotting function can be invoked:
+plot(hLow)
+```
+
+As resolution increases, the default plotting devices of R become slower and slower at the visualization of gridded data. On the upside, unlike raster data, the plots are vector images, which present many advantages if the images are saved as .pdfs.
+
+A change in projection can automatically be employed on the grid structure by adding a ’\verb@projargs@’ argument that is used by the function ’\verb@spTransform()@’. This can be either a CRS class object, or a character string that will be transformed to be one.
+
+```{r tri11, plot=TRUE, ,dev='png',dpi=300}
+# Lambert cylcindrical equal area projection
+cea <- "+proj=cea"
+plot(hLow, projargs=cea)
+```
+
+```{r tri11AA,results='hide'}
+# load rgdal package for the CRS function
+library(rgdal)
+```
+
+```{r tri11B, plot=TRUE, ,dev='png',dpi=300}
+# The Mollweide projection
+moll <- CRS("+proj=moll")
+plot(hLow, projargs=moll)
+```
+
+Here are some additional examples of projections using the World Borders Dataset (2) that can be accessed in the ’\verb@SpatialPolygonsDataframe@’ format using the following chunk of code:
+
+Here are some additional examples of projections using the 'z3' resolution of landy polygons from the OSM archive (2) that can be accessed in the ’\verb@SpatialPolygons@’ format using the following chunk of code:
+
+```{r tri23, plot=TRUE,dev='png',dpi=300,echo=TRUE, results='hide'}
+# file path
+file <- system.file("extdata", "land_polygons_z3.shx", package = "icosa")
+
+# read in the shape file
+wo <- readOGR(file, "land_polygons_z3")
+```
+
+A grid can be plotted easilly with this map, after their projection methods are adjusted:
+
+```{r examplePaleo, plot=TRUE, ,dev='png',dpi=300}
+# transform the land data to long-lat coordinates
+wo <- spTransform(wo, gLow@proj4string)
+
+#triangular grid
+gLow<-newsp(gLow)
+
+# load in a map
+# plot the grid (default longitude/latitude)
+plot(gLow, border="gray", lty=1)
+
+# the reconstruction
+lines(wo, lwd=2, col="blue")
+```
+
+Naturally the ’\verb@SpatialPolygons@’ representation of the grid can be created and transformed on its own. 
+
+```{r examplePaleo2, plot=TRUE, ,dev='png',dpi=300}
+# the Winkel tripel projection
+wintri<-CRS("+proj=wintri")
+
+# plot the grid (default longitude/latitude)
+gLow2d<-SpPolygons(gLow, res=50) 			# create SpatialPolygons
+gLow2dTrans<-spTransform(gLow2d, wintri) 	# transform projection
+plot(gLow2dTrans, border="gray",lty=1) 		# plot
+
+#transform the reconstruction
+woTrans<-spTransform(wo, CRS("+proj=wintri"))
+
+# the reconstruction
+lines(woTrans, lwd=2, col="blue")
+```
+
+
+The ’\verb@gridlabs()@’ function can also be of use here to locate the vertices and faces of the plotted grid. The ’\verb@type@’ argument is used to choose which part of the grid is to be shown. The rest of the argumnets are passed to the ’\verb@text()@’ function.
+
+```{r tri12, plot=TRUE, ,dev='png',dpi=300}
+# a very low resolution hexagrid
+hVeryLow<-hexagrid(c(4))
+# add 2d component
+hVeryLow<-newsp(hVeryLow)
+# the Robinson projection
+robin <- CRS("+proj=robin")
+# plot with labels
+plot(hVeryLow, projargs=robin)
+gridlabs(hVeryLow, type="f", cex=0.6,projargs=robin)
+```
+
+Similarly useful can be the ’\verb@pos()@’ function, that retrieves the position of a named element in the grid, e.g. vertices and face centers:
+
+```{r tri13, echo=TRUE}
+pos(hLow, c("P2", "F12", NA))
+```
+
+### Layers
+
+The grid itself operates as a scaffold for all kinds operations we can do based on data which can be organized in layers. At this moment, the layers are built on vectors, but in the next major update of the package they will incorporate both memory and harddrive-stored data similar to the ’\verb@RasterLayer@’ class objects defined in the ’\verb@raster@’ package.
+
+Currently only the ’\verb@facelayer@’ class is defined, which link individual values to the faces of a ’\verb@trigrid@’ or ’\verb@hexagrid@’ class object.
+
+```{r tri14, echo=TRUE}
+fl1<-facelayer(gLow) # the argument is the grid object to which the layer is linked
+fl1
+str(fl1)
+```
+
+The ’\verb@facelayer@’ has the same number of values as the the number of faces in the linked grid, accessed by the ’\verb@length()@’ function
+
+```{r tri15, echo=TRUE}
+length(fl1)
+```
+
+The  stored values can be assigned or shown by the values function:
+```{r tri16, echo=TRUE}
+values(fl1) <-1:length(fl1)
+values(fl1)[1:10]
+```
+
+Arithmethics for the ’\verb@facelayer@’ class objects are defined as well.
+
+```{r tri17, echo=TRUE, results='hide'}
+# layer definition
+fl2<-facelayer(gLow)
+# all values should be one
+values(fl2)[] <- 1
+
+# layer arithmetics
+fl1+fl2
+fl1*4
+```
+
+Besides storage and data manipulation, layers can be especially useful for plotting data. For logical data the ’\verb@faces3d()@’ function will indicate which faces are occupied. 
+
+```{r tri18, rgl=TRUE,dev='png',dpi=300}
+a <-facelayer(gLow)
+values(a) <- sample(c(T,F), length(a), replace=T)
+# plot the grid first
+plot3d(gLow, guides=F)
+
+# invoke lower level plotting for the facelayer 
+# (draws on previously plotted rgl environemnts)
+faces3d(a, col="green")
+```
+
+This is the lower level graphic function, that is called when the ’\verb@plot3d()@’ method of the ’\verb@facelayer@’ is called. For numeric data, heatmaps are built automatically based on the range of the data. Let's examine the basic case, where its number in sequence is assigned to every face.
+
+```{r tri19, rgl=TRUE,dev='png',dpi=300}
+# new layer
+b<-facelayer(gLow)
+# sequenced values 
+values(b)<-1:length(b)
+# plot3d method of the facelayer (implements faces3d too)
+plot3d(b, guides=F, frame=F)
+```
+
+The colors of the heatmaps can be changed by adding standard color names to the ’\verb@col@’ argument:
+```{r tri19b, rgl=TRUE,dev='png',dpi=300}
+# new layer
+# grid frame
+plot3d(gLow)
+# the heatmap
+faces3d(b, col=c("green", "brown")) 
+```
+
+The function create the legend is the heatMapLegend() function that allows further customization of the legend. It uses a png device to render a plot to the background. The resolution of this image is dependendent on the size of the ’\verb@rgl@’ device (window). At small window sizes (green and brown heatmap) the legend will have a worse resolution. The ’\verb@plot3d()@’ method of the facelayer includes an automatic resizing statement (’\verb@par3d()@’), which can be turned off, if the size of the ’\verb@rgl()@’ device is to be determined before plotting. 
+
+```{r tri19c, rgl=TRUE,dev='png',dpi=300}
+# plot3d method of the facelayer (implements faces3d too)
+par3d(windowRect=c(20,30,1000,400))
+plot3d(b, guides=F, frame=F, defaultPar3d=F)
+```
+
+Categorical values can also be stored and plotted with the facelayer. By default, these values will be plotted with random colours, without a legend.
+```{r categ1, rgl=TRUE,dev='png',dpi=300}
+# new layer
+catLayer<-facelayer(hLow)
+
+# assign random information
+catLayer@values<-sample(c("one","two","three"),length(catLayer), replace=T)
+
+plot(catLayer)
+```
+
+In case a legend is necessary, a lower level solution is recommended, defining the colours by hand:
+
+```{r categ2, rgl=TRUE,dev='png',dpi=300}
+# the colours of the variables
+allColours<-c("red", "blue", "orange")
+par(mar=c(4,2,4,6), xpd=TRUE)
+plot(hLow, col=allColours[as.numeric(factor(catLayer@values))])
+
+# draw a rudimentary legend
+legend("right",fill=allColours, legend=levels(factor(catLayer@values)), inset=c(-0.15,0))
+
+```
+
+In case the plotting and data manipulation functions of the ’\verb@sp@’ package are preferred,
+the grid object and the data can easilly be converted to a ’\verb@SpatialPolygonsDataFrame@’ class, and then the data can be plotted with ’\verb@spplot()@’
+
+
+# Application
+
+## Lookup
+
+Until this point only those features of the package were demonstrated that have no practicality on their own. All real world application of a gridding scheme relies on the capacity to look up coordinates and assign them to grid cells. The overall performance of the package boils down to the speed of this procedure. ’\verb@icosa@’ uses a very efficient point-in-tetrhedron check to get the assigned cells to each set of coordinates. In the case of the ’\verb@trigrid@’, every face on the surface of the grid outlines a tetrahedron with the center of the object. At high resolutions this in itself can be very slow, especially if the number of queries is large, hence the necessity of the skeleton slot and the multiple levels of tessellations. With the ’\verb@meanGC@’ tessellation method, the vertices of the input do not change, which means that every level of resolution can be retained when multiple rounds of tessellation happen. This allows the implementation of a hierarchical lookup algorithm, which searches the position of a point given by progressively refining the resolution, so an exhaustive lookup is not required.
+
+### The 'locate()' function -  point query
+
+The most straightforward implementation is the ’\verb@locate()@’ function which is used to find the position of a set of points on the grid:
+
+```{r tri20, rgl=TRUE,dev='png',dpi=300}
+# generate 50000 random coordinates on a sphere of default radius
+pointdat <- rpsphere(5000)
+
+# and locate them on the grid 'gLow'
+cells<-locate(gLow, pointdat)
+
+# the return of this function is vector of cell names
+head(cells)
+```
+
+The function accepts matrices in longitude-latitude, and XYZ format as well. An object of the ’\verb@SpatialPoints@’ class defined in the package ’\verb@sp@’ can alse be provided as input. In the case of the polar coordinate entry, the coordinates will be transformed to the xyz Cartesian coordinate system using the default radius. This function returns the names of the faces that the points fell on. In the case of points that fall on vertices or edges (which is extremely unlikely with real world data), the returned values are by default NAs.
+The ’\verb@locate()@’ function is especially powerful if it combined with the’\verb@table()@’ and ’\verb@tapply()@’ functions or similar types of iterators:
+
+```{r tri20b, rgl=TRUE,dev='png',dpi=300}
+tCell <- table(cells)
+fl <- facelayer(gLow,0)
+# [] invokes a method that save the values to places that 
+# correspond to the names attribute of tCell
+fl[] <-tCell #
+# heat map of the point densities
+plot3d(fl)
+ 
+```
+
+This function operates just as fine with the ’\verb@hexagrid@’ object, and uses subfaces to locate the points. Every hexagonal face consists of 6 subfaces and every pentagonal face contains 5 subfaces. 
+
+```{r tri21, rgl=TRUE,dev='png',dpi=300}
+# do the same for the hexagrid
+cells2<- locate(hLow, pointdat)
+b<-facelayer(hLow,0) # initialize to 0
+b[]<-table(cells2)
+# hLow<-newsp(hLow) # was run before
+
+# plot the faces
+plot(b, axes=T) 
+```
+
+The performance of the ’\verb@locate()@’ function is linearly related to the number of queries. It is also positively related to the grid resolution, although larger tessellation values will increase computation time more than using multiple levels of tessellations.
+
+### The occupied() function 
+
+For presence-absence values the function ’\verb@occupied()@’ can be used. It returns a ’\verb@facelayer@’ class objecte with logical values (’\verb@TRUE@’ when the face is occupied an ’\verb@FALSE@’ when the face is not). 
+
+The example below shows how the occupied cells can be shown with the points:
+
+```{r tri22, rgl=TRUE,dev='png',dpi=300}
+# run function only on the first 300
+fl<-occupied(hLow, pointdat[1:300,])
+
+# after the SpatialPolygons object is calculated
+# hLow<-newsp(hLow) # was run before
+
+# the plot function can also be applied to the facelayer object
+plot(fl, col="blue")
+
+# show the points as well
+points(CarToPol(pointdat[1:300,]), col="red", pch=3, cex=0.7)
+```
+
+Naturally the grid can be shown as well, for instance with ’\verb@lines()@’:
+
+```{r tri22b, rgl=TRUE,dev='png',dpi=300,}
+# the plot function can also be applied to the facelayer object
+plot(fl, col="blue")
+
+points(CarToPol(pointdat[1:300,]), col="red", pch=3, cex=0.7)
+lines(hLow, col="gray")
+```
+
+The ’\verb@occupied()@’ function also applies to various other object types and behaves as a wrapper function around methods that return which faces are occupied by the input objects. Most notable among these is the ’\verb@SpatialPolygons@’, ’\verb@SpatialLines@’, and ’\verb@SpatialPoints@’ classes defined by the package ’\verb@sp@’. The method changes the coordinate reference system (CRS) of the input object  is used to transform it to the spherical model first, and then the function transforms the coordinates to XYZ Cartesian space. 
+
+Let us consider the land polygon data that were imported previously. The advantage of this class is that it can be transformed to any types of classes in the ’\verb@sp@’ package to show how the ’\verb@occupied()@’ function works. For instance, on the ’\verb@SpatialPoints@’ class:
+
+```{r tri24, rgl=TRUE,dev='png',dpi=300,}
+# transform it to SpatialLines
+woL <- as(wo, "SpatialLines")
+woP <- as(woL, "SpatialPoints")
+
+# the facelayer of the occupied cells
+fL<-occupied(hLow, woP)
+
+plot3d(fL, col="red")
+```
+
+The shapes of North and South America are only roughly visible at this resolution.
+
+As the map itself is a only collection of well organized coordinates of points, the borders might not form continuous lines when they are plotted as tiles of gridcells.
+If, on the other hand, a SpatialLines object is created, the ’\verb@occupied()@’ method will perform a latitude-longitude linear interpolation on the coordinates within the individual lines, set by the ’\verb@f@’ argument (the number of inserted points between two points).
+
+
+Calculating the occupied faces of a ’\verb@SpatialPolygons@’ or ’\verb@SpatialPolygonsDataFrame@’ object is a somewhat more complicated. The current version relies on the ’\verb@raster@’ package to regularly sample the inner parts of the polygons. These points are then looked up by the same method that looks up coordinates of individual points in a matrix. 
+```{r tri26, rgl=TRUE,dev='png',dpi=300,}
+# look up the polygons
+landFaces<-occupied(hLow, wo)
+# the empty grid
+plot3d(hLow, guides=F)
+
+# the landmass of the world
+faces3d(landFaces, col="blue")
+```
+
+The number of points is guessed by a rough algorithm that overestimates the number of points necessary to make the polygons whole. This algorithm will be replaced in the future to a more efficient and more precisely defined one.
+
+### Raster type data
+
+Most global data compilations use raster formats to store information. These data can be fitted to the icosahedral grids using the ’\verb@resample()@’ function. For a brief example, we can use a grid object of global precipitation data downloaded from the WorldClim database (3). The data included in the package was downscaled to 1°×1° resolution to decrease size.
+
+```{r tri26b, plot=TRUE,dev='png',dpi=300,}
+library(raster)
+
+# read in the file
+file<-system.file("extdata", "prec1_1degree.grd", package = "icosa")
+r<-raster(file)
+
+# plot the raster
+plot(r)
+```
+
+The usage of the ’\verb@resample()@’ function is very straightforward, it requires designation of the original data and the new grid. Depending on the resolution of the original and the new grids, this can be time consuming.
+
+```{r tri27, rgl=TRUE,dev='png',dpi=300,}
+
+# resample the original data
+resDat<-resample(r, hLow, "ngb")
+```
+
+The return value of the ’\verb@resample()@’ function is a named ’\verb@numeric@’ vector, which is easilly transformed to a ’\verb@facelayer@’ using the empty brackets operator ’\verb@[]@’:
+
+```{r tri28, rgl=TRUE,dev='png',dpi=300,}
+# new facelayer
+precLayer<- facelayer(hLow)
+# fill in the new facelayer
+precLayer[]<-resDat
+```
+
+Using the methods written for the facelayer, the data can be easilly plotted in 3d:
+```{r tri29, rgl=TRUE,dev='png',dpi=300,}
+# the grid 
+plot3d(precLayer, col=c("red","orange", "yellow", "cyan", "blue"))
+```
+
+And after projection, in two dimensions as well:
+```{r tri30, plot=TRUE,dev='png',dpi=300,}
+# the 
+plot(precLayer, col=c("red","orange", "yellow", "cyan", "blue"), tick.cex=0.7, axes=T)
+```
+
+The arguments of this function depend on the nature and interpretation of the data points. As resampling requires some form of interpolation, it needs assumptions on the representativity of the measurements. Each original data point can be thought of either as an entity that represent the entire cell or only the center of the cell. In the first case the original raster object needs to be upscaled with the nearest neighbour method, and in the latter, another form of interpolation is necessary (e.g. the bilinear or bicubic resampling). The 'method' argument of this function is passed to the ’\verb@resample()@’ function in the ’\verb@raster@’ package, and is used to generate higher resolution data from the original raster.The ’\verb@resample()@’ function can also be used to upscale, or downscale a ’\verb@facelayer@’ linked to ’\verb@trigrid@’ or ’\verb@hexagrid@’ object as well. 
+
+
+## Graph representation
+
+The grid structure is a compound object, can also be understood as a graph of connected faces. This representation is efficiently implemented using the ’\verb@igraph@’ package.
+On default, ’\verb@igraph@’ represenation of the grid is added to the ’\verb@graph@’ slot of the grid object. In this graph, each face is connected to its direct neighbours, which allows etheir efficient lookup, the implementation of shortest path algorithms and more.
+
+
+### Neighbours
+
+The most direct application of this representation is the ’\verb@vicinity()@’ function that allows the user to look up cells that are closest to a focal cell, 
+without calculating distance matrices. This particular example gets all the neighbouring cells of the ’\verb@F125@’ cell.
+
+```{r vic1, rgl=TRUE,dev='png',dpi=300}
+# calculate a very coarse resolution grid
+gVeryLow<-trigrid(8, sp=T)
+# names of faces that are neighbours to face F125
+facenames<-vicinity(gVeryLow, "F125")
+# plot a portion of the grid
+plot(gVeryLow, xlim=c(0,180), ylim=c(0,90))
+# plot the original and the neighbouring faces
+plot(gVeryLow@sp[facenames], col="red", add=T)
+# the names of all the cells
+gridlabs(gVeryLow, type="f", cex=0.5)
+```
+
+The ’\verb@vicinity()@’ function accepts a vector of face names as well:
+
+```{r vic2, rgl=TRUE,dev='png',dpi=300}
+# the neighbours of cells F125 and F126
+facenames2<-vicinity(gVeryLow, c("F125", "F126"))
+# plot the empty grid 
+plot(gVeryLow, xlim=c(0,180), ylim=c(0,90))
+# plot these faces with red
+plot(gVeryLow@sp[facenames2], col="red", add=T)
+# the names of the cells
+gridlabs(gVeryLow, type="f", cex=0.5)
+```
+
+The true strength of the vicintiy function is that it allows the user to select higher order neighbourhoods, by setting the ’\verb@order@’ argument (the second order neighbours is the neighbour of the neighbours).
+
+```{r vic3, rgl=TRUE,dev='png',dpi=300}
+# the 2nd order neighbourhood of cell F125
+facenames3 <- vicinity(gVeryLow, c("F125"), order=2)
+# empty grid
+plot(gVeryLow, xlim=c(0,180), ylim=c(0,90))
+# the neighbourhood
+plot(gVeryLow@sp[facenames3], col="red", add=T)
+# the names of the cells
+gridlabs(gVeryLow, type="f", cex=0.5)
+```
+
+The returning object can either lump the cells together (default) or separate them by the input faces. Setting the ’\verb@output@’ argument, allows the user to choose
+between vector and list output.
+
+```{r vic4, rgl=TRUE,dev='png',dpi=300}
+# the neighbours a cell 
+facenames4 <- vicinity(gLow, c("F125", "F126"), output="list", order=2)
+```
+
+In both cases, the output can either contain the the input cell, or it can be omitted. This is set with the ’\verb@self@’ argument.
+```{r vic54, rgl=TRUE,dev='png',dpi=300}
+# the names of the neighbouring cells of F125, without itself
+facenames5<-vicinity(gVeryLow, "F125", self=F)
+# plot the empty grid
+plot(gVeryLow, xlim=c(0,180), ylim=c(0,90))
+# plot the neighbours
+plot(gVeryLow@sp[facenames5], col="red", add=T)
+# the names of the cells
+gridlabs(gVeryLow, type="f", cex=0.5)
+```
+
+### Using 'igraph' in geographic calculations
+
+At any point, a new graph can be calculated from a grid with the ’\verb@gridgraph@’ function.
+
+```{r ggraph, dev='png',dpi=300}
+# new graph from the faces of the icosahedron
+graphTri <- gridgraph(tri)
+plot(graphTri)
+```
+
+Setting the directed argument creates either a directed two-way edge system, or an undirected graph.
+
+```{r ggraph2, rgl=TRUE,dev='png',dpi=300}
+# new graph
+graphTriDir <- gridgraph(tri, directed=T)
+plot(graphTriDir)
+```
+
+Using a separate ’\verb@igraph@’ class object can be especially useful when subsets of the grids are to be used for an analysis or simulation. 
+```{r ggraphAttach, results='hide'}
+# attach igraph
+library(igraph)
+```
+Please note that ’\verb@igraph@’ masks out some of the auxilliary functions written in this package as well. These functions are just shorthands for tasks that are available with other methods as well.
+
+Naturally, you can use the ’\verb@induced_subgraph()@’ function of the ’\verb@igraph@’ package directly:
+
+```{r ggraph4,dev='png',dpi=300, echo=TRUE, results='hide'} 
+faces<-paste("F", 1:10, sep="")
+subGraph <- induced_subgraph(graphTri,faces) 
+plot(subGraph)
+```
+
+The subsetting of the grid will also subset the ’\verb@igraph@’ class representation:
+
+```{r ggraph5,dev='png',dpi=300}
+lowGraph<-gLow[1:12]@graph
+```
+
+or you can create it from a logical ’\verb@facelayer@’, for example from the occupied cells of the land data we imported earlier:
+
+```{r ggraph4b, dev='png',dpi=300}
+landGraph<-gridgraph(landFaces)
+plot(landFaces, col="brown")
+```
+
+This particular graph is a rough estimate for the presence of terrestrial settings, and can be useful for path calculations.
+```{r ggraph6, dev='png',dpi=300}
+# shortest path in igraph
+path <- shortest_paths(landGraph, from="F432", to="F1073", output="vpath")
+# the names of the cells in order
+cells<-path$vpath[[1]]$name
+# plot the map
+plot(landFaces, col="brown", xlim=c(0,90), ylim=c(0,90))
+# make a subset of the grid - which corresponds to the path
+routeGrid<-hLow[cells]
+# plot the path
+plot(routeGrid, col="red", add=T)
+```
+
+The shortest path using grid cells is a suboptimal estimate of the actual shortest route between two points, as the graph structure limits the angles the path can turn to. A future update will include a function that allows more accurate estimates of the actual shortest paths.
+
+Random walk simulations can also be built using the graph represetation. In this example a random walker will walk 100 steps on the grid, starting from face ’\verb@F432@’. 
+
+```{r ggraph6b, dev='png',dpi=300}
+# plot the map
+plot(landFaces, col="brown", xlim=c(0,90), ylim=c(0,90))
+# create a random walk from source cell with a given no. of steps
+randomWalk <- random_walk(landGraph, steps=100, start="F432")
+# the names of the cells visited by the random walker
+cells<-randomWalk$name
+# the source cell
+plot(hLow["F432"], col="green",add=T)
+# the centers of these faces
+centers<-CarToPol(hLow@faceCenters[cells,], norad=T)
+# draw the lines of the random walk
+for(i in 2:nrow(centers)){
+	segments(x0=centers[i-1,1], y0=centers[i-1,2], x1=centers[i,1], y1=centers[i,2], lwd=2)
+}
+```
+
+# Utility functions
+
+A number of additional functions are included in the package that will help efficient workflow. Random data generation for the spherical model can fastened with the ’\verb@rpsphere()@’ function:
+```{r tri31, rgl=TRUE,dev='png',dpi=300,}
+# sphere 1
+aSphere<-rpsphere(n=250, origin=c(0,0,0), radius=1)
+# sphere 2
+bSphere<-rpsphere(n=250, origin=c(1,1,1), radius=3)
+points3d(aSphere, col="blue")
+points3d(bSphere, col="red")
+```
+
+The default settings of the ’\verb@rpsphere()@’ function will create random points on a spherical Earth model with the center of ’\verb@c(0,0,0)@’, and a radius of ca. 6371 km.
+
+The next among these utility functions is the pair of coordinate transformation functions that were shown previously to transform polar coordinates to Cartesian ones and vica versa: A quick plot for the grid vertices can be drawn by:
+
+```{r tri4, plot=TRUE,dev='png',dpi=300}
+# coordinate transformations from cartesian to polar:
+v2d <- CarToPol(gLow@vertices)
+plot(v2d, xlim=c(-180,180), ylim=c(-90,90))
+
+# coordinate transformation from polar to cartesian
+longLatMat<-rbind(c(35,20), c(45,50))
+PolToCar(longLatMat)
+```
+
+An  efficient arc distance calculator is included in the package as well, implemented by the ’\verb@arcdist()@’. It returns either kms, radians or degrees and can be set to varius sphere centers and radii. The ’\verb@arcdistmat()@’ function implements the Rcpp core of the ’\verb@arcdist()@’ function to create arc distance matrices with similar flexibility, which can be either symmetric or asymmetric. For example a symmetric distance matrix might be useful if a function is dependent on the distances between the faces:
+
+```{r triarc, plot=TRUE,dev='png',dpi=300}
+#great circle distance matrix between the facecenters
+amat<-arcdistmat(hLow@faceCenters, radius=hLow@r, origin=hLow@center)
+
+# the relationship of the first 6 points
+amat[1:6,1:6]
+```
+
+Asymmetric distance matrices can be very useful, when there is no need for within group distance calculations (i.e. faceCenters and occurrence coordinates)
+```{r triarc2, plot=TRUE,dev='png',dpi=300}
+randPoints<-rpsphere(15)
+#great circle distance matrix between the facecenters
+amat<-arcdistmat(hLow@faceCenters, randPoints, radius=hLow@r, origin=hLow@center)
+
+# the relationship of the first 6 points
+amat[1:6,1:6]
+```
+
+# Acknowledgements
+The 'icosa' package development is part of a Deutsche Forschungsgemeinschaft project for global biogeographic analyses (KO 5382/1-1). Special thanks are due to all early testers of the project in particular to: Wolfgang Kiessling, Kilian Eichenseer, Carl Reddin, Vanessa Roden, Emilia Jarochowska and Andreas Lauchstedt
+
+#Expected updates, notes and known bugs
+* The tessellation procedure needs modularization: this will allow the addition of new tessellation-projection methods for completely equal areas, and to further increase resolution,
+by applying the tessellation to subsets of the grid.
+* The data container system needs elaboration. Either a new container set will be used, or the existing ones will be redefined so that they inherit the already written methods of the RasterLayers.
+* Besides the facelayer, the "pointlayer" and "edgelayer" classes are considered for addition
+* Rasterization and resampling protocols will be added in future versions.
+* Help files will be better organized.
+* The plotting system will be improved.
+
+#References
+
+(1) Moritz, H. 2000. Geodetic Reference System 1980. Journal of Geodesy, 74, 128-162.
+(2) http://openstreetmapdata.com/
+(3) http://www.worldclim.org/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
