@@ -52,7 +52,7 @@ Rebuilt from previous version .
 ### Fixed
 - memory deallocation issues
 - SpPolygons(): zenith/nadir face issue
-- unnecessary 'rgdal' namespace import
+- unnecessary 'rgdal' namespace import - still not perfect, though
 
 ## [0.9.80] (first Beta) - 2017-04-17
 ### Added
@@ -90,8 +90,8 @@ the facelayer
 - character values in facelayers will be plotted with random colors
 - rgdal dependecy of spTransorm() was properly resolved
 - the missing belts slot of the hexagrid class was filled 
-- fixed missing invalid input message for PolToCar() function.
-- grid resolution is now displayed with the show() method.
+- fixed missing invalid input message for PolToCar() function
+- grid resolution is now displayed with the show() method
 - the group generics Ops, Math, and Summary were implemented for the facelayer.
 - basic functions of the 'stats' packages were implemented
 - latitude and longitude-wise selection was implemented to the facelayer subsetting method
