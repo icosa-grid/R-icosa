@@ -3,7 +3,7 @@ R package for global triangular and penta-gexagonal grids based on tessellated i
 
 ## News
 
-I initilized the developmental repository of the `icosa` package, which has been under continuous testing in the past year. I have not been attending to this project, as I have been too occupied with research and my other package. 
+I initilized the developmental repository of the `icosa` package, which has been under continuous testing in the past year. I have not been attending to this project,because I was too occupied with research and the divDyn package. 
 
 ## About
 
