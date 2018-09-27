@@ -12,9 +12,9 @@ This repository contains the under development versions of the package as well a
 
 ## Installation
 
-1. The stable version of the package is openly available from the CRAN servers. Just type in
+1. The latest stable version of the package (v0.9.81) is openly available from the CRAN servers. Just type in
 ```
-`install.packages("icosa")`
+install.packages("icosa")
 ```
 
 and the package will be installed. In case you would like to experiment with the under development versions, please take a look at the points below
