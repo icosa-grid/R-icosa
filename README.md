@@ -26,7 +26,7 @@ install.packages(
   repos=NULL, type="source")
 ```
 3. I will also provide binaries for Windows. If you want to, you can try them. 
-`install.packages("https://github.com/adamkocsis/icosa/raw/master/_bin/Win_x64_x86/icosa_0.9.82.zip", repos=NULL)`
+`install.packages("https://github.com/adamkocsis/icosa/raw/master/_bin/Win_x64_x86/icosa_0.9.82.zip", repos=NULL, type="win.binary")`
 
 
 
