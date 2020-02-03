@@ -2,6 +2,9 @@
 
 # functions for 3d SP operations
 
+authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
+	
+
 
 ##########################################################
 #class definitions for the lines			
@@ -122,7 +125,7 @@ setMethod(
 	signature="Lines",
 	definition=function(spObj, radius=authRadius){
 		listLook<-spObj@Lines
-		list3d<-lapply(listLook, To3d)
+		list3d<-lapply(listLook, To3d, radius=radius)
 		
 		Lines3d(Lines=list3d, ID=spObj@ID)
 	}
@@ -133,8 +136,9 @@ setMethod(
 	"To3d",
 	signature="SpatialLines",
 	definition=function(spObj, radius=authRadius){
+		spObj <- normalizeProj(spObj)
 		listLook<-spObj@lines
-		list3d<-lapply(listLook, To3d)
+		list3d<-lapply(listLook, To3d, radius=radius)
 		
 		SpatialLines3d(lines=list3d)
 	}
@@ -145,8 +149,9 @@ setMethod(
 		"To3d",
 		signature="SpatialLinesDataFrame",
 		definition=function(spObj, radius=authRadius){
+			spObj <- normalizeProj(spObj)
 			listLook<-spObj@lines
-			list3d<-lapply(listLook, To3d)
+			list3d<-lapply(listLook, To3d, radius=radius)
 			
 			SpatialLines3dDataFrame(data=spObj@data, lines=list3d)
 		
@@ -174,7 +179,7 @@ setMethod(
 	signature="Polygons",
 	definition=function(spObj, radius=authRadius){
 		listLook<-spObj@Polygons
-		list3d<-lapply(listLook, To3d)
+		list3d<-lapply(listLook, To3d, radius=radius)
 		
 		Polygons3d(Polygons=list3d, plotOrder=spObj@plotOrder, ID=spObj@ID, area=spObj@area)
 	}
@@ -189,8 +194,9 @@ setMethod(
 	"To3d",
 	signature="SpatialPolygons",
 	definition=function(spObj, radius=authRadius){
+		spObj <- normalizeProj(spObj)
 		listLook<-spObj@polygons
-		list3d<-lapply(listLook, To3d)
+		list3d<-lapply(listLook, To3d, radius=radius)
 		
 		SpatialPolygons3d(polygons=list3d, proj4string=spObj@proj4string,plotOrder=spObj@plotOrder)
 	}
@@ -204,8 +210,9 @@ setMethod(
 	"To3d",
 	signature="SpatialPolygonsDataFrame",
 	definition=function(spObj, radius=authRadius){
+		spObj <- normalizeProj(spObj)
 		listLook<-spObj@polygons
-		list3d<-lapply(listLook, To3d)
+		list3d<-lapply(listLook, To3d, radius=radius)
 		
 		SpatialPolygons3dDataFrame(polygons=list3d, proj4string=spObj@proj4string,plotOrder=spObj@plotOrder)
 	}
@@ -245,8 +252,8 @@ setGeneric(
 setMethod(
 	"lines3d",
 	signature="Line",
-	definition=function(x,...){
-		y<-To3d(x)
+	definition=function(x,radius=authRadius, ...){
+		y<-To3d(x, radius=radius)
 		lines3dInt(y,...)
 	}
 )
@@ -288,8 +295,8 @@ setMethod(
 setMethod(
 	"lines3d",
 	signature="Lines",
-	definition=function(x,...){
-		y<-To3d(x)
+	definition=function(x,radius=authRadius,...){
+		y<-To3d(x, radius=radius)
 		lines3dInt(y,...)	
 	}
 )
@@ -330,8 +337,8 @@ setMethod(
 		setMethod(
 			"lines3d",
 			signature="SpatialLines",
-			definition=function(x,...){
-				y<-To3d(x)
+			definition=function(x,radius=authRadius, ...){
+				y<-To3d(x, radius=radius)
 				lines3dInt(y,...)	
 			}
 		)
@@ -371,8 +378,8 @@ setMethod(
 		setMethod(
 			"lines3d",
 			signature="SpatialLinesDataFrame",
-			definition=function(x,...){
-				y<-To3d(x)
+			definition=function(x,radius=authRadius, ...){
+				y<-To3d(x, radius=radius)
 				lines3dInt(y,...)	
 			}
 		)
@@ -396,8 +403,8 @@ setMethod(
 	setMethod(
 		"lines3d",
 		signature="Polygon",
-		definition=function(x,...){
-			y<-To3d(x)
+		definition=function(x,radius=authRadius, ...){
+			y<-To3d(x, radius=radius)
 			lines3dInt(y,...)
 		}
 	)
@@ -436,8 +443,8 @@ setMethod(
 		setMethod(
 			"lines3d",
 			signature="Polygons",
-			definition=function(x,...){
-				y<-To3d(x)
+			definition=function(x,radius=authRadius, ...){
+				y<-To3d(x, radius=radius)
 				lines3dInt(y,...)	
 			}
 		)
@@ -475,8 +482,8 @@ setMethod(
 		setMethod(
 			"lines3d",
 			signature="SpatialPolygons",
-			definition=function(x,...){
-				y<-To3d(x)
+			definition=function(x,radius=authRadius,...){
+				y<-To3d(x, radius=radius)
 				lines3dInt(y,...)	
 			}
 		)
@@ -515,8 +522,8 @@ setMethod(
 		setMethod(
 			"lines3d",
 			signature="SpatialPolygonsDataFrame",
-			definition=function(x,...){
-				y<-To3d(x)
+			definition=function(x,radius=authRadius, ...){
+				y<-To3d(x, radius=radius)
 				lines3dInt(y,...)	
 			}
 		)
@@ -527,8 +534,8 @@ setMethod(
 setMethod(
 	"coordinates",
 	signature="SpatialLines3d",
-	definition=function(obj, gaps=FALSE){
-		objCoor<-lines3d(obj, plot=FALSE)
+	definition=function(obj, gaps=FALSE, radius=authRadius){
+		objCoor<-lines3d(obj, plot=FALSE, radius=radius)
 		if(gaps==TRUE){
 			return(objCoor)
 		}else{
@@ -540,8 +547,8 @@ setMethod(
 setMethod(
 	"coordinates",
 	signature="SpatialLines3dDataFrame",
-	definition=function(obj, gaps=FALSE){
-		objCoor<-lines3d(obj, plot=FALSE)
+	definition=function(obj, gaps=FALSE, radius=authRadius){
+		objCoor<-lines3d(obj, plot=FALSE, radius=radius)
 		if(gaps==TRUE){
 			return(objCoor)
 		}else{
@@ -553,8 +560,8 @@ setMethod(
 setMethod(
 	"coordinates",
 	signature="SpatialPolygons3d",
-	definition=function(obj, gaps=FALSE){
-		objCoor<-lines3dInt(obj, plot=FALSE)
+	definition=function(obj, gaps=FALSE, radius=authRadius){
+		objCoor<-lines3dInt(obj, plot=FALSE, radius=radius)
 		if(gaps==TRUE){
 			return(objCoor)
 		}else{
@@ -566,8 +573,8 @@ setMethod(
 setMethod(
 	"coordinates",
 	signature="SpatialPolygons3dDataFrame",
-	definition=function(obj, gaps=FALSE){
-		objCoor<-lines3dInt(obj, plot=FALSE)
+	definition=function(obj, gaps=FALSE, radius=authRadius){
+		objCoor<-lines3dInt(obj, plot=FALSE, radius=radius)
 		if(gaps==TRUE){
 			return(objCoor)
 		}else{
@@ -670,4 +677,23 @@ setMethod(
 		return(obj)
 	}
 )
+
+
+
+
+# utility function to do a spatial transformation, in case the object has a CRS projection
+normalizeProj<- function(data){
+	if(methods::.hasSlot(data, "proj4string")){
+		# and it's not NA
+		if(!is.na(data@proj4string)){
+			# need rgdal
+			if(requireNamespace("rgdal", quietly = TRUE)){
+				data<-sp::spTransform(data, CRS("+proj=longlat +a=6371000 +b=6371000"))
+			} else{
+				stop("The rgdal package is required to appropriately project this object. ")
+			}
+		}
+	}
+	return(data)
+}
 

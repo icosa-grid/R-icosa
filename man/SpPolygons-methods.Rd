@@ -11,14 +11,14 @@
 \usage{
 SpPolygons(gridObj, res)
 
-\S4method{SpPolygons}{trigrid}(gridObj, res = 50)
+\S4method{SpPolygons}{trigrid}(gridObj, res = NULL)
 
-\S4method{SpPolygons}{hexagrid}(gridObj, res = 50)
+\S4method{SpPolygons}{hexagrid}(gridObj, res = NULL)
 }
 \arguments{
 \item{gridObj}{an icosahedral grid.}
 
-\item{res}{Integer value, the number of points inserted between two vertices.}
+\item{res}{The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.}
 }
 \description{
 The function will create a SpatialPolygons class 2d representation of the icosahedral grid.

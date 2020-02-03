@@ -5,7 +5,6 @@
 \alias{edges}
 \alias{edges,obj3d-method}
 \alias{edges,facelayer-method}
-\alias{edges,facelayer-method}
 \alias{facelayer-edges-method}
 \title{The edges of a 3d object}
 \usage{

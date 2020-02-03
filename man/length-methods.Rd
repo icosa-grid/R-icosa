@@ -21,5 +21,5 @@ An integer value
 \description{
 The length of the object is interpreted as the number of faces it contains.
 
-This function returns the number of values present in the gridlayer.
+This function returns the number of values present in the \code{gridlayer}.
 }

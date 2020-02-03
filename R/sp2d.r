@@ -70,7 +70,7 @@ oneFace<-function(faceMat, nadirFace, zenithFace,faceID){
 			}
 		}
 		
-	#if the face is polar| given that is not a vertex
+	#if the face is polar| that is not a vertex
 		if(!is.na(nadirFace)){
 			boolNad<-nadirFace==faceID
 		}else{
@@ -174,23 +174,33 @@ oneFace<-function(faceMat, nadirFace, zenithFace,faceID){
 				# aparent divison, but no true divison is required
 				# turn the sign, and divide not!
 				faceMat[abs(faceMat[,1])==180,1] <- -faceMat[abs(faceMat[,1])==180,1]
+				options(warn=-1)
 				cell<-sp::Polygon(faceMat)
+				options(warn=0)
 				oneFace<-list(cell)
 			#	check<-c(check, i)
 			
 			}else{
 			#divide regularly
+				options(warn=-1)
 				cellPart1<-sp::Polygon(cellPart1)
 				cellPart2<-sp::Polygon(cellPart2)
+				options(warn=0)
 				oneFace<-list(cellPart1, cellPart2)
 			}
 		} else{
 		# if not 
+			options(warn=-1)
 			cell<-sp::Polygon(faceMat)
+			options(warn=0)
 			oneFace<-list(cell)
 		}
 	return(oneFace)
-}	
+}
+
+
+
+
 #' SpatialLines class object from an icosahedral grid
 #'
 #' @name SpLines
@@ -215,7 +225,7 @@ setGeneric(
 #' @param dateLine Specifies that NAs should be introduced at the dateline to break the boundaries of the faces. 
 #' Can be switched off by setting it to \code{FALSE}.	
 #' 
-#' @param res Integer value, specifies the number of points (resolution) to be inserted between two vertices.
+#' @param res The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.
 #' @rdname SpLines-methods
 #' @aliases SpLines-trigrid-method
 #' @return an object of class SpatialLines.
@@ -223,7 +233,7 @@ setGeneric(
 setMethod(
 	"SpLines",
 	signature="trigrid",
-	definition=function(gridObj, dateLine="break", res=15){
+	definition=function(gridObj, dateLine="break", res=NULL){
 		# center back to origin if not there already
 		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
 			gridObj<-translate(gridObj,-gridObj@center)
@@ -233,7 +243,35 @@ setMethod(
 		v<-gridObj@skeleton$v[as.logical(gridObj@skeleton$aV),]
 		f<-gridObj@skeleton$f[as.logical(gridObj@skeleton$aF),1:3]
 		
-	#	res<-30
+	
+		# prepare resolution vector
+		if(is.null(res)){
+			# the entire implementations is then
+			# if(dynamic)
+			minres <- ceiling(1/prod(gridObj@tessellation)^2*500)
+
+			# maxres should be 50 more, whichever it is - doesn't matter for coarse grids, 
+			# and 50 is enough for everything. 
+			maxres <- minres+500
+
+			# then the latitudinal correction needs to be added
+				# the frequency of cells in latitudinal belts
+				tabBelt <- table(gridObj@belts)^1.3
+
+				# how many plus vertices are needed in each belt?
+				plusBelt <- round((maxres-minres)/as.numeric(tabBelt))
+
+				# final resolution vector
+				res <- minres+plusBelt[gridObj@belts]
+
+		}else{
+			if(is.numeric(res)){
+				res <- rep(res, nrow(gridObj@faces))
+			}else{
+				stop("The provided resolution value is not numeric and not 'NULL'. ")
+			}
+		}
+		
 		
 		#extend to make a matrix
 		temp<- .Call(Cpp_icosa_ExpandBoundariesToCols_, f, v, res, gridObj@center,0)
@@ -300,7 +338,7 @@ setMethod(
 #		
 #' @rdname SpPolygons-methods
 #' @param gridObj an icosahedral grid.
-#' @param res Integer value, the number of points inserted between two vertices.
+#' @param res The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.
 #' 
 #' @exportMethod SpPolygons
 setGeneric(
@@ -322,7 +360,7 @@ setGeneric(
 setMethod(
 	"SpPolygons",
 	signature="trigrid",
-	definition=function(gridObj, res=50){
+	definition=function(gridObj, res=NULL){
 		# center back to origin if not there already
 		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
 			gridObj<-translate(gridObj,-gridObj@center)
@@ -342,6 +380,34 @@ setMethod(
 	#	if(-90%in%vertexCoord[,2]){
 	#		nadirFace<-NA
 	#	}
+
+	# prepare resolution vector
+	if(is.null(res)){
+		# the entire implementations is then
+		# if(dynamic)
+		minres <- ceiling(1/prod(gridObj@tessellation)^2*500)
+
+		# maxres should be 50 more, whichever it is - doesn't matter for coarse grids, 
+		# and 50 is enough for everything. 
+		maxres <- minres+100
+
+		# then the latitudinal correction needs to be added
+			# the frequency of cells in latitudinal belts
+			tabBelt <- table(gridObj@belts)
+
+			# how many plus vertices are needed in each belt?
+			plusBelt <- round((maxres-minres)/as.numeric(tabBelt))
+
+			# final resolution vector
+			res <- minres+plusBelt[gridObj@belts]
+
+	}else{
+		if(is.numeric(res)){
+			res <- rep(res, nrow(gridObj@faces))
+		}else{
+			stop("The provided resolution value is not numeric and not 'NULL'. ")
+		}
+	}
 		
 		
 	#extend the faces
@@ -386,6 +452,10 @@ setMethod(
 				c(x[(1*l+1):(2*l)],x[(4*l+1):(5*l)],x[(7*l+1):(8*l)], x[9*l+2]),
 				c(x[(2*l+1):(3*l)],x[(5*l+1):(6*l)],x[(8*l+1):(9*l)], x[9*l+3])
 			)
+			
+			# after the matrix is properly structured (if res=NULL, then full of weir d things), just omit them
+			mat<-mat[mat[,1]!= -80000,]
+			
 
 			faceMat<-CarToPol(mat,norad=TRUE, origin=gridObj@center)
 			faceMat<-correct90lat(faceMat)
@@ -431,7 +501,7 @@ setMethod(
 setMethod(
 	"SpPolygons",
 	signature="hexagrid",
-	definition=function(gridObj, res=50){
+	definition=function(gridObj, res=NULL){
 		# center back to origin if not there already
 		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
 			gridObj<-translate(gridObj,-gridObj@center)
@@ -449,10 +519,51 @@ setMethod(
 		# pentagons
 		pent<-sum(is.na(f[,6]))
 		
+		# based on the outer representation!!!
+		pentLogInner <- is.na(apply(f, 1, sum))
+		pentLogOuter <- rep(NA, length(pentLogInner))
+		pentLogOuter[gridObj@skeleton$aF] <- pentLogInner
+
 	#	res<-30
+			
+		# prepare resolution vector
+		if(is.null(res)){
+			# the entire implementations is then
+			# if(dynamic)
+			minres <- ceiling(1/prod(gridObj@tessellation)^2*500)
+
+			# maxres should be 50 more, whichever it is - doesn't matter for coarse grids, 
+			# and 50 is enough for everything. 
+			maxres <- minres+100
+
+			# then the latitudinal correction needs to be added
+				# the frequency of cells in latitudinal belts
+				# the belts ordered to the outer representation
+				outerBelt <- gridObj@belts
+			#	innerBelt <- rep(NA, length(outerBelt))
+				# reorder from outer to inner respresentation
+				innerBelt <- outerBelt[gridObj@skeleton$aF]
+
+				tabBelt <- table(innerBelt)
+
+				# how many plus vertices are needed in each belt?
+				plusBelt <- round((maxres-minres)/as.numeric(tabBelt))
+
+				# final resolution vector
+				res <- minres+plusBelt[innerBelt]
+
+		}else{
+			if(is.numeric(res)){
+				res <- rep(res, nrow(gridObj@faces))
+			}else{
+				stop("The provided resolution value is not numeric and not 'NULL'. ")
+			}
+		}
 		
 		#extend to make a matrix
 		temp<- .Call(Cpp_icosa_ExpandBoundariesToCols_, f, v, res, gridObj@center, pent)
+
+		tempRes <<- temp
 		
 		#reorder to the outer representation
 		put<-gridObj@skeleton$aF[as.logical(gridObj@skeleton$aF)]
@@ -461,7 +572,10 @@ setMethod(
 		
 		temp2[,put]<-temp
 		
-		subLog<-!is.na(apply(temp2,2, sum))
+		# subLog<-!is.na(apply(temp2,2, sum))
+		# need another solution for this - NAs code other things!!!
+		subLog <- 1:max(put)%in%put
+
 		temp2<-temp2[,subLog]
 		
 	#	allNames<-paste("F", gridObj@skeleton$aF[as.logical(gridObj@skeleton$aF)], sep="")
@@ -470,7 +584,8 @@ setMethod(
 		#make a data frame from the matrix
 		temp2<-data.frame(temp2)
 		
-		finalList<-lapply(temp2,function(x){
+		finalList <- mapply(function(x, pen){
+	#	finalList<-lapply(temp2,function(x){
 		
 	#	finalList<-list()
 	#	for(i in 1:length(temp2)){
@@ -486,6 +601,7 @@ setMethod(
 			}
 			
 			if((x[length(x)]+1)<(pent+1)){
+			#if(pen){
 			#pentagon case
 				#parts are lines
 				mat<-cbind(
@@ -546,9 +662,15 @@ setMethod(
 						x[(14*l+1):(15*l)],
 						x[(17*l+1):(18*l)])
 				)
+				
 			}
+
 			
-					
+			
+			# after the matrix is properly structured (if res=NULL, then full of weir d things), just omit them
+			mat<-mat[mat[,1]!= -80000,]
+			
+
 			faceMat<-CarToPol(mat,norad=TRUE, origin=gridObj@center)
 			faceMat<-correct90lat(faceMat)
 			
@@ -568,8 +690,8 @@ setMethod(
 			return(of)
 	#	}
 		
-		})
-		
+		}, temp2, pentLogOuter)
+	#	})	
 	
 		
 #		plot(NULL, NULL, xlim=c(-180,180), ylim=c(-90,90))
@@ -579,6 +701,8 @@ setMethod(
 #			plot(tsp, add=TRUE)
 #	#		Sys.sleep(0.3)
 #		}
+		
+		# switch off the warnings
 		
 		endObj<-sp::SpatialPolygons(finalList, proj4string=CRS("+proj=longlat +a=6371007 +b=6371007"))
 		
@@ -594,7 +718,7 @@ setMethod(
 #		
 #' @rdname newsp-methods
 #' @param gridObj an icosahedral grid.
-#' @param res integer, the number of points inserted between two vertices, passed to \code{SpPolygons()}.
+#' @param res The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.
 #' 
 #' @return A trigrid or hexagrid class object.
 #' @examples
@@ -605,7 +729,7 @@ setMethod(
 setGeneric(
 	name="newsp",
 	package="icosa",
-	def=function(gridObj,res=50){
+	def=function(gridObj,res=NULL){
 		standardGeneric("newsp")
 	}
 
@@ -615,7 +739,7 @@ setGeneric(
 setMethod(
 	"newsp",
 	signature="trigrid",
-	definition=function(gridObj, res=50){
+	definition=function(gridObj, res=NULL){
 		gridObj@sp<-SpPolygons(gridObj,res=res)
 		return(gridObj)
 	

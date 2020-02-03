@@ -5,8 +5,8 @@
 \alias{plot3d,facelayer-method}
 \title{3d plotting of a facelayer of an icosahedral grid or its subset}
 \usage{
-\S4method{plot3d}{facelayer}(x, type = "f", frame = TRUE, guides = TRUE,
-  defaultPar3d = TRUE, ...)
+\S4method{plot3d}{facelayer}(x, type = "f", frame = TRUE,
+  guides = TRUE, defaultPar3d = TRUE, ...)
 }
 \arguments{
 \item{x}{The \code{facelayer} object to be plotted.}

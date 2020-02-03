@@ -7,7 +7,6 @@
 \alias{faces3d,}
 \alias{faces3d-trigrid-method}
 \alias{faces3d,hexagrid-method}
-\alias{faces3d,}
 \alias{faces3d-hexagrid-method}
 \alias{faces3d,facelayer-method}
 \title{Methods of 3d face plotting.}

@@ -18,7 +18,7 @@
 \item{value}{replacement values.}
 }
 \description{
-The function will get the values slot of a gridlayer object
+The function will get the \code{@values} slot of a \code{gridlayer} object.
 
-Shorthand function to replace all values of a gridlayer object.
+Shorthand function to replace all values of a \code{gridlayer} object.
 }

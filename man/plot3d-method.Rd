@@ -6,12 +6,11 @@
 \alias{plot3d,}
 \alias{plot3d-trigrid-method}
 \alias{plot3d,hexagrid-method}
-\alias{plot3d,}
 \alias{plot3d-hexagrid-method}
 \title{3d plotting of an icosahedral grid or its subset}
 \usage{
-\S4method{plot3d}{trigrid}(x, type = c("l"), sphere = NULL, add = FALSE,
-  guides = TRUE, ...)
+\S4method{plot3d}{trigrid}(x, type = c("l"), sphere = NULL,
+  add = FALSE, guides = TRUE, ...)
 
 \S4method{plot3d}{hexagrid}(x, type = c("l"), sphere = NULL,
   color = "gray70", add = FALSE, guides = TRUE, ...)
@@ -41,8 +40,6 @@ The function does not return any value.
 }
 \description{
 This is a generic function used to plot either a \code{trigrid} or a \code{hexagrid} object or their \code{facelayer} in 3d space.
-
-3d plotting of an icosahedral grid or its subset
 }
 \details{
 The function is built on the openGL renderer of the R package \code{rgl}.

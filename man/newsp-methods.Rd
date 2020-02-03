@@ -6,14 +6,14 @@
 \alias{newsp,trigrid-method}
 \title{Add SpatialPolygons object to a predefined slot in a trigrid or hexagrid object}
 \usage{
-newsp(gridObj, res = 50)
+newsp(gridObj, res = NULL)
 
-\S4method{newsp}{trigrid}(gridObj, res = 50)
+\S4method{newsp}{trigrid}(gridObj, res = NULL)
 }
 \arguments{
 \item{gridObj}{an icosahedral grid.}
 
-\item{res}{integer, the number of points inserted between two vertices, passed to \code{SpPolygons()}.}
+\item{res}{The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.}
 }
 \value{
 A trigrid or hexagrid class object.

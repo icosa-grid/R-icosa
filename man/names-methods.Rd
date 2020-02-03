@@ -4,16 +4,16 @@
 \name{names,gridlayer-method}
 \alias{names,gridlayer-method}
 \alias{gridlayer-names-method}
-\title{The face names in a gridlayer class object}
+\title{The face names in a \code{gridlayer} class object}
 \usage{
 \S4method{names}{gridlayer}(x)
 }
 \arguments{
-\item{x}{A gridlayer class object.}
+\item{x}{A \code{gridlayer} class object.}
 }
 \value{
-Character vector, the names of the faces.
+\code{character} vector, the names of the faces.
 }
 \description{
-Function to extract the registered face names to which the gridlayer renders information.
+Function to extract the registered face names to which the \code{gridlayer} renders information.
 }

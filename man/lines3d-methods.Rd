@@ -21,45 +21,33 @@
 \alias{lines3d-SpatialPolygonsDataFrame-method}
 \title{3d plotting method of a Line class object}
 \usage{
-\S4method{lines3d}{Line}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{Line}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{Lines}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{Lines}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{SpatialLines}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{SpatialLines}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{SpatialLinesDataFrame}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{SpatialLinesDataFrame}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{Polygon}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{Polygon}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{Polygons}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{Polygons}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{SpatialPolygons}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{SpatialPolygons}(x, radius = authRadius, ...)
 
-\S4method{lines3d}{SpatialPolygonsDataFrame}(x, y = NULL, z = NULL, ...)
+\S4method{lines3d}{SpatialPolygonsDataFrame}(x, radius = authRadius, ...)
 }
 \arguments{
 \item{x}{the SpatialLines object}
 
+\item{...}{arguments passed to rgl::lines3d()}
+
 \item{y}{unused argument of the lines3d() generic.}
 
 \item{z}{unused argument of the lines3d() generic.}
-
-\item{...}{arguments passed to rgl::lines3d()}
 }
 \description{
 The function draws the segments of a Line clas object in 3d.
 
 The function draws the segments of a Line clas object in 3d.
-
-lines3d method for the SpatialLines class
-
-lines3d method for the SpatialLinesDataFrame
-
-lines3d method for the Polygon class
-
-lines3d method for the Polygon sclass
-
-lines3d method for the SpatialPolygons sclass
-
-lines3d method for the SpatialPolygonsDataFrame sclass
 }

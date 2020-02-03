@@ -208,6 +208,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// surfConvHullTri
+double surfConvHullTri(NumericMatrix v, NumericVector cent, NumericVector origin, double pi);
+RcppExport SEXP _icosa_surfConvHullTri(SEXP vSEXP, SEXP centSEXP, SEXP originSEXP, SEXP piSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type cent(centSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type origin(originSEXP);
+    Rcpp::traits::input_parameter< double >::type pi(piSEXP);
+    rcpp_result_gen = Rcpp::wrap(surfConvHullTri(v, cent, origin, pi));
+    return rcpp_result_gen;
+END_RCPP
+}
 // SplitArc_
 NumericMatrix SplitArc_(NumericVector coord1, NumericVector coord2, NumericVector center, int breaks, bool onlyNew);
 RcppExport SEXP _icosa_SplitArc_(SEXP coord1SEXP, SEXP coord2SEXP, SEXP centerSEXP, SEXP breaksSEXP, SEXP onlyNewSEXP) {
@@ -506,14 +520,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // ExpandBoundariesToCols_
-NumericMatrix ExpandBoundariesToCols_(NumericMatrix f, NumericMatrix v, int res, NumericVector origin, int pent);
+NumericMatrix ExpandBoundariesToCols_(NumericMatrix f, NumericMatrix v, NumericVector res, NumericVector origin, int pent);
 RcppExport SEXP _icosa_ExpandBoundariesToCols_(SEXP fSEXP, SEXP vSEXP, SEXP resSEXP, SEXP originSEXP, SEXP pentSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< int >::type res(resSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type res(resSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type origin(originSEXP);
     Rcpp::traits::input_parameter< int >::type pent(pentSEXP);
     rcpp_result_gen = Rcpp::wrap(ExpandBoundariesToCols_(f, v, res, origin, pent));

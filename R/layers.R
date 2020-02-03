@@ -127,7 +127,7 @@
 
 #' Extract values from a gridlayer
 #'
-#' The function will get the values slot of a gridlayer object
+#' The function will get the \code{@values} slot of a \code{gridlayer} object.
 #'
 #' @param x a gridlayer derived object.
 #' @aliases gridlayer-values-method
@@ -140,9 +140,9 @@ setMethod(
 		return(x@values)
 	}
 )
-#' The length of a gridlayer class object.
+#' The length of a \code{gridlayer} class object.
 #' 
-#' This function returns the number of values present in the gridlayer.
+#' This function returns the number of values present in the \code{gridlayer}.
 #' @rdname length-methods
 #' @aliases gridlayer-length-method
 #' @exportMethod length
@@ -154,12 +154,12 @@ setMethod(
 	}
 )
 
-#' The face names in a gridlayer class object
+#' The face names in a \code{gridlayer} class object
 #'
-#' Function to extract the registered face names to which the gridlayer renders information.
+#' Function to extract the registered face names to which the \code{gridlayer} renders information.
 #'
-#' @param x A gridlayer class object.
-#' @return Character vector, the names of the faces.
+#' @param x A \code{gridlayer} class object.
+#' @return \code{character} vector, the names of the faces.
 #' @rdname names-methods
 #' @aliases gridlayer-names-method
 #' @exportMethod names
@@ -175,9 +175,9 @@ setMethod(
 	
 
 
-#' Replace values from a gridlayer
+#' Replace values from a \code{gridlayer}
 #'
-#' Shorthand function to replace all values of a gridlayer object.
+#' Shorthand function to replace all values of a \code{gridlayer} object.
 #'
 #' @param value replacement values.
 #' @aliases gridlayer-set-values-method
@@ -199,9 +199,9 @@ setReplaceMethod(
 
 #' Subsetting a gridlayer object.
 #'
-#' The function extracts parts of the gridlayer depending on different criteria.
+#' The function extracts subsets of the \code{gridlayer} depending on different criteria.
 #'
-#' The following methods are incorporated into the function. If the subsetVector argument is a vector of integers, they will be interpreted as indices. If the numeric subsetVector contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
+#' The following methods are incorporated into the function: If the subsetVector argument is a vector of integers, they will be interpreted as indices. If the numeric subsetVector contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
 #'
 #' @param x The gridlayer object to be subsetted.
 #' @param subsetVector Vector object indicating the faces to be subsetted.
@@ -714,7 +714,9 @@ setMethod(
 #' The function is built on the openGL renderer of the R package \code{rgl}.
 #'  
 #' @param col graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.
-#' 
+#' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
+#' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
+#' @param discrete
 #' @return The function does not return any value.
 #'
 #' @exportMethod faces3d
@@ -723,7 +725,7 @@ setMethod(
 setMethod(	
 	f="faces3d",
 	signature="facelayer",
-	definition= function(x,col="red",...){
+	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, discrete=FALSE, ...){
 		# extract the grid that needs to be plotted:
 		actGrid  <- get(x@grid)
 	#	checkLinkedGrid(actGrid, x)
@@ -735,6 +737,13 @@ setMethod(
 		#when the valuues are logical
 		#FALSEs do not plot; NAs do not plot, TRUEs plot
 		
+		# defend 'breaks'
+		if(!is.null(breaks)){
+			if(!is.numeric(breaks)) stop("The 'breaks' argument has to be numeric.")
+			if(length(breaks)<3) stop("You need to provide at least three values to the 'breaks' argument.")
+		}
+
+
 		# if the grid is numerical and it has only one value, make it logical
 		if(class(x@values)%in%c("integer","double", "numeric")){
 			if(length(unique(x@values[!is.na(x@values)]))==1){
@@ -786,38 +795,70 @@ setMethod(
 		# when  numerical values are added to the facelayer object, do a heatmap!
 		if(class(x@values)%in%c("integer","double", "numeric")){
 			
+			
+			# calculate the breaking vector
+			if(is.null(breaks)){
+				minimum <- min(x@values)
+				maximum <- max(x@values)
+				steps <- length(x)+1
+				
+				# the vector used to cut the plottted variable
+				useBreaks <- seq(minimum, maximum,length.out=steps)
+			}else{
+				minimum <- min(breaks)
+				maximum <- max(breaks)
+				useBreaks <- breaks
+			}
+
+			# still need to include limitations
+			bMax <- FALSE
+			bMin <- FALSE
+			if(inclusive){
+				# values that are beyond the minimum boundary set by breaks
+				beyondMax <- which(x@values>maximum)
+				if(length(beyondMax)>1){
+					x@values[beyondMax] <- maximum
+					bMax <- TRUE
+				}
+				# values that are beyond the minimum boundary set by breaks
+				beyondMin <- which(x@values<minimum)
+				if(length(beyondMin)>1){
+					x@values[beyondMin] <- minimum
+					bMin <- TRUE
+				}
+			}
+
+
 			#do a heatmap!
-			#create aramp
+			#create a ramp, with a given number of colours
 			#the color vector will control the heatmap
 			if(length(col)==1){
-				if(col=="red"){
+				# predefined
+				if(col=="heat"){
 #					col<-c("red","orange","yellow", "white")
-				#	cols <- rev(heat.colors(length(x)+30))[31:(30+length(x))]
-					cols <- rev(grDevices::heat.colors(length(x)))
-					
+					cols <- rev(grDevices::heat.colors(length(useBreaks)-1))
+				
+					cols<-substring(cols, 1,7)
 				}else{
 					
 					if(length(col)==1){
-						stop("You hace specified only one color.")
+						stop("You specified only one color.")
 					}
 				
 				}
 			} else{
 			#do a heatmap!
 				ramp<-grDevices::colorRampPalette(col, bias=2, space="Lab")
-				cols<-ramp(length(x))
+				# produce as many colours as there are values
+				cols <- ramp(length(useBreaks)-1)
 			}
-			
-			#minimum value assigned to the smallest
-				minimum<- min(x@values)
-			#this should be the first color of the rmap
-				trans<-x@values-minimum
-			#scale so the maximum value is the last color	
-				newMax<-max(trans)
-				trans2<-trans*((length(cols)-1)/(newMax))
-				trans2<-trans2+1
-				trans2<-round(trans2)
-					
+
+			# do the cutting
+			alreadyCut <- base::cut(x@values, breaks=useBreaks, include.lowest=TRUE)
+
+			# transfer the factor to indices
+			trans2 <- as.numeric(alreadyCut)
+
 			# this is the ui sequence	
 			faceColors<-cols[trans2]
 			
@@ -888,13 +929,22 @@ setMethod(
 			currentset2[4]<-currentset[4]*1.5
 			
 			
+			# what should be passed to the heatmaplegend
+			if(!discrete){
+				tickLabs <- useBreaks
+			}else{
+				tickLabs <-  (useBreaks+useBreaks[2:(length(useBreaks)+1)])/2
+				tickLabs <- tickLabs[!is.na(tickLabs)]
+			}
+				
+
 			# double the resolution
 			rgl::par3d(windowRect=currentset2)
 			# plot the background
 			rgl::bgplot3d(
 				# turn off the graphical parameters warning bullshit
 				suppressWarnings(
-					heatMapLegend(cols,minVal=min(x@values), maxVal=max(x@values),...)
+					heatMapLegend(cols,vals=tickLabs,...)
 				)
 			)
 				
@@ -1004,18 +1054,34 @@ setMethod(
 #' some misalignments can happen. If you want to use a differently sized window, use windows() to set the height and width before running the function.
 #' @param x The facelayer object to be plotted.
 #' @param frame Logical value, if TRUE the grid boundaries will be drawn with black.
-#' @param col Character vector. Colors passed to a grDevices::colorRampPalette() in case of the facelayer contains logical values, a single value is required (defaults to red).
+#' @param col Character vector. Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the facelayer contains logical values, a single value is required (defaults to red).
 #' @param border Character value specifying the color of the borders of the cells.
 #' @param alpha Character value of two digits for the fill colors, in hexadecimal value between 0 and 255.
+#' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
+#' @param legend (\code{logical}): Should the legend be plotted? 
+#' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
+#' @param discrete \code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
 #' @rdname plot-methods
 #' @exportMethod plot
 setMethod(
 	"plot",
 	signature="facelayer",
-	definition=function(x,projargs=NULL,col="red",border=NA, alpha="", frame=FALSE,...){
+	definition=function(x,projargs=NULL,col="heat",border=NA, alpha=NULL, frame=FALSE,legend=TRUE, breaks=NULL,beside=TRUE, inclusive=TRUE, discrete=FALSE,  ...){
 		actGrid<-get(x@grid)
 		checkLinkedGrid(actGrid, x)
 		
+		# defend 'breaks'
+		if(!is.null(breaks)){
+			if(!is.numeric(breaks)) stop("The 'breaks' argument has to be numeric.")
+			if(length(breaks)<3) stop("You need to provide at least three values to the 'breaks' argument.")
+		}
+
+		# defend alpha
+		if(!is.null(alpha)){
+			if(length(alpha)>1) stop("Only one 'alpha' value is permitted.")
+		#	if(alpha<=1 & alpha>=0) alpha
+		}
+
 		#if no @sp found
 		if(suppressWarnings(is.na(actGrid@sp))){
 			stop(paste("Slot @sp in the linked grid \'",x@grid, "\' is empty.", sep=""))
@@ -1033,7 +1099,7 @@ setMethod(
 		}
 		#check whether the  grid is actually updated
 		if(sum(x@names%in%rownames(actGrid@faces))!=length(x)) 
-		stop("The facenames in thelinked grid does not match the facelayer object.")
+		stop("The facenames in the linked grid does not match the facelayer object.")
 		
 		# if the grid is numerical and it has only one value, make it logical
 		if(class(x@values)%in%c("integer","double", "numeric")){
@@ -1083,37 +1149,69 @@ setMethod(
 		# when  numerical values are added to the facelayer object, do a heatmap!
 		if(class(x@values)%in%c("integer","double", "numeric")){
 			
+			# calculate the breaking vector
+			if(is.null(breaks)){
+				minimum <- min(x@values)
+				maximum <- max(x@values)
+				steps <- length(x)+1
+				
+				# the vector used to cut the plottted variable
+				useBreaks <- seq(minimum, maximum,length.out=steps)
+			}else{
+				minimum <- min(breaks)
+				maximum <- max(breaks)
+				useBreaks <- breaks
+			}
+
+			# still need to include limitations
+			bMax <- FALSE
+			bMin <- FALSE
+			if(inclusive){
+				# values that are beyond the minimum boundary set by breaks
+				beyondMax <- which(x@values>maximum)
+				if(length(beyondMax)>1){
+					x@values[beyondMax] <- maximum
+					bMax <- TRUE
+				}
+				# values that are beyond the minimum boundary set by breaks
+				beyondMin <- which(x@values<minimum)
+				if(length(beyondMin)>1){
+					x@values[beyondMin] <- minimum
+					bMin <- TRUE
+				}
+			}
+
+
 			#do a heatmap!
-			#create aramp
+			#create a ramp, with a given number of colours
 			#the color vector will control the heatmap
 			if(length(col)==1){
-				if(col=="red"){
+				# predefined
+				if(col=="heat"){
 #					col<-c("red","orange","yellow", "white")
-					cols <- rev(grDevices::heat.colors(length(x)+30))[31:(30+length(x))]
+					cols <- rev(grDevices::heat.colors(length(useBreaks)-1))
+				
 					cols<-substring(cols, 1,7)
 				}else{
 					
 					if(length(col)==1){
-						stop("You hace specified only one color.")
+						stop("You specified only one color.")
 					}
 				
 				}
 			} else{
 			#do a heatmap!
 				ramp<-grDevices::colorRampPalette(col, bias=2, space="Lab")
-				cols<-ramp(length(x))
+				# produce as many colours as there are values
+				cols <- ramp(length(useBreaks)-1)
 			}
-			
-			#minimum value assigned to the smallest
-				minimum<- min(x@values)
-			#this should be the first color of the rmap
-				trans<-x@values-minimum
-			#scale so the maximum value is the last color	
-				newMax<-max(trans)
-				trans2<-trans*((length(cols)-1)/(newMax))
-				trans2<-trans2+1
-				trans2<-round(trans2)
-					
+
+			# do the cutting
+			alreadyCut <- base::cut(x@values, breaks=useBreaks, include.lowest=TRUE)
+
+			# transfer the factor to indices
+			trans2 <- as.numeric(alreadyCut)
+
 			# this is the ui sequence	
 			faceColors<-cols[trans2]
 			if(is.character(border)){
@@ -1125,9 +1223,11 @@ setMethod(
 				}
 			}
 			faceColors<-paste(faceColors, alpha, sep="")
-			# set the new margins
 			
-			graphics::par(mar=c(2,2,2,8))
+			# set the new margins
+			if(legend){
+				graphics::par(mar=c(2,2,2,8))
+			}
 			# plot the sp object with the given argumetns
 				# get rid of some of the arguments
 				addArgs<-list(...)
@@ -1153,6 +1253,7 @@ setMethod(
 				do.call(plot, plotArgs)
 			
 			#the heatmap legend
+			if(legend){
 				#in case a heatmap is needed
 				oldRef<-graphics::par()
 				oldRef$cin<-NULL
@@ -1171,12 +1272,21 @@ setMethod(
 				addArgs$axes<-NULL
 				addArgs$add<-NULL
 				
+				# what should be passed to the heatmaplegend
+				if(!discrete){
+					tickLabs <- useBreaks
+				}else{
+					tickLabs <-  (useBreaks+useBreaks[2:(length(useBreaks)+1)])/2
+					tickLabs <- tickLabs[!is.na(tickLabs)]
+				}
+				
+
 				firstArgs<-list(
 					cols=cols,
-					minVal=min(x@values, na.rm=TRUE),
-					maxVal=max(x@values, na.rm=TRUE),
+					vals=tickLabs,
 					add=TRUE,
-					xLeft=101
+					xLeft=101, 
+					bounds=c(bMin, bMax)
 				)
 				
 				# all the argumetns of the heatmap
@@ -1187,6 +1297,7 @@ setMethod(
 				
 				)
 				graphics::par(oldRef)
+			}
 				
 		}
 		

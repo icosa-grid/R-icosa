@@ -4,8 +4,8 @@
 \alias{rpsphere}
 \title{Random point generation on the surface of a sphere}
 \usage{
-rpsphere(n = 1, output = "cartesian", radius = authRadius, origin = c(0,
-  0, 0))
+rpsphere(n = 1, output = "cartesian", radius = authRadius,
+  origin = c(0, 0, 0))
 }
 \arguments{
 \item{n}{The number of random points to be created.}

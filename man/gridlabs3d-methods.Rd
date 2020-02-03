@@ -7,7 +7,6 @@
 \alias{gridlabs3d,}
 \alias{gridlabs3d-trigrid-method}
 \alias{gridlabs3d,hexagrid-method}
-\alias{gridlabs3d,}
 \alias{gridlabs3d-hexagrid-method}
 \title{Display the names of the grid elements in 3d plots.}
 \usage{

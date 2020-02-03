@@ -50,6 +50,7 @@ extern SEXP _icosa_SizeEstimate_(SEXP);
 extern SEXP _icosa_SphericalTriangleCenter_(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _icosa_SphericalTriangleSurface_(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _icosa_spherTriSurfs(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _icosa_surfConvHullTri(SEXP, SEXP, SEXP, SEXP);
 extern SEXP _icosa_SplitArc_(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP _icosa_stl_sort(SEXP);
 extern SEXP _icosa_SymmetricArcDistMat_(SEXP, SEXP, SEXP);
@@ -105,6 +106,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"_icosa_SphericalTriangleCenter_",   (DL_FUNC) &_icosa_SphericalTriangleCenter_,   4},
   {"_icosa_SphericalTriangleSurface_",  (DL_FUNC) &_icosa_SphericalTriangleSurface_,  5},
   {"_icosa_spherTriSurfs",              (DL_FUNC) &_icosa_spherTriSurfs,              4},
+  {"_icosa_surfConvHullTri",            (DL_FUNC) &_icosa_surfConvHullTri,            4},
   {"_icosa_SplitArc_",                  (DL_FUNC) &_icosa_SplitArc_,                  5},
   {"_icosa_stl_sort",                   (DL_FUNC) &_icosa_stl_sort,                   1},
   {"_icosa_SymmetricArcDistMat_",       (DL_FUNC) &_icosa_SymmetricArcDistMat_,       3},

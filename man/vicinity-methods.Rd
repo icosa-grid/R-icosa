@@ -9,7 +9,7 @@
 vicinity(gridObj, faces, ...)
 
 \S4method{vicinity}{trigrid,character}(gridObj, faces, order = 1,
-  output = "vector", self = TRUE, ...)
+  output = "vector", self = TRUE, namedorder = FALSE, ...)
 }
 \arguments{
 \item{gridObj}{A \code{trigrid} or \code{hexagrid} class object.}
@@ -26,6 +26,8 @@ including themselves. \code{"list"} will return a list.}
 
 \item{self}{logical value indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
 omitted only from those character vectors that contain face names that are related to the face in question.}
+
+\item{namedorder}{(\code{logical}) Should the orders of the neighbouring cells be reported (\code{TRUE}) or just the names of the cells (default, \code{FALSE}).}
 }
 \value{
 A character vector or a list of character vectors.

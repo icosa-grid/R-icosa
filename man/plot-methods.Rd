@@ -7,8 +7,9 @@
 \title{2d plotting of a facelayer class object
 This function will invoke the 2d plotting methods of a grid so data stored in a facelayer object can be displayed.}
 \usage{
-\S4method{plot}{facelayer,ANY}(x, projargs = NULL, col = "red",
-  border = NA, alpha = "", frame = FALSE, ...)
+\S4method{plot}{facelayer,ANY}(x, projargs = NULL, col = "heat",
+  border = NA, alpha = "", frame = FALSE, legend = TRUE,
+  dlim = NULL, beside = TRUE, steps = NULL, ...)
 
 \S4method{plot}{trigrid,ANY}(x, projargs = NULL, ...)
 }
@@ -17,13 +18,19 @@ This function will invoke the 2d plotting methods of a grid so data stored in a 
 
 \item{projargs}{a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.}
 
-\item{col}{Character vector. Colors passed to a grDevices::colorRampPalette() in case of the facelayer contains logical values, a single value is required (defaults to red).}
+\item{col}{Character vector. Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the facelayer contains logical values, a single value is required (defaults to red).}
 
 \item{border}{Character value specifying the color of the borders of the cells.}
 
 \item{alpha}{Character value of two digits for the fill colors, in hexadecimal value between 0 and 255.}
 
 \item{frame}{Logical value, if TRUE the grid boundaries will be drawn with black.}
+
+\item{legend}{(\code{logical}): Should the legend be plotted?}
+
+\item{dlim}{Numeric vector. Two values constraining the range of plotted variable. Only for numeric values.}
+
+\item{steps}{\code{numeric}: for numeric values, how many different levels should be discriminated? If set to the default \code{NULL} then the length of the \code{facelayer} object is used as the number of colours to be generated.}
 
 \item{...}{arguments passed to the sp::plot() function.}
 }

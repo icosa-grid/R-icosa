@@ -27,7 +27,7 @@ orientation(x) <- value
 
 \item{display}{The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.}
 
-\item{value}{the vector of rotation. Passed as the \code{angles} argument of \code{\link{rotate}}.}
+\item{value}{the vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.}
 }
 \description{
 Extracting the grid orientation

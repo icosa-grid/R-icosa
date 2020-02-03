@@ -6,7 +6,7 @@
 #' @param x (\code{trigrid} or \code{hexagrid}): Input grid. 
 #' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). 
 #' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
-#' @rdname rotate-methods
+#' @rdname rotate
 #' @return Another \code{trigrid} or \code{hexagrid} class object.
 #' @aliases rotate, trigrid-rotate-method		
 #' @exportMethod rotate
@@ -174,6 +174,7 @@ setReplaceMethod(
 #' @param self logical value indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
 #' omitted only from those character vectors that contain face names that are related to the face in question.
 #'
+#' @param namedorder (\code{logical}) Should the orders of the neighbouring cells be reported (\code{TRUE}) or just the names of the cells (default, \code{FALSE}).
 #' @param ... arguments passed to the igraph::ego() function
 #' @examples
 #' 	g <- trigrid(3)
@@ -195,7 +196,7 @@ setGeneric(
 setMethod(
 	"vicinity",
 	signature=c("trigrid","character"),
-	definition=function(gridObj,faces, order=1, output="vector",self=TRUE, ...){
+	definition=function(gridObj,faces, order=1, output="vector",self=TRUE,namedorder=FALSE,  ...){
 		#if no @graph found
 		if(suppressWarnings(is.na(gridObj@graph)[1])){
 			stop("Slot @graph is empty. Use newgraph() to add an igraph respresentation. ")
@@ -214,9 +215,37 @@ setMethod(
 		# get only the names of the faces
 		newList<-lapply(nList, function(x){x$name})
 		
-		if(!self){
+		# should the orders of the neighbours be reported? if yes..
+		if(namedorder){
+			newStructure <- lapply(newList, function(x){
+				temp <- rep(order, length(x))
+				names(temp) <- x
+				temp
+			})
+
+			# rerun the process for all the lower orders iterativels
+			for(i in order:1){
+				nList<-igraph::ego(gridObj@graph, order=i, faces,...)
+		
+				# get only the names of the faces
+				nL<-lapply(nList, function(x){x$name})
+
+				newStructure <- mapply(FUN=function(x,y){
+					y[x] <- i
+					return(y)
+				},nL, newStructure)
+
+			}
+
+			newList <- lapply(newStructure, function(x){x[1] <- 0; return(x)})
+
+		}
+
+
+		if(!self & !namedorder){
 			newList<-lapply(newList, function(x){x[-1]})
 		}
+
 		
 		if(output=="list"){
 			return(newList)
@@ -1484,3 +1513,29 @@ setMethod(
 		return(gridObj)
 	}
 )
+
+
+#' Locate grid faces based on their positions on a map
+#' 
+#' The function returns which grid faces contain the points clicked in a plot.
+#' 
+#' @param gridObj (\code{trigrid} or \code{hexagrid}) The grid object.
+#' @param n (\code{integer}) The number of points to be looked up.
+#' @param output (\code{character}) Type of output: \code{"faces"} returns only the face names of the points, \code{"full"} returns the coordinates as well.
+#' @param ... arguments passed to the \code{\link[graphics]{locator}} function.
+#' 
+#' @export
+cellocator <- function(gridObj,n, output="faces",...){
+	pointset<- locator(n=n, ...)
+	pointset <-cbind(pointset$x, pointset$y)
+	cells <- locate(gridObj, pointset)
+
+	if(output=="full"){
+		retVal<- data.frame(pointset, cells, stringsAsFactors=FALSE)
+	}
+	if(output=="faces"){
+		retVal<-cells
+	}
+	return(retVal)
+}
+

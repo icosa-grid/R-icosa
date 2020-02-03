@@ -3,6 +3,14 @@
 	authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
 	meanRadius<-6371.0087714 # mean radius (R1) based on Mortiz, 1980
 	volRadius <-6371.0007900 # radius of sphere of same volume
+
+
+
+.onUnload <- function (libpath) {
+	library.dynam.unload("icosa", libpath)
+}
+
+
 #' The vertices of an icosahedral grid object
 #'
 #' Shorthand function to return the vertices slot of an icosahedral grid or a grid linked to a facelayer. 

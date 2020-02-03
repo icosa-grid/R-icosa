@@ -193,7 +193,7 @@ NumericVector edges_(NumericMatrix v, NumericMatrix e, NumericVector origin, boo
 
 }
 
-// calculate the dihedral angle from 3
+// calculate the dihedral angle from dihedral angle opposite of 'a'
 double DihedralAngle(double a, double b, double c){
 	double temp = acos((cos(a)-(cos(b)*cos(c)))/(sin(b)*sin(c)));
 	return temp;
@@ -210,7 +210,7 @@ double DihedralAngle(double a, double b, double c){
  	double ang13 = ArcDist_(coord1, coord3, origin,0);
  	double ang23 = ArcDist_(coord2, coord3, origin,0);
 
-
+ 	// dihedral angle in opposite of a
  	double d12 = DihedralAngle(ang12,ang13,ang23);
  	double d13 = DihedralAngle(ang13,ang12,ang23);
  	double d23 = DihedralAngle(ang23,ang12,ang13);
@@ -245,6 +245,39 @@ double DihedralAngle(double a, double b, double c){
 	return endObj;
  }
 
+
+// [[Rcpp::export]]
+double surfConvHullTri(NumericMatrix v, NumericVector cent, NumericVector origin, double pi){
+	// warning! use only if the great circle archs do not intersect, otherwise you get area inflation!
+
+	// the number of triangles 
+	int nTri = v.nrow();
+
+	//  the total area covered by the shape
+	double endSum=0;
+
+	// repeat surface calculation for every triangle
+	for(int i=1;i<nTri;i++){
+		endSum += SphericalTriangleSurface_(
+			v(i-1,_),
+			v(i,_),
+			cent,
+			origin,
+			pi
+		);
+	}
+
+	// and then add up the last triangle
+	endSum += SphericalTriangleSurface_(
+		v(nTri-1,_),
+		v(0,_),
+		cent,
+		origin,
+		pi
+	);
+
+	return endSum;
+}
 
 
 // [[Rcpp::export]]
@@ -2777,12 +2810,27 @@ NumericVector OccupiedCellUpSampling_(NumericVector values, NumericVector loc){
 
 }
 
+
+
 // [[Rcpp::export]]
-NumericMatrix ExpandBoundariesToCols_(NumericMatrix f, NumericMatrix v, int res, NumericVector origin, int pent){
+NumericMatrix ExpandBoundariesToCols_(NumericMatrix f, NumericMatrix v, NumericVector res, NumericVector origin, int pent){
 	int nF = f.rows();
 	int nColF = f.cols();
 
-	NumericMatrix semiEndObj(nColF*(res+4)*10,nF);
+	// supposed final final object
+	int overPoints = max(res);
+
+	// what the edge looks like, when resolution is the same for all faces
+	NumericMatrix templateMatrix(overPoints,3);
+
+	// and fill with NAs
+	//	std::fill( templateMatrix.begin(), templateMatrix.end(), NumericVector::get_na() ) ;
+	std::fill( templateMatrix.begin(), templateMatrix.end(), -80000 ) ;
+
+	// this will be copied over to
+	NumericMatrix nowUsed;
+
+	NumericMatrix semiEndObj(nColF*(overPoints+4)*10,nF);
 
 	NumericMatrix tempMat;
 
@@ -2820,13 +2868,23 @@ NumericMatrix ExpandBoundariesToCols_(NumericMatrix f, NumericMatrix v, int res,
 			}
 
 			//divide the edge
-			tempMat=SplitArc_(v(first,_), v(second,_), origin, res, onlyNew);
+			tempMat=SplitArc_(v(first,_), v(second,_), origin, res(i), onlyNew);
 
+			// now this changes with every run, but all we have to do is to fill it with NAs
+			nowUsed = templateMatrix;
+			std::fill( nowUsed.begin(), nowUsed.end(), -80000 ) ;
+
+			//fill in the NA-matrix with actual values
+			for(int u=0;u<tempMat.rows();u++){
+				nowUsed(u,_) = tempMat(u,_);
+			}
+
+			// refer to the copied matrix, that should constrain the structure
 			for(int k=0;k<3;k++){
 				semiEndObj(counter,i)=v(first,k);
 				counter++;
-				for(int m=0;m<res;m++){
-					semiEndObj(counter,i) = tempMat(m,k);
+				for(int m=0;m<nowUsed.rows();m++){
+					semiEndObj(counter,i) = nowUsed(m,k);
 					counter++;
 				}
 

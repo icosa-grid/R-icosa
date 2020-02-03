@@ -6,7 +6,6 @@
 \alias{subset,}
 \alias{subset-trigrid-method}
 \alias{subset,hexagrid-method}
-\alias{subset,}
 \alias{subset-hexagrid-method}
 \alias{[,trigrid,ANY,ANY-method}
 \alias{[-trigrid-method}
@@ -45,7 +44,7 @@ This is a generic function used to access data from either a triangular or hexag
 
 Shorthand for the subset function.
 
-The function extracts parts of the gridlayer depending on different criteria.
+The function extracts subsets of the \code{gridlayer} depending on different criteria.
 
 Shorthand to the subset() function.
 
@@ -59,7 +58,7 @@ The numeric vector can either refer to indices to the rownames of faces in the f
 to surfaces bounded by longitude/latitude data. In the latter case, the the vector should contain an element with a names of at least one of the "lomax", "lamax", 
 "lomin" or "lamin" strings (lo for longitude, la: latitude, min: minimum, max: maximum). In case a subset around the dateline is needed a larger longitude to a smaller longitude value is needed (e.g. between 150° to -150°).
 
-The following methods are incorporated into the function. If the subsetVector argument is a vector of integers, they will be interpreted as indices. If the numeric subsetVector contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
+The following methods are incorporated into the function: If the subsetVector argument is a vector of integers, they will be interpreted as indices. If the numeric subsetVector contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
 }
 \examples{
     #create a triangular grid

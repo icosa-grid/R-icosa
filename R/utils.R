@@ -340,14 +340,14 @@ arcdistmat<-function(points1, points2=NULL, origin=c(0,0,0), output="distance", 
 	
 	if(sum(is.na(points1))>0 | sum(is.na(points2))>0) stop("The coordinates include NAs")
 	if(ncol(points1)==2){
-		points1<-PolToCar(matrix(points1, ncol=2, nrow=1),radius=radius, origin=origin)
+		points1<-PolToCar(matrix(points1, ncol=2),radius=radius, origin=origin)
 		points1<-points1[1,]
 	}
 	
 	
 	
 	if(ncol(points2)==2){
-		points2<-PolToCar(matrix(points2, ncol=2, nrow=1),radius=radius, origin=origin)
+		points2<-PolToCar(matrix(points2, ncol=2),radius=radius, origin=origin)
 		points2<-points2[1,]
 	}
 		
@@ -574,8 +574,7 @@ whichVertices<-function(vertices, data){
 #'
 #' @param cols Character vector, containnig the ordered colors that are used for the heatmap.
 #' @param tick.text The values on the heatmap legend. If missing, will be calculated with minVal and maxVal. Should have the length as 'ticks'.
-#' @param minVal If tick.text is missing, the lowest value in the heatmap
-#' @param maxVal If tick.text is missing, the highest value in the heatmap
+#' @param vals If tick.text is missing, the lowest value in the heatmap
 #' @param ticks The number of ticks/values in the heatmap legend (the bar will be divided to this number).
 #' @param tick.cex Letter size of the values on the legend.
 #' @param varName The label of the variable name plotted to the heatmap.
@@ -585,51 +584,133 @@ whichVertices<-function(vertices, data){
 #' @param xLeft the x coordinate of the lower left hand corner of the bar.
 #' @param yBot the y coordinate of the lower left hand corner of the bar.
 #' @param add indicates wheter a new plot should be drawn or not. Defaults to FALSE.
+#' @param bounds Logical vector indicating whether open intervals should be indicated for the legend. 
 #' @param ... arguments passed to the plot() function.
 #' @export		
-heatMapLegend<-function(cols, minVal, varName, tick.text, maxVal,ticks=5, tick.cex=1.5, barWidth=3, barHeight=50,tickLength=1, xLeft=88, yBot=25, add=FALSE, ...){
-	
+heatMapLegend<-function(cols, vals, varName, tick.text=NULL,tick.cex=1.5, barWidth=3, barHeight=50,tickLength=1, xLeft=88, yBot=25, add=FALSE, bounds=c(FALSE, FALSE),...){
+	usedCols<<-cols
+	usedVals <<- vals
+
 	if(!add){
 		plot(NULL, NULL, xlim=c(0,100), ylim=c(0,100), axes=FALSE, xlab="", ylab="",xaxs="i", yaxs="i",...)
 	}
 	#	barWidth<-3
 	#	tickLength=1
 	#	xLeft<-88
-	#	minVal<-min(x@values)
-	#	maxVal<-max(x@values)
 	
+		# plotting mode is dependent on the relationship of cols and vals
+		if(length(cols)==length(vals)){
+			inter<-FALSE
+		}else{
+			if(length(cols)==(length(vals)-1)){
+				inter <- TRUE
+			}else{
+				stop("Invalid color length.")
+			}
+		}
+
+		# calculate horizontal positions
 		x2<-xLeft+barWidth
 		x3<-x2+tickLength
 		x4<-x3+tickLength
-		
-		
-	#	ybot<-25
-		ytop<-yBot+barHeight
-		
-		ySubLab<-ytop*1.1
 	
+		# y coordinates of the bar
+		yTop<-yBot+barHeight
 		
-		ts<-seq(yBot,ytop, length.out=ticks)
-		
-		if(missing(tick.text)){
-			tick.text<-seq(minVal,maxVal, length.out=ticks)
-		#	tick.text<-format(tick.text, digits=5)
+		# plot the colour bar first (this doesn't change)
+		rectTops<-seq(yBot, yTop,length.out=length(cols)+1)
+		for(i in 2:length(rectTops)){
+			graphics::rect(xleft=xLeft, xright=x2, ytop=rectTops[i],ybottom=rectTops[i-1], 
+			col=cols[i-1], border=NA)
 		}
+		graphics::rect(ytop=yBot, ybottom=yTop, xleft=xLeft, xright=x2)
+	
+		# the ticks 
+		# what should be plotted?
+		# intervals
+		if(inter){
+			# are the values given? - plot those
+			if(!is.null(tick.text)){
+				# the number of ticks is set by the tick text provided by the user
+				ticks <- length(tick.text)
+
+			# should the default be used?
+			}else{
+				# if the number of colours is smaller than 8, plot all of them 
+				if(length(cols)<8){
+					ticks <- length(vals)
+					tick.text <- vals
+				# treat it as a continuous scale
+				}else{
+					ticks <- 5
+					minVal<-min(vals)
+					maxVal <- max(vals)
+					tick.text <- seq(minVal, maxVal, length.out=ticks)
+				}
+			}
+			
+			# calculate the coordinates where the ticks have to be drawn
+			ts<-seq(yBot,yTop, length.out=ticks)
 		
+		# values
+		}else{
+			# cooridnates should be at the middle of the rectangles
+			rectMid <- (rectTops+rectTops[2:(length(rectTops)+1)])/2
+			rectMid <- rectMid[!is.na(rectMid)]
+		
+			if(!is.null(tick.text)){
+				# the number of ticks is set by the tick text provided by the user
+				ticks <- length(tick.text)
+
+				ts <- seq(rectMid[1], rectMid[length(rectMid)], length.out=ticks)
+			# should the default be used?
+			}else{
+				# if the number of colours is smaller than 8, plot all of them 
+				if(length(cols)<8){
+					ticks <- length(vals)
+					tick.text <- vals
+					ts <- seq(rectMid[1], rectMid[length(rectMid)], length.out=ticks)
+				# omit some of them 
+				}else{
+					allIndex <- 1:length(vals)
+					good<- allIndex
+					counter <- 2
+					while(length(good)>7){
+						good<- which(allIndex%%counter==1)
+
+						counter<- counter+1
+					}
+					ticks <- length(good)
+					tick.text <- vals[good]
+					ts<- rectMid[good]
+				}
+			}
+			
+			# 
+				
+		}
+
+
+		# plot the chosen number of ticks 
+
 		for(i in 1:ticks){
 			graphics::segments(x0=x2,x1=x3, y0=ts[i], y1=ts[i])
 			
-			graphics::text(label=format(tick.text[i], digits=5), x=x4, y=ts[i], pos=4,cex=tick.cex)
+			# plus or minus signs? 
+			sig <- NULL
+			if(bounds[1] & i==1){
+				sig <- "(-)"
+			}
+			if(bounds[2] & i==ticks){
+				sig <- "(+)"
+			}
+
+			graphics::text(label=paste(format(tick.text[i], digits=5), sig), x=x4, y=ts[i], pos=4,cex=tick.cex)
 		}
-		
-		rectTops<-seq(yBot, ytop,length.out=length(cols)+1)
-		for(i in 2:length(rectTops)){
-			graphics::rect(xleft=xLeft, xright=x2, ytop=rectTops[i],ybottom=rectTops[i-1], 
-			col=cols[i], border=NA)
-		
-		}
-		graphics::rect(ytop=yBot, ybottom=ytop, xleft=xLeft, xright=x2)
-	
+
+
+		# the variable name
+		ySubLab<-yTop*1.1
 		if(missing(varName)) varName<-""
 		graphics::text(varName, x=xLeft, y=ySubLab, pos=4, cex=tick.cex)
 	
@@ -665,8 +746,6 @@ checkLinkedGrid <-function(gridObj, fl){
 #' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #'
-#' @param inner Single positive integer, the number of points inserted between every two points of the spherical centroid. Heavilly impacts the performance.
-#' 
 #' @return Either an XYZ or a long-lat numeric vector.
 #' 
 #' @examples
@@ -683,8 +762,10 @@ checkLinkedGrid <-function(gridObj, fl){
 #'	points3d(sc[1], sc[2], sc[3], col="red", size=5)
 #'
 #' @export surfacecentroid
-surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadius, inner=20)
+surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadius)
 {
+	if(class(data)!="data.frame" & class(data)!="matrix") stop("Invalid input data.")
+	if(nrow(data)<2) return(data)
 	#data argument
 	# which formatting?
 	if(ncol(data)==2){
@@ -697,18 +778,9 @@ surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadi
 		rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
 	}
 	
-	#create all combinations of the great circles 
-		combinations<-t(utils::combn(1:nrow(data),2))
-		
-		# C indexing (0)
-		combinations<- combinations-1
-	
-	# get the coordinates+ combinations + resolution var = matrix of all the great circles
-	 all<- .Call(Cpp_icosa_centroidPoints_, data, combinations, center, inner)
-		
-	
+
 	#the 3d centroid of the point cloud
-		centroid3d<-apply(all, 2, mean, na.rm=TRUE)
+		centroid3d<-apply(data, 2, mean, na.rm=TRUE)
 		if(output=="cartesian"){
 			radVec<-(centroid3d-center)
 			retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad
@@ -746,7 +818,6 @@ surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadi
 }
 
 
-
 #' Spherical convex hull
 #' 
 #' This function calculates a possible implementation of the spherical convex hull
@@ -761,8 +832,7 @@ surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadi
 #' 
 #' @param center Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
 #' @param method Character value, indicating the method to create the spherical convex hulls.
-#' @param inner Single positive integer, the number of points inserted between every two points of the spherical centroid. Heavilly impacts the performance.
-#'
+#' @param radius Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
 #' @param param Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'	the centroid.
 #' 
 #' @return Either an XYZ or a long-lat numeric vector.
@@ -776,11 +846,11 @@ surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadi
 #'	
 #'
 #' @export chullsphere
-chullsphere<-function(data, center=c(0,0,0), method="centroidprojection", param=200, inner=10)
+chullsphereOLD<-function(data, center=c(0,0,0), radius=authRadius, method="centroidprojection", param=200)
 {
 	if(ncol(data)==2){
 		# transform the two columns
-		data<-PolToCar(data, origin=center, radius=authRadius)
+		data<-PolToCar(data, radius, origin=center)
 	}
 	if (ncol(data)==3){
 		radVec<-data[1,]-center
@@ -788,18 +858,201 @@ chullsphere<-function(data, center=c(0,0,0), method="centroidprojection", param=
 	}
 	
 	#calculate the group centroid
-		centroid<-surfacecentroid(data, center=center, radius=authRadius, output="cartesian", inner=10)
+		centroid<-surfacecentroid(data, output="cartesian", center=center, radius)
 
 	#shrink the 2d surface proportionally! to the vicinity of the reference point of latLong 2d space(roughly planar area)
 	if(method=="centroidprojection"){
 		projectedPoints<-.Call(Cpp_icosa_projectCloseToPoint_, data, centroid, center, param)
-	
-		projP<- CarToPol(projectedPoints,norad=TRUE)
 		
-		return(grDevices::chull(projP))
+		#omit NA's (including the case where the centroid is among the points!)
+		boolMiss<-is.na(projectedPoints[,1])& is.na(projectedPoints[,2])
+		if(any(boolMiss)){
+			for(i in which(boolMiss)){
+				projectedPoints[i,] <- centroid
+			}
+		}
+		
+		projP<- CarToPol(projectedPoints,norad=TRUE)
+
+		convHull <- grDevices::chull(projP)
+		return(convHull)
 	}
+
 }
 
+#' Spherical convex hull
+#' 
+#' This function calculates a possible implementation of the spherical convex hull
+#' 
+#' With the method \code{centroidprojection} the function calls the surfacecentroid() 
+#'	function to get the a reference point from the shape. Then all the points are 'projected' 
+#'	close to this point using the great circles linking them to the reference point.
+#'	Each such great circle will be devided to an equal number of points and the closest
+#'	 will replace the original point coordinates in the convex hull algorithm implemented in \code{grDevices::chull()}. 
+#' 
+#' @param data  Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.
+#' 
+#' @param center Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
+#' @param radius Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
+#' @param param Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'	the centroid.
+#' 
+#' @param strict (\code{logical}) Strictly convex output is required.
+#' @return Either an XYZ or a long-lat numeric vector.
+#' 
+#' @examples
+#'	# generate some random points
+#'	allData <- rpsphere(1000)
+#'	# select only a subset
+#'	points<-allData[allData[,1]>3000,]
+#'	chullsphere(points)
+#'	
+#'
+#' @export chullsphere
+chullsphere<-function(data, center=c(0,0,0), radius=authRadius, param=200, strict=TRUE)
+{
+	if(ncol(data)==2){
+		# transform the two columns
+		data<-PolToCar(data, radius, origin=center)
+	}
+	if (ncol(data)==3){
+		radVec<-data[1,]-center
+		rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
+	}
+	
+	#calculate the group centroid
+		centroid<-surfacecentroid(data, output="cartesian", center=center, radius)
+
+	#shrink the 2d surface proportionally! to the vicinity of the reference point of latLong 2d space(roughly planar area)
+	projectedPoints<-.Call(Cpp_icosa_projectCloseToPoint_, data, centroid, center, param)
+	
+	#omit NA's (including the case where the centroid is among the points!)
+	boolMiss<-is.na(projectedPoints[,1])& is.na(projectedPoints[,2])
+	if(any(boolMiss)){
+		for(i in which(boolMiss)){
+			projectedPoints[i,] <- centroid
+		}
+	}
+	
+	projP<- CarToPol(projectedPoints,norad=TRUE)
+	convHull <- grDevices::chull(projP)
+	
+	# do another quick check based on the dihedral angles, as some points are seen as convex from the centroid
+	if(strict){
+		# do iteratively!
+		more <- TRUE
+		while(more){
+			# test results
+			testIndex <- rep(FALSE, length(convHull))
+	
+			# for all hull points
+			for(i in 1:length(convHull)){
+				if(i==1){
+					one <- length(convHull)
+				}else{
+					one <- i-1
+				}
+				if(i==length(convHull)){
+					three <- 1
+				}else{
+					three<-i+1
+				}
+				# the first dihedral angle
+				xa <- arcdist(centroid, data[convHull[one],], center, output="rad")
+				ab <- arcdist(data[convHull[one],], data[convHull[i],], center, output="rad")
+				bx <- arcdist(data[convHull[i],], centroid, center, output="rad")
+		
+				firstAng = acos((cos(xa)-(cos(ab)*cos(bx)))/(sin(ab)*sin(bx)));
+				
+				# the second dihedral angle
+				xc <- arcdist(centroid, data[convHull[three],], center, output="rad")
+				cb <- arcdist(data[convHull[three],], data[convHull[i],], center, output="rad")
+		
+				secondAng = acos((cos(xc)-(cos(cb)*cos(bx)))/(sin(cb)*sin(bx)));
+				
+				if((secondAng+firstAng)<=pi) testIndex[i] <- TRUE
+			}
+	
+			# result
+			if(sum(testIndex) < length(convHull) & sum(testIndex)>2){
+				more<-TRUE
+			}else{
+				more <-FALSE
+			}
+			
+			convHull <- convHull[testIndex]
+		}
+	}
+
+	return(convHull)
+
+}
+
+
+#' Surface area of a spherical convex-hull defined by a set of points
+#' 
+#' The function returns the area covered by the spherical convex hull of a pointset in square kilometers
+#' 
+#' The function assumes a round Earth, but SpatialPoints with \code{CRS} entries will be projected to a sphere before the calulations. 
+#' 
+#' @param data Coordinates of individual points. Can be either a two-dimensional 
+#' matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
+#' or a set of points with class 'SpatialPoints'.
+#' @param origin Numeric vector of length 3, defining the center of the sphere. Defaults to c(0,0,0).
+#' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
+#' @examples
+#' # simple example with a hexagrid 
+#' a<-hexagrid(c(4), sp=T)
+#' b<-a[c(lomax=40, lomin=-40, lamax=30, lamin=-30)]
+#' data <- centers(b)
+#' surfacechullsphere(data)
+#' 
+#' @export
+surfacechullsphere <-function(data, origin=c(0,0,0), radius=authRadius){
+	
+	# 1. make sure you have cartesian coordinates
+	
+	# for the SpatialPoints
+	if(class(data)=="SpatialPoints"){
+		# if it has a proj4
+		if(methods::.hasSlot(data, "proj4string")){
+			# and it's not NA
+			if(!is.na(data@proj4string)){
+				# need rgdal
+				if(requireNamespace("rgdal", quietly = TRUE)){
+					data<-sp::spTransform(data, gridObj@proj4string)@coords
+				} else{
+					stop("The rgdal package is required to appropriately project this object. ")
+				}
+			}
+		}
+	}
+	
+	#data argument
+	# which formatting?
+	if(ncol(data)==2){
+		# transform the two columns
+		data<-PolToCar(data, radius, origin)
+	}
+	
+
+	# 2. calculate surface centroid
+	surfcent <- surfacecentroid(data, output="cartesian", center=origin, radius)
+
+	# 3. calculate spherical convex hulls
+	indices <- rev(chullsphere(data, center=surfcent, radius))
+
+	# 4. calculate the area
+	if(length(indices)>2){
+		surfarea <-.Call(Cpp_icosa_surfConvHullTri,
+			data[indices,],
+			surfcent,
+			origin,
+			pi)
+	}else{
+		surfarea <- 0
+	}
+	return(surfarea)
+}
 
 #only one for the hexagrid: subface boundaries should give back an entry even if the randomborder is FALSE
 approximateFace<-function(coords, n, d, gridObj, onlyOne=FALSE, output="skeleton"){

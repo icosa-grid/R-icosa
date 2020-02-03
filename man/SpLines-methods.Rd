@@ -9,7 +9,7 @@
 \usage{
 SpLines(gridObj, ...)
 
-\S4method{SpLines}{trigrid}(gridObj, dateLine = "break", res = 15)
+\S4method{SpLines}{trigrid}(gridObj, dateLine = "break", res = NULL)
 }
 \arguments{
 \item{gridObj}{Either a \code{trigrid} or a \code{hexagrid} class object.}
@@ -19,13 +19,11 @@ SpLines(gridObj, ...)
 \item{dateLine}{Specifies that NAs should be introduced at the dateline to break the boundaries of the faces. 
 Can be switched off by setting it to \code{FALSE}.}
 
-\item{res}{Integer value, specifies the number of points (resolution) to be inserted between two vertices.}
+\item{res}{The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.}
 }
 \value{
 an object of class SpatialLines.
 }
 \description{
-SpatialLines class object from an icosahedral grid
-
 The function will create an approporiate 2d render of the grid in the SpatialLines object format defined in the package 'sp'.
 }

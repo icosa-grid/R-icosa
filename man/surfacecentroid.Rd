@@ -5,7 +5,7 @@
 \title{Surface centroid point of a spherical point cloud}
 \usage{
 surfacecentroid(data, output = "polar", center = c(0, 0, 0),
-  radius = authRadius, inner = 20)
+  radius = authRadius)
 }
 \arguments{
 \item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}
@@ -17,8 +17,6 @@ longitude-latitude or \code{"cartesian"} for XYZ data.}
 
 \item{radius}{Numeric value, the radius of the circle in case the input points have only polar coordinates.
 Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.}
-
-\item{inner}{Single positive integer, the number of points inserted between every two points of the spherical centroid. Heavilly impacts the performance.}
 }
 \value{
 Either an XYZ or a long-lat numeric vector.

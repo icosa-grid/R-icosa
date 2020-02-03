@@ -4,19 +4,19 @@
 \alias{chullsphere}
 \title{Spherical convex hull}
 \usage{
-chullsphere(data, center = c(0, 0, 0), method = "centroidprojection",
-  param = 200, inner = 10)
+chullsphere(data, center = c(0, 0, 0), radius = authRadius,
+  param = 200, strict = TRUE)
 }
 \arguments{
 \item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}
 
 \item{center}{Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).}
 
-\item{method}{Character value, indicating the method to create the spherical convex hulls.}
+\item{radius}{Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
 
 \item{param}{Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'    the centroid.}
 
-\item{inner}{Single positive integer, the number of points inserted between every two points of the spherical centroid. Heavilly impacts the performance.}
+\item{strict}{(\code{logical}) Strictly convex output is required.}
 }
 \value{
 Either an XYZ or a long-lat numeric vector.
