@@ -5,76 +5,6 @@
 
 using namespace Rcpp;
 
-// edgeMatTri_
-NumericMatrix edgeMatTri_(NumericMatrix v, NumericMatrix e);
-RcppExport SEXP _icosa_edgeMatTri_(SEXP vSEXP, SEXP eSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type e(eSEXP);
-    rcpp_result_gen = Rcpp::wrap(edgeMatTri_(v, e));
-    return rcpp_result_gen;
-END_RCPP
-}
-// triMatTri_
-NumericMatrix triMatTri_(NumericMatrix v, NumericMatrix f);
-RcppExport SEXP _icosa_triMatTri_(SEXP vSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
-    rcpp_result_gen = Rcpp::wrap(triMatTri_(v, f));
-    return rcpp_result_gen;
-END_RCPP
-}
-// pointLayerColorOrder_
-NumericVector pointLayerColorOrder_(NumericMatrix f);
-RcppExport SEXP _icosa_pointLayerColorOrder_(SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
-    rcpp_result_gen = Rcpp::wrap(pointLayerColorOrder_(f));
-    return rcpp_result_gen;
-END_RCPP
-}
-// xxxxyyyyzzzz_
-NumericVector xxxxyyyyzzzz_(NumericMatrix v, NumericMatrix f);
-RcppExport SEXP _icosa_xxxxyyyyzzzz_(SEXP vSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
-    rcpp_result_gen = Rcpp::wrap(xxxxyyyyzzzz_(v, f));
-    return rcpp_result_gen;
-END_RCPP
-}
-// xyz1xyz1xyz1xyz1_
-NumericVector xyz1xyz1xyz1xyz1_(NumericMatrix v, NumericMatrix f);
-RcppExport SEXP _icosa_xyz1xyz1xyz1xyz1_(SEXP vSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
-    rcpp_result_gen = Rcpp::wrap(xyz1xyz1xyz1xyz1_(v, f));
-    return rcpp_result_gen;
-END_RCPP
-}
-// xyz1
-NumericVector xyz1(NumericMatrix q);
-RcppExport SEXP _icosa_xyz1(SEXP qSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(xyz1(q));
-    return rcpp_result_gen;
-END_RCPP
-}
 // Collapse_
 NumericVector Collapse_(NumericVector vect);
 RcppExport SEXP _icosa_Collapse_(SEXP vectSEXP) {
@@ -635,6 +565,76 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type center(centerSEXP);
     Rcpp::traits::input_parameter< int >::type breaks(breaksSEXP);
     rcpp_result_gen = Rcpp::wrap(projectCloseToPoint_(coords, toPoint, center, breaks));
+    return rcpp_result_gen;
+END_RCPP
+}
+// xxxxyyyyzzzz_
+NumericVector xxxxyyyyzzzz_(NumericMatrix v, NumericMatrix f);
+RcppExport SEXP _icosa_xxxxyyyyzzzz_(SEXP vSEXP, SEXP fSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
+    rcpp_result_gen = Rcpp::wrap(xxxxyyyyzzzz_(v, f));
+    return rcpp_result_gen;
+END_RCPP
+}
+// xyz1xyz1xyz1xyz1_
+NumericVector xyz1xyz1xyz1xyz1_(NumericMatrix v, NumericMatrix f);
+RcppExport SEXP _icosa_xyz1xyz1xyz1xyz1_(SEXP vSEXP, SEXP fSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
+    rcpp_result_gen = Rcpp::wrap(xyz1xyz1xyz1xyz1_(v, f));
+    return rcpp_result_gen;
+END_RCPP
+}
+// xyz1
+NumericVector xyz1(NumericMatrix q);
+RcppExport SEXP _icosa_xyz1(SEXP qSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type q(qSEXP);
+    rcpp_result_gen = Rcpp::wrap(xyz1(q));
+    return rcpp_result_gen;
+END_RCPP
+}
+// edgeMatTri_
+NumericMatrix edgeMatTri_(NumericMatrix v, NumericMatrix e);
+RcppExport SEXP _icosa_edgeMatTri_(SEXP vSEXP, SEXP eSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type e(eSEXP);
+    rcpp_result_gen = Rcpp::wrap(edgeMatTri_(v, e));
+    return rcpp_result_gen;
+END_RCPP
+}
+// triMatTri_
+NumericMatrix triMatTri_(NumericMatrix v, NumericMatrix f);
+RcppExport SEXP _icosa_triMatTri_(SEXP vSEXP, SEXP fSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
+    rcpp_result_gen = Rcpp::wrap(triMatTri_(v, f));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pointLayerColorOrder_
+NumericVector pointLayerColorOrder_(NumericMatrix f);
+RcppExport SEXP _icosa_pointLayerColorOrder_(SEXP fSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type f(fSEXP);
+    rcpp_result_gen = Rcpp::wrap(pointLayerColorOrder_(f));
     return rcpp_result_gen;
 END_RCPP
 }

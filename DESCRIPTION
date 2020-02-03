@@ -1,7 +1,7 @@
 Package: icosa
 Title: Global Triangular and Penta-Hexagonal Grids Based on Tessellated
     Icosahedra
-Version: 0.9.87
+Version: 0.9.87-1010
 Authors@R: person("Adam T.", "Kocsis", email = "adam.kocsis@fau.de", 
 	role = c("aut", "cre"))
 Description: Employs triangular tessellation to refine icosahedra

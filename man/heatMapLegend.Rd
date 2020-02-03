@@ -4,22 +4,18 @@
 \alias{heatMapLegend}
 \title{Legend for a heatmap with predefined colors.}
 \usage{
-heatMapLegend(cols, minVal, varName, tick.text, maxVal, ticks = 5,
-  tick.cex = 1.5, barWidth = 3, barHeight = 50, tickLength = 1,
-  xLeft = 88, yBot = 25, add = FALSE, ...)
+heatMapLegend(cols, vals, varName, tick.text = NULL, tick.cex = 1.5,
+  barWidth = 3, barHeight = 50, tickLength = 1, xLeft = 88,
+  yBot = 25, add = FALSE, bounds = c(FALSE, FALSE), ...)
 }
 \arguments{
 \item{cols}{Character vector, containnig the ordered colors that are used for the heatmap.}
 
-\item{minVal}{If tick.text is missing, the lowest value in the heatmap}
+\item{vals}{If tick.text is missing, the lowest value in the heatmap}
 
 \item{varName}{The label of the variable name plotted to the heatmap.}
 
 \item{tick.text}{The values on the heatmap legend. If missing, will be calculated with minVal and maxVal. Should have the length as 'ticks'.}
-
-\item{maxVal}{If tick.text is missing, the highest value in the heatmap}
-
-\item{ticks}{The number of ticks/values in the heatmap legend (the bar will be divided to this number).}
 
 \item{tick.cex}{Letter size of the values on the legend.}
 
@@ -35,7 +31,11 @@ heatMapLegend(cols, minVal, varName, tick.text, maxVal, ticks = 5,
 
 \item{add}{indicates wheter a new plot should be drawn or not. Defaults to FALSE.}
 
+\item{bounds}{Logical vector indicating whether open intervals should be indicated for the legend.}
+
 \item{...}{arguments passed to the plot() function.}
+
+\item{ticks}{The number of ticks/values in the heatmap legend (the bar will be divided to this number).}
 }
 \description{
 This function will invoke the plot function to draw a heatmap legend.

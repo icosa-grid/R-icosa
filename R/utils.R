@@ -181,7 +181,7 @@ CarToPol <- function(matXYZ, norad=FALSE, origin=c(0,0,0)) {
 #'	point2<-c(130,65)
 #'	points(arcpoints(point1, point2, breaks=70, output="polar"))
 #'
-#' @export arc
+#' @export arcpoints
 arcpoints<-function(p1,p2,breaks=2,origin=c(0,0,0), onlyNew=FALSE, output="cartesian", radius=authRadius){
 	if(!output%in%c("cartesian", "polar")) stop("Invalid \'output\' argument.")
 	

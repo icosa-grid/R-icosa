@@ -17,7 +17,8 @@ faces3d(x, ...)
 
 \S4method{faces3d}{hexagrid}(x, ...)
 
-\S4method{faces3d}{facelayer}(x, col = "red", ...)
+\S4method{faces3d}{facelayer}(x, col = "heat", breaks = NULL,
+  inclusive = TRUE, discrete = FALSE, ...)
 }
 \arguments{
 \item{x}{The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.}
@@ -25,6 +26,12 @@ faces3d(x, ...)
 \item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}) and the heatMapLegend() function.}
 
 \item{col}{graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.}
+
+\item{breaks}{Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
+
+\item{discrete}{Description.}
+
+\item{inclusve}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
 }
 \value{
 The function does not return any value.

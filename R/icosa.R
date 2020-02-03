@@ -16,7 +16,8 @@
 #' # Create a triangular grid
 #' tri <- trigrid(c(2,2))
 #' @name icosa
-#' @useDynLib icosa
+#' @useDynLib icosa, .registration = TRUE, .fixes="Cpp"
+
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rgl plot3d
 #' @importFrom sp coordinates
@@ -24,6 +25,39 @@
 #' @importFrom raster subset
 #' @importFrom raster rotate
 #' @importFrom raster values
+#' @importFrom raster "values<-"
+#' @importFrom raster resample
+#' @importFrom rgl persp3d
+#' @importFrom igraph graph_from_data_frame
+#' @importFrom igraph induced_subgraph
+#' @importFrom sp Line
+#' @importFrom sp Lines
+#' @importFrom sp SpatialLines
+#' @importFrom sp Polygon
+#' @importFrom sp Polygons
+#' @importFrom sp SpatialPolygons
+#' @importFrom sp plot
+#' @importFrom sp CRS
+#' @importFrom sp spsample
+#' @importFrom grDevices colorRampPalette
+#' @importFrom grDevices colors
+#' @importFrom grDevices heat.colors
+#' @importFrom graphics grid
+#' @importFrom graphics par
+#' @importFrom graphics rect
+#' @importFrom graphics segments
+#' @importFrom graphics text
+#' @importFrom methods .hasSlot
+#' @importFrom methods as
+#' @importFrom methods callGeneric
+#' @importFrom methods new
+#' @importFrom stats dist
+#' @importFrom stats rnorm
+#' @importFrom stats runif
+#' @importFrom utils combn
+
+
+
 NULL
 
 #the objects ---------

@@ -811,11 +811,12 @@ setMethod(
 					x@sp<-sp::spTransform(x@sp, sp::CRS(projargs))
 				}	
 			} else{
-				stop("The rgdal package is required to appropriately project this object. ")
+				stop("The 'rgdal' package is required to appropriately project this object. ")
 			}
 				
 		}
 		
+		# replace with sp::sp.lines()
 		raster::lines(x@sp,...)
 	
 	}

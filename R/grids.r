@@ -27,7 +27,6 @@ setGeneric(
 )
 
 #' @rdname vertices-methods
-#' @exportMethod vertices
 setMethod(	
 	f="vertices",
 	signature=c("trigrid","character"),
@@ -56,7 +55,6 @@ setGeneric(
 )
 
 #' @rdname faces-methods
-#' @exportMethod faces
 setMethod(	
 	f="faces",
 	signature="trigrid",
@@ -83,7 +81,6 @@ setGeneric(
 )
 
 #' @rdname edges-methods
-#' @exportMethod edges
 setMethod(	
 	f="edges",
 	signature="obj3d",
@@ -93,7 +90,6 @@ setMethod(
 )
 
 #' @rdname edges-methods
-#' @exportMethod edges
 setMethod(	
 	f="edges",
 	signature="facelayer",
@@ -124,7 +120,6 @@ setGeneric(
 #' @param output the coordinate system of the output. Either "polar" or "cartesian".
 #' @rdname centers-methods
 #' @aliases centers-trigrid-method
-#' @exportMethod centers
 setMethod(	
 	f="centers",
 	signature="trigrid",
@@ -431,7 +426,7 @@ trigrid<-setClass(
 #' @rdname trigrid-class
 #' @aliases trigrid-initalize-method
 #' @param .Object non-argument pointing to self.
-#' @exportMethod trigrid
+#' @export trigrid
 setMethod(
 	"initialize",
 	signature="trigrid",
@@ -754,7 +749,7 @@ hexagrid<-setClass(
 #' @rdname hexagrid-class
 #' @aliases hexagrid-initalize-method
 #' @param .Object non-argument pointing to self.
-#' @exportMethod hexagrid
+#' @export hexagrid
 setMethod(
 	"initialize",
 	signature="hexagrid",
@@ -1347,7 +1342,6 @@ setMethod(
 #'
 #' @rdname subset-methods
 #' @aliases [-trigrid-method
-#' @exportMethod
 setMethod(
 	"[",
 	signature="trigrid",
@@ -1458,7 +1452,6 @@ setMethod(
 #' @rdname plot3d-method
 #' @param color Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.
 #' @aliases plot3d, plot3d-hexagrid-method
-#' @exportMethod plot3d
 setMethod(
 	"plot3d",
 	signature="hexagrid",
@@ -1901,7 +1894,6 @@ setGeneric(
 #'		g<-trigrid(4, graph=FALSE)
 #'		g<-newgraph(g)
 #' 
-#' @exportMethod newgraph
 setMethod(
 	"newgraph",
 	signature="trigrid",

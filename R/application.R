@@ -99,7 +99,6 @@ setGeneric(
 #' 
 #' @rdname orientation-methods
 #' @aliases orientation, trigrid-orientation-method	
-#' @exportMethod orientation
 setMethod(
 	"orientation",
 	signature="trigrid",
@@ -140,7 +139,6 @@ setGeneric(
 #' 
 #' 
 #' 
-#' @exportMethod orientation<-
 #' @aliases trigrid-setorientation-method
 #' @rdname orientation-methods
 setReplaceMethod(
@@ -301,7 +299,6 @@ setGeneric(
 #'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 #'	so in radians.
 #' 
-#' @exportMethod edgelength
 #' @rdname edgelength-trigrid-methods
 setMethod(
 	"edgelength", 
@@ -1236,6 +1233,40 @@ pos<-function(gridObj, names, output="polar"){
 	return(res)
 }
 
+# Resampling
+# define generic function depending on whether a package namespace is present
+if(requireNamespace("raster", quietly = TRUE)){
+	setGeneric("resample", def=raster::resample)
+}else{
+	setGeneric(
+		name="resample",
+		def=function(x,y,...){
+			standardGeneric("resample")
+		}
+	)
+}
+
+
+
+#	if(requireNamespace("chronosphere", quietly = TRUE)){
+#		setGeneric("mapplot", def=chronosphere::mapplot)
+#	}else{
+#		setGeneric(
+#			name="mapplot",
+#			def=function(x,...){
+#				standardGeneric("mapplot")
+#			}
+#		)
+#	}
+#	
+#	setMethod(
+#		"mapplot",
+#		signature="facelayer",
+#		function(x){
+#			plot(x)
+#		}
+#	)
+
 #' Resampling of data to a trigrid or a hexagrid object.
 #'
 #' The function is used to resolve and resample data stored in RasterLayers and facelayers so they can be fitted to and can be plotted by using trigrid or hexagrid objects.
@@ -1315,10 +1346,8 @@ setGeneric(
 #' @return The function returns an 'igraph' graph.
 #' @param directed logical value, defaults to FALSE creating an undirected graph. If TRUE than the graph will be directed.
 #' @param distances logical values, defaults to FALSE. If TRUE than the distances between the linked faces will be calculated and will be rendered to the edges as [["dist"]].
-#' @exportMethod gridgraph
 #' @rdname gridgraph-methods
 #' @aliases gridgraph-trigrid-method
-#' @exportMethod gridgraph
 setMethod(
 	f="gridgraph",
 	signature="trigrid",
@@ -1399,7 +1428,7 @@ setMethod(
 #'
 #' The function can be applied to a hexagrid class object.
 #' @return The function returns an 'igraph' graph.
-#' @exportMethod gridgraph
+
 #' @rdname gridgraph-methods
 #' @aliases gridgraph-hexagrid-method
 #' @exportMethod gridgraph
@@ -1480,7 +1509,6 @@ setGeneric(
 )
 
 #' @rdname translate-methods
-#' @exportMethod translate
 setMethod(
 	"translate",
 	signature=c("trigrid","numeric"),

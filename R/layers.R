@@ -172,8 +172,17 @@ setMethod(
 )
 		
 
+if(requireNamespace("raster", quietly = TRUE)){
+	setGeneric("values<-", def=raster::`values<-`)
+}else{
+	setGeneric(
+		name="resample",
+		def=function(x,value){
+			standardGeneric("values<-")
+		}
+	)
+}
 	
-
 
 #' Replace values from a \code{gridlayer}
 #'
@@ -489,7 +498,7 @@ setReplaceMethod(
 
 
 #2. inheriting classes
-{
+
 
 #facelayer
 #'Container for data storage using the faces on icosahedral grid
@@ -498,7 +507,7 @@ setReplaceMethod(
 #'
 #'@rdname facelayer-class
 #'
-#'@exportClass facelayer
+#'@export facelayer
 facelayer <- setClass(
 	#name
 	"facelayer",
@@ -584,7 +593,7 @@ setMethod("initialize", signature = "facelayer",
 		}
 		
 	)
-}
+
 
 
 #' @rdname vertices-methods
@@ -716,7 +725,7 @@ setMethod(
 #' @param col graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.
 #' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
-#' @param discrete
+#' @param discrete Description.
 #' @return The function does not return any value.
 #'
 #' @exportMethod faces3d

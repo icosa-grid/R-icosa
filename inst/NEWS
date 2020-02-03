@@ -1,5 +1,14 @@
 # Change log
 
+## [0.9.88 (build 1010)] - 2002-02-03
+### Added
+- conditional generic declaration to values<- 
+- conditional generic declaration to resample()
+
+### Changed
+- complete NAMESPACE cleanup with roxygen
+
+
 ## [0.9.87 (build 1009)] - 2019-08-20
 ### Added 
 - Dynamic sp resolution setting 

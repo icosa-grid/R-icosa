@@ -8,8 +8,9 @@
 This function will invoke the 2d plotting methods of a grid so data stored in a facelayer object can be displayed.}
 \usage{
 \S4method{plot}{facelayer,ANY}(x, projargs = NULL, col = "heat",
-  border = NA, alpha = "", frame = FALSE, legend = TRUE,
-  dlim = NULL, beside = TRUE, steps = NULL, ...)
+  border = NA, alpha = NULL, frame = FALSE, legend = TRUE,
+  breaks = NULL, beside = TRUE, inclusive = TRUE, discrete = FALSE,
+  ...)
 
 \S4method{plot}{trigrid,ANY}(x, projargs = NULL, ...)
 }
@@ -28,11 +29,13 @@ This function will invoke the 2d plotting methods of a grid so data stored in a 
 
 \item{legend}{(\code{logical}): Should the legend be plotted?}
 
-\item{dlim}{Numeric vector. Two values constraining the range of plotted variable. Only for numeric values.}
+\item{breaks}{Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
 
-\item{steps}{\code{numeric}: for numeric values, how many different levels should be discriminated? If set to the default \code{NULL} then the length of the \code{facelayer} object is used as the number of colours to be generated.}
+\item{discrete}{\code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap.}
 
 \item{...}{arguments passed to the sp::plot() function.}
+
+\item{inclusve}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
 }
 \description{
 The function passes arguments to the plot method of the SpatialPolygons class (€ref). In case a heatmap is plotted and the windows plotting device gets resized,
