@@ -1,5 +1,16 @@
 # This file contains all methods that are used in the application of the grid in analyses. 
 
+if(requireNamespace("raster", quietly = TRUE)){
+	setGeneric("rotate", def=raster::rotate)
+}else{
+	setGeneric(
+		name="rotate",
+		def=function(x,...){
+			standardGeneric("rotate")
+		}
+	)
+}
+
 
 #' Rotation method of trigrid and hexagrid objects
 #'
@@ -720,6 +731,8 @@ setMethod(
 	"OccupiedFaces",
 	signature=c("trigrid", "SpatialPolygons"),
 	definition=function(gridObj, data){
+		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
+				
 		borders<-NA
 		
 		#faces on the line
@@ -762,6 +775,8 @@ setMethod(
 	"OccupiedFaces",
 	signature=c("trigrid", "RasterLayer"),
 	definition=function(gridObj, data){
+		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
+		
 		borders<-NA
 		resGrid<-mean(edgelength(gridObj,"deg"))
 		# if the default resolution of the raster is too coarse for the trigrid
@@ -1281,6 +1296,7 @@ setMethod(
 	signature=c("Raster", "trigrid"),
 	definition=function(x,y, method="ngb", na.rm=TRUE){
 		
+		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
 		
 		# copy the raster
 		x2<-x

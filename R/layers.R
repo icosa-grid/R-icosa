@@ -124,6 +124,18 @@
 }
 
 
+if(requireNamespace("raster", quietly = TRUE)){
+	setGeneric("values", def=raster::values)
+}else{
+	setGeneric(
+		name="values",
+		def=function(x,...){
+			standardGeneric("values")
+		}
+	)
+}
+
+
 
 #' Extract values from a gridlayer
 #'
@@ -176,7 +188,7 @@ if(requireNamespace("raster", quietly = TRUE)){
 	setGeneric("values<-", def=raster::`values<-`)
 }else{
 	setGeneric(
-		name="resample",
+		name="values<-",
 		def=function(x,value){
 			standardGeneric("values<-")
 		}

@@ -817,7 +817,7 @@ setMethod(
 		}
 		
 		# replace with sp::sp.lines()
-		raster::lines(x@sp,...)
+		sp::sp.lines(x@sp,...)
 	
 	}
 )

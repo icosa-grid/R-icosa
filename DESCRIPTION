@@ -20,14 +20,14 @@ LazyData: true
 Suggests:
     knitr,
     rmarkdown,
-    rgdal
+    rgdal, 
+    raster
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 LinkingTo: Rcpp
 Imports:
     Rcpp,
     sp,
-    raster,
     igraph,
     methods,
     stats

@@ -4,9 +4,12 @@
 ### Added
 - conditional generic declaration to values<- 
 - conditional generic declaration to resample()
+- conditional generic declaration to values()
+- conditional generic declaration to rotate()
 
 ### Changed
 - complete NAMESPACE cleanup with roxygen
+- package 'raster' moved from 'Imports' to 'Suggests'
 
 
 ## [0.9.87 (build 1009)] - 2019-08-20
