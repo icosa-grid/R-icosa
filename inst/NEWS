@@ -1,5 +1,12 @@
 # Change log
 
+## [0.9.88 (build 1012)] - 2002-02-04
+### Changed
+- rgl package moved to Suggests from Depends, freeing the package from its grasp
+- plot3d() rewritten as S3 from S4
+- rgl dependent functions have warnings to instruct installation.
+
+
 ## [0.9.88 (build 1011)] - 2002-02-04
 ### Added
 - Collate field for DESCRIPTION

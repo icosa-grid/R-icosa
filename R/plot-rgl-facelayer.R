@@ -18,13 +18,11 @@
 #' 
 #' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
 #' 
-#' @exportMethod plot3d
-#' @rdname plot3d-methods
+#' @S3method plot3d facelayer
+#' @rdname plot3d
+#' @export plot3d.facelayer
 # ' @aliases plot3d, plot3d-facelayer-method
-setMethod(
-	"plot3d",
-	signature="facelayer",
-	definition=function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TRUE, ...){
+plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TRUE, ...){
 	
 		# default par3d options
 		if(defaultPar3d){
@@ -57,7 +55,7 @@ setMethod(
 		
 	
 	}
-)
+
 #' Methods of 3d face plotting.
 #' 
 #' This is a generic function used to plot the faces of a facelayer type object. 

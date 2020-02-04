@@ -1,28 +1,26 @@
-# Conditional generic function for rgl::plot3d()
-if(requireNamespace("rgl", quietly = TRUE)){
-	setGeneric(
-		"plot3d", 
-		def=function(x,...) standardGeneric("plot3d"),
-		package="rgl",
-		useAsDefault=rgl::plot3d)
-}else{
-	setGeneric(
-		name="plot3d",
-		def=function(x,...){
-			if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
-			standardGeneric("plot3d")
-		}
-	)
-}
-
-
-
 #' 3d plotting of an icosahedral grid or its subset
 #' 
 #' This is a generic function used to plot either a \code{trigrid} or a \code{hexagrid} object or their \code{facelayer} in 3d space. 
 #' 
 #' The function is built on the openGL renderer of the R package \code{rgl}.
 #'  
+#' @usage plot3d(x,...)
+#' @rdname plot3d
+#' @export plot3d
+"plot3d"
+
+if(requireNamespace("rgl", quietly = TRUE)){
+	# manually copy S3 generic
+	plot3d <- rgl::plot3d
+}else{
+	# manually create S3 generic
+	plot3d <-function(x,...){
+		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+		UseMethod("plot3d")
+	}
+}
+
+
 #' @param x The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.
 #' 
 #' @param type A character value specifying the part of the grid to be plotted by the call of the function. 
@@ -40,7 +38,6 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #' 
 #' @return The function does not return any value.
 #'
-#' @rdname plot3d-method
 #'
 #' @examples
 #' # create a hexagonal grid
@@ -51,143 +48,139 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #'    subG <- subset(g, c("F5", "F2"))
 #' # plot the subset defined above
 #'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
-#' @rdname plot3d-methods
+#' @rdname plot3d
 #' @aliases plot3d, plot3d-trigrid-method
-#' @exportMethod plot3d
-setMethod(
-	"plot3d",
-	signature="trigrid",
-	definition=function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, ...){
+#' @S3method plot3d trigrid
+#' @export plot3d.trigrid
+plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, ...){
+	
+	#create new plot?
+	if(add==FALSE)
+	{
+		#checking plotting
+		rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
 		
-		#create new plot?
-		if(add==FALSE)
-		{
-			#checking plotting
-			rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
-			
-			#default sphere plotting
-			if(is.null(sphere)){
-				#get the radius
-				fc<-apply(x@vertices[x@faces[1,],],2,mean)-x@center
-				rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-15
-				blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
-			}else{
-				if(sphere){
-					blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
-				}
+		#default sphere plotting
+		if(is.null(sphere)){
+			#get the radius
+			fc<-apply(x@vertices[x@faces[1,],],2,mean)-x@center
+			rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-15
+			blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
+		}else{
+			if(sphere){
+				blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
 			}
 		}
-		
-		
-		if(type=="p")
-		{
-			#single point
-			if(length(x@vertices)==3)
-			{
-				rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3],...)
-			}else{
-				rgl::points3d(x@vertices, ...)
-			}
-		}
-			
-		if(type=="l")
-		{
-			icosa::lines3d(x, ...)
-		}
-		
-		if(type=="f")
-		{
-			faces3d(x,...)
-		}
-		
-		if(type=="n"){
-		
-		}
-		# guides
-		if(guides){
-			guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
-		}
-		
-		
 	}
-)
+	
+	
+	if(type=="p")
+	{
+		#single point
+		if(length(x@vertices)==3)
+		{
+			rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3],...)
+		}else{
+			rgl::points3d(x@vertices, ...)
+		}
+	}
+		
+	if(type=="l")
+	{
+		icosa::lines3d(x, ...)
+	}
+	
+	if(type=="f")
+	{
+		faces3d(x,...)
+	}
+	
+	if(type=="n"){
+	
+	}
+	# guides
+	if(guides){
+		guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
+	}
+	
+	
+}
+
 #' 3d plotting of an icosahedral grid or its subset
-#' @rdname plot3d-method
+#' @rdname plot3d
 #' @param color Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.
 #' @aliases plot3d, plot3d-hexagrid-method
-setMethod(
-	"plot3d",
-	signature="hexagrid",
-	definition=function(x, type=c("l"),sphere=NULL, color="gray70", add=FALSE, guides=TRUE, ...){
+#' @S3method plot3d hexagrid
+#' @export plot3d.hexagrid
+plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALSE, guides=TRUE, ...){
+	#create new plot?
+	if(add==FALSE)
+	{
+		#empty plotting plotting
+		rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
 		
-		#create new plot?
-		if(add==FALSE)
-		{
-			#empty plotting plotting
-			rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
-			
-			#default sphere plotting
-			if(is.null(sphere)){
-				fVect<-x@faces[2,!is.na(x@faces[2,])]
-				#get the radius
-				fc<-apply(x@vertices[fVect,],2,mean)-x@center
-				rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-10
-				blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
-			}else{
-				if(sphere){
-					blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
-				}
+		#default sphere plotting
+		if(is.null(sphere)){
+			fVect<-x@faces[2,!is.na(x@faces[2,])]
+			#get the radius
+			fc<-apply(x@vertices[fVect,],2,mean)-x@center
+			rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-10
+			blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
+		}else{
+			if(sphere){
+				blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
 			}
 		}
-		
-		
-		if(type=="p")
-		{
-			#single point
-			if(length(x@vertices)==3)
-			{
-				rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3], col=color,...)
-			}else{
-				rgl::points3d(x@vertices, col=color, ...)
-			}
-		}
-			
-		if(type=="l")
-		{
-			icosa::lines3d(x, ...)
-		}
-		
-		if(type=="f")
-		{
-			faces3d(x,...)
-		}
-		
-		if(type=="c")
-		{
-			#single point
-			if(length(x@faceCenters)==3)
-			{
-				rgl::points3d(x=x@faceCenters[1],y=x@faceCenters[2],z=x@faceCenters[3], col=color, ...)
-			}else{
-				rgl::points3d(x@faceCenters, col=color, ...)
-			}
-		}
-		
-		if(type=="t")
-		{
-			rgl::text3d(x@faceCenters, texts=rownames(x@faceCenters),col=color, ...)
-		}
-		
-		if(type=="n"){
-		
-		}
-		if(guides){
-			guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
-		}
-		
-		
 	}
-)
+	
+	
+	if(type=="p")
+	{
+		#single point
+		if(length(x@vertices)==3)
+		{
+			rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3], col=color,...)
+		}else{
+			rgl::points3d(x@vertices, col=color, ...)
+		}
+	}
+		
+	if(type=="l")
+	{
+		icosa::lines3d(x, ...)
+	}
+	
+	if(type=="f")
+	{
+		faces3d(x,...)
+	}
+	
+	if(type=="c")
+	{
+		#single point
+		if(length(x@faceCenters)==3)
+		{
+			rgl::points3d(x=x@faceCenters[1],y=x@faceCenters[2],z=x@faceCenters[3], col=color, ...)
+		}else{
+			rgl::points3d(x@faceCenters, col=color, ...)
+		}
+	}
+	
+	if(type=="t")
+	{
+		rgl::text3d(x@faceCenters, texts=rownames(x@faceCenters),col=color, ...)
+	}
+	
+	if(type=="n"){
+	
+	}
+	if(guides){
+		guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
+	}
+	
+	
+}
+
 
 # Conditional generic function for rgl::lines3d()
 if(requireNamespace("rgl", quietly = TRUE)){

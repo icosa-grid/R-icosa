@@ -1,7 +1,7 @@
 Package: icosa
 Title: Global Triangular and Penta-Hexagonal Grids Based on Tessellated
     Icosahedra
-Version: 0.9.88-1011
+Version: 0.9.88-1012
 Authors@R: person("Adam T.", "Kocsis", email = "adam.t.kocsis@gmail.com", 
 	role = c("aut", "cre"))
 Collate:
