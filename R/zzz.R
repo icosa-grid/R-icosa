@@ -1,4 +1,3 @@
-
 #' Global Triangular and Hexa-Pentagonal Grids Based on Tessellated Icosahedra
 #' 
 #' The \bold{icosa} package provides tools to aggregate and analyze geographic data
@@ -19,10 +18,7 @@
 #' @useDynLib icosa, .registration = TRUE, .fixes="Cpp"
 
 #' @importFrom Rcpp sourceCpp
-#' @importFrom rgl plot3d
 #' @importFrom sp coordinates
-#' @importFrom rgl lines3d
-#' @importFrom rgl persp3d
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom igraph induced_subgraph
 #' @importFrom sp sp.lines
@@ -43,6 +39,7 @@
 #' @importFrom graphics rect
 #' @importFrom graphics segments
 #' @importFrom graphics text
+#' @importFrom graphics locator
 #' @importFrom methods .hasSlot
 #' @importFrom methods as
 #' @importFrom methods callGeneric
@@ -51,9 +48,15 @@
 #' @importFrom stats rnorm
 #' @importFrom stats runif
 #' @importFrom utils combn
-
-
-
 NULL
 
-#the objects ---------
+#package namespace variables
+	origin<-c(0,0,0)
+	authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
+	meanRadius<-6371.0087714 # mean radius (R1) based on Mortiz, 1980
+	volRadius <-6371.0007900 # radius of sphere of same volume
+
+.onUnload <- function (libpath) {
+	library.dynam.unload("icosa", libpath)
+}
+

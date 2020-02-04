@@ -1,0 +1,531 @@
+setMethod(	
+	f="show",
+	signature="obj3d",
+	definition= function(object){
+		cat(paste("A/An ", class(object), " object with ", 
+			object@length[1], " vertices, ",
+			object@length[2], " edges and ",
+			object@length[3], " faces.\n",
+			sep=""))
+		if(class(object)%in% c("trigrid", "hexagrid")){
+			cat(paste("The mean grid edge length is ", 
+			round(object@edgeLength[1],2), " km or ",
+			round(object@edgeLength[2],2), " degrees.\n", sep=""))
+		}
+		cat("Use plot3d() to see a 3d render.\n")
+	}
+)
+
+
+#' The length of a trigrid or, hexagrid class object.
+#'
+#' The length of the object is interpreted as the number of faces it contains.
+#'
+#' @param x the object.
+#' @return An integer value
+#' @rdname length-methods
+#' @aliases trigrid-length-method
+#' @exportMethod length
+setMethod(	
+	f="length",
+	signature="trigrid",
+	definition= function(x){
+		return(x@length[3])
+	}
+)
+
+
+#' The vertices of an icosahedral grid object
+#'
+#' Shorthand function to return the vertices slot of an icosahedral grid or a grid linked to a facelayer. 
+#' @name vertices
+#' @param x The grid or facelayer object.
+#' @param output the coordinate system of the output.
+#' @rdname vertices-methods
+#' @exportMethod vertices
+setGeneric(
+	name="vertices",
+	def=function(x,output){
+		standardGeneric("vertices")
+	}
+)
+
+#' @rdname vertices-methods
+setMethod(	
+	f="vertices",
+	signature=c("trigrid","character"),
+	definition= function(x, output="polar"){
+		if(output=="polar"){
+			return(CarToPol(x@vertices, origin=x@center, norad=TRUE))
+		
+		}else{
+			return(x@vertices)
+		}
+	}
+)
+
+#' @rdname vertices-methods
+#' @exportMethod vertices
+setMethod(	
+	f="vertices",
+	signature=c("facelayer","character"),
+	definition= function(x, output="polar"){
+		actGrid <- get(x@grid)
+		if(output=="polar"){
+			return(CarToPol(actGrid@vertices, origin=actGrid@center, norad=TRUE))
+		
+		}else{
+			return(actGrid@vertices)
+		}
+	}
+)
+
+#' The faces of a 3d object
+#'
+#' Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a facelayer. 
+#' @param x The grid or facelayer object.
+#' @name faces
+#' @rdname faces-methods
+#' @exportMethod faces
+setGeneric(
+	name="faces",
+	def=function(x){
+		standardGeneric("faces")
+	}
+)
+
+#' @rdname faces-methods
+setMethod(	
+	f="faces",
+	signature="trigrid",
+	definition= function(x){
+		return(x@faces)
+	}
+)
+
+#' @rdname faces-methods
+setMethod(	
+	f="faces",
+	signature="gridlayer",
+	definition= function(x){
+		actGrid<-get(x@grid)
+		return(actGrid@faces)
+	}
+)
+
+#	#' @rdname faces-methods
+#	#' @aliases facelayer-faces-method
+#	#' @exportMethod faces
+#	setMethod(	
+#		f="faces",
+#		signature="facelayer",
+#		definition= function(x){
+#			actGrid<-get(x@grid)
+#			return(actGrid@faces)
+#		}
+#	)
+
+
+#' The edges of a 3d object
+#'
+#' Shorthand function to get the edges slot of an icosahedral grid or a grid linked to a facelayer. 
+#' @param x The grid or facelayer object.
+
+#' @name edges
+#' @rdname edges-methods
+#' @exportMethod edges
+setGeneric(
+	name="edges",
+	def=function(x){
+		standardGeneric("edges")
+	}
+)
+
+#' @rdname edges-methods
+setMethod(	
+	f="edges",
+	signature="obj3d",
+	definition= function(x){
+		return(x@edges)
+	}
+)
+
+#' @aliases facelayer-edges-method
+#' @exportMethod edges
+#' @rdname edges-methods
+setMethod(	
+	f="edges",
+	signature="facelayer",
+	definition= function(x){
+		actGrid<-get(x@grid)
+		return(actGrid@edges)
+	}
+)
+
+#' The face centers of an icosahedral grid object
+#'
+#' Shorthand function to return the faceCenters slot of an icosahedral grid or a grid linked to a facelayer. 
+#' @name centers
+#' @param x The grid or facelayer object.
+#' @param ... arguments passed to the class specific methods.
+#' @rdname centers-methods
+#' @exportMethod centers
+setGeneric(
+	name="centers",
+	def=function(x,...){
+		standardGeneric("centers")
+	}
+)
+#' The face centers of a trigrid or hexagrid class object
+#'
+#' Shorthand function to return the faceCenters slot of an icosahedral grid . 
+#
+#' @param output the coordinate system of the output. Either "polar" or "cartesian".
+#' @rdname centers-methods
+#' @aliases centers-trigrid-method
+setMethod(	
+	f="centers",
+	signature="trigrid",
+	definition= function(x, output="polar"){
+		if(output=="polar"){
+			return(CarToPol(x@faceCenters, origin=x@center, norad=TRUE))
+		
+		}else{
+			return(x@faceCenters)
+		}
+	}
+)
+
+#' The face centers of a trigrid or hexagrid class object that is linked to a facelayer
+#'
+#' Shorthand function to return the faceCenters slot of the linked icosahedral grid . 
+#
+#' @rdname centers-methods
+#' @aliases centers-facelayer-method
+#' @exportMethod centers
+setMethod(	
+	f="centers",
+	signature="facelayer",
+	definition= function(x, output="polar"){
+		actGrid <- get(x@grid)
+		if(output=="polar"){
+			return(CarToPol(actGrid@faceCenters, origin=actGrid@center, norad=TRUE))
+		
+		}else{
+			return(actGrid@faceCenters)
+		}
+	}
+)
+
+	
+#' Extracting the grid orientation
+#' 
+#' @name orientation
+#' 
+#' @param x (\code{trigrid} or \code{hexagrid}): Input grid. 
+#' @param display The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.
+#' @exportMethod orientation
+#' 
+#' @aliases orientation-method
+#' @rdname orientation-methods
+setGeneric(
+	name="orientation",
+	package="icosa",
+	def=function(x,...){
+		standardGeneric("orientation")
+	}
+)
+
+#' Extracting the grid orientation
+#' 
+#' @rdname orientation-methods
+#' @aliases orientation, trigrid-orientation-method	
+setMethod(
+	"orientation",
+	signature="trigrid",
+	definition=function(x,display="deg",...){
+		if(display=="rad"){
+			names(x@orientation)<-c("x (rad)", "y (rad)", "z (rad)")
+			return(x@orientation)
+		}
+		if(display=="deg"){
+			names(x@orientation)<-c("x (deg)", "y (deg)", "z (deg)")
+			return(x@orientation/pi*180)
+			
+		}
+	
+	}
+	
+)
+
+
+
+#' Setting the orientation of a trigrid or hexagrid object
+#' 
+#' @name orientation<-
+#' 
+#' @param value the vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.
+#' @param ... values passed on to the rotate() function.
+#' 
+#' @exportMethod orientation<-
+#' 
+#' @rdname orientation-methods
+setGeneric(
+	name="orientation<-",
+	def=function(x,value){
+		standardGeneric("orientation<-")
+	}
+	
+)
+
+#' Setting the orientation of a trigrid or hexagrid object
+#' 
+#' 
+#' 
+#' @aliases trigrid-setorientation-method
+#' @rdname orientation-methods
+setReplaceMethod(
+	"orientation",
+	signature="trigrid",
+	definition=function(x, value){
+		x<-rotate(x, angles=value)
+		return(x)
+	
+	}
+)
+
+
+
+
+#' Lengths of grid edges
+#' 
+#' This function will return the length of all edges in the specified grid object.
+#' 
+#' @name edgelength
+#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
+#' 
+#' @param ... arguments passed to the class specific methods.
+#' 
+#' @examples
+#' 	g <- trigrid(3)
+#' 	edges <- edgelength(g, output="deg")
+#' 	edges
+#' 
+#' @return A named numeric vector.
+#' 	
+#' @exportMethod edgelength
+#' @rdname edgelength-methods
+setGeneric(
+	name="edgelength",
+	def=function(gridObj,...){
+		standardGeneric("edgelength")
+	}
+
+)
+
+#' Lengths of grid edges
+#' 
+#' This function will return the length of all edges in the specified grid object.
+#' 
+#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
+#' 
+#' @param output Character value, the type of the output. \code{"distance"} will give back the distance
+#'	in the metric that was fed to the function in the coordinates or the radius.
+#'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
+#'	so in radians.
+#' 
+#' @rdname edgelength-trigrid-methods
+setMethod(
+	"edgelength", 
+	signature="trigrid",
+	definition=function(gridObj, output="distance"){
+		if(!output%in%c("distance", "rad", "deg")) stop("Invalid distance method.")
+		v<-gridObj@skeleton$v
+		e<-gridObj@skeleton$e
+		
+		if(output=="distance"){
+			met<-1
+		}else{
+			met<-0
+		}
+		sizes<-  .Call(Cpp_icosa_edges_, v, e, origin=as.integer(gridObj@center), method=as.logical(met))
+		
+		names(sizes)<-rownames(gridObj@edges)
+		
+		if(output=="deg") sizes<-sizes/pi*180
+		
+		return(sizes)
+		
+	}
+)
+
+
+#' Areas of grid cell surfaces
+#' 
+#' This function will return the areas of all cells in the specified grid object.
+#' 
+#' @name surfacearea
+#' @param gridObj A \code{trigrid} or \code{hexagrid} object. 
+#' 
+#'	in the metric that was fed to the function in the coordinates or the radius.
+#'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
+#'	so in radians.
+#' 
+#' @examples
+#' 	g <- trigrid(3)
+#' 	surfaces <- surfacearea(g)
+#' 	surfaces
+#' 
+#' @return A named numeric vector.
+#' 	
+#' @rdname surfacearea-methods
+#' @exportMethod surfacearea
+setGeneric(
+	name="surfacearea",
+	package="icosa",
+	def=function(gridObj){
+		standardGeneric("surfacearea")
+		
+	}
+)
+
+#' @rdname surfacearea-methods
+# ' @aliases surfacearea, trigrid-method	
+setMethod(
+	"surfacearea", 
+	signature="trigrid", 
+	def=function(gridObj){
+		# get the highest resolution faces
+		newF <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aF),1:3]
+		v <- gridObj@skeleton$v
+		
+		# call the surface calculation function
+		surfInner <-  .Call(Cpp_icosa_spherTriSurfs,
+			v=v, 
+			f=newF, 
+			origin=gridObj@center, 
+			pi=pi
+		)
+		
+		# reorganize the faces: outer representation
+		ord<-gridObj@skeleton$aF[as.logical(gridObj@skeleton$aF)]
+		
+		surfOuter<-surfInner
+		surfOuter[ord]<- surfInner
+		
+		names(surfOuter) <- rownames(gridObj@faces)
+		
+		return(surfOuter)
+	}
+)
+
+#' @rdname surfacearea-methods
+# ' @aliases surfacearea, hexagrid-method
+setMethod(
+	"surfacearea", 
+	signature="hexagrid", 
+	def=function(gridObj){
+		# get the highest resolution faces
+		newF <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aSF),1:3]
+		v <- gridObj@skeleton$v
+		
+		# call the surface calculation function
+		surfInner <-  .Call(Cpp_icosa_spherTriSurfs, 
+			v=v, 
+			f=newF, 
+			origin=gridObj@center, 
+			pi=pi
+		)
+		
+		# the subfaces belong to these face IDs in the outer representation
+		aS<-gridObj@skeleton$aSF[as.logical(gridObj@skeleton$aSF)]
+		
+		# calculate the sums of all subface areas in a face, and order them
+		doubleSurf<-tapply(INDEX=aS, X=surfInner, sum)
+		
+		# each subface occurs two times in the f matrix, divide area by 2
+		singleSurf <- doubleSurf/2
+		
+		# augment the names attributes
+		names(singleSurf)<- paste("F", names(singleSurf), sep="")
+		
+		return(singleSurf)
+	}
+)
+
+
+#' Shape distortions of the triangular faces and subfaces
+#' 
+#' This function will return a value that is proportional to the irregularity of a triangonal face or subface.
+#' 
+#' The value is exactly 1 for an equilateral triangle, and becomes 0 as one of the edges approach 0.
+#'
+#' @name trishape
+#' @param gridObj A \code{trigrid} or \code{hexagrid} object. 
+#' 
+#' @examples
+#' 	g <- trigrid(3)
+#' 	shape <- trishape(g)
+#' 	trishape
+#' 
+#' @return A named numeric vector.
+#' 	
+#' @rdname trishape-methods
+#' @exportMethod trishape
+setGeneric(
+	name="trishape",
+	def=function(gridObj){
+		standardGeneric("trishape")
+	}
+)
+
+#' @rdname trishape-methods
+setMethod(
+	"trishape",
+	signature="trigrid",
+	definition=function(gridObj){
+		# center back to origin if not there already
+		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
+			gridObj<-translate(gridObj,-gridObj@center)
+		}
+		
+		v <- gridObj@skeleton$v
+		f <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aF),]
+		
+		# the shapes in the inner order
+		innerShape <-.Call(Cpp_icosa_AllShapeTri_, v, f)
+		outerShape <- innerShape[gridObj@skeleton$uiF]
+
+		return(outerShape)
+	}
+)
+
+#' @rdname trishape-methods
+setMethod(
+	"trishape",
+	signature="hexagrid",
+	definition=function(gridObj){
+		# center back to origin if not there already
+		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
+			gridObj<-translate(gridObj,-gridObj@center)
+		}
+		
+		v <- gridObj@skeleton$v
+		f <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aSF),]
+		
+		# the shapes in the inner order
+		innerShape <-.Call(Cpp_icosa_AllShapeTri_, v, f)
+		outerShape<- tapply(
+			X=innerShape, 
+			INDEX=gridObj@skeleton$aSF[as.logical(gridObj@skeleton$aSF)],
+			FUN=mean)	
+		outerShape<-as.numeric(outerShape)
+		names(outerShape)<-paste("F", names(outerShape), sep="")
+		
+		return(outerShape)
+		
+	
+	}
+)
+
+		

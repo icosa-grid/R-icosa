@@ -227,6 +227,7 @@ setMethod(
 setGeneric(
 		name="lines3dInt",
 		def=function(x,...){
+			if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 			standardGeneric("lines3dInt")
 		}
 	

@@ -1,5 +1,12 @@
 # Change log
 
+## [0.9.88 (build 1011)] - 2002-02-04
+### Added
+- Collate field for DESCRIPTION
+
+### Changed
+- R file structure
+
 ## [0.9.88 (build 1010)] - 2002-02-03
 ### Added
 - conditional generic declaration to values<- 
@@ -11,6 +18,8 @@
 - complete NAMESPACE cleanup with roxygen
 - package 'raster' moved from 'Imports' to 'Suggests'
 
+### Removed 
+- old vignette
 
 ## [0.9.87 (build 1009)] - 2019-08-20
 ### Added 
