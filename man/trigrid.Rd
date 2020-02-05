@@ -3,9 +3,7 @@
 \docType{class}
 \name{trigrid}
 \alias{trigrid}
-\alias{trigrid-class}
 \alias{initialize,trigrid-method}
-\alias{trigrid-initalize-method}
 \title{A triangular icosahedral grid}
 \usage{
 \S4method{initialize}{trigrid}(.Object, tessellation = 1, sp = FALSE,

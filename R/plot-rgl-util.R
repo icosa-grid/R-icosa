@@ -52,7 +52,7 @@ blankSphere <- function (x, y=NULL, z=NULL, res=100, radius = authRadius, color=
 #' # plot some coordinates
 #'    guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
 #' @export
-guides3d<-function(axis=1.5, polgrid=c(30,30), textPG=FALSE, res=1,  origin=c(0,0,0), radius=authRadius, drad=1.1, ...){
+guides3d <- function(axis=1.5, polgrid=c(30,30), textPG=FALSE, res=1,  origin=c(0,0,0), radius=authRadius, drad=1.1, ...){
 	if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 	if(!is.null(axis)){
 		rgl::segments3d(x=c(0,0)+origin[1], y=c(0,0)+origin[2], z=c(-axis*radius,axis*radius)+origin[3],...)

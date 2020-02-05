@@ -6,22 +6,12 @@
 #' The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is 800x800 pixels. In case you want to override this, please
 #' use the function with 'defaultPar3d=FALSE' after running 'rgl::par3d(windowRect=<>)'. 
 #'  
-#' @param x The \code{facelayer} object to be plotted.
-#' 
-#' @param type A character value specifying the part of the grid to be plotted by the call of the function. 
-#' \code{"l"} plots the grid lines (only when frame=FALSE). 
-#' \code{"f"} draws the grid faces.
-#' \code{FALSE} does not plot the sphere. 
 #' @param defaultPar3d Logical value, whether the default settings for par3d() are to be used (windowRect = c(50, 60, 800, 800), zoom=0.8).
-#' @param guides If set to TRUE the guides3d() function will be run with col="green" and default settings.
 #' @param frame If set to TRUE the grid line structure will be plotted.
-#' 
-#' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
 #' 
 #' @S3method plot3d facelayer
 #' @rdname plot3d
 #' @export plot3d.facelayer
-# ' @aliases plot3d, plot3d-facelayer-method
 plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TRUE, ...){
 	
 		# default par3d options
@@ -64,13 +54,12 @@ plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TR
 #'  
 #' @param col graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.
 #' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
-#' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
+#' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
 #' @param discrete Description.
 #' @return The function does not return any value.
 #'
 #' @exportMethod faces3d
-#' @rdname faces3d-methods
-# ' @aliases faces3d, facelayer-method
+#' @rdname faces3d
 setMethod(	
 	f="faces3d",
 	signature="facelayer",

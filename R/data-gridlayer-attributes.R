@@ -15,8 +15,7 @@ if(requireNamespace("raster", quietly = TRUE)){
 #' The function will get the \code{@values} slot of a \code{gridlayer} object.
 #'
 #' @param x a gridlayer derived object.
-#' @aliases gridlayer-values-method
-#' @rdname values-methods
+#' @rdname values
 #' @exportMethod values
 setMethod(	
 	f="values",
@@ -28,8 +27,7 @@ setMethod(
 #' The length of a \code{gridlayer} class object.
 #' 
 #' This function returns the number of values present in the \code{gridlayer}.
-#' @rdname length-methods
-#' @aliases gridlayer-length-method
+#' @rdname length
 #' @exportMethod length
 setMethod(	
 	f="length",
@@ -45,8 +43,7 @@ setMethod(
 #'
 #' @param x A \code{gridlayer} class object.
 #' @return \code{character} vector, the names of the faces.
-#' @rdname names-methods
-#' @aliases gridlayer-names-method
+#' @rdname names
 #' @exportMethod names
 setMethod(	
 	f="names",
@@ -74,8 +71,7 @@ if(requireNamespace("raster", quietly = TRUE)){
 #' Shorthand function to replace all values of a \code{gridlayer} object.
 #'
 #' @param value replacement values.
-#' @aliases gridlayer-set-values-method
-#' @rdname values-methods
+#' @rdname values
 #' @exportMethod values<-
 setReplaceMethod(	
 	f="values",

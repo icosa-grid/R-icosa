@@ -4,7 +4,7 @@
 #'
 #' @param gridObj Either a \code{trigrid} or a \code{hexagrid} class object. 
 #' @param ... specific details of the new SpatialLines object. 
-#' @rdname SpLines-methods
+#' @rdname SpLines
 #' 
 #' @exportMethod SpLines
 setGeneric(
@@ -23,8 +23,7 @@ setGeneric(
 #' Can be switched off by setting it to \code{FALSE}.	
 #' 
 #' @param res The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.
-#' @rdname SpLines-methods
-#' @aliases SpLines-trigrid-method
+#' @rdname SpLines
 #' @return an object of class SpatialLines.
 #' @exportMethod SpLines
 setMethod(

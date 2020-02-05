@@ -4,7 +4,6 @@
 \name{newgraph}
 \alias{newgraph}
 \alias{newgraph,trigrid-method}
-\alias{newgraph-trigrid-method}
 \title{Add an igraph object to a predefined slot in a trigrid or hexagrid object}
 \usage{
 newgraph(gridObj, ...)

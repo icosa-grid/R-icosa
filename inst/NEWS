@@ -1,5 +1,13 @@
 # Change log
 
+## [0.9.88 (build 1013)] - 2002-02-04
+### Added
+- proper usage (roxygen tags before "function") for triggering help files in case of namespace conflicts.
+
+### Changed
+- Reorganization of Roxygen tags: removed all aliases, -method bullshit
+
+
 ## [0.9.88 (build 1012)] - 2002-02-04
 ### Changed
 - rgl package moved to Suggests from Depends, freeing the package from its grasp
@@ -27,6 +35,9 @@
 
 ### Removed 
 - old vignette
+
+----------------------------------------------------------------------
+
 
 ## [0.9.87 (build 1009)] - 2019-08-20
 ### Added 

@@ -4,7 +4,6 @@
 \name{SpLines}
 \alias{SpLines}
 \alias{SpLines,trigrid-method}
-\alias{SpLines-trigrid-method}
 \title{SpatialLines class object from an icosahedral grid}
 \usage{
 SpLines(gridObj, ...)

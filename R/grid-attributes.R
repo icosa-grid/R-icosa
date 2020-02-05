@@ -23,8 +23,7 @@ setMethod(
 #'
 #' @param x the object.
 #' @return An integer value
-#' @rdname length-methods
-#' @aliases trigrid-length-method
+#' @rdname length
 #' @exportMethod length
 setMethod(	
 	f="length",
@@ -41,7 +40,7 @@ setMethod(
 #' @name vertices
 #' @param x The grid or facelayer object.
 #' @param output the coordinate system of the output.
-#' @rdname vertices-methods
+#' @rdname vertices
 #' @exportMethod vertices
 setGeneric(
 	name="vertices",
@@ -50,7 +49,7 @@ setGeneric(
 	}
 )
 
-#' @rdname vertices-methods
+#' @rdname vertices
 setMethod(	
 	f="vertices",
 	signature=c("trigrid","character"),
@@ -64,7 +63,7 @@ setMethod(
 	}
 )
 
-#' @rdname vertices-methods
+#' @rdname vertices
 #' @exportMethod vertices
 setMethod(	
 	f="vertices",
@@ -85,7 +84,7 @@ setMethod(
 #' Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a facelayer. 
 #' @param x The grid or facelayer object.
 #' @name faces
-#' @rdname faces-methods
+#' @rdname faces
 #' @exportMethod faces
 setGeneric(
 	name="faces",
@@ -94,7 +93,7 @@ setGeneric(
 	}
 )
 
-#' @rdname faces-methods
+#' @rdname faces
 setMethod(	
 	f="faces",
 	signature="trigrid",
@@ -103,7 +102,7 @@ setMethod(
 	}
 )
 
-#' @rdname faces-methods
+#' @rdname faces
 setMethod(	
 	f="faces",
 	signature="gridlayer",
@@ -113,8 +112,7 @@ setMethod(
 	}
 )
 
-#	#' @rdname faces-methods
-#	#' @aliases facelayer-faces-method
+#	#' @rdname faces
 #	#' @exportMethod faces
 #	setMethod(	
 #		f="faces",
@@ -132,7 +130,7 @@ setMethod(
 #' @param x The grid or facelayer object.
 
 #' @name edges
-#' @rdname edges-methods
+#' @rdname edges
 #' @exportMethod edges
 setGeneric(
 	name="edges",
@@ -141,7 +139,7 @@ setGeneric(
 	}
 )
 
-#' @rdname edges-methods
+#' @rdname edges
 setMethod(	
 	f="edges",
 	signature="obj3d",
@@ -150,9 +148,8 @@ setMethod(
 	}
 )
 
-#' @aliases facelayer-edges-method
 #' @exportMethod edges
-#' @rdname edges-methods
+#' @rdname edges
 setMethod(	
 	f="edges",
 	signature="facelayer",
@@ -168,7 +165,7 @@ setMethod(
 #' @name centers
 #' @param x The grid or facelayer object.
 #' @param ... arguments passed to the class specific methods.
-#' @rdname centers-methods
+#' @rdname centers
 #' @exportMethod centers
 setGeneric(
 	name="centers",
@@ -181,8 +178,7 @@ setGeneric(
 #' Shorthand function to return the faceCenters slot of an icosahedral grid . 
 #
 #' @param output the coordinate system of the output. Either "polar" or "cartesian".
-#' @rdname centers-methods
-#' @aliases centers-trigrid-method
+#' @rdname centers
 setMethod(	
 	f="centers",
 	signature="trigrid",
@@ -200,8 +196,7 @@ setMethod(
 #'
 #' Shorthand function to return the faceCenters slot of the linked icosahedral grid . 
 #
-#' @rdname centers-methods
-#' @aliases centers-facelayer-method
+#' @rdname centers
 #' @exportMethod centers
 setMethod(	
 	f="centers",
@@ -226,8 +221,7 @@ setMethod(
 #' @param display The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.
 #' @exportMethod orientation
 #' 
-#' @aliases orientation-method
-#' @rdname orientation-methods
+#' @rdname orientation
 setGeneric(
 	name="orientation",
 	package="icosa",
@@ -238,8 +232,7 @@ setGeneric(
 
 #' Extracting the grid orientation
 #' 
-#' @rdname orientation-methods
-#' @aliases orientation, trigrid-orientation-method	
+#' @rdname orientation
 setMethod(
 	"orientation",
 	signature="trigrid",
@@ -269,7 +262,7 @@ setMethod(
 #' 
 #' @exportMethod orientation<-
 #' 
-#' @rdname orientation-methods
+#' @rdname orientation
 setGeneric(
 	name="orientation<-",
 	def=function(x,value){
@@ -282,8 +275,7 @@ setGeneric(
 #' 
 #' 
 #' 
-#' @aliases trigrid-setorientation-method
-#' @rdname orientation-methods
+#' @rdname orientation
 setReplaceMethod(
 	"orientation",
 	signature="trigrid",
@@ -314,7 +306,7 @@ setReplaceMethod(
 #' @return A named numeric vector.
 #' 	
 #' @exportMethod edgelength
-#' @rdname edgelength-methods
+#' @rdname edgelength
 setGeneric(
 	name="edgelength",
 	def=function(gridObj,...){
@@ -334,7 +326,7 @@ setGeneric(
 #'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 #'	so in radians.
 #' 
-#' @rdname edgelength-trigrid-methods
+#' @rdname edgelength
 setMethod(
 	"edgelength", 
 	signature="trigrid",
@@ -378,7 +370,7 @@ setMethod(
 #' 
 #' @return A named numeric vector.
 #' 	
-#' @rdname surfacearea-methods
+#' @rdname surfacearea
 #' @exportMethod surfacearea
 setGeneric(
 	name="surfacearea",
@@ -389,8 +381,7 @@ setGeneric(
 	}
 )
 
-#' @rdname surfacearea-methods
-# ' @aliases surfacearea, trigrid-method	
+#' @rdname surfacearea
 setMethod(
 	"surfacearea", 
 	signature="trigrid", 
@@ -419,8 +410,7 @@ setMethod(
 	}
 )
 
-#' @rdname surfacearea-methods
-# ' @aliases surfacearea, hexagrid-method
+#' @rdname surfacearea
 setMethod(
 	"surfacearea", 
 	signature="hexagrid", 
@@ -470,7 +460,7 @@ setMethod(
 #' 
 #' @return A named numeric vector.
 #' 	
-#' @rdname trishape-methods
+#' @rdname trishape
 #' @exportMethod trishape
 setGeneric(
 	name="trishape",
@@ -479,7 +469,7 @@ setGeneric(
 	}
 )
 
-#' @rdname trishape-methods
+#' @rdname trishape
 setMethod(
 	"trishape",
 	signature="trigrid",
@@ -500,7 +490,7 @@ setMethod(
 	}
 )
 
-#' @rdname trishape-methods
+#' @rdname trishape
 setMethod(
 	"trishape",
 	signature="hexagrid",

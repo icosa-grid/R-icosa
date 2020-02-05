@@ -245,11 +245,7 @@ setGeneric(
 	
 
 #' 3d plotting method of a Line class object
-#' 
-#' The function draws the segments of a Line clas object in 3d.
-#' @rdname lines3d-methods
-#' @aliases Line-lines3d-method
-#' @exportMethod lines3d
+#' @rdname lines3d
 setMethod(
 	"lines3d",
 	signature="Line",
@@ -288,11 +284,8 @@ setMethod(
 	
 #' 3d  plotting method of a Lines class object
 #' 
-#' The function draws the segments of a Line clas object in 3d.
-#' @param ... arguments passed to rgl::lines3d()
-#' @rdname lines3d-methods
-#' @aliases Lines-lines3d-method
-#' @exportMethod lines3d
+#' @param radius Used for plotting objects that inherit from Spatial*. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.
+#' @rdname lines3d
 setMethod(
 	"lines3d",
 	signature="Lines",
@@ -327,22 +320,17 @@ setMethod(
 		}
 	)
 	
-	#3B. SpatialLines
-	#' lines3d method for the SpatialLines class
-	#' @rdname lines3d-methods
-	#' @param x the SpatialLines object
-	#' @param y unused argument of the lines3d() generic.
-	#' @param z unused argument of the lines3d() generic.
-	#' @aliases lines3d, SpatialLines-method
-	#' @exportMethod lines3d
-		setMethod(
-			"lines3d",
-			signature="SpatialLines",
-			definition=function(x,radius=authRadius, ...){
-				y<-To3d(x, radius=radius)
-				lines3dInt(y,...)	
-			}
-		)
+
+#' lines3d method for the SpatialLines class
+#' @rdname lines3d
+	setMethod(
+		"lines3d",
+		signature="SpatialLines",
+		definition=function(x,radius=authRadius, ...){
+			y<-To3d(x, radius=radius)
+			lines3dInt(y,...)	
+		}
+	)
 	
 	#4A. SpatialLines3dDataFrame
 		
@@ -371,19 +359,17 @@ setMethod(
 		}
 	)
 	
-	#4B. SpatialLinesDataFrame
-	#' lines3d method for the SpatialLinesDataFrame
-	#' @rdname lines3d-methods
-	#' @aliases lines3d-SpatialLinesDataFrame-method
-	#' @exportMethod lines3d
-		setMethod(
-			"lines3d",
-			signature="SpatialLinesDataFrame",
-			definition=function(x,radius=authRadius, ...){
-				y<-To3d(x, radius=radius)
-				lines3dInt(y,...)	
-			}
-		)
+#4B. SpatialLinesDataFrame
+#' lines3d method for the SpatialLinesDataFrame
+#' @rdname lines3d
+	setMethod(
+		"lines3d",
+		signature="SpatialLinesDataFrame",
+		definition=function(x,radius=authRadius, ...){
+			y<-To3d(x, radius=radius)
+			lines3dInt(y,...)	
+		}
+	)
 		
 	
 #3d Line plotting and coordinate extraction (Polygons)	
@@ -397,18 +383,16 @@ setMethod(
 	)
 	
 	#1B. Polygon
-	#' lines3d method for the Polygon class
-	#' @rdname lines3d-methods
-	#' @aliases lines3d-Polygon-method
-	#' @exportMethod lines3d
-	setMethod(
-		"lines3d",
-		signature="Polygon",
-		definition=function(x,radius=authRadius, ...){
-			y<-To3d(x, radius=radius)
-			lines3dInt(y,...)
-		}
-	)
+#' lines3d method for the Polygon class
+#' @rdname lines3d
+setMethod(
+	"lines3d",
+	signature="Polygon",
+	definition=function(x,radius=authRadius, ...){
+		y<-To3d(x, radius=radius)
+		lines3dInt(y,...)
+	}
+)
 	
 	
 	
@@ -436,19 +420,17 @@ setMethod(
 		}
 	)
 	
-	#2B. Polygons
-	#' lines3d method for the Polygon sclass
-	#' @rdname lines3d-methods
-	#' @aliases lines3d-Polygons-method
-	#' @exportMethod lines3d
-		setMethod(
-			"lines3d",
-			signature="Polygons",
-			definition=function(x,radius=authRadius, ...){
-				y<-To3d(x, radius=radius)
-				lines3dInt(y,...)	
-			}
-		)
+
+#' lines3d method for the Polygon sclass
+#' @rdname lines3d
+	setMethod(
+		"lines3d",
+		signature="Polygons",
+		definition=function(x,radius=authRadius, ...){
+			y<-To3d(x, radius=radius)
+			lines3dInt(y,...)	
+		}
+	)
 	
 	#3A. SpatialPolygons3d
 	setMethod(
@@ -475,19 +457,17 @@ setMethod(
 		}
 	)
 	
-	#3B. SpatialPolygons
-	#' lines3d method for the SpatialPolygons sclass
-	#' @rdname lines3d-methods
-	#' @aliases lines3d-SpatialPolygons-method
-	#' @exportMethod lines3d
-		setMethod(
-			"lines3d",
-			signature="SpatialPolygons",
-			definition=function(x,radius=authRadius,...){
-				y<-To3d(x, radius=radius)
-				lines3dInt(y,...)	
-			}
-		)
+
+#' lines3d method for the SpatialPolygons sclass
+#' @rdname lines3d
+	setMethod(
+		"lines3d",
+		signature="SpatialPolygons",
+		definition=function(x,radius=authRadius,...){
+			y<-To3d(x, radius=radius)
+			lines3dInt(y,...)	
+		}
+	)
 	
 	#4A. SpatialPolygons3dDataFrame
 	setMethod(
@@ -515,19 +495,17 @@ setMethod(
 		}
 	)
 	
-	#4B. SpatialPolygonsDataFrame
-	#' lines3d method for the SpatialPolygonsDataFrame sclass
-	#' @rdname lines3d-methods
-	#' @aliases lines3d-SpatialPolygonsDataFrame-method
-	#' @exportMethod lines3d
-		setMethod(
-			"lines3d",
-			signature="SpatialPolygonsDataFrame",
-			definition=function(x,radius=authRadius, ...){
-				y<-To3d(x, radius=radius)
-				lines3dInt(y,...)	
-			}
-		)
+#4B. SpatialPolygonsDataFrame
+#' lines3d method for the SpatialPolygonsDataFrame sclass
+#' @rdname lines3d
+	setMethod(
+		"lines3d",
+		signature="SpatialPolygonsDataFrame",
+		definition=function(x,radius=authRadius, ...){
+			y<-To3d(x, radius=radius)
+			lines3dInt(y,...)	
+		}
+	)
 	
 
 

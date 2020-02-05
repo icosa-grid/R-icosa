@@ -3,7 +3,6 @@
 \docType{methods}
 \name{names,gridlayer-method}
 \alias{names,gridlayer-method}
-\alias{gridlayer-names-method}
 \title{The face names in a \code{gridlayer} class object}
 \usage{
 \S4method{names}{gridlayer}(x)

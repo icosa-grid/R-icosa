@@ -6,9 +6,9 @@
 #'
 #' @param x The gridlayer object to be subsetted.
 #' @param subsetVector Vector object indicating the faces to be subsetted.
+#' @param ... Not in use.
 #'
-#' @rdname subset-methods
-#' @aliases subset-gridlayer-method
+#' @rdname subset
 #' @exportMethod subset
 setMethod(
 	"subset",
@@ -114,9 +114,7 @@ setMethod(
 #' 
 #' Shorthand to the subset() function.
 #' 
-#' @rdname subset-methods
-#'
-#' @aliases [-gridlayer-index-method
+#' @rdname subset
 #' @exportMethod "["
 setMethod(
 	"[",
@@ -131,9 +129,8 @@ setMethod(
 #' 
 #' Shorthand to the subset() function.
 #' 
-#' @rdname subset-methods
+#' @rdname subset
 #'
-#' @aliases [-gridlayer-Extent-method
 #' @exportMethod "["
 setMethod(
 	"[",
@@ -164,9 +161,8 @@ setMethod(
 #' @param x the gridlayer.
 #' @param i the subsetting vector, as in subset(). 
 #' @param value the replacement values.
-#' @rdname replace-methods
+#' @rdname replace
 #'
-#' @aliases replace-gridlayer-method
 #' @exportMethod "[<-"
 setReplaceMethod(
 	"[",

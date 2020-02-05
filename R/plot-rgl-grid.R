@@ -49,7 +49,6 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #' # plot the subset defined above
 #'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
 #' @rdname plot3d
-#' @aliases plot3d, plot3d-trigrid-method
 #' @S3method plot3d trigrid
 #' @export plot3d.trigrid
 plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, ...){
@@ -87,7 +86,7 @@ plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, 
 		
 	if(type=="l")
 	{
-		icosa::lines3d(x, ...)
+		lines3d(x, ...)
 	}
 	
 	if(type=="f")
@@ -109,7 +108,6 @@ plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, 
 #' 3d plotting of an icosahedral grid or its subset
 #' @rdname plot3d
 #' @param color Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.
-#' @aliases plot3d, plot3d-hexagrid-method
 #' @S3method plot3d hexagrid
 #' @export plot3d.hexagrid
 plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALSE, guides=TRUE, ...){
@@ -147,7 +145,7 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 		
 	if(type=="l")
 	{
-		icosa::lines3d(x, ...)
+		lines3d(x, ...)
 	}
 	
 	if(type=="f")
@@ -181,30 +179,16 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 	
 }
 
-
-# Conditional generic function for rgl::lines3d()
-if(requireNamespace("rgl", quietly = TRUE)){
-	setGeneric("lines3d", def=rgl::lines3d, package="rgl")
-}else{
-	setGeneric(
-		name="lines3d",
-		def=function(x,...){
-			if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
-			standardGeneric("lines3d")
-		}
-	)
-}
-
-
-
-#' Methods of 3d line plotting.
+#' Methods of 3d line plotting
 #' 
-#' This is a generic function used to plot the edge lines of either a \code{trigrid} or a \code{hexagrid} object in 3d space. The method is also implemented for 
+#' This is a generic function used to plot the edge lines of either a \code{trigrid} or a \code{hexagrid} object, a \code{facelayer}, or \code{Spatial} objects in 3d space. The method is also implemented for 
 #' the object classes defined by the package 'sp'.
 #' 
-#' The function is built on the openGL renderer of the R package \code{rgl}.
+#' The function is built on the openGL renderer of the R package \code{rgl}, which needs to be installed for the function to run. Although the function is works without attaching rgl, note that if you want to attach both \code{icosa} and \code{rgl},the \code{rgl} package has to be loaded ifrst otherwise the function will not be usable.
 #'  
 #' @param x The \code{trigrid}, \code{hexagrid}, \code{facelayer} or \code{sp} object to be plotted.
+#' @param y Not used. 
+#' @param z Not used. 
 #' @param arcs Logical value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.
 #' 
 #' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
@@ -220,8 +204,23 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #'    subG <- subset(g, c("F5", "F2"))
 #' # plot the subset defined above
 #'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
-#' @rdname lines3d-method
-#' @aliases lines3d-trigrid-method
+#' @rdname lines3d
+"lines3d"
+if(requireNamespace("rgl", quietly = TRUE)){
+	setGeneric("lines3d", def=rgl::lines3d, package="rgl")
+}else{
+	setGeneric(
+		name="lines3d",
+		def=function(x,y=NULL,z=NULL, ...){
+			if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+			standardGeneric("lines3d")
+		}
+	)
+}
+
+
+#' lines3d method for the trigrid class
+#' @rdname lines3d
 #' @exportMethod lines3d
 setMethod(
 	"lines3d",
@@ -270,7 +269,7 @@ setMethod(
 #' # plot the subset defined above
 #'     faces3d(subG, col="orange")
 #' @exportMethod faces3d
-#' @rdname faces3d-methods
+#' @rdname faces3d
 setGeneric(
 	name="faces3d",
 	package="icosa",
@@ -289,8 +288,7 @@ setGeneric(
 #'  
 #' @return The function does not return any value.
 #'
-#' @rdname faces3d-methods
-#' @aliases faces3d, faces3d-trigrid-method	
+#' @rdname faces3d
 setMethod(
 	"faces3d",
 	signature="trigrid",
@@ -315,8 +313,8 @@ setMethod(
 #'  
 #' @return The function does not return any value.
 #'
-#' @rdname faces3d-methods
-#' @aliases faces3d, faces3d-hexagrid-method	
+#' @rdname faces3d
+
 setMethod(
 	"faces3d",
 	signature="hexagrid",
@@ -363,7 +361,7 @@ setMethod(
 #' # plot the names of the vertices
 #'     gridlabs3d(g, type="v", col="blue", cex=0.6)
 #' @exportMethod gridlabs3d
-#' @rdname gridlabs3d-methods
+#' @rdname gridlabs3d
 setGeneric(
 	name="gridlabs3d",
 	package="icosagrid",
@@ -374,8 +372,7 @@ setGeneric(
 	}
 )
 
-#' @rdname gridlabs3d-methods
-#' @aliases gridlabs3d, gridlabs3d-trigrid-method
+#' @rdname gridlabs3d
 setMethod(
 	"gridlabs3d",
 	signature="trigrid",
@@ -404,8 +401,7 @@ setMethod(
 	}
 )
 	
-#' @rdname gridlabs3d-methods
-#' @aliases gridlabs3d, gridlabs3d-hexagrid-method
+#' @rdname gridlabs3d
 setMethod(
 	"gridlabs3d",
 	signature="hexagrid",

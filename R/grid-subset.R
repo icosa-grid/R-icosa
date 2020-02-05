@@ -1,4 +1,4 @@
-#' Subsetting an icosahedral grid
+#' Subsetting an icosahedral grid or data layers organized with them
 #' 
 #' This is a generic function used to access data from either a triangular or hexagonal grid using the names of the faces, integers or logical vectors. 
 #' 
@@ -29,10 +29,14 @@
 #'		gDateLine<-g[c(lomax=-150, lomin=150)]
 #'			plot3d(gDateLine)
 #'
-#' @rdname subset-methods
-#' @aliases subset, subset-trigrid-method
+#' @rdname subset
 #' @return Subset of the input grid. The class of the original object is retained, the \code{@skeleton} slot contains all previous information.
 #' @exportMethod subset
+"subset"
+
+
+#' Subset method of the trigrid class
+#' @rdname subset
 setMethod(
 	"subset",
 	signature="trigrid",
@@ -198,9 +202,8 @@ setMethod(
 	}
 )
 
-#' @rdname subset-methods
-#' @aliases subset, subset-hexagrid-method
-#' @exportMethod subset
+#' Subset method of the hexagrid class
+#' @rdname subset
 setMethod(
 	"subset",
 	signature="hexagrid",
@@ -367,15 +370,11 @@ setMethod(
 
 
 #' Extract subset faces of a trigrid or hexagrid object using.
-#' 
-#' Shorthand for the subset function.
-#'
-#' @rdname subset-methods
-#' @aliases [-trigrid-method
+#' @rdname subset
 setMethod(
 	"[",
 	signature="trigrid",
-#	definition=function(x,i,j,..., drop=TRUE){
+
 	definition=function(x,i){
 		subset(x, i)
 	

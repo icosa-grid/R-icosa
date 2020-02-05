@@ -222,9 +222,8 @@ setMethod(
 #'
 #' @param radius The radius of the grid. Defaults to the authalic radius of Earth.
 #' @param center The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
-#' @rdname trigrid-class
+#' @rdname trigrid
 #' @name trigrid
-#' @aliases trigrid-class
 #'
 #' @return A triangular grid object, with class \code{trigrid}.
 #' @examples
@@ -250,9 +249,7 @@ trigrid<-setClass(
 )
 
 
-
-#' @rdname trigrid-class
-#' @aliases trigrid-initalize-method
+#' @rdname trigrid
 #' @param .Object non-argument pointing to self.
 #' @export trigrid
 setMethod(
@@ -558,9 +555,8 @@ setMethod(
 #' @param radius The radius of the grid. Defaults to the authalic radius of Earth.
 #' @param center The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
 #'
-#' @rdname hexagrid-class
+#' @rdname hexagrid
 #' @name hexagrid
-#' @aliases hexagrid-class
 #'
 #' @return A hexagonal grid object, with class \code{hexagrid}.
 #' @examples
@@ -574,8 +570,7 @@ hexagrid<-setClass(
 
 
 
-#' @rdname hexagrid-class
-#' @aliases hexagrid-initalize-method
+#' @rdname hexagrid
 #' @param .Object non-argument pointing to self.
 #' @export hexagrid
 setMethod(

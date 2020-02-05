@@ -4,9 +4,7 @@
 \name{centers}
 \alias{centers}
 \alias{centers,trigrid-method}
-\alias{centers-trigrid-method}
 \alias{centers,facelayer-method}
-\alias{centers-facelayer-method}
 \title{The face centers of an icosahedral grid object}
 \usage{
 centers(x, ...)

@@ -3,7 +3,6 @@
 \docType{methods}
 \name{[<-,gridlayer,ANY,ANY-method}
 \alias{[<-,gridlayer,ANY,ANY-method}
-\alias{replace-gridlayer-method}
 \title{Replacement of elements in a gridlayer object.}
 \usage{
 \S4method{[}{gridlayer,ANY,ANY}(x, i) <- value

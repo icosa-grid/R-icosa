@@ -2,7 +2,7 @@
 #'
 #' @name newgraph
 #		
-#' @rdname newgraph-methods
+#' @rdname newgraph
 #' @param gridObj an icosahedral grid.
 #' @param ... arguments passed to the gridgraph() function.
 #' @examples
@@ -22,8 +22,7 @@ setGeneric(
 
 #' Add an igraph object to a predefined slot in a trigrid or hexagrid object
 #'
-#' @rdname newgraph-methods
-#' @aliases newgraph-trigrid-method
+#' @rdname newgraph
 #' @examples
 #'		#create a grid
 #'		g<-trigrid(4, graph=FALSE)
@@ -47,7 +46,7 @@ setMethod(
 #' @return The function returns an undirected igraph graph.
 #' @param x the icosahedral grid or facelayer.
 #' @param ... arguments passed to the class specific methods.
-#' @rdname gridgraph-methods
+#' @rdname gridgraph
 #' @exportMethod gridgraph
 setGeneric(
 		name="gridgraph",
@@ -63,8 +62,7 @@ setGeneric(
 #' @return The function returns an 'igraph' graph.
 #' @param directed logical value, defaults to FALSE creating an undirected graph. If TRUE than the graph will be directed.
 #' @param distances logical values, defaults to FALSE. If TRUE than the distances between the linked faces will be calculated and will be rendered to the edges as [["dist"]].
-#' @rdname gridgraph-methods
-#' @aliases gridgraph-trigrid-method
+#' @rdname gridgraph
 setMethod(
 	f="gridgraph",
 	signature="trigrid",
@@ -146,8 +144,7 @@ setMethod(
 #' The function can be applied to a hexagrid class object.
 #' @return The function returns an 'igraph' graph.
 
-#' @rdname gridgraph-methods
-#' @aliases gridgraph-hexagrid-method
+#' @rdname gridgraph
 #' @exportMethod gridgraph
 setMethod(
 	f="gridgraph",
@@ -224,7 +221,7 @@ setMethod(
 #' @return A character vector or a list of character vectors.
 #' 	
 #' @exportMethod vicinity
-#' @rdname vicinity-methods
+#' @rdname vicinity
 setGeneric(
 	name="vicinity",
 	def=function(gridObj,faces,...){
@@ -232,7 +229,7 @@ setGeneric(
 	}
 )
 
-#' @rdname vicinity-methods
+#' @rdname vicinity
 setMethod(
 	"vicinity",
 	signature=c("trigrid","character"),

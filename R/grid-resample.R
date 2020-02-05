@@ -12,14 +12,17 @@ if(requireNamespace("raster", quietly = TRUE)){
 }
 
 
-#' Resampling of data to a trigrid or a hexagrid object.
+#' Resampling of data with a trigrid or a hexagrid object.
 #'
 #' The function is used to resolve and resample data stored in RasterLayers and facelayers so they can be fitted to and can be plotted by using trigrid or hexagrid objects.
 #'
 #' This method is necessary to utilize rasterized data in the icosa package. The only method currently implemented upscales the raster data and then resolve the values to the trigrid or hexagrid values, using averages. In the case of resampling rasterlayers, the method argument will be passed to the raster::resample() function. 
+#' @rdname resample
+"resample"
+
+#' Resample method of trigrid
 #' @param na.rm logical value. If a face contains a missing value, should its value be NA as well (FALSE) or calculate the mean anyway (TRUE).
-#' @aliases Raster-trigrid-resample-method
-#' @rdname resample-methods
+#' @rdname resample
 #' @exportMethod resample
 setMethod(
 	"resample",

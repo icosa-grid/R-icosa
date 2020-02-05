@@ -4,9 +4,7 @@
 \name{SpPolygons}
 \alias{SpPolygons}
 \alias{SpPolygons,trigrid-method}
-\alias{SpPolygons-trigrid-method}
 \alias{SpPolygons,hexagrid-method}
-\alias{SpPolygons-hexagrid-method}
 \title{Spatial polygons from an icosahedral grid}
 \usage{
 SpPolygons(gridObj, res)

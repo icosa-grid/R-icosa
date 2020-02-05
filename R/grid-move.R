@@ -18,8 +18,12 @@ if(requireNamespace("raster", quietly = TRUE)){
 #' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
 #' @rdname rotate
 #' @return Another \code{trigrid} or \code{hexagrid} class object.
-#' @aliases rotate, trigrid-rotate-method		
 #' @exportMethod rotate
+"rotate"
+
+
+#' Rotation method of trigrid class
+#' @rdname rotate
 setMethod(	
 	f="rotate",
 	signature="trigrid",
@@ -109,7 +113,7 @@ setMethod(
 #' @return The same grid structure as the input, but with translated coordinates.
 #' 	
 #' @exportMethod translate
-#' @rdname translate-methods
+#' @rdname translate
 setGeneric(
 	name="translate",
 	package="icosa",
@@ -118,7 +122,7 @@ setGeneric(
 	}
 )
 
-#' @rdname translate-methods
+#' @rdname translate
 setMethod(
 	"translate",
 	signature=c("trigrid","numeric"),
@@ -134,7 +138,7 @@ setMethod(
 	}
 )
 
-#' @rdname translate-methods
+#' @rdname translate
 #' @exportMethod translate
 setMethod(
 	"translate",

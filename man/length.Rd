@@ -4,9 +4,7 @@
 \docType{methods}
 \name{length,trigrid-method}
 \alias{length,trigrid-method}
-\alias{trigrid-length-method}
 \alias{length,gridlayer-method}
-\alias{gridlayer-length-method}
 \title{The length of a trigrid or, hexagrid class object.}
 \usage{
 \S4method{length}{trigrid}(x)

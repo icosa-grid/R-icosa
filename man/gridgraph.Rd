@@ -4,11 +4,8 @@
 \name{gridgraph}
 \alias{gridgraph}
 \alias{gridgraph,trigrid-method}
-\alias{gridgraph-trigrid-method}
 \alias{gridgraph,hexagrid-method}
-\alias{gridgraph-hexagrid-method}
 \alias{gridgraph,facelayer-method}
-\alias{gridgraph-facelayer-method}
 \title{Create or instantiate an 'igraph' class graph from the faces of an icosahedral grid}
 \usage{
 gridgraph(x, ...)

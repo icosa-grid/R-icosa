@@ -4,10 +4,7 @@
 \name{faces3d}
 \alias{faces3d}
 \alias{faces3d,trigrid-method}
-\alias{faces3d,}
-\alias{faces3d-trigrid-method}
 \alias{faces3d,hexagrid-method}
-\alias{faces3d-hexagrid-method}
 \alias{faces3d,facelayer-method}
 \title{Methods of 3d face plotting.}
 \usage{
@@ -29,9 +26,9 @@ faces3d(x, ...)
 
 \item{breaks}{Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
 
-\item{discrete}{Description.}
+\item{inclusive}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
 
-\item{inclusve}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
+\item{discrete}{Description.}
 }
 \value{
 The function does not return any value.

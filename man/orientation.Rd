@@ -3,13 +3,9 @@
 \docType{methods}
 \name{orientation}
 \alias{orientation}
-\alias{orientation-method}
 \alias{orientation,trigrid-method}
-\alias{orientation,}
-\alias{trigrid-orientation-method}
 \alias{orientation<-}
 \alias{orientation<-,trigrid-method}
-\alias{trigrid-setorientation-method}
 \title{Extracting the grid orientation}
 \usage{
 orientation(x, ...)

@@ -3,9 +3,7 @@
 \docType{class}
 \name{hexagrid}
 \alias{hexagrid}
-\alias{hexagrid-class}
 \alias{initialize,hexagrid-method}
-\alias{hexagrid-initalize-method}
 \title{A penta-hexagonal icosahedral grid}
 \usage{
 \S4method{initialize}{hexagrid}(.Object, tessellation = 1, sp = FALSE,

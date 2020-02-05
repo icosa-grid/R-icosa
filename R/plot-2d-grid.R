@@ -3,8 +3,12 @@
 #'	This function will invoke the \code{plot()} method of the SpatialPolygons class.
 #' @param projargs a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.
 #' @param ... arguments passed to the sp::plot() function.
-#' @rdname plot-methods
+#' @rdname plot
 #' @exportMethod plot
+"plot"
+
+#' Plot method for the trigrid object class
+#' @rdname plot
 setMethod(
 	"plot",
 	signature="trigrid",

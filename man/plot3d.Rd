@@ -3,10 +3,7 @@
 \name{plot3d}
 \alias{plot3d}
 \alias{plot3d.trigrid}
-\alias{plot3d,}
-\alias{plot3d-trigrid-method}
 \alias{plot3d.hexagrid}
-\alias{plot3d-hexagrid-method}
 \alias{plot3d.facelayer}
 \title{3d plotting of an icosahedral grid or its subset}
 \usage{
@@ -44,17 +41,6 @@ plot3d(x,...)
 \item{frame}{If set to TRUE the grid line structure will be plotted.}
 
 \item{defaultPar3d}{Logical value, whether the default settings for par3d() are to be used (windowRect = c(50, 60, 800, 800), zoom=0.8).}
-
-\item{x}{The \code{facelayer} object to be plotted.}
-
-\item{type}{A character value specifying the part of the grid to be plotted by the call of the function. 
-\code{"l"} plots the grid lines (only when frame=FALSE). 
-\code{"f"} draws the grid faces.
-\code{FALSE} does not plot the sphere.}
-
-\item{guides}{If set to TRUE the guides3d() function will be run with col="green" and default settings.}
-
-\item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).}
 }
 \value{
 The function does not return any value.

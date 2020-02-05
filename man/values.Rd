@@ -3,9 +3,7 @@
 \docType{methods}
 \name{values,gridlayer-method}
 \alias{values,gridlayer-method}
-\alias{gridlayer-values-method}
 \alias{values<-,gridlayer-method}
-\alias{gridlayer-set-values-method}
 \title{Extract values from a gridlayer}
 \usage{
 \S4method{values}{gridlayer}(x)

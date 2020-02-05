@@ -300,7 +300,7 @@ setMethod(
 #'	randomPoints<-rpsphere(4, output="polar")
 #'	# cells
 #'	locate(g, randomPoints)
-#' @rdname locate-methods
+#' @rdname locate
 #' @exportMethod locate
 setGeneric(
 		name="locate",
@@ -313,7 +313,7 @@ setGeneric(
 
 # locate method for the trigrid v6.0
 # this version uses my own c++ function for point in tetrahedron testing
-#' @rdname locate-methods
+#' @rdname locate
 #' @exportMethod locate
 setMethod(
 	"locate", 
@@ -468,8 +468,7 @@ setMethod(
 # locate method for the hexagrid v6.0
 # this version uses my own c++ function for point in tetrahedron testing
 #' @param forceNA logical value, suppressing the recursive lookup of points falling on subface boundaries.
-#' @rdname locate-methods
-# ' @aliases locate, hexagrid-method
+#' @rdname locate
 #' @exportMethod locate
 setMethod(
 	"locate", 

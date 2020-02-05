@@ -4,9 +4,7 @@
 #' The function can be applied to a facelayer class object of logical values. The resulting graph will have the characteristics of the original grid (directed/undirected etc.).
 #' @return The function returns an 'igraph' graph.
 #' @exportMethod gridgraph
-#' @rdname gridgraph-methods
-#' @aliases gridgraph-facelayer-method
-#' @exportMethod gridgraph
+#' @rdname gridgraph
 setMethod(
 	f="gridgraph",
 	signature="facelayer",

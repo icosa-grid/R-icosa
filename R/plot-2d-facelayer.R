@@ -5,6 +5,7 @@
 #' The function passes arguments to the plot method of the SpatialPolygons class (€ref). In case a heatmap is plotted and the windows plotting device gets resized,
 #' some misalignments can happen. If you want to use a differently sized window, use windows() to set the height and width before running the function.
 #' @param x The facelayer object to be plotted.
+#' @param y Not used.
 #' @param frame Logical value, if TRUE the grid boundaries will be drawn with black.
 #' @param col Character vector. Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the facelayer contains logical values, a single value is required (defaults to red).
 #' @param border Character value specifying the color of the borders of the cells.
@@ -13,7 +14,7 @@
 #' @param legend (\code{logical}): Should the legend be plotted? 
 #' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
 #' @param discrete \code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
-#' @rdname plot-methods
+#' @rdname plot
 #' @exportMethod plot
 setMethod(
 	"plot",

@@ -2,7 +2,7 @@
 #'
 #' @name newsp
 #		
-#' @rdname newsp-methods
+#' @rdname newsp
 #' @param gridObj an icosahedral grid.
 #' @param res The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.
 #' 
@@ -21,7 +21,7 @@ setGeneric(
 
 )
 
-#' @rdname newsp-methods
+#' @rdname newsp
 setMethod(
 	"newsp",
 	signature="trigrid",
@@ -40,7 +40,7 @@ setMethod(
 #'		
 #' @name SpPolygons
 #		
-#' @rdname SpPolygons-methods
+#' @rdname SpPolygons
 #' @param gridObj an icosahedral grid.
 #' @param res The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.
 #' 
@@ -57,10 +57,7 @@ setGeneric(
 #'
 #' The function will create a SpatialPolygons class 2d representation of trigrid class object.
 #'		
-#' @rdname SpPolygons-methods
-#' 
-#' @aliases SpPolygons-trigrid-method
-#' @exportMethod SpPolygons
+#' @rdname SpPolygons
 setMethod(
 	"SpPolygons",
 	signature="trigrid",
@@ -198,10 +195,7 @@ setMethod(
 #'
 #' The function will create a SpatialPolygons class 2d representation of the hexagrid class object
 #'		
-#' @rdname SpPolygons-methods
-#' 
-#' @aliases SpPolygons-hexagrid-method
-#' @exportMethod SpPolygons
+#' @rdname SpPolygons
 setMethod(
 	"SpPolygons",
 	signature="hexagrid",

@@ -2,8 +2,6 @@
 #'
 #'@name facelayer
 #'
-#'@rdname facelayer-class
-#'
 #'@export facelayer
 facelayer <- setClass(
 	#name
@@ -25,7 +23,6 @@ facelayer <- setClass(
 #' 	g <- trigrid(c(4,4))
 #' 	fl <- facelayer(g, 1:length(g))
 #' 	faces3d(fl)
-#' @aliases facelayer-class
 #' @exportClass facelayer
 setMethod("initialize", signature = "facelayer",
 	definition = function(.Object, gridObj, value=NA){
