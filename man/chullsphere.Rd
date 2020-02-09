@@ -4,8 +4,13 @@
 \alias{chullsphere}
 \title{Spherical convex hull}
 \usage{
-chullsphere(data, center = c(0, 0, 0), radius = authRadius,
-  param = 200, strict = TRUE)
+chullsphere(
+  data,
+  center = c(0, 0, 0),
+  radius = authRadius,
+  param = 200,
+  strict = TRUE
+)
 }
 \arguments{
 \item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}

@@ -2,29 +2,38 @@
 % Please edit documentation in R/utils-conversion.R
 \name{CarToPol}
 \alias{CarToPol}
+\alias{CarToPol,matrix-method}
+\alias{CarToPol,numeric-method}
+\alias{CarToPol,data.frame-method}
 \title{Conversion of 3d Cartesian coordinates to polar coordinates}
 \usage{
-CarToPol(matXYZ, norad = FALSE, origin = c(0, 0, 0))
+CarToPol(x, ...)
+
+\S4method{CarToPol}{matrix}(x, norad = FALSE, origin = c(0, 0, 0))
+
+\S4method{CarToPol}{numeric}(x, norad = FALSE, origin = c(0, 0, 0))
+
+\S4method{CarToPol}{data.frame}(x, norad = FALSE, origin = c(0, 0, 0))
 }
 \arguments{
-\item{matXYZ}{3-column numeric matrix containing xyz coordinates in a Cartesian space}
+\item{x}{(\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in a Cartesian space.}
 
-\item{norad}{Logical value, toggles whether the rho coordinate (distance from origin) should be omitted or not.}
+\item{norad}{(\code{logical}). Toggles whether the rho coordinate (distance from origin) should be omitted from the output.}
 
-\item{origin}{Numeric vector of length 3, defining the center of the sphere. Defaults to c(0,0,0).}
+\item{origin}{(\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.}
 }
 \value{
-A 3-column or 2-column numeric matrix with longitude, latitude and, if set accordingly, radius data.
+A 3-column or 2-column \code{numeric}, \code{matrix} or \code{data.frame} with longitude, latitude and, if set accordingly, radius data.
 }
 \description{
-The function uses basic trigonometric relationships to transform xyz coordinates to polar coordinates
+The function uses basic trigonometric relationships to transform XYZ coordinates to polar coordinates
 }
 \examples{
 # some random points
 xyz <- rbind(
-	 c(6371, 0,0),
-	 c(0, 6371,0),
-	 c(1000,1000,1000)
+  c(6371, 0,0),
+  c(0, 6371,0),
+  c(1000,1000,1000)
 )
 
 # conversions

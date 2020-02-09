@@ -6,8 +6,14 @@
 \alias{initialize,hexagrid-method}
 \title{A penta-hexagonal icosahedral grid}
 \usage{
-\S4method{initialize}{hexagrid}(.Object, tessellation = 1, sp = FALSE,
-  graph = TRUE, center = origin, radius = authRadius)
+\S4method{initialize}{hexagrid}(
+  .Object,
+  tessellation = 1,
+  sp = FALSE,
+  graph = TRUE,
+  center = origin,
+  radius = authRadius
+)
 }
 \arguments{
 \item{.Object}{non-argument pointing to self.}

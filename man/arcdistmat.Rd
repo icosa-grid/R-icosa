@@ -4,8 +4,13 @@
 \alias{arcdistmat}
 \title{Calculation of distance matrices along arcs}
 \usage{
-arcdistmat(points1, points2 = NULL, origin = c(0, 0, 0),
-  output = "distance", radius = authRadius)
+arcdistmat(
+  points1,
+  points2 = NULL,
+  origin = c(0, 0, 0),
+  output = "distance",
+  radius = authRadius
+)
 }
 \arguments{
 \item{points1}{Numeric matrix, XYZ or longitude-latitude coordinates of the first set of points.}

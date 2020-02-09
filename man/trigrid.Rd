@@ -6,8 +6,14 @@
 \alias{initialize,trigrid-method}
 \title{A triangular icosahedral grid}
 \usage{
-\S4method{initialize}{trigrid}(.Object, tessellation = 1, sp = FALSE,
-  graph = TRUE, radius = authRadius, center = origin)
+\S4method{initialize}{trigrid}(
+  .Object,
+  tessellation = 1,
+  sp = FALSE,
+  graph = TRUE,
+  radius = authRadius,
+  center = origin
+)
 }
 \arguments{
 \item{.Object}{non-argument pointing to self.}

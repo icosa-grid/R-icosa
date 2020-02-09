@@ -4,8 +4,16 @@
 \alias{guides3d}
 \title{Guides for 3d spherical plotting.}
 \usage{
-guides3d(axis = 1.5, polgrid = c(30, 30), textPG = FALSE, res = 1,
-  origin = c(0, 0, 0), radius = authRadius, drad = 1.1, ...)
+guides3d(
+  axis = 1.5,
+  polgrid = c(30, 30),
+  textPG = FALSE,
+  res = 1,
+  origin = c(0, 0, 0),
+  radius = authRadius,
+  drad = 1.1,
+  ...
+)
 }
 \arguments{
 \item{axis}{Numeric argument draws the -90(lat. deg. ) +90 (lat. deg.) axis. The plotted radius will be 'axis' times the authalic radius ca. 6371km.}

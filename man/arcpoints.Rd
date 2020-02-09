@@ -4,8 +4,15 @@
 \alias{arcpoints}
 \title{Calculation of points along an arc}
 \usage{
-arcpoints(p1, p2, breaks = 2, origin = c(0, 0, 0), onlyNew = FALSE,
-  output = "cartesian", radius = authRadius)
+arcpoints(
+  p1,
+  p2,
+  breaks = 2,
+  origin = c(0, 0, 0),
+  onlyNew = FALSE,
+  output = "cartesian",
+  radius = authRadius
+)
 }
 \arguments{
 \item{p1}{Numeric vector, XYZ or longitude-latitude coordinates of the first point along the arc.}

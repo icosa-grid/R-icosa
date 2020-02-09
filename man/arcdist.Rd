@@ -4,8 +4,7 @@
 \alias{arcdist}
 \title{Calculation of distances along arcs}
 \usage{
-arcdist(p1, p2, output = "distance", origin = c(0, 0, 0),
-  radius = authRadius)
+arcdist(p1, p2, output = "distance", origin = c(0, 0, 0), radius = authRadius)
 }
 \arguments{
 \item{p1}{Numeric vector, XYZ or longitude-latitude coordinates of the first point along the arc.}

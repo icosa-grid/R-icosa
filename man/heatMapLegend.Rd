@@ -4,9 +4,21 @@
 \alias{heatMapLegend}
 \title{Legend for a heatmap with predefined colors.}
 \usage{
-heatMapLegend(cols, vals, varName, tick.text = NULL, tick.cex = 1.5,
-  barWidth = 3, barHeight = 50, tickLength = 1, xLeft = 88,
-  yBot = 25, add = FALSE, bounds = c(FALSE, FALSE), ...)
+heatMapLegend(
+  cols,
+  vals,
+  varName,
+  tick.text = NULL,
+  tick.cex = 1.5,
+  barWidth = 3,
+  barHeight = 50,
+  tickLength = 1,
+  xLeft = 88,
+  yBot = 25,
+  add = FALSE,
+  bounds = c(FALSE, FALSE),
+  ...
+)
 }
 \arguments{
 \item{cols}{Character vector, containnig the ordered colors that are used for the heatmap.}

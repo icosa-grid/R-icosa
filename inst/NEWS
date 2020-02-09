@@ -1,5 +1,13 @@
 # Change log
 
+## [0.9.88 (build 1014)] - 2002-02-09
+### Added
+- long at lat arguments to the CarToPol() function's data.frame-method
+
+### Changed
+- CarToPol() and PolToCar()  functions rewritten with S4 method dispatch
+- main function argument of CarToPol() and PolToCar() is now 'x' instead of 'longLatMat' and 'matXYZ'
+
 ## [0.9.88 (build 1013)] - 2002-02-04
 ### Added
 - proper usage (roxygen tags before "function") for triggering help files in case of namespace conflicts.

@@ -4,8 +4,12 @@
 \alias{surfacecentroid}
 \title{Surface centroid point of a spherical point cloud}
 \usage{
-surfacecentroid(data, output = "polar", center = c(0, 0, 0),
-  radius = authRadius)
+surfacecentroid(
+  data,
+  output = "polar",
+  center = c(0, 0, 0),
+  radius = authRadius
+)
 }
 \arguments{
 \item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}
