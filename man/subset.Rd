@@ -7,8 +7,6 @@
 \alias{subset,hexagrid-method}
 \alias{[,trigrid,ANY,ANY-method}
 \alias{subset,gridlayer-method}
-\alias{[,gridlayer,ANY,missing-method}
-\alias{[,gridlayer,Extent,missing-method}
 \title{Subsetting an icosahedral grid or data layers organized with them}
 \format{An object of class \code{standardGeneric} of length 1.}
 \usage{
@@ -21,10 +19,6 @@ subset
 \S4method{[}{trigrid,ANY,ANY}(x, i)
 
 \S4method{subset}{gridlayer}(x, subsetVector)
-
-\S4method{[}{gridlayer,ANY,missing}(x, i)
-
-\S4method{[}{gridlayer,Extent,missing}(x, i)
 }
 \arguments{
 \item{x}{The gridlayer object to be subsetted.}
@@ -32,8 +26,6 @@ subset
 \item{i}{A subscript vector, specifying the names of the face that are used for subsetting.}
 
 \item{subsetVector}{Vector object indicating the faces to be subsetted.}
-
-\item{...}{Not in use.}
 }
 \value{
 Subset of the input grid. The class of the original object is retained, the \code{@skeleton} slot contains all previous information.
@@ -42,10 +34,6 @@ Subset of the input grid. The class of the original object is retained, the \cod
 This is a generic function used to access data from either a triangular or hexagonal grid using the names of the faces, integers or logical vectors.
 
 The function extracts subsets of the \code{gridlayer} depending on different criteria.
-
-Shorthand to the subset() function.
-
-Shorthand to the subset() function.
 }
 \details{
 The function returns subsets of the grid pertaining to the specified faces that can be used for additional operations (e.g. plotting). 

@@ -2,24 +2,36 @@
 % Please edit documentation in R/grid-lookup.R
 \name{locate}
 \alias{locate}
-\alias{locate,trigrid-method}
-\alias{locate,hexagrid-method}
+\alias{locate,trigrid,matrix-method}
+\alias{locate,trigrid,numeric-method}
+\alias{locate,trigrid,data.frame-method}
+\alias{locate,trigrid,SpatialPoints-method}
+\alias{locate,trigrid,SpatialPointsDataFrame-method}
+\alias{locate,hexagrid,matrix-method}
 \title{Basic lookup function of coordinates on an icosahedral grid}
 \usage{
-locate(gridObj, ...)
+locate(x, y, ...)
 
-\S4method{locate}{trigrid}(gridObj, data, randomborder = FALSE, output = "ui")
+\S4method{locate}{trigrid,matrix}(x, y, randomborder = FALSE, output = "ui")
 
-\S4method{locate}{hexagrid}(gridObj, data, output = "ui", randomborder = FALSE, forceNA = FALSE)
+\S4method{locate}{trigrid,numeric}(x, y, ...)
+
+\S4method{locate}{trigrid,data.frame}(x, y, ...)
+
+\S4method{locate}{trigrid,SpatialPoints}(x, y, ...)
+
+\S4method{locate}{trigrid,SpatialPointsDataFrame}(x, y, ...)
+
+\S4method{locate}{hexagrid,matrix}(x, y, output = "ui", randomborder = FALSE, forceNA = FALSE)
 }
 \arguments{
-\item{gridObj}{a trigrid or hexagrid class object.}
+\item{x}{a trigrid or hexagrid class object.}
 
-\item{...}{arguments passed to class specific methods.}
-
-\item{data}{Coordinates of individual points. Can be either a two-dimensional 
+\item{y}{Coordinates of individual points. Can be either a two-dimensional 
 matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
 or a set of points with class 'SpatialPoints'.}
+
+\item{...}{arguments passed to class specific methods.}
 
 \item{randomborder}{Logical value. Defaults to FALSE. If TRUE, then the points
 falling on vertices and edges will be randomly assigned, otherwise they will be kept as NAs.}
@@ -35,6 +47,14 @@ The function returns the cell names where the input coordinates fall.
 }
 \description{
 Basic lookup function of coordinates on an icosahedral grid
+
+locate-method of trigrid-numeric
+
+locate-method of trigrid - data.frame
+
+locate method of trigrid - SpatialPoints
+
+trigrid-SPDF method
 }
 \examples{
 # create a grid 

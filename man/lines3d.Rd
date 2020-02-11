@@ -43,10 +43,6 @@ lines3d
 \item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).}
 
 \item{radius}{Used for plotting objects that inherit from Spatial*. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.}
-
-\item{y}{Not used.}
-
-\item{z}{Not used.}
 }
 \value{
 The function does not return any value.
@@ -62,10 +58,6 @@ The function is built on the openGL renderer of the R package \code{rgl}, which 
 # create a hexagonal grid
     g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-    plot3d(g, col="blue")
-# make a subset to select faces
-   subG <- subset(g, c("F5", "F2"))
-# plot the subset defined above
-    plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
+    lines3d(g, col="blue")
 }
 \keyword{datasets}

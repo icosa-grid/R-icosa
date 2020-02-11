@@ -49,7 +49,8 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #' # plot the subset defined above
 #'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
 #' @rdname plot3d
-#' @S3method plot3d trigrid
+#' @exportS3Method rgl::plot3d trigrid
+#' @exportS3Method plot3d trigrid
 #' @export plot3d.trigrid
 plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, ...){
 	
@@ -108,7 +109,8 @@ plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, 
 #' 3d plotting of an icosahedral grid or its subset
 #' @rdname plot3d
 #' @param color Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.
-#' @S3method plot3d hexagrid
+#' @exportS3Method rgl::plot3d hexagrid
+#' @exportS3Method plot3d hexagrid
 #' @export plot3d.hexagrid
 plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALSE, guides=TRUE, ...){
 	#create new plot?
@@ -187,8 +189,6 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 #' The function is built on the openGL renderer of the R package \code{rgl}, which needs to be installed for the function to run. Although the function is works without attaching rgl, note that if you want to attach both \code{icosa} and \code{rgl},the \code{rgl} package has to be loaded ifrst otherwise the function will not be usable.
 #'  
 #' @param x The \code{trigrid}, \code{hexagrid}, \code{facelayer} or \code{sp} object to be plotted.
-#' @param y Not used. 
-#' @param z Not used. 
 #' @param arcs Logical value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.
 #' 
 #' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
@@ -199,11 +199,7 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 #' # create a hexagonal grid
 #'     g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'     plot3d(g, col="blue")
-#' # make a subset to select faces
-#'    subG <- subset(g, c("F5", "F2"))
-#' # plot the subset defined above
-#'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
+#'     lines3d(g, col="blue")
 #' @rdname lines3d
 "lines3d"
 if(requireNamespace("rgl", quietly = TRUE)){
@@ -263,11 +259,7 @@ setMethod(
 #' # create a hexagonal grid
 #'     g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'     plot3d(g)
-#' # make a subset to select faces
-#'    subG <- subset(g, c("F5", "F2"))
-#' # plot the subset defined above
-#'     faces3d(subG, col="orange")
+#'     faces3d(g)
 #' @exportMethod faces3d
 #' @rdname faces3d
 setGeneric(
@@ -355,11 +347,9 @@ setMethod(
 #' # create a hexagonal grid
 #'     g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'	   plot3d(g, guides=FALSE)
-#' # plot the names of the faces
-#' 		gridlabs3d(g, type="f", col="red")
-#' # plot the names of the vertices
-#'     gridlabs3d(g, type="v", col="blue", cex=0.6)
+#'	   lines3d(g, guides=FALSE)
+#' # labels
+#'  gridlabs3d(g)
 #' @exportMethod gridlabs3d
 #' @rdname gridlabs3d
 setGeneric(

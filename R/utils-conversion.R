@@ -10,10 +10,11 @@
 #' @param radius (\code{}) (\code{numeric} value) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
 #'
 #' @param origin (\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.
+#' @param ... Arguments passed to class-specific methods.
 #' 
 #' @return An xyz 3-column numeric \code{matrix}, \code{data.frame} or \code{numeric}, depending on the class of \code{x}.
 #' 
-#' @export PolToCar
+#' @exportMethod PolToCar
 #' @rdname PolToCar
 #'
 #' @examples 
@@ -31,7 +32,7 @@
 #' xyz3 <- PolToCar(as.data.frame(longLat))
 setGeneric("PolToCar", function(x,...) standardGeneric("PolToCar"))
 
-#' Basic matrix method for PolToCar
+#' Matrix-method of PolToCar()
 #'
 #' @rdname PolToCar
 setMethod(
@@ -120,6 +121,7 @@ setMethod(
 
 
 
+# do not put generic in doc. 
 
 
 
@@ -130,6 +132,7 @@ setMethod(
 #' @param x (\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in a Cartesian space.
 #' @param origin (\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.
 #' @param norad (\code{logical}). Toggles whether the rho coordinate (distance from origin) should be omitted from the output.
+#' @param ... Arguments passed to class-specific methods.
 #' 
 #' @return A 3-column or 2-column \code{numeric}, \code{matrix} or \code{data.frame} with longitude, latitude and, if set accordingly, radius data.
 #' 
@@ -143,13 +146,12 @@ setMethod(
 #' 
 #' # conversions
 #'   CarToPol(xyz)
-#' @export CarToPol
+#' @exportMethod CarToPol
 #' @rdname CarToPol
 setGeneric("CarToPol", function(x,...) standardGeneric("CarToPol"))
 
-#' Basic matrix method for CarToPol
-#'
-#' @rdname CarToPol
+#' Matrix-method of CartoPol()
+#' @rdname CarToPol 
 setMethod(
 	"CarToPol",
 	signature="matrix",

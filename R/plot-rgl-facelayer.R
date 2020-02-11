@@ -1,6 +1,3 @@
-
-
-
 #' 3d plotting of a facelayer of an icosahedral grid or its subset
 #'
 #' The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is 800x800 pixels. In case you want to override this, please
@@ -9,7 +6,8 @@
 #' @param defaultPar3d Logical value, whether the default settings for par3d() are to be used (windowRect = c(50, 60, 800, 800), zoom=0.8).
 #' @param frame If set to TRUE the grid line structure will be plotted.
 #' 
-#' @S3method plot3d facelayer
+#' @exportS3Method rgl::plot3d facelayer
+#' @exportS3Method plot3d facelayer
 #' @rdname plot3d
 #' @export plot3d.facelayer
 plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TRUE, ...){
@@ -56,6 +54,7 @@ plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TR
 #' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
 #' @param discrete Description.
+#' @param legend (\code{logical}) Should the heatmap legend be plotted?
 #' @return The function does not return any value.
 #'
 #' @exportMethod faces3d
@@ -63,7 +62,7 @@ plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TR
 setMethod(	
 	f="faces3d",
 	signature="facelayer",
-	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, discrete=FALSE, ...){
+	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, discrete=FALSE, legend=TRUE,  ...){
 		# extract the grid that needs to be plotted:
 		actGrid  <- get(x@grid)
 	#	checkLinkedGrid(actGrid, x)
@@ -282,7 +281,7 @@ setMethod(
 			rgl::bgplot3d(
 				# turn off the graphical parameters warning bullshit
 				suppressWarnings(
-					heatMapLegend(cols,vals=tickLabs,...)
+					if(legend) heatMapLegend(cols,vals=tickLabs,...)
 				)
 			)
 				

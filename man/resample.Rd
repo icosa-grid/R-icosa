@@ -24,8 +24,6 @@ resample
 \item{na.rm}{logical value. If a face contains a missing value, should its value be NA as well (FALSE) or calculate the mean anyway (TRUE).}
 
 \item{res}{Numeric value, indicating the precision of area estimation during the upscaling. In case the "ebaa" method is chosen, the variable indicate the number of breaking points on an edge.}
-
-\item{...}{Not in use.}
 }
 \value{
 A named numeric vector.

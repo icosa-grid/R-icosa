@@ -9,7 +9,6 @@
 #' @param cols Character vector, containnig the ordered colors that are used for the heatmap.
 #' @param tick.text The values on the heatmap legend. If missing, will be calculated with minVal and maxVal. Should have the length as 'ticks'.
 #' @param vals If tick.text is missing, the lowest value in the heatmap
-#' @param ticks The number of ticks/values in the heatmap legend (the bar will be divided to this number).
 #' @param tick.cex Letter size of the values on the legend.
 #' @param varName The label of the variable name plotted to the heatmap.
 #' @param barWidth The width (percent) of the bar featuring the colors of the heatmap.

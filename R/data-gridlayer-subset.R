@@ -6,7 +6,6 @@
 #'
 #' @param x The gridlayer object to be subsetted.
 #' @param subsetVector Vector object indicating the faces to be subsetted.
-#' @param ... Not in use.
 #'
 #' @rdname subset
 #' @exportMethod subset
@@ -114,8 +113,10 @@ setMethod(
 #' 
 #' Shorthand to the subset() function.
 #' 
-#' @rdname subset
+#' @param x (\code{gridlayer})The gridlayer object to be subsetted.
+#' @param i (\code{logical}, \code{numeric} nor \code{extent} the subscript vector, as in subset().
 #' @exportMethod "["
+#' @rdname extract-methods
 setMethod(
 	"[",
 	signature=c("gridlayer","ANY", "missing"),
@@ -128,10 +129,9 @@ setMethod(
 #' Extraction from a gridlayer using 'Extent' class object 
 #' 
 #' Shorthand to the subset() function.
-#' 
-#' @rdname subset
 #'
 #' @exportMethod "["
+#' @rdname extract-methods
 setMethod(
 	"[",
 	signature=c("gridlayer","Extent", "missing"),
@@ -152,21 +152,24 @@ setMethod(
 	}
 )
 
+# this method produces a warning without the aliases!!!
+
+
 #' Replacement of elements in a gridlayer object.
 #' 
 #' Function to replace specific elements in a gridlayer object 
 #' 
 #' All these methods are implementing direct replacement in the values slot of a layer, depending on criteria used for subsetting. 
 #'
-#' @param x the gridlayer.
-#' @param i the subsetting vector, as in subset(). 
 #' @param value the replacement values.
-#' @rdname replace
 #'
+#' @docType methods
+#' @aliases [<-,gridlayer-method
 #' @exportMethod "[<-"
+#' @rdname extract-methods
 setReplaceMethod(
 	"[",
-	signature="gridlayer",
+	signature=c("gridlayer"),
 #	definition=function(x,i,j,..., value){
 	definition=function(x,i,value){
 		y<-x

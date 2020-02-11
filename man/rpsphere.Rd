@@ -29,7 +29,8 @@ The function uses a three dimension normal distribution to generate points,
 which are then projected to the surface of the sphere.
 }
 \examples{
-randomPoints <- rpsphere(20000)
-points3d(randomPoints)
+ randomPoints <- rpsphere(2000, output="polar")
+# observe latitudinal pattern
+ plot(randomPoints, xlim=c(-180, 180), ylim=c(-90, 90))
 
 }

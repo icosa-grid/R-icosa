@@ -1,16 +1,3 @@
-#'Container for data storage using the faces on icosahedral grid
-#'
-#'@name facelayer
-#'
-#'@export facelayer
-facelayer <- setClass(
-	#name
-	"facelayer",
-	contains="gridlayer"
-) 
-
-#' Constructor of a \code{facelayer} object
-#' 
 #' This function will create \code{facelayer} linked to a \code{trigrid} or \code{hexagrid} object
 #' 
 #' The grids themselves are scaffolds for the assigned data. The data themselves are stored in containers which are linked to the the grids.
@@ -18,12 +5,19 @@ facelayer <- setClass(
 #' @param gridObj A \code{hexagrid} or \code{trigrid} object.
 #' 
 #' @param value The \code{facelayer} will be initialized with these values/this value
-#' @name facelayer  
 #' @examples
 #' 	g <- trigrid(c(4,4))
 #' 	fl <- facelayer(g, 1:length(g))
 #' 	faces3d(fl)
 #' @exportClass facelayer
+facelayer <- setClass(
+	#name
+	"facelayer",
+	contains="gridlayer"
+) 
+
+
+#' @export facelayer
 setMethod("initialize", signature = "facelayer",
 	definition = function(.Object, gridObj, value=NA){
 		.Object@grid <- deparse(substitute(gridObj))

@@ -1,6 +1,7 @@
 #' Plot method for the trigrid and hexagrid classes
 #' 
 #'	This function will invoke the \code{plot()} method of the SpatialPolygons class.
+#' @param x (\code{trigrid}, \code{hexagrid} or \code{facelayer}) The object to be plotted.
 #' @param projargs a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.
 #' @param ... arguments passed to the sp::plot() function.
 #' @rdname plot

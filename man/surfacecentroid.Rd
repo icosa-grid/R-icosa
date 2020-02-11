@@ -2,17 +2,23 @@
 % Please edit documentation in R/utils-spherical.R
 \name{surfacecentroid}
 \alias{surfacecentroid}
+\alias{surfacecentroid,matrix-method}
+\alias{surfacecentroid,data.frame-method}
+\alias{surfacecentroid,SpatialPoints-method}
 \title{Surface centroid point of a spherical point cloud}
 \usage{
-surfacecentroid(
-  data,
-  output = "polar",
-  center = c(0, 0, 0),
-  radius = authRadius
-)
+surfacecentroid(x, ...)
+
+\S4method{surfacecentroid}{matrix}(x, output = "polar", center = c(0, 0, 0), radius = authRadius)
+
+\S4method{surfacecentroid}{data.frame}(x, ...)
+
+\S4method{surfacecentroid}{SpatialPoints}(x, ...)
 }
 \arguments{
-\item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}
+\item{x}{(\code{matrix} or \code{data.frame}) Numeric data, XYZ or longitude-latitude coordinates of the set of points.}
+
+\item{...}{Arguments passed to class-specific methods.}
 
 \item{output}{Character value, the coordinate system of the output points. Can either be \code{"polar"} for
 longitude-latitude or \code{"cartesian"} for XYZ data.}
@@ -37,13 +43,15 @@ to avoid a particual error that frequently occurrs with other methods for centro
 # generate some random points
 allData <- rpsphere(1000)
 # select only a subset
-points<-allData[allData[,1]>3000,]
+points<-allData[allData[,2]>1500,]
+# transform to 2d
+ points2 <- CarToPol(points, norad=TRUE)
 # the spherical centroid
-sc <- surfacecentroid(points)
+sc <- surfacecentroid(points2, output="polar")
 sc
 
 #3d plot
-plot3d(points)
-points3d(sc[1], sc[2], sc[3], col="red", size=5)
+plot(points2, xlim=c(-180, 180), ylim=c(-90, 90))
+points(sc[1], sc[2], col="red", cex=5)
 
 }

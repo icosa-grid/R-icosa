@@ -10,7 +10,6 @@
 #' @param res Numeric value, indicating the precision of area estimation during the upscaling. In case the "ebaa" method is chosen, the variable indicate the number of breaking points on an edge.
 #' 
 #' @param method Character string stating the name of the algorithm used for resampling. 
-#' @param ... Not in use.
 #' 
 #' @return A named numeric vector.
 #' 

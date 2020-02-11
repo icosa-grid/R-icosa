@@ -1,0 +1,92 @@
+---
+title: "Introduction to the R package 'icosa' v0.9.82 for global triangular and hexagonal gridding"
+author: "Adam T. Kocsis"
+date: '`r Sys.Date()`'
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to the R package 'icosa' v0.9.82 for global triangular and hexagonal gridding}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(icosa)
+library(rgl)
+knit_hooks$set(rgl = hook_rgl)
+```
+# 1. Introduction
+
+The purpose of this vignette is to demonstrate the basic usage of the ``icosa`` package, explain object structures and basic functionalities. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point coordinate data. This is just a brief introduction to the package's capabilities and will be expanded substantially in the future.
+
+# 2. The grids
+
+The primary problem with ecological samples is that due to density and uniformity issues, the data points are to be aggregated to distinct units. As coordinate recording is very efficient on the 2d surface of a polar coordinate system (i.e. latiude and longitude data), this was primarly achieved by rectangular gridding of the surface (for instance 1° times 1° grid cells). Unfortunately, this method suffers from systematic biasing effects: as the poles are approached, the cells become smaller in area, and come closer together. 
+
+The ``icosa`` package approaches this problem from one of the most straightforward ways, by tessellation of a regular icosahedron to a given resolution. This procedure ends up with a polyhedral object of triangular faces of higly isometric properties: very similar shapes of cells which are roughly equally distanced, and similar in cell area.
+
+
+## 2.1. Grid creation
+
+To create a triangular grid use the function ``trigrid()``:
+
+```{r first, rgl=TRUE,dev='png',dpi=300, fig.width=6, fig.height=4}
+# create a trigrid class object
+tri <- trigrid()
+
+# the show() method displays basic information
+tri
+
+# plot the object in 3d
+plot3d(tri, guides=F)
+```
+
+Without any specified additional entry, the first line will create an icosahedron with the center of ``c(0,0,0)`` Cartesian coordinates and the 'R2' (authalic, as defined by IUGG (1)) radius of Earth between the object center and the vertices. These can be altered by setting the ``radius`` and ``center`` arguments if necessary. When dealing with properly georeferenced data, the model ellipsoid (or in this case, the sphere) is to be taken into account when the data and the grid interact. Therefore a slot called ``proj4strig`` is added to the grid object, which contains a CRS class string generated automatically from the input radius. With the default settings this is:
+
+```{r crs, rgl=TRUE,dev='png',dpi=300}
+tri@proj4string
+```
+
+Setting the first argument of the ``trigrid()`` function will create more complex objects that have tessellated faces:
+
+```{r trigrid, rgl=TRUE,dev='png',dpi=300}
+# create a trigrid class object
+gLow <- trigrid(tessellation=c(4,4))
+
+# plot the object in 3d
+plot3d(gLow, guides=F)
+```
+
+The result is another ``trigrid`` class object with the tessellation vector of ``c(4,4)``. The tessellation vector is the primary argument influencing grid resolution. It consists of integer values which are larger than 1. These values will be passed in sequence to the tessellation function, using the result of the previous round as an input. In the example of the ``c(4,4)`` grid, the icosahedron will be tessellated with the value of 4 in the first round, meaning that every edge of the 20 faces are split to 4, which then results in 4 times 4 new triangular faces instead of the one original (4 times 4 times 20 new faces in total). The second round will be repeated for every newly formed face as well, so the total resolution of the grid will be 4 times 4 times 4 times 4 times 20 faces. 
+
+The obvious question is then: what is the difference between the ``c(2,2,2,2))``, ``c(4,4)``, ``c(8,2)``, ``c(2,8)`` and ``c(16)`` grids? The answer depends on the applied tessellation method. The icosahedron itself is smaller in surface area and volume than the sphere. The points created between the faces need to be projected to the sphere, which can be done in a number of different ways.
+
+The current version of the ``icosa`` package uses a single tessellation method, which requires the least amount of information to provide a consistent output: The ``"meanGC"`` method uses spherical functions to calculate new points directly on the great circles that connect points which are on a single edge without any sort of projection. The internal points are calculated by connecting the newly formed points on the edges. This results in some scatter for these internal points, as their position depends on the pair of edges that are connected. In this method, the points are defined as their centroids projected to the surface of the sphere, which results in a systematic increase in cell area as the center of the tessellated face is approached. Therefore, the answer to the question of the different tessellation vectors is: the number of faces will be equal as that is set by the total product of the tessellation vector, but as every tessellation round includes the above described procedure, the cell areas, cell shapes will be somewhat different with these. In the future, multiple tessellation methods are to be incorporated that produce grid cells with exactly the same areas just to mention one.
+
+As grid complexity increases the time to create the structure increases as well (The highest resolution grid so far was the ``c(10,10,4)`` trigrid, which took about 2,500 seconds using a single thread of an Intel Xeon E5-1620 processor, it had 3,200,000 faces, the mean edge length of 0.17 degrees (20km) and its size was almost 2GB). 
+Performance also becomes an issue with very large tessellation values, as they currently incorporate distance matrix calculations (will be updated later, if required). 
+
+A rectangular grid has an additional problem that is not solved by triangular replacement, which is the definition of neighbouring cells. With both the rectangular and the triangular grid, two types of possible connections exist: cells can share either one or two vertices (an edge), which leads to problems with cell to cell relationship calculations. The inversion of the triangular grid solves this problem: if every center of the face becomes a new vertex a hexagonal pattern emerges, which creates a neighbourhood pattern where the neighbouring faces can share exactly two vertices only. Every resolution triangular grid can be turned to a penta-hexagonal one, which is directly created by the ``hexagrid()`` function.
+
+```{r hexagrid1, rgl=TRUE,dev='png',dpi=300}
+# create a hexagrid object
+hLow <- hexagrid()
+
+# plot it in 3d
+plot3d(hLow, guides=F)
+```
+
+By default (``tessellation=1``), the ``hexagrid()`` function inverts the regular icosahedron, creating a regular pentagonal-dodecahedron. This object paradoxically has no hexagonal faces. Increasing the tessellation vector, however, will add these, while keeping the 12 pentagonal faces at the positions which were originally containing the icosahedron's vertices.
+
+```{r hexagrid, rgl=TRUE,dev='png',dpi=300}
+# create a hexagrid object
+hLow <- hexagrid(c(4,4))
+
+# plot it in 3d
+plot3d(hLow)
+```
+
+The function of the tessellation vector is exactly the same as for the ``trigrid()`` function, which is invoked by the ``hexagrid()`` function before the inversion is implemented. This naturally leads to an equality between the vertex numbers of the hexagrid and face numbers of the trigrid, and the face numbers of the trigrid and the vertex numbers of the hexagrid objects.
+
+All methods that are implemented for the trigrid are implemented for the hexagrid as well. The examples that follow use the two types of grids at random, and work interchangably.

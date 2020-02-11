@@ -18,6 +18,8 @@ PolToCar(x, ...)
 \arguments{
 \item{x}{(\code{matrix}, \code{numeric}, \code{data.frame}) A 2-column \code{numeric} matrix with the longitude/latitude data.}
 
+\item{...}{Arguments passed to class-specific methods.}
+
 \item{radius}{(\code{}) (\code{numeric} value) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
 
 \item{origin}{(\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.}

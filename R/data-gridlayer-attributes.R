@@ -1,3 +1,7 @@
+#' @rdname values
+#' @param ... Arguments passed to class-specific methods.
+#' @usage values(x,...)
+"values" 
 
 if(requireNamespace("raster", quietly = TRUE)){
 	setGeneric("values", def=raster::values)
@@ -10,7 +14,7 @@ if(requireNamespace("raster", quietly = TRUE)){
 	)
 }
 
-#' Extract values from a gridlayer
+#' Extract and replace values from a gridlayer
 #'
 #' The function will get the \code{@values} slot of a \code{gridlayer} object.
 #'
@@ -24,6 +28,41 @@ setMethod(
 		return(x@values)
 	}
 )
+
+
+#' @usage values(x) <- value
+#' @rdname values
+"values<-"
+
+if(requireNamespace("raster", quietly = TRUE)){
+	setGeneric("values<-", def=raster::`values<-`)
+}else{
+	setGeneric(
+		name="values<-",
+		def=function(x,value){
+			standardGeneric("values<-")
+		}
+	)
+}
+	
+
+#' @param value replacement values.
+#' @rdname values
+#' @exportMethod values<-
+setReplaceMethod(	
+	f="values",
+	signature="gridlayer",
+	definition= function(x, value){
+		x@values<-value
+		if(length(x@values)!=x@length){
+			stop("Wrong replacement length.")
+		}else{
+			return(x)
+		}
+	}
+)
+
+
 #' The length of a \code{gridlayer} class object.
 #' 
 #' This function returns the number of values present in the \code{gridlayer}.
@@ -50,39 +89,6 @@ setMethod(
 	signature="gridlayer",
 	definition= function(x){
 		x@names
-	}
-)
-		
-
-if(requireNamespace("raster", quietly = TRUE)){
-	setGeneric("values<-", def=raster::`values<-`)
-}else{
-	setGeneric(
-		name="values<-",
-		def=function(x,value){
-			standardGeneric("values<-")
-		}
-	)
-}
-	
-
-#' Replace values from a \code{gridlayer}
-#'
-#' Shorthand function to replace all values of a \code{gridlayer} object.
-#'
-#' @param value replacement values.
-#' @rdname values
-#' @exportMethod values<-
-setReplaceMethod(	
-	f="values",
-	signature="gridlayer",
-	definition= function(x, value){
-		x@values<-value
-		if(length(x@values)!=x@length){
-			stop("Wrong replacement length.")
-		}else{
-			return(x)
-		}
 	}
 )
 

@@ -21,14 +21,13 @@ plot
   frame = FALSE,
   legend = TRUE,
   breaks = NULL,
-  beside = TRUE,
   inclusive = TRUE,
   discrete = FALSE,
   ...
 )
 }
 \arguments{
-\item{x}{The facelayer object to be plotted.}
+\item{x}{(\code{trigrid}, \code{hexagrid} or \code{facelayer}) The object to be plotted.}
 
 \item{projargs}{a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.}
 
@@ -46,11 +45,9 @@ plot
 
 \item{breaks}{Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
 
+\item{inclusive}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
+
 \item{discrete}{\code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap.}
-
-\item{y}{Not used.}
-
-\item{inclusve}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
 }
 \description{
 This function will invoke the \code{plot()} method of the SpatialPolygons class.

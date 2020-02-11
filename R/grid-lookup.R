@@ -281,8 +281,8 @@ setMethod(
 #' @name locate
 #' @return The function returns the cell names where the input coordinates fall.
 #'
-#' @param gridObj a trigrid or hexagrid class object.
-#' @param data Coordinates of individual points. Can be either a two-dimensional 
+#' @param x a trigrid or hexagrid class object.
+#' @param y Coordinates of individual points. Can be either a two-dimensional 
 #' matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
 #' or a set of points with class 'SpatialPoints'.
 #'
@@ -303,23 +303,22 @@ setMethod(
 #' @rdname locate
 #' @exportMethod locate
 setGeneric(
-		name="locate",
-		def=function(gridObj,...){
-			standardGeneric("locate")
-		}
-	
-	)
+	name="locate",
+	def=function(x,y,...){
+		standardGeneric("locate")
+	}
+
+)
 
 
 # locate method for the trigrid v6.0
 # this version uses my own c++ function for point in tetrahedron testing
 #' @rdname locate
-#' @exportMethod locate
 setMethod(
 	"locate", 
-	signature="trigrid",
-	definition=function(gridObj, data, randomborder=FALSE, output="ui"){
-	
+	signature=c(x="trigrid", y="matrix"),
+	definition=function(x, y, randomborder=FALSE, output="ui"){
+
 	#the tetrahedron algorithm does not find vertices
 	if(!is.logical(randomborder)){
 		stop("Invalid randomborder argument.")
@@ -329,42 +328,26 @@ setMethod(
 		stop("Invalid value for output argument.")
 	}
 	
-	# for the SpatialPoints
-	if(class(data)=="SpatialPoints"){
-		# if it has a proj4
-		if(methods::.hasSlot(data, "proj4string")){
-			# and it's not NA
-			if(!is.na(data@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					data<-sp::spTransform(data, gridObj@proj4string)@coords
-				} else{
-					stop("The rgdal package is required to appropriately project this object. ")
-				}
-			}
-		}
-	}
-	
 	#data argument
 	# which formatting?
-	if(ncol(data)==2){
+	if(ncol(y)==2){
 	
 		# transform the two columns
-		data<-PolToCar(data, origin=gridObj@center, radius=gridObj@r)
+		y<-PolToCar(y, origin=x@center, radius=x@r)
 	}
 	
 	# does the data include NAs?
-	boolResultNoNA<-!is.na(data[,1]) & !is.na(data[,2]) & !is.na(data[,3]) 
-	data<-data[boolResultNoNA,, drop=FALSE]
+	boolResultNoNA<-!is.na(y[,1]) & !is.na(y[,2]) & !is.na(y[,3]) 
+	y<-y[boolResultNoNA,, drop=FALSE]
 	
 	
 	#project the coordinates out from the origin
 	#access the skeleton of the grid
-		v<-gridObj@skeleton$v*1.5
-		f<-gridObj@skeleton$f[,1:3]
-		origin<-gridObj@center
+		v<-x@skeleton$v*1.5
+		f<-x@skeleton$f[,1:3]
+		origin<-x@center
 	
-		d<-gridObj@div
+		d<-x@div
 		
 	#organize vertices to the linear coordinate + add 1s for the determinants
 		#written with C++ for speed
@@ -374,15 +357,15 @@ setMethod(
 	#check whether the point is one of the vertices!!!!! here
 		
 	#the queried data in a similar linear format x*n,y*n, z*n
-		qrs<-.Call(Cpp_icosa_xyz1, data)
+		qrs<-.Call(Cpp_icosa_xyz1, y)
 		
-		nQrs<-as.integer(nrow(data))
+		nQrs<-as.integer(nrow(y))
 				
 			
 		# allocate some memory to the results vector 
-		queryIndex<-rep(-9, nrow(data))
-		faceIndex<-rep(-9, nrow(data))
-		foundMiddle<-rep(0, nrow(data)*12)
+		queryIndex<-rep(-9, nrow(y))
+		faceIndex<-rep(-9, nrow(y))
+		foundMiddle<-rep(0, nrow(y)*12)
 		faceContainer<-rep(0, max(d)+1)
 		offset<-rep(0,length(d)+1)
 		tempF<-rep(0, max(d)+1)
@@ -432,10 +415,10 @@ setMethod(
 		dubiousIndex<-which(is.na(fi))
 		
 		# the coordinates of these points
-		weirdPoints<-data[dubiousIndex,, drop=FALSE]
+		weirdPoints<-y[dubiousIndex,, drop=FALSE]
 		
 		# repeat locate on randomly generated close points
-		addFi<-apply(weirdPoints, 1, approximateFace, n=20, d=2e-8, gridObj=gridObj, onlyOne=FALSE, output="skeleton")
+		addFi<-apply(weirdPoints, 1, approximateFace, n=20, d=2e-8, gridObj=x, onlyOne=FALSE, output="skeleton")
 		
 		# add these points to the rest
 		fi[dubiousIndex]<-addFi
@@ -445,7 +428,7 @@ setMethod(
 	
 	if(output=="ui"){
 		# translate the inner C representation to the UI
-		fiUI<-gridObj@skeleton$aF[gridObj@skeleton$offsetF+fi]
+		fiUI<-x@skeleton$aF[x@skeleton$offsetF+fi]
 		
 		options(scipen=999)
 		fiUI[!is.na(fiUI)]<-paste("F", fiUI[!is.na(fiUI)], sep="")
@@ -464,16 +447,101 @@ setMethod(
 }
 )
 
+#' locate-method of trigrid-numeric
+#' @rdname locate
+setMethod(
+	"locate",
+	signature=c(x="trigrid", y="numeric"),
+	function(x,y,...){
+		# if
+		if(length(y)!=2 & length(y)!=3) stop("Please provide a matrix, or vector with 2 or 3 values.")
+		y <- matrix(y, nrow=1)
+		locate(x, y, ...)
+	}
+)
 
-# locate method for the hexagrid v6.0
-# this version uses my own c++ function for point in tetrahedron testing
+#' locate-method of trigrid - data.frame
+#' @rdname locate
+setMethod(
+	"locate",
+	signature=c(x="trigrid", y="data.frame"),
+	function(x,y,...){
+		# if
+		if(ncol(y)!=2 & ncol(y)!=3) stop("Please provide a data.frame or matrix with 2 or 3 columns")
+		for(i in 1:ncol(y)){
+			if(!is.numeric(y[,i])) stop("One of the columns of 'x' is not numeric.")
+		}
+		# if all the checks are passed, pass the data frame as a matrix
+		newY <- as.matrix(y)
+		locate(x, newY, ...)
+	}
+)
+
+#' locate method of trigrid - SpatialPoints
+#' @rdname locate
+setMethod(
+	"locate",
+	signature=c(x="trigrid", y="SpatialPoints"),
+	function(x,y,...){
+		# if it has a proj4
+		if(methods::.hasSlot(y, "proj4string")){
+			# and it's not NA
+			if(!is.na(y@proj4string)){
+				# need rgdal
+				if(requireNamespace("rgdal", quietly = TRUE)){
+					y<-sp::spTransform(y, x@proj4string)@coords
+				} else{
+					stop("The 'rgdal' package is required to appropriately project this object. ")
+				}
+			}else{
+				y <- y@coords 
+			}
+		}else{
+			y <- y@coords 
+		}
+
+		locate(x, y, ...)
+	}
+)
+
+#' trigrid-SPDF method
+#' @rdname locate
+setMethod(
+	"locate",
+	signature=c(x="trigrid", y="SpatialPointsDataFrame"),
+	function(x,y,...){
+		# if it has a proj4
+		if(methods::.hasSlot(y, "proj4string")){
+			# and it's not NA
+			if(!is.na(y@proj4string)){
+				# need rgdal
+				if(requireNamespace("rgdal", quietly = TRUE)){
+					y<-sp::spTransform(y, x@proj4string)@coords
+				} else{
+					stop("The 'rgdal' package is required to appropriately project this object. ")
+				}
+			}else{
+				y <- y@coords 
+			}
+		}else{
+			y <- y@coords 
+		}
+
+		locate(x, y, ...)
+	}
+)
+
+
+# locate() method for the hexagrid v6.0 - written for matrix
+# This is only the y="matrix" method, inheritance will take care of the rest. 
+# This version uses my own c++ function for point in tetrahedron testing
 #' @param forceNA logical value, suppressing the recursive lookup of points falling on subface boundaries.
 #' @rdname locate
 #' @exportMethod locate
 setMethod(
 	"locate", 
-	signature="hexagrid",
-	definition=function(gridObj, data, output="ui", randomborder=FALSE, forceNA=FALSE){
+	signature=c(x="hexagrid",y="matrix"),
+	definition=function(x, y, output="ui", randomborder=FALSE, forceNA=FALSE){
 
 	#the tetrahedron algorithm does not find vertices
 	if(!is.logical(randomborder)){
@@ -484,44 +552,24 @@ setMethod(
 		stop("Invalid value for output argument.")
 	}
 	
-	if(is.data.frame(data)){
-		data <- as.matrix(data)
-	}
-	
-	# for the SpatialPoints
-	if(class(data)=="SpatialPoints"){
-		# if it has a proj4
-		if(methods::.hasSlot(data, "proj4string")){
-			# and it's not NA
-			if(!is.na(data@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					data<-sp::spTransform(data, gridObj@proj4string)@coords
-				} else{
-					stop("The rgdal package is required to appropriately project this object. ")
-				}
-			}
-		}
-	}
-	
 	#data argument
 	# which formatting?
-	if(ncol(data)==2){
+	if(ncol(y)==2){
 		# transform the two columns
-		data<-PolToCar(data, origin=gridObj@center, radius=gridObj@r)
+		y<-PolToCar(y, origin=x@center, radius=x@r)
 	}
 	
 	# does the data include NAs?
-	boolResultNoNA<-!is.na(data[,1]) & !is.na(data[,2]) & !is.na(data[,3]) 
-	data<-data[boolResultNoNA,, drop=FALSE]
+	boolResultNoNA<-!is.na(y[,1]) & !is.na(y[,2]) & !is.na(y[,3]) 
+	y<-y[boolResultNoNA,, drop=FALSE]
 	
 	#project the coordinates out from the origin
 	#access the skeleton of the grid
-		v<-gridObj@skeleton$v*1.5
-		f<-gridObj@skeleton$f[,1:3]
-		origin<-gridObj@center
+		v<-x@skeleton$v*1.5
+		f<-x@skeleton$f[,1:3]
+		origin<-x@center
 	
-		d<-gridObj@div
+		d<-x@div
 		d<-c(d,6)
 		
 	#organize vertices to the linear coordinate + add 1s for the determinants
@@ -532,14 +580,14 @@ setMethod(
 	#check whether the point is one of the vertices!!!!! here
 		
 	#the queried data in a similar linear format x*n,y*n, z*n
-		qrs<-.Call(Cpp_icosa_xyz1, data)
+		qrs<-.Call(Cpp_icosa_xyz1, y)
 		
-		nQrs<-as.integer(nrow(data))
+		nQrs<-as.integer(nrow(y))
 				
 			
 		# allocate some memory to the results vector 
-		queryIndex<-rep(-9, nrow(data)*6)
-		faceIndex<-rep(0, nrow(data)*6)
+		queryIndex<-rep(-9, nrow(y)*6)
+		faceIndex<-rep(0, nrow(y)*6)
 			
 	#invoke the C function
 	#written with direct C object manipulation to evade speed loss with copying
@@ -588,7 +636,7 @@ setMethod(
 	if(output=="ui"){
 
 		# translate the inner C representation to the UI
-		fiUI<-gridObj@skeleton$aSF[Output$offset[length(d)]+fi]
+		fiUI<-x@skeleton$aSF[Output$offset[length(d)]+fi]
 		
 		# add the labels
 		#temporarily supress scientific notation
@@ -605,10 +653,10 @@ setMethod(
 				dubiousIndex<-which(is.na(fiUI))
 				
 				# the coordinates of these points
-				weirdPoints<-data[dubiousIndex,, drop=FALSE]
+				weirdPoints<-y[dubiousIndex,, drop=FALSE]
 				
 				# repeat locate on randomly generated close points
-				addFiUI<-apply(weirdPoints, 1, approximateFace, n=20, gridObj=gridObj, d=2e-10, onlyOne=!randomborder, output="ui")
+				addFiUI<-apply(weirdPoints, 1, approximateFace, n=20, gridObj=x, d=2e-10, onlyOne=!randomborder, output="ui")
 				addFiUI
 				
 				# add these points to the rest
@@ -622,7 +670,7 @@ setMethod(
 		return(resVec)
 	}
 	if(output=="skeleton"){
-		fiInner<-gridObj@skeleton$f[Output$offset[length(d)]+fi,1]
+		fiInner<-x@skeleton$f[Output$offset[length(d)]+fi,1]
 		
 		# stop it for base case of recursion
 		if(!forceNA){
@@ -631,10 +679,10 @@ setMethod(
 				dubiousIndex<-which(is.na(fiInner))
 				
 				# the coordinates of these points
-				weirdPoints<-data[dubiousIndex,, drop=FALSE]
+				weirdPoints<-y[dubiousIndex,, drop=FALSE]
 			
 				# repeat locate on randomly generated close points
-				addFiInner<-apply(weirdPoints, 1, approximateFace, n=20, gridObj=gridObj, d=2e-10, onlyOne=!randomborder, output="skeleton")
+				addFiInner<-apply(weirdPoints, 1, approximateFace, n=20, gridObj=x, d=2e-10, onlyOne=!randomborder, output="skeleton")
 				
 				# add these points to the rest
 				fiInner[dubiousIndex]<-addFiInner

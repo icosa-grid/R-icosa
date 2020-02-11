@@ -1,6 +1,17 @@
 # Change log
 
-## [0.9.88 (build 1014)] - 2002-02-09
+## [0.9.88 (build 1015)] - 2020-02-09
+### Added
+- documentation for the 'tessguide' dataset
+- 'legend' argument to faces3d method of facelayer
+
+### Changed
+- the locate() function's main arguments were renamed to 'x' and 'y' with S4 dispatch for 'y'
+- the surfacecentroid() function is rewritten with S4 method dispatch, with main argument of 'x'
+- corrected roxygen tags for S3 methods
+- minor documentation corrections, package ready for CRAN resubmission
+
+## [0.9.88 (build 1014)] - 2020-02-09
 ### Added
 - long at lat arguments to the CarToPol() function's data.frame-method
 
@@ -8,7 +19,7 @@
 - CarToPol() and PolToCar()  functions rewritten with S4 method dispatch
 - main function argument of CarToPol() and PolToCar() is now 'x' instead of 'longLatMat' and 'matXYZ'
 
-## [0.9.88 (build 1013)] - 2002-02-04
+## [0.9.88 (build 1013)] - 2020-02-04
 ### Added
 - proper usage (roxygen tags before "function") for triggering help files in case of namespace conflicts.
 
@@ -16,21 +27,21 @@
 - Reorganization of Roxygen tags: removed all aliases, -method bullshit
 
 
-## [0.9.88 (build 1012)] - 2002-02-04
+## [0.9.88 (build 1012)] - 2020-02-04
 ### Changed
 - rgl package moved to Suggests from Depends, freeing the package from its grasp
 - plot3d() rewritten as S3 from S4
 - rgl dependent functions have warnings to instruct installation.
 
 
-## [0.9.88 (build 1011)] - 2002-02-04
+## [0.9.88 (build 1011)] - 2020-02-04
 ### Added
 - Collate field for DESCRIPTION
 
 ### Changed
 - R file structure
 
-## [0.9.88 (build 1010)] - 2002-02-03
+## [0.9.88 (build 1010)] - 2020-02-03
 ### Added
 - conditional generic declaration to values<- 
 - conditional generic declaration to resample()

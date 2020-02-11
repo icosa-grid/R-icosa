@@ -46,8 +46,6 @@ heatMapLegend(
 \item{bounds}{Logical vector indicating whether open intervals should be indicated for the legend.}
 
 \item{...}{arguments passed to the plot() function.}
-
-\item{ticks}{The number of ticks/values in the heatmap legend (the bar will be divided to this number).}
 }
 \description{
 This function will invoke the plot function to draw a heatmap legend.

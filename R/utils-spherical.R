@@ -292,8 +292,9 @@ rotateOnePoint<-function(coords, angles,origin)
 #' @return A 3-column (XYZ) or a 2-column (long-lat) numeric matrix.
 #' 
 #' @examples
-#'	randomPoints <- rpsphere(20000)
-#'	points3d(randomPoints)
+#'  randomPoints <- rpsphere(2000, output="polar")
+#' # observe latitudinal pattern
+#'  plot(randomPoints, xlim=c(-180, 180), ylim=c(-90, 90))
 #' 
 #' @export
 rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)){
@@ -351,6 +352,7 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 
 
 
+
 #' Surface centroid point of a spherical point cloud
 #' 
 #' This function the projected place of the centroid from a pointset on the sphere
@@ -359,7 +361,7 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #'	to avoid a particual error that frequently occurrs with other methods for centroid calculation, namely that the place of the centroid is right,
 #' 	but on the opposite hemisphere.
 #' 
-#' @param data  Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.
+#' @param x (\code{matrix} or \code{data.frame}) Numeric data, XYZ or longitude-latitude coordinates of the set of points.
 #' 
 #' @param output Character value, the coordinate system of the output points. Can either be \code{"polar"} for
 #' 	longitude-latitude or \code{"cartesian"} for XYZ data.
@@ -369,139 +371,128 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #'
+#' @param ... Arguments passed to class-specific methods.
 #' @return Either an XYZ or a long-lat numeric vector.
 #' 
 #' @examples
 #'	# generate some random points
 #'	allData <- rpsphere(1000)
 #'	# select only a subset
-#'	points<-allData[allData[,1]>3000,]
+#'	points<-allData[allData[,2]>1500,]
+#' # transform to 2d
+#'  points2 <- CarToPol(points, norad=TRUE)
 #'	# the spherical centroid
-#'	sc <- surfacecentroid(points)
+#'	sc <- surfacecentroid(points2, output="polar")
 #'	sc
 #'	
 #'	#3d plot
-#'	plot3d(points)
-#'	points3d(sc[1], sc[2], sc[3], col="red", size=5)
+#'	plot(points2, xlim=c(-180, 180), ylim=c(-90, 90))
+#'	points(sc[1], sc[2], col="red", cex=5)
 #'
-#' @export surfacecentroid
-surfacecentroid<-function(data, output="polar", center=c(0,0,0), radius=authRadius)
-{
-	if(class(data)!="data.frame" & class(data)!="matrix") stop("Invalid input data.")
-	if(nrow(data)<2) return(data)
-	#data argument
-	# which formatting?
-	if(ncol(data)==2){
-	
-		# transform the two columns
-		data<-PolToCar(data, origin=center, radius=radius)
-	}
-	if (ncol(data)==3){
-		radVec<-data[1,]-center
-		rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
-	}
-	
+#' @exportMethod surfacecentroid
+#' @rdname surfacecentroid
+setGeneric(
+	"surfacecentroid", 
+	function(x,...) standardGeneric("surfacecentroid")
+)
 
-	#the 3d centroid of the point cloud
-		centroid3d<-apply(data, 2, mean, na.rm=TRUE)
-		if(output=="cartesian"){
-			radVec<-(centroid3d-center)
-			retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad
-			return(retCentroid)
+#' Matrix-method of surfacecentroid()
+#' @rdname surfacecentroid
+setMethod(
+	"surfacecentroid",
+	signature=c(x="matrix"), 
+	function(x, output="polar", center=c(0,0,0), radius=authRadius){
+		if(nrow(x)<2) return(x)
+		#data argument
+		# which formatting?
+		if(ncol(x)==2){
+			# transform the two columns
+			x<-PolToCar(x, origin=center, radius=radius)
 		}
-	
-	#transform back to spherical coordinates
-	if(output=="polar"){
-		#the longitude problem!!!
-		xSign<-sign(centroid3d[1])
-	
-		theta<-atan(centroid3d[2]/centroid3d[1])
-		phi<-atan(sqrt(centroid3d[1]^2+centroid3d[2]^2)/centroid3d[3])
-	
-	#transform spherical coordinates to long/lat
-		theta<-theta/pi*180
-		phi<-phi/pi*180
-	
-		#convert to lat-long
-		if(phi>=0) lat<-90-phi
-		if(phi<0) lat<--90-phi
+		if (ncol(x)==3){
+			radVec<-x[1,]-center
+			rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
+		}
+
+		#the 3d centroid of the point cloud
+			centroid3d<-apply(x, 2, mean, na.rm=TRUE)
+			if(output=="cartesian"){
+				radVec<-(centroid3d-center)
+				retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad
+				return(retCentroid)
+			}
 		
-		if(xSign<0 & theta<=0) long<-180+theta
-		if(xSign<0 & theta>0) long<--180+theta
-		if(xSign>=0) long<-theta
+		#transform back to spherical coordinates
+		if(output=="polar"){
+			#the longitude problem!!!
+			xSign<-sign(centroid3d[1])
+		
+			theta<-atan(centroid3d[2]/centroid3d[1])
+			phi<-atan(sqrt(centroid3d[1]^2+centroid3d[2]^2)/centroid3d[3])
+		
+		#transform spherical coordinates to long/lat
+			theta<-theta/pi*180
+			phi<-phi/pi*180
+		
+			#convert to lat-long
+			if(phi>=0) lat<-90-phi
+			if(phi<0) lat<--90-phi
+			
+			if(xSign<0 & theta<=0) long<-180+theta
+			if(xSign<0 & theta>0) long<--180+theta
+			if(xSign>=0) long<-theta
+			
+			#return value
+			centroidLongLat<-c(long, lat)
+			names(centroidLongLat)<-c("long", "lat")
+		
 		
 		#return value
-		centroidLongLat<-c(long, lat)
-		names(centroidLongLat)<-c("long", "lat")
-	
-	
-	#return value
-		return(centroidLongLat)
-	}		
-}
-
-
-#' Spherical convex hull
-#' 
-#' This function calculates a possible implementation of the spherical convex hull
-#' 
-#' With the method \code{centroidprojection} the function calls the surfacecentroid() 
-#'	function to get the a reference point from the shape. Then all the points are 'projected' 
-#'	close to this point using the great circles linking them to the reference point.
-#'	Each such great circle will be devided to an equal number of points and the closest
-#'	 will replace the original point coordinates in the convex hull algorithm implemented in \code{grDevices::chull()}. 
-#' 
-#' @param data  Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.
-#' 
-#' @param center Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
-#' @param method Character value, indicating the method to create the spherical convex hulls.
-#' @param radius Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
-#' @param param Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'	the centroid.
-#' 
-#' @return Either an XYZ or a long-lat numeric vector.
-#' 
-#' @examples
-#'	# generate some random points
-#'	allData <- rpsphere(1000)
-#'	# select only a subset
-#'	points<-allData[allData[,1]>3000,]
-#'	chullsphere(points)
-#'	
-#'
-#' @export chullsphere
-chullsphereOLD<-function(data, center=c(0,0,0), radius=authRadius, method="centroidprojection", param=200)
-{
-	if(ncol(data)==2){
-		# transform the two columns
-		data<-PolToCar(data, radius, origin=center)
+			return(centroidLongLat)
+		}		
 	}
-	if (ncol(data)==3){
-		radVec<-data[1,]-center
-		rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
-	}
-	
-	#calculate the group centroid
-		centroid<-surfacecentroid(data, output="cartesian", center=center, radius)
+)
 
-	#shrink the 2d surface proportionally! to the vicinity of the reference point of latLong 2d space(roughly planar area)
-	if(method=="centroidprojection"){
-		projectedPoints<-.Call(Cpp_icosa_projectCloseToPoint_, data, centroid, center, param)
-		
-		#omit NA's (including the case where the centroid is among the points!)
-		boolMiss<-is.na(projectedPoints[,1])& is.na(projectedPoints[,2])
-		if(any(boolMiss)){
-			for(i in which(boolMiss)){
-				projectedPoints[i,] <- centroid
+#' df-method of surfacecentroid()
+#' @rdname surfacecentroid
+setMethod(
+	"surfacecentroid", 
+	signature=c(x="data.frame"),
+	function(x,...){
+		newX <- as.matrix(x)
+		surfacecentroid(newX,...)
+	}
+)
+
+#' SP-method of surfacecentroid()
+#' @rdname surfacecentroid
+setMethod(
+	"surfacecentroid",
+	signature=c(x="SpatialPoints"),
+	function(x,...){
+		# if it has a proj4
+		if(methods::.hasSlot(x, "proj4string")){
+			# and it's not NA
+			if(!is.na(x@proj4string)){
+				# need rgdal
+				if(requireNamespace("rgdal", quietly = TRUE)){
+					x<-sp::spTransform(x, sp::CRS("+proj=longlat"))@coords
+				} else{
+					stop("The 'rgdal' package is required to appropriately project this object. ")
+				}
+			}else{
+				x <- x@coords 
 			}
+		}else{
+			x <- x@coords 
 		}
-		
-		projP<- CarToPol(projectedPoints,norad=TRUE)
 
-		convHull <- grDevices::chull(projP)
-		return(convHull)
+		locate(x, ...)
 	}
+)
 
-}
+
+
 
 #' Spherical convex hull
 #' 
@@ -611,68 +602,68 @@ chullsphere<-function(data, center=c(0,0,0), radius=authRadius, param=200, stric
 }
 
 
-#' Surface area of a spherical convex-hull defined by a set of points
-#' 
-#' The function returns the area covered by the spherical convex hull of a pointset in square kilometers
-#' 
-#' The function assumes a round Earth, but SpatialPoints with \code{CRS} entries will be projected to a sphere before the calulations. 
-#' 
-#' @param data Coordinates of individual points. Can be either a two-dimensional 
-#' matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
-#' or a set of points with class 'SpatialPoints'.
-#' @param origin Numeric vector of length 3, defining the center of the sphere. Defaults to c(0,0,0).
-#' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
-#' @examples
-#' # simple example with a hexagrid 
-#' a<-hexagrid(c(4), sp=T)
-#' b<-a[c(lomax=40, lomin=-40, lamax=30, lamin=-30)]
-#' data <- centers(b)
-#' surfacechullsphere(data)
-#' 
-#' @export
-surfacechullsphere <-function(data, origin=c(0,0,0), radius=authRadius){
-	
-	# 1. make sure you have cartesian coordinates
-	
-	# for the SpatialPoints
-	if(class(data)=="SpatialPoints"){
-		# if it has a proj4
-		if(methods::.hasSlot(data, "proj4string")){
-			# and it's not NA
-			if(!is.na(data@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					data<-sp::spTransform(data, gridObj@proj4string)@coords
-				} else{
-					stop("The rgdal package is required to appropriately project this object. ")
-				}
-			}
-		}
-	}
-	
-	#data argument
-	# which formatting?
-	if(ncol(data)==2){
-		# transform the two columns
-		data<-PolToCar(data, radius, origin)
-	}
-	
-
-	# 2. calculate surface centroid
-	surfcent <- surfacecentroid(data, output="cartesian", center=origin, radius)
-
-	# 3. calculate spherical convex hulls
-	indices <- rev(chullsphere(data, center=surfcent, radius))
-
-	# 4. calculate the area
-	if(length(indices)>2){
-		surfarea <-.Call(Cpp_icosa_surfConvHullTri,
-			data[indices,],
-			surfcent,
-			origin,
-			pi)
-	}else{
-		surfarea <- 0
-	}
-	return(surfarea)
-}
+#	#' Surface area of a spherical convex-hull defined by a set of points
+#	#' 
+#	#' The function returns the area covered by the spherical convex hull of a pointset in square kilometers
+#	#' 
+#	#' The function assumes a round Earth, but SpatialPoints with \code{CRS} entries will be projected to a sphere before the calulations. 
+#	#' 
+#	#' @param data Coordinates of individual points. Can be either a two-dimensional 
+#	#' matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
+#	#' or a set of points with class 'SpatialPoints'.
+#	#' @param origin Numeric vector of length 3, defining the center of the sphere. Defaults to c(0,0,0).
+#	#' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
+#	#' @examples
+#	#' # simple example with a hexagrid 
+#	#' a<-hexagrid(c(4), sp=T)
+#	#' b<-a[c(lomax=40, lomin=-40, lamax=30, lamin=-30)]
+#	#' data <- centers(b)
+#	#' surfacechullsphere(data)
+#	#' 
+#	#' @export
+#	surfacechullsphere <-function(data, origin=c(0,0,0), radius=authRadius){
+#		
+#		# 1. make sure you have cartesian coordinates
+#		
+#		# for the SpatialPoints
+#		if(class(data)=="SpatialPoints"){
+#			# if it has a proj4
+#			if(methods::.hasSlot(data, "proj4string")){
+#				# and it's not NA
+#				if(!is.na(data@proj4string)){
+#					# need rgdal
+#					if(requireNamespace("rgdal", quietly = TRUE)){
+#						data<-sp::spTransform(data, gridObj@proj4string)@coords
+#					} else{
+#						stop("The rgdal package is required to appropriately project this object. ")
+#					}
+#				}
+#			}
+#		}
+#		
+#		#data argument
+#		# which formatting?
+#		if(ncol(data)==2){
+#			# transform the two columns
+#			data<-PolToCar(data, radius, origin)
+#		}
+#		
+#	
+#		# 2. calculate surface centroid
+#		surfcent <- surfacecentroid(data, output="cartesian", center=origin, radius)
+#	
+#		# 3. calculate spherical convex hulls
+#		indices <- rev(chullsphere(data, center=surfcent, radius))
+#	
+#		# 4. calculate the area
+#		if(length(indices)>2){
+#			surfarea <-.Call(Cpp_icosa_surfConvHullTri,
+#				data[indices,],
+#				surfcent,
+#				origin,
+#				pi)
+#		}else{
+#			surfarea <- 0
+#		}
+#		return(surfarea)
+#	}

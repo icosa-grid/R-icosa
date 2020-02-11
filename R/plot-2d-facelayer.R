@@ -4,22 +4,20 @@
 #'
 #' The function passes arguments to the plot method of the SpatialPolygons class (€ref). In case a heatmap is plotted and the windows plotting device gets resized,
 #' some misalignments can happen. If you want to use a differently sized window, use windows() to set the height and width before running the function.
-#' @param x The facelayer object to be plotted.
-#' @param y Not used.
 #' @param frame Logical value, if TRUE the grid boundaries will be drawn with black.
 #' @param col Character vector. Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the facelayer contains logical values, a single value is required (defaults to red).
 #' @param border Character value specifying the color of the borders of the cells.
 #' @param alpha Character value of two digits for the fill colors, in hexadecimal value between 0 and 255.
 #' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param legend (\code{logical}): Should the legend be plotted? 
-#' @param inclusve (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
+#' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
 #' @param discrete \code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
 #' @rdname plot
 #' @exportMethod plot
 setMethod(
 	"plot",
 	signature="facelayer",
-	definition=function(x,projargs=NULL,col="heat",border=NA, alpha=NULL, frame=FALSE,legend=TRUE, breaks=NULL,beside=TRUE, inclusive=TRUE, discrete=FALSE,  ...){
+	definition=function(x,projargs=NULL,col="heat",border=NA, alpha=NULL, frame=FALSE,legend=TRUE, breaks=NULL, inclusive=TRUE, discrete=FALSE,  ...){
 		actGrid<-get(x@grid)
 		checkLinkedGrid(actGrid, x)
 		
@@ -96,6 +94,7 @@ setMethod(
 		#when the values are logical
 		if(class(x@values)=="logical"){
 			#set default color value
+			if(length(col)==1) if(col=="heat") col <- "#FF0000"
 			plot(actSp,col=col,border=border,...)
 		}
 		

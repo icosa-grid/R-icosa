@@ -19,6 +19,7 @@ faces3d(x, ...)
   breaks = NULL,
   inclusive = TRUE,
   discrete = FALSE,
+  legend = TRUE,
   ...
 )
 }
@@ -34,6 +35,8 @@ faces3d(x, ...)
 \item{inclusive}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
 
 \item{discrete}{Description.}
+
+\item{legend}{(\code{logical}) Should the heatmap legend be plotted?}
 }
 \value{
 The function does not return any value.
@@ -66,9 +69,5 @@ The function is built on the openGL renderer of the R package \code{rgl}.
 # create a hexagonal grid
     g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-    plot3d(g)
-# make a subset to select faces
-   subG <- subset(g, c("F5", "F2"))
-# plot the subset defined above
-    faces3d(subG, col="orange")
+    faces3d(g)
 }

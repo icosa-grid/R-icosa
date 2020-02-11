@@ -18,6 +18,8 @@ CarToPol(x, ...)
 \arguments{
 \item{x}{(\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in a Cartesian space.}
 
+\item{...}{Arguments passed to class-specific methods.}
+
 \item{norad}{(\code{logical}). Toggles whether the rho coordinate (distance from origin) should be omitted from the output.}
 
 \item{origin}{(\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.}
