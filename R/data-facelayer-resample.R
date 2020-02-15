@@ -1,26 +1,28 @@
 #' Resampling a facelayer to a different resolution
 #' 
-#' This function will calculate values for a different resolution icosahedral grid from a facelayer.
-#' 
 #' The function applies different resampling algorithms. Currently there are only two implemented methods, one for upscaling and one for downscaling. The downscaling method "average" will tabluate all face centers from the high resolution grid that fall on a coarse resolution cell and average them. The upscaling method "ebaa" (edge breakpoint area approximation) will estimate the areas covered by the high resolution cells using the number of edge breakpoints.
 #' 
-#' @param x a \code{facelayer} class object.
+#' @param x (\code{\link[raster:raster]{RasterLayer}}, \code{\link{facelayer}}) Object to resample.  
 #' 
-#' @param y a \code{hexagrid} or \code{trigrid} object.
-#' @param res Numeric value, indicating the precision of area estimation during the upscaling. In case the "ebaa" method is chosen, the variable indicate the number of breaking points on an edge.
+#' @param y  (\code{\link{hexagrid}} or \code{\link{trigrid}}) Object describing the target structure.
+#' @param res (\code{numeric}) Value indicating the precision of area estimation during the upscaling (\code{facelayer}-method). In case the \code{"ebaa"} method is chosen, the variable indicate the number of breaking points on an edge.
 #' 
-#' @param method Character string stating the name of the algorithm used for resampling. 
+#' @param method (\code{character}) The name of the algorithm used for resampling. 
 #' 
-#' @return A named numeric vector.
+#' @return A named \code{numeric} vector.
 #' 
 #' @examples
-#' 	g <- trigrid(c(4,4))
-#' 	fl <- facelayer(g)
-#'		fl@values<-rnorm(length(fl))
-#' 	h <- trigrid(4)
-#'		res <- resample(fl, h)
-#' 	fl2<-facelayer(h)
-#'		fl2@values[] <- res
+#' # create a grid
+#' g <- trigrid(c(4,4))
+#' # create a data layer
+#' fl <- facelayer(g)
+#' fl@values<-rnorm(length(fl))
+#' # target structure
+#' h <- trigrid(4)
+#' # resampling
+#' res <- resample(fl, h)
+#' fl2<-facelayer(h)
+#' fl2@values[] <- res
 #'
 #' @exportMethod resample
 #' @rdname resample

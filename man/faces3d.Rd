@@ -5,7 +5,7 @@
 \alias{faces3d,trigrid-method}
 \alias{faces3d,hexagrid-method}
 \alias{faces3d,facelayer-method}
-\title{Methods of 3d face plotting.}
+\title{Methods of 3D face plotting.}
 \usage{
 faces3d(x, ...)
 
@@ -13,56 +13,28 @@ faces3d(x, ...)
 
 \S4method{faces3d}{hexagrid}(x, ...)
 
-\S4method{faces3d}{facelayer}(
-  x,
-  col = "heat",
-  breaks = NULL,
-  inclusive = TRUE,
-  discrete = FALSE,
-  legend = TRUE,
-  ...
-)
+\S4method{faces3d}{facelayer}(x, col = "heat", breaks = NULL, inclusive = TRUE, legend = TRUE, ...)
 }
 \arguments{
-\item{x}{The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.}
+\item{x}{The \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} object to be plotted.}
 
-\item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}) and the heatMapLegend() function.}
+\item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}) and the \code{\link{heatMapLegend}} function.}
 
-\item{col}{graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.}
+\item{col}{(\code{character}) Graphical parameter indicating the colours of the faces. A single value is accepted for \code{logical} values. Multiple colors will be passed to \code{\link[grDevices:colorRamp]{colorRampPalette}}, to create palettes for heat maps in case of \code{numeric} values. The default plotting method in this case is the reversed \code{\link[grDevices:palettes]{heat.colors}}. In case of categorical data, random colors will be chosen.}
 
-\item{breaks}{Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
+\item{breaks}{(\code{numeric}) Vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function.}
 
 \item{inclusive}{(\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?}
-
-\item{discrete}{Description.}
 
 \item{legend}{(\code{logical}) Should the heatmap legend be plotted?}
 }
 \value{
 The function does not return any value.
-
-The function does not return any value.
-
-The function does not return any value.
-
-The function does not return any value.
 }
 \description{
-This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space.
-
-This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space.
-
-This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space.
-
-This is a generic function used to plot the faces of a facelayer type object.
+This function is used to plot the faces of either a \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} object in 3D space.
 }
 \details{
-The function is built on the openGL renderer of the R package \code{rgl}.
-
-The function is built on the openGL renderer of the R package \code{rgl}.
-
-The function is built on the openGL renderer of the R package \code{rgl}.
-
 The function is built on the openGL renderer of the R package \code{rgl}.
 }
 \examples{
@@ -70,4 +42,7 @@ The function is built on the openGL renderer of the R package \code{rgl}.
     g <- hexagrid(c(2,2))
 # plot the grid in 3d space
     faces3d(g)
+h <- hexagrid(8)
+b <- facelayer(h)
+values(b)<- rnorm(length(b))
 }

@@ -1,15 +1,16 @@
-#' This function will create \code{facelayer} linked to a \code{trigrid} or \code{hexagrid} object
+#' A \code{facelayer} linked to a \code{trigrid} or \code{hexagrid} object
 #' 
-#' The grids themselves are scaffolds for the assigned data. The data themselves are stored in containers which are linked to the the grids.
+#' The grids themselves are scaffolds for the assigned data. The data are stored in containers which are linked to the grids.
 #' 
-#' @param gridObj A \code{hexagrid} or \code{trigrid} object.
+#' @param gridObj (\code{\link{hexagrid}} or \code{\link{trigrid}}) The linked grid object.
 #' 
-#' @param value The \code{facelayer} will be initialized with these values/this value
+#' @param value (\code{logical},\code{numeric} or \code{character}) The \code{facelayer} will be initialized with these values/this value
 #' @examples
-#' 	g <- trigrid(c(4,4))
-#' 	fl <- facelayer(g, 1:length(g))
-#' 	faces3d(fl)
+#' g <- trigrid(c(4,4))
+#' fl <- facelayer(g, 1:length(g))
+#' faces3d(fl)
 #' @exportClass facelayer
+#' @return A \code{facelayer} class object.
 facelayer <- setClass(
 	#name
 	"facelayer",

@@ -6,7 +6,7 @@
 \alias{values,gridlayer-method}
 \alias{values<-}
 \alias{values<-,gridlayer-method}
-\title{Extract and replace values from a gridlayer}
+\title{Extract and replace values from a gridlayer-derived object (e.g. \code{link{facelayer}}).}
 \format{An object of class \code{standardGeneric} of length 1.}
 \usage{
 values(x,...)
@@ -18,13 +18,13 @@ values(x) <- value
 \S4method{values}{gridlayer}(x) <- value
 }
 \arguments{
-\item{x}{a gridlayer derived object.}
+\item{x}{(\code{\link{facelayer}}) Object.}
 
-\item{value}{replacement values.}
+\item{value}{(\code{logical}, \code{character} or \code{numeric}) Replacement values.}
 
-\item{...}{Arguments passed to class-specific methods.}
+\item{...}{Arguments passed to class-specific methods. (Not used.)}
 }
 \description{
-The function will get the \code{@values} slot of a \code{gridlayer} object.
+The function will get the \code{@values} slot of a \code{\link{facelayer}} object.
 }
 \keyword{datasets}

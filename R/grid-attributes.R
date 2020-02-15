@@ -17,12 +17,12 @@ setMethod(
 )
 
 
-#' The length of a trigrid or, hexagrid class object.
+#' The number of faces in a \code{trigrid} or \code{hexagrid} class object. 
 #'
 #' The length of the object is interpreted as the number of faces it contains.
 #'
-#' @param x the object.
-#' @return An integer value
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object.
+#' @return An integer value.
 #' @rdname length
 #' @exportMethod length
 setMethod(	
@@ -38,13 +38,17 @@ setMethod(
 #'
 #' Shorthand function to return the vertices slot of an icosahedral grid or a grid linked to a facelayer. 
 #' @name vertices
-#' @param x The grid or facelayer object.
-#' @param output the coordinate system of the output.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The icosahedral grid, or linked data object.
+#' @param ... Additional arguments passed to class-specific methods.
+#' @param output (\code{character}) The coordinate system of output.
 #' @rdname vertices
 #' @exportMethod vertices
+#' @examples
+#' a <- trigrid(1)
+#' vertices(a)
 setGeneric(
 	name="vertices",
-	def=function(x,output){
+	def=function(x,...){
 		standardGeneric("vertices")
 	}
 )
@@ -52,7 +56,7 @@ setGeneric(
 #' @rdname vertices
 setMethod(	
 	f="vertices",
-	signature=c("trigrid","character"),
+	signature=c("trigrid"),
 	definition= function(x, output="polar"){
 		if(output=="polar"){
 			return(CarToPol(x@vertices, origin=x@center, norad=TRUE))
@@ -64,10 +68,9 @@ setMethod(
 )
 
 #' @rdname vertices
-#' @exportMethod vertices
 setMethod(	
 	f="vertices",
-	signature=c("facelayer","character"),
+	signature=c("facelayer"),
 	definition= function(x, output="polar"){
 		actGrid <- get(x@grid)
 		if(output=="polar"){
@@ -81,10 +84,11 @@ setMethod(
 
 #' The faces of a 3d object
 #'
-#' Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a facelayer. 
-#' @param x The grid or facelayer object.
+#' Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a \code{\link{facelayer}}. 
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or facelayer object.
 #' @name faces
 #' @rdname faces
+#' @return The faces of the grid as a \code{character} matrix.
 #' @exportMethod faces
 setGeneric(
 	name="faces",
@@ -127,7 +131,7 @@ setMethod(
 #' The edges of a 3d object
 #'
 #' Shorthand function to get the edges slot of an icosahedral grid or a grid linked to a facelayer. 
-#' @param x The grid or facelayer object.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or linked data object.
 
 #' @name edges
 #' @rdname edges
@@ -149,6 +153,7 @@ setMethod(
 )
 
 #' @exportMethod edges
+#' @return The edges of the grid, as a \code{character} matrix. 
 #' @rdname edges
 setMethod(	
 	f="edges",
@@ -161,11 +166,15 @@ setMethod(
 
 #' The face centers of an icosahedral grid object
 #'
-#' Shorthand function to return the faceCenters slot of an icosahedral grid or a grid linked to a facelayer. 
+#' Shorthand function to return the \code{@faceCenters} slot of an icosahedral grid or a grid linked to a facelayer. 
 #' @name centers
-#' @param x The grid or facelayer object.
-#' @param ... arguments passed to the class specific methods.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}). The grid or linked data layer object.
+#' @param ... Arguments passed to the class specific methods.
 #' @rdname centers
+#' @return The coordinates of the face centers as a \code{numeric} matrix.
+#' @examples
+#' a <- trigrid()
+#' centers(a)
 #' @exportMethod centers
 setGeneric(
 	name="centers",
@@ -175,9 +184,7 @@ setGeneric(
 )
 #' The face centers of a trigrid or hexagrid class object
 #'
-#' Shorthand function to return the faceCenters slot of an icosahedral grid . 
-#
-#' @param output the coordinate system of the output. Either "polar" or "cartesian".
+#' @param output (\code{character}) The coordinate system of the output. Either \code{"polar"} or \code{"cartesian"}.
 #' @rdname centers
 setMethod(	
 	f="centers",
@@ -194,8 +201,6 @@ setMethod(
 
 #' The face centers of a trigrid or hexagrid class object that is linked to a facelayer
 #'
-#' Shorthand function to return the faceCenters slot of the linked icosahedral grid . 
-#
 #' @rdname centers
 #' @exportMethod centers
 setMethod(	
@@ -213,12 +218,12 @@ setMethod(
 )
 
 	
-#' Extracting the grid orientation
+#' Extracting and setting the grid orientation
 #' 
 #' @name orientation
 #' 
-#' @param x (\code{trigrid} or \code{hexagrid}): Input grid. 
-#' @param display The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.
+#' @param x (\code{\link{trigrid}} or \code{\link{hexagrid}}): Input grid. 
+#' @param display (\code{character}) The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.
 #' @exportMethod orientation
 #' 
 #' @rdname orientation
@@ -230,8 +235,6 @@ setGeneric(
 	}
 )
 
-#' Extracting the grid orientation
-#' 
 #' @rdname orientation
 setMethod(
 	"orientation",
@@ -253,13 +256,13 @@ setMethod(
 
 
 
-#' Setting the orientation of a trigrid or hexagrid object
-#' 
+
 #' @name orientation<-
 #' 
-#' @param value the vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.
-#' @param ... values passed on to the rotate() function.
+#' @param value (\code{numeric}) The vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.
+#' @param ... Values passed on to the \code{\link[icosa]{rotate}} function.
 #' 
+#' @return In case the function returns does, it returns the orientation angles of the grid (as \code{numeric}).
 #' @exportMethod orientation<-
 #' 
 #' @rdname orientation
@@ -271,10 +274,7 @@ setGeneric(
 	
 )
 
-#' Setting the orientation of a trigrid or hexagrid object
-#' 
-#' 
-#' 
+
 #' @rdname orientation
 setReplaceMethod(
 	"orientation",
@@ -294,16 +294,16 @@ setReplaceMethod(
 #' This function will return the length of all edges in the specified grid object.
 #' 
 #' @name edgelength
-#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
+#' @param gridObj (\code{\link{trigrid}} or \code{{hexagrid}}) A grid object. 
 #' 
-#' @param ... arguments passed to the class specific methods.
+#' @param ... Arguments passed to the class specific methods.
 #' 
 #' @examples
-#' 	g <- trigrid(3)
-#' 	edges <- edgelength(g, output="deg")
-#' 	edges
+#' g <- trigrid(3)
+#' edges <- edgelength(g, output="deg")
+#' edges
 #' 
-#' @return A named numeric vector.
+#' @return A named \code{numeric} vector.
 #' 	
 #' @exportMethod edgelength
 #' @rdname edgelength
@@ -317,11 +317,8 @@ setGeneric(
 
 #' Lengths of grid edges
 #' 
-#' This function will return the length of all edges in the specified grid object.
 #' 
-#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
-#' 
-#' @param output Character value, the type of the output. \code{"distance"} will give back the distance
+#' @param output (\code{character}) The type of the output. \code{"distance"} will give back the distance
 #'	in the metric that was fed to the function in the coordinates or the radius.
 #'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 #'	so in radians.
@@ -357,18 +354,15 @@ setMethod(
 #' This function will return the areas of all cells in the specified grid object.
 #' 
 #' @name surfacearea
-#' @param gridObj A \code{trigrid} or \code{hexagrid} object. 
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) Object. 
 #' 
-#'	in the metric that was fed to the function in the coordinates or the radius.
-#'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
-#'	so in radians.
 #' 
 #' @examples
-#' 	g <- trigrid(3)
-#' 	surfaces <- surfacearea(g)
-#' 	surfaces
+#' g <- trigrid(3)
+#' surfaces <- surfacearea(g)
+#' surfaces
 #' 
-#' @return A named numeric vector.
+#' @return A named \code{numeric} vector, in the metric that was given to the function in the coordinates or the radius. \code{"deg"} will output the the distance in degrees, \code{"rad"} will do so in radians.
 #' 	
 #' @rdname surfacearea
 #' @exportMethod surfacearea
@@ -446,19 +440,19 @@ setMethod(
 
 #' Shape distortions of the triangular faces and subfaces
 #' 
-#' This function will return a value that is proportional to the irregularity of a triangonal face or subface.
+#' This function will return a value that is proportional to the irregularity of a triangonal face or subface. The ratio of the lengths of the shortest and the longest edges.
 #' 
-#' The value is exactly 1 for an equilateral triangle, and becomes 0 as one of the edges approach 0.
+#' The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}.
 #'
 #' @name trishape
-#' @param gridObj A \code{trigrid} or \code{hexagrid} object. 
+#' @param gridObj (\code{\link{trigrid}}, \code{\link{hexagrid}}) Object. 
 #' 
 #' @examples
-#' 	g <- trigrid(3)
-#' 	shape <- trishape(g)
-#' 	trishape
+#' g <- trigrid(3)
+#' shape <- trishape(g)
 #' 
-#' @return A named numeric vector.
+#' 
+#' @return A named \code{numeric} vector, one value for every face of the grid.
 #' 	
 #' @rdname trishape
 #' @exportMethod trishape

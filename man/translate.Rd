@@ -4,7 +4,7 @@
 \alias{translate}
 \alias{translate,trigrid,numeric-method}
 \alias{translate,hexagrid,numeric-method}
-\title{Translating the grid object in 3d Cartesian space}
+\title{Translating an icosahedral grid object in 3d Cartesian space}
 \usage{
 translate(gridObj, vec)
 
@@ -13,9 +13,9 @@ translate(gridObj, vec)
 \S4method{translate}{hexagrid,numeric}(gridObj, vec)
 }
 \arguments{
-\item{gridObj}{A \code{trigrid} or \code{hexagrid} class object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Icosahedral grid object.}
 
-\item{vec}{A numeric vector of length 3. This is the translation vector.}
+\item{vec}{(\code{numeric}) A vector of length 3. This is the translation vector.}
 }
 \value{
 The same grid structure as the input, but with translated coordinates.
@@ -24,11 +24,11 @@ The same grid structure as the input, but with translated coordinates.
 The function translates the coordinates of a grid object with the specified 3d vector.
 }
 \examples{
- # create a grid and plot it
+# create a grid and plot it
 g <- trigrid(3)
 lines3d(g)
 # translate the grid to (15000,15000,15000)
- g2 <- translate(g, c(15000,15000,15000))
-	 lines3d(g2)
+g2 <- translate(g, c(15000,15000,15000))
+lines3d(g2)
 
 }

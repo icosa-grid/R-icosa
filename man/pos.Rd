@@ -7,24 +7,24 @@
 pos(gridObj, names, output = "polar")
 }
 \arguments{
-\item{gridObj}{a \code{hexagrid} or \code{trigrid} object.}
+\item{gridObj}{a (\code{\link{hexagrid}} or \code{\link{trigrid}}) Icosahedral grid object.}
 
-\item{names}{A (character) vector of the names that are to be looked up.}
+\item{names}{(\code{character}) Vector of the names that are to be looked up.}
 
-\item{output}{The coordinate system in which the names are to be shown: use \code{"polar"} for longitude-latitude and \code{"cartesian"} for XYZ output.}
+\item{output}{(\code{character}) The coordinate system in which the names are to be shown: use \code{"polar"} for longitude-latitude and \code{"cartesian"} for XYZ output.}
 }
 \value{
-A numerical matrix.
+A \code{numeric} matrix.
 }
 \description{
-This function will retrieve the position of a vertex or a face on a \code{hexagrid} or \code{trigrid} object.
+This function will retrieve the position of a vertex or a face on a \code{\link{hexagrid}} or \code{\link{trigrid}} object.
 }
 \details{
 Vertex and face names can be mixed in a single \code{names} argument.
 }
 \examples{
-	g <- trigrid(c(4,4))
-	pos(g, c("F2", "P6", "dummyname"))
+g <- trigrid(c(4,4))
+pos(g, c("F2", "P6", "dummyname"))
 
 
 }

@@ -13,11 +13,11 @@ gridlabs3d(gridObj, ...)
 \S4method{gridlabs3d}{hexagrid}(gridObj, type = "f", ...)
 }
 \arguments{
-\item{gridObj}{A \code{trigrid} or \code{hexagrid} object to be plotted.}
+\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
 
-\item{...}{further arguments passed to \code{text3d} of the rgl package.}
+\item{...}{Additional arguments passed to \code{\link[rgl:texts]{text3d}} function of the \code{rgl} package.}
 
-\item{type}{A character vector containing either "f", "e" or "v", rendering the names
+\item{type}{(\code{character}) Vector containing either \code{"f"}, \code{"e"} or \code{"v"}, rendering the names
 of either the faces, edges or vertives respectively.}
 }
 \value{
@@ -28,9 +28,9 @@ This function will display the names of vertices, faces and edges on 3d plots.
 }
 \examples{
 # create a hexagonal grid
-    g <- hexagrid(c(2,2))
+g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-   lines3d(g, guides=FALSE)
+lines3d(g, guides=FALSE)
 # labels
- gridlabs3d(g)
+gridlabs3d(g)
 }

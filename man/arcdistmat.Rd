@@ -13,26 +13,26 @@ arcdistmat(
 )
 }
 \arguments{
-\item{points1}{Numeric matrix, XYZ or longitude-latitude coordinates of the first set of points.}
+\item{points1}{(\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the first set of points.}
 
-\item{points2}{Numeric matrix, XYZ or longitude-latitude coordinates (matrix) of the second set of points. 
+\item{points2}{(\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the second set of points. 
 Leave this empty if you want all the arc distances between a set of points}
 
-\item{origin}{Numeric vector, the center of the circle in XYZ coordinates (default is 0,0,0).}
+\item{origin}{(\code{numeric}) Vector, the center of the circle in XYZ coordinates (default is \code{c(0,0,0)}).}
 
-\item{output}{Character value, the type of the output value. \code{"distance"} will give back the distance
+\item{output}{(\code{character}) The type of the output value. \code{"distance"} will give back the distance
 in the metric that was fed to the function in the coordinates or the radius.
 \code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 so in radians.}
 
-\item{radius}{Numeric value, the radius of the circle in case the input points have polar coordinates only.
+\item{radius}{(\code{numeric}) The radius of the circle in case the input points have polar coordinates only.
 Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.}
 }
 \value{
-A single numeric value.
+A single \code{numeric} value.
 }
 \description{
-This function calculates the shortest arc distance matrix between two set of points.
+This function calculates the shortest arc distance matrix between two sets of points.
 }
 \details{
 This function will create all possible shortest arc distances between points in the two sets,

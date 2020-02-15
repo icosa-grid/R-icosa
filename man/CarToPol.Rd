@@ -16,7 +16,7 @@ CarToPol(x, ...)
 \S4method{CarToPol}{data.frame}(x, norad = FALSE, origin = c(0, 0, 0))
 }
 \arguments{
-\item{x}{(\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in a Cartesian space.}
+\item{x}{(\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in Cartesian space.}
 
 \item{...}{Arguments passed to class-specific methods.}
 

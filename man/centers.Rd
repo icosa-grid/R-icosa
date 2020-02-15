@@ -13,16 +13,19 @@ centers(x, ...)
 \S4method{centers}{facelayer}(x, output = "polar")
 }
 \arguments{
-\item{x}{The grid or facelayer object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}). The grid or linked data layer object.}
 
-\item{...}{arguments passed to the class specific methods.}
+\item{...}{Arguments passed to the class specific methods.}
 
-\item{output}{the coordinate system of the output. Either "polar" or "cartesian".}
+\item{output}{(\code{character}) The coordinate system of the output. Either \code{"polar"} or \code{"cartesian"}.}
+}
+\value{
+The coordinates of the face centers as a \code{numeric} matrix.
 }
 \description{
-Shorthand function to return the faceCenters slot of an icosahedral grid or a grid linked to a facelayer.
-
-Shorthand function to return the faceCenters slot of an icosahedral grid .
-
-Shorthand function to return the faceCenters slot of the linked icosahedral grid .
+Shorthand function to return the \code{@faceCenters} slot of an icosahedral grid or a grid linked to a facelayer.
+}
+\examples{
+a <- trigrid()
+centers(a)
 }

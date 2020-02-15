@@ -13,8 +13,11 @@ faces(x)
 \S4method{faces}{gridlayer}(x)
 }
 \arguments{
-\item{x}{The grid or facelayer object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or facelayer object.}
+}
+\value{
+The faces of the grid as a \code{character} matrix.
 }
 \description{
-Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a facelayer.
+Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a \code{\link{facelayer}}.
 }

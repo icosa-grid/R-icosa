@@ -4,17 +4,20 @@
 \name{facelayer-class}
 \alias{facelayer-class}
 \alias{facelayer}
-\title{This function will create \code{facelayer} linked to a \code{trigrid} or \code{hexagrid} object}
+\title{A \code{facelayer} linked to a \code{trigrid} or \code{hexagrid} object}
 \arguments{
-\item{gridObj}{A \code{hexagrid} or \code{trigrid} object.}
+\item{gridObj}{(\code{\link{hexagrid}} or \code{\link{trigrid}}) The linked grid object.}
 
-\item{value}{The \code{facelayer} will be initialized with these values/this value}
+\item{value}{(\code{logical},\code{numeric} or \code{character}) The \code{facelayer} will be initialized with these values/this value}
+}
+\value{
+A \code{facelayer} class object.
 }
 \description{
-The grids themselves are scaffolds for the assigned data. The data themselves are stored in containers which are linked to the the grids.
+The grids themselves are scaffolds for the assigned data. The data are stored in containers which are linked to the grids.
 }
 \examples{
-	g <- trigrid(c(4,4))
-	fl <- facelayer(g, 1:length(g))
-	faces3d(fl)
+g <- trigrid(c(4,4))
+fl <- facelayer(g, 1:length(g))
+faces3d(fl)
 }

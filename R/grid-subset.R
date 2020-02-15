@@ -6,29 +6,29 @@
 #' The subscript vector can be either a logical, character or numeric one. The character vector should contain the names of faces, the logical subscript should have 
 #' the same length as the number of faces in the order in which the faces are present in the \code{faces} slot. 
 #' The numeric vector can either refer to indices to the rownames of faces in the faces slot, or
-#' to surfaces bounded by longitude/latitude data. In the latter case, the the vector should contain an element with a names of at least one of the "lomax", "lamax", 
-#' "lomin" or "lamin" strings (lo for longitude, la: latitude, min: minimum, max: maximum). In case a subset around the dateline is needed a larger longitude to a smaller longitude value is needed (e.g. between 150° to -150°). 
+#' to surfaces bounded by longitude/latitude data. In the latter case, the the vector should contain an element with a names of at least one of the \code{"lomax"}, \code{"lamax"}, 
+#' \code{"lomin"} or \code{"lamin"} strings (lo for longitude, la: latitude, min: minimum, max: maximum). In case a subset around the dateline is needed a larger longitude to a smaller longitude value is needed (e.g. between \code{150}° to \code{-150}°). 
 #' 
 #' 
-#' 
-#' @param i A subscript vector, specifying the names of the face that are used for subsetting.
 #' 
 #' @examples
-#'     #create a triangular grid
-#'         g <- trigrid(c(2,2))
-#'     #make a subset pertaining to the faces
-#'         subG1 <- subset(g, c("F1", "F33"))
+#' #create a triangular grid
+#' g <- trigrid(c(2,2))
+#' 
+#' #make a subset pertaining to the faces
+#' subG1 <- subset(g, c("F1", "F33"))
 #'     
-#'	   #additional way of subsetting
-#'			subG2 <- g[1:15] # selects faces F1 through F15
-#'     logicalSub<-sample(c(TRUE,FALSE), nrow(g@faces), replace=TRUE)
-#'			subG3 <- g[logicalSub]
-#'     #plot the subset in 3d space
-#'         plot3d(subG3)
-#'		# previously mentioned case around the dateline
-#'		gDateLine<-g[c(lomax=-150, lomin=150)]
-#'			plot3d(gDateLine)
-#'
+#' #additional way of subsetting
+#' subG2 <- g[1:15] # selects faces F1 through F15
+#' logicalSub<-sample(c(TRUE,FALSE), nrow(g@faces), replace=TRUE)
+#' subG3 <- g[logicalSub]
+#' 
+#' #plot the subset in 3d space
+#' plot3d(subG3)
+#' 
+#' # previously mentioned case around the dateline
+#' gDateLine<-g[c(lomax=-150, lomin=150)]
+#' plot3d(gDateLine)
 #' @rdname subset
 #' @return Subset of the input grid. The class of the original object is retained, the \code{@skeleton} slot contains all previous information.
 #' @exportMethod subset

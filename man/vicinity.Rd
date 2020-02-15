@@ -18,32 +18,32 @@ vicinity(gridObj, faces, ...)
 )
 }
 \arguments{
-\item{gridObj}{A \code{trigrid} or \code{hexagrid} class object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Icosahedral grid object.}
 
-\item{faces}{A character vector specifying names of faces.}
+\item{faces}{(\code{character}) A vector specifying names of faces.}
 
-\item{...}{arguments passed to the igraph::ego() function}
+\item{...}{Arguments passed to the \code{\link[igraph]{ego}} function.}
 
-\item{order}{Passed to the igraph::ego() function, an integer value specifying the size of the neighborhood around a face.}
+\item{order}{(\code{numeric}) Passed to the \code{\link[igraph]{ego}} function, an integer value specifying the size of the neighborhood around a face.}
 
-\item{output}{Characater value, the type of the output. The default \code{"vector"} 
+\item{output}{(\code{character}) The type of the output. The default \code{"vector"} 
 will give back the names of the faces that adjacent to the faces specified, 
 including themselves. \code{"list"} will return a list.}
 
-\item{self}{logical value indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
+\item{self}{(\code{logical}) Flag indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
 omitted only from those character vectors that contain face names that are related to the face in question.}
 
 \item{namedorder}{(\code{logical}) Should the orders of the neighbouring cells be reported (\code{TRUE}) or just the names of the cells (default, \code{FALSE}).}
 }
 \value{
-A character vector or a list of character vectors.
+A \code{character} vector or a \code{list} of \code{character} vectors.
 }
 \description{
 This function will return neighbouring faces of the input faces.
 }
 \examples{
-	g <- trigrid(3)
-	ne <- vicinity(g, c("F4", "F10"))
-	ne
+g <- trigrid(3)
+ne <- vicinity(g, c("F4", "F10"))
+ne
 
 }

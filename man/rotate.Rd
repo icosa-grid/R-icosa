@@ -4,7 +4,7 @@
 \name{rotate}
 \alias{rotate}
 \alias{rotate,trigrid-method}
-\title{Rotation method of trigrid and hexagrid objects}
+\title{Rotation of \code{\link{trigrid}} and \code{\link{hexagrid}} objects}
 \format{An object of class \code{standardGeneric} of length 1.}
 \usage{
 rotate
@@ -12,18 +12,16 @@ rotate
 \S4method{rotate}{trigrid}(x, angles = "random", pivot = NA)
 }
 \arguments{
-\item{x}{(\code{trigrid} or \code{hexagrid}): Input grid.}
+\item{x}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Input grid.}
 
 \item{angles}{(\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default).}
 
 \item{pivot}{(\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.}
 }
 \value{
-Another \code{trigrid} or \code{hexagrid} class object.
+Another \code{\link{trigrid}} or \code{\link{hexagrid}} class object.
 }
 \description{
-Rotation method of trigrid and hexagrid objects
-
-Rotation method of trigrid class
+Rotation of \code{\link{trigrid}} and \code{\link{hexagrid}} objects
 }
 \keyword{datasets}

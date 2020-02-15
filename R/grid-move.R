@@ -11,18 +11,18 @@ if(requireNamespace("raster", quietly = TRUE)){
 }
 
 
-#' Rotation method of trigrid and hexagrid objects
+#' Rotation of \code{\link{trigrid}} and \code{\link{hexagrid}} objects
 #'
-#' @param x (\code{trigrid} or \code{hexagrid}): Input grid. 
+#' @param x (\code{\link{trigrid}} or \code{\link{hexagrid}}) Input grid. 
 #' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). 
 #' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
 #' @rdname rotate
-#' @return Another \code{trigrid} or \code{hexagrid} class object.
+#' @return Another \code{\link{trigrid}} or \code{\link{hexagrid}} class object.
 #' @exportMethod rotate
 "rotate"
 
 
-#' Rotation method of trigrid class
+# Rotation method of trigrid class
 #' @rdname rotate
 setMethod(	
 	f="rotate",
@@ -93,22 +93,22 @@ setMethod(
 
 
 
-#' Translating the grid object in 3d Cartesian space
+#' Translating an icosahedral grid object in 3d Cartesian space
 #' 
 #' The function translates the coordinates of a grid object with the specified 3d vector.
 #' @name translate
 #' 
-#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) Icosahedral grid object. 
 #' 
-#' @param vec A numeric vector of length 3. This is the translation vector.
+#' @param vec (\code{numeric}) A vector of length 3. This is the translation vector.
 #'
 #' @examples
-#'  # create a grid and plot it
-#'	g <- trigrid(3)
-#'	lines3d(g)
-#'	# translate the grid to (15000,15000,15000)
-#'  g2 <- translate(g, c(15000,15000,15000))
-#' 	 lines3d(g2)
+#' # create a grid and plot it
+#' g <- trigrid(3)
+#' lines3d(g)
+#' # translate the grid to (15000,15000,15000)
+#' g2 <- translate(g, c(15000,15000,15000))
+#' lines3d(g2)
 #' 
 #' @return The same grid structure as the input, but with translated coordinates.
 #' 	

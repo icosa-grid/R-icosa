@@ -284,7 +284,7 @@ setMethod(
 	
 #' 3d  plotting method of a Lines class object
 #' 
-#' @param radius Used for plotting objects that inherit from Spatial*. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.
+#' @param radius (\code{numeric}) Used for plotting objects that inherit from \code{Spatial*}. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.
 #' @rdname lines3d
 setMethod(
 	"lines3d",

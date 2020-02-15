@@ -1,24 +1,27 @@
 ## wrapper function around the OccupiedFaces generic, to get the occupied grid cells. return out a facelayer object
 #export!
+
 #' Faces occupied by the specified object
 #'
-#' This function will return a \code{facelayer} class object showing which faces are occupied by the input object.
+#' This function will return a \code{\link{facelayer}} class object showing which faces are occupied by the input object.
 #'
-#' This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data. The function creates a link between the facelayer and the relevant grid.
+#' This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data. 
 #'
-#' @param gridObj a \code{trigrid} or \code{hexagrid} object.
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.
 #' 
-#' @param data the queried data.
+#' @param data (\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.
 #'
-#' @param ... arguments passed to the class specific methods
+#' @param ... Arguments passed to the class specific methods
 #'
-#' @return returns a facelayer object
+#' @return The function Returns a \code{\link{facelayer}}-class object. 
 #'
 #' @examples
 #'	# create a grid
 #'	g <- trigrid(8, sp=TRUE)
+#'
 #'	# create random points
 #'	randPoints <- rpsphere(100,output="polar")
+#'
 #'	# the facelayer occupied by these points
 #'	randomLayer <- occupied(g, randPoints)
 #'	plot(randomLayer)
@@ -264,7 +267,7 @@ setMethod(
 		
 		cells<-locate(gridObj, mat)
 		
-		occup<-tapply(X=values(data), INDEX=cells, function(x){sum(!is.na(x))})
+		occup<-tapply(X=raster::values(data), INDEX=cells, function(x){sum(!is.na(x))})
 		occupiedCells<-names(occup)[occup>0]
 		
 		fl<-rep(FALSE, length(gridObj))
@@ -279,20 +282,20 @@ setMethod(
 #' Basic lookup function of coordinates on an icosahedral grid
 #'
 #' @name locate
-#' @return The function returns the cell names where the input coordinates fall.
+#' @return The function returns the cell names (as \code{character}) where the input coordinates fall.
 #'
-#' @param x a trigrid or hexagrid class object.
-#' @param y Coordinates of individual points. Can be either a two-dimensional 
+#' @param x (\code{trigrid}, \code{hexagrid}) Icosahedral grid object.
+#' @param y (\code{matrix}, \code{data.frame}, \code{numeric} or \code{Spatial}) Coordinates of individual points. Can be either a two-dimensional 
 #' matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
-#' or a set of points with class 'SpatialPoints'.
+#' or a set of points with class \code{\link[sp]{SpatialPoints}} or \code{\link[sp:SpatialPoints]{SpatialPointsDataFrame}}.
 #'
-#' @param randomborder Logical value. Defaults to FALSE. If TRUE, then the points
-#' falling on vertices and edges will be randomly assigned, otherwise they will be kept as NAs.
+#' @param randomborder (\code{logical}) Defaults to \code{FALSE}. If \code{TRUE}, then the points
+#' falling on vertices and edges will be randomly assigned, otherwise they will be kept as \code{NA}s.
 #'
-#' @param output Character value either "ui" or "skeleton". ui returns the face 
-#' 	names used in the user interface, while "skeleton" returns their 
+#' @param output (\code{character}) Either \code{"ui"} or \code{"skeleton"}. \code{"ui"} returns the face 
+#' 	names used in the user interface, while \code{"skeleton"} returns their 
 #' 	indices used in back-end procedures.
-#' @param ... arguments passed to class specific methods.
+#' @param ... Arguments passed to class specific methods.
 #' @examples
 #'	# create a grid 
 #'	g <- trigrid(4)
@@ -447,7 +450,7 @@ setMethod(
 }
 )
 
-#' locate-method of trigrid-numeric
+# locate-method of trigrid-numeric
 #' @rdname locate
 setMethod(
 	"locate",
@@ -460,7 +463,7 @@ setMethod(
 	}
 )
 
-#' locate-method of trigrid - data.frame
+# locate-method of trigrid - data.frame
 #' @rdname locate
 setMethod(
 	"locate",
@@ -477,7 +480,7 @@ setMethod(
 	}
 )
 
-#' locate method of trigrid - SpatialPoints
+# locate method of trigrid - SpatialPoints
 #' @rdname locate
 setMethod(
 	"locate",
@@ -504,7 +507,7 @@ setMethod(
 	}
 )
 
-#' trigrid-SPDF method
+# trigrid-SPDF method
 #' @rdname locate
 setMethod(
 	"locate",
@@ -535,7 +538,7 @@ setMethod(
 # locate() method for the hexagrid v6.0 - written for matrix
 # This is only the y="matrix" method, inheritance will take care of the rest. 
 # This version uses my own c++ function for point in tetrahedron testing
-#' @param forceNA logical value, suppressing the recursive lookup of points falling on subface boundaries.
+#' @param forceNA (\code{logical}) Suppressing the recursive lookup of points falling on subface boundaries.
 #' @rdname locate
 #' @exportMethod locate
 setMethod(
@@ -703,21 +706,21 @@ setMethod(
 
 #' Position of face centers and vertices on a grid
 #' 
-#' This function will retrieve the position of a vertex or a face on a \code{hexagrid} or \code{trigrid} object.
+#' This function will retrieve the position of a vertex or a face on a \code{\link{hexagrid}} or \code{\link{trigrid}} object.
 #' 
 #' Vertex and face names can be mixed in a single \code{names} argument.
 #' 
-#' @param gridObj a \code{hexagrid} or \code{trigrid} object.
+#' @param gridObj a (\code{\link{hexagrid}} or \code{\link{trigrid}}) Icosahedral grid object.
 #' 
-#' @param names A (character) vector of the names that are to be looked up.
+#' @param names (\code{character}) Vector of the names that are to be looked up.
 #' 
-#' @param output The coordinate system in which the names are to be shown: use \code{"polar"} for longitude-latitude and \code{"cartesian"} for XYZ output.
+#' @param output (\code{character}) The coordinate system in which the names are to be shown: use \code{"polar"} for longitude-latitude and \code{"cartesian"} for XYZ output.
 #' 
-#' @return A numerical matrix.
+#' @return A \code{numeric} matrix.
 #' 
 #' @examples
-#' 	g <- trigrid(c(4,4))
-#' 	pos(g, c("F2", "P6", "dummyname"))
+#' g <- trigrid(c(4,4))
+#' pos(g, c("F2", "P6", "dummyname"))
 #' 
 #' 
 #' @export

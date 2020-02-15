@@ -1,5 +1,11 @@
 # Change log
 
+## [0.10.0 (build 1016)] - CRAN submission - 2020-02-15
+### Changed
+- vignette was cut for performance optimization
+- documentation was systematically revised
+
+
 ## [0.9.88 (build 1015)] - 2020-02-09
 ### Added
 - documentation for the 'tessguide' dataset

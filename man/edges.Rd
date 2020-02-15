@@ -13,7 +13,10 @@ edges(x)
 \S4method{edges}{facelayer}(x)
 }
 \arguments{
-\item{x}{The grid or facelayer object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or linked data object.}
+}
+\value{
+The edges of the grid, as a \code{character} matrix.
 }
 \description{
 Shorthand function to get the edges slot of an icosahedral grid or a grid linked to a facelayer.

@@ -1,24 +1,25 @@
 # function to create a legend for a heatmap
 #' Legend for a heatmap with predefined colors.
 #'
-#' This function will invoke the plot function to draw a heatmap legend.
+#' This function will invoke the \code{\link[graphics]{plot}} function to draw a heatmap legend.
 #' 
 #' The 'percents' refer to the plotting area measured from the lower left corner.
 #' @rdname heatMapLegend
 #'
-#' @param cols Character vector, containnig the ordered colors that are used for the heatmap.
-#' @param tick.text The values on the heatmap legend. If missing, will be calculated with minVal and maxVal. Should have the length as 'ticks'.
-#' @param vals If tick.text is missing, the lowest value in the heatmap
-#' @param tick.cex Letter size of the values on the legend.
-#' @param varName The label of the variable name plotted to the heatmap.
-#' @param barWidth The width (percent) of the bar featuring the colors of the heatmap.
-#' @param barHeight The height (percent)of the bar featuring the colors of the heatmap.
-#' @param tickLength The length (percent) of the ticks at the bars.
-#' @param xLeft the x coordinate of the lower left hand corner of the bar.
-#' @param yBot the y coordinate of the lower left hand corner of the bar.
-#' @param add indicates wheter a new plot should be drawn or not. Defaults to FALSE.
-#' @param bounds Logical vector indicating whether open intervals should be indicated for the legend. 
-#' @param ... arguments passed to the plot() function.
+#' @param cols (\code{character}) Vector, containnig the ordered colors that are used for the heatmap.
+#' @param tick.text (\code{numeric}) The values on the heatmap legend. If missing, will be calculated with \code{minVal} and \code{maxVal}. 
+#' @param vals (\code{numeric}) If \code{tick.text} is missing, the lowest value in the heatmap
+#' @param tick.cex (\code{numeric}) Letter size of the values on the legend.
+#' @param varName (\code{character}) The label of the variable name plotted to the heatmap.
+#' @param barWidth (\code{numeric}) The width (percent) of the bar featuring the colors of the heatmap.
+#' @param barHeight (\code{numeric}) The height (percent)of the bar featuring the colors of the heatmap.
+#' @param tickLength (\code{numeric})  The length (percent) of the ticks at the bars.
+#' @param xLeft (\code{numeric}) The x coordinate of the lower left hand corner of the bar.
+#' @param yBot (\code{numeric}) The y coordinate of the lower left hand corner of the bar.
+#' @param add (\code{logical}) Indicates wheter a new plot should be drawn or not. Defaults to \code{FALSE}.
+#' @param bounds (\code{logical}) Vector (length 2) indicating whether open intervals should be indicated for the legend. 
+#' @param ... Arguments passed to the \code{\link[graphics]{plot}} function.
+#' @return The function does not return any value.
 #' @export		
 heatMapLegend <- function(cols, vals, varName, tick.text=NULL,tick.cex=1.5, barWidth=3, barHeight=50,tickLength=1, xLeft=88, yBot=25, add=FALSE, bounds=c(FALSE, FALSE),...){
 #	usedCols<<-cols

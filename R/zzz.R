@@ -7,9 +7,9 @@
 #'    are provided to position points (latitude-longitude data) on the grids,
 #'    to allow 2D and 3D plotting, use raster data and shapefiles.
 #' 
-#' This is the 0.9 (Beta) version. Notes about found bugs and suggestions are more than welcome!
+#' This is still the Beta version. Notes about found bugs and suggestions are more than welcome!
 #'
-#' @author Adam T. Kocsis (adam.kocsis@outlook.com)
+#' @author Adam T. Kocsis (adam.t.kocsis@gmail.com)
 #' @docType package
 #' @examples
 #' # Create a triangular grid
@@ -50,7 +50,7 @@
 #' @importFrom utils combn
 NULL
 
-#package namespace variables
+# package namespace variables
 	origin<-c(0,0,0)
 	authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
 	meanRadius<-6371.0087714 # mean radius (R1) based on Mortiz, 1980

@@ -25,36 +25,28 @@ locate(x, y, ...)
 \S4method{locate}{hexagrid,matrix}(x, y, output = "ui", randomborder = FALSE, forceNA = FALSE)
 }
 \arguments{
-\item{x}{a trigrid or hexagrid class object.}
+\item{x}{(\code{trigrid}, \code{hexagrid}) Icosahedral grid object.}
 
-\item{y}{Coordinates of individual points. Can be either a two-dimensional 
+\item{y}{(\code{matrix}, \code{data.frame}, \code{numeric} or \code{Spatial}) Coordinates of individual points. Can be either a two-dimensional 
 matrix of long-lat coordinates, a three-dimensional matrix of XYZ coordinates, 
-or a set of points with class 'SpatialPoints'.}
+or a set of points with class \code{\link[sp]{SpatialPoints}} or \code{\link[sp:SpatialPoints]{SpatialPointsDataFrame}}.}
 
-\item{...}{arguments passed to class specific methods.}
+\item{...}{Arguments passed to class specific methods.}
 
-\item{randomborder}{Logical value. Defaults to FALSE. If TRUE, then the points
-falling on vertices and edges will be randomly assigned, otherwise they will be kept as NAs.}
+\item{randomborder}{(\code{logical}) Defaults to \code{FALSE}. If \code{TRUE}, then the points
+falling on vertices and edges will be randomly assigned, otherwise they will be kept as \code{NA}s.}
 
-\item{output}{Character value either "ui" or "skeleton". ui returns the face 
-names used in the user interface, while "skeleton" returns their 
+\item{output}{(\code{character}) Either \code{"ui"} or \code{"skeleton"}. \code{"ui"} returns the face 
+names used in the user interface, while \code{"skeleton"} returns their 
 indices used in back-end procedures.}
 
-\item{forceNA}{logical value, suppressing the recursive lookup of points falling on subface boundaries.}
+\item{forceNA}{(\code{logical}) Suppressing the recursive lookup of points falling on subface boundaries.}
 }
 \value{
-The function returns the cell names where the input coordinates fall.
+The function returns the cell names (as \code{character}) where the input coordinates fall.
 }
 \description{
 Basic lookup function of coordinates on an icosahedral grid
-
-locate-method of trigrid-numeric
-
-locate-method of trigrid - data.frame
-
-locate method of trigrid - SpatialPoints
-
-trigrid-SPDF method
 }
 \examples{
 # create a grid 

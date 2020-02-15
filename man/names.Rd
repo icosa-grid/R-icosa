@@ -2,16 +2,16 @@
 % Please edit documentation in R/data-gridlayer-attributes.R
 \name{names,gridlayer-method}
 \alias{names,gridlayer-method}
-\title{The face names in a \code{gridlayer} class object}
+\title{The face names in a \code{\link{facelayer}} class object}
 \usage{
 \S4method{names}{gridlayer}(x)
 }
 \arguments{
-\item{x}{A \code{gridlayer} class object.}
+\item{x}{(\code{\link{facelayer}}) Object.}
 }
 \value{
-\code{character} vector, the names of the faces.
+A vector of \code{character} values, the names of the faces.
 }
 \description{
-Function to extract the registered face names to which the \code{gridlayer} renders information.
+Function to extract the registered face names to which the \code{\link{facelayer}} renders information.
 }

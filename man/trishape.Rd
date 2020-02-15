@@ -13,20 +13,20 @@ trishape(gridObj)
 \S4method{trishape}{hexagrid}(gridObj)
 }
 \arguments{
-\item{gridObj}{A \code{trigrid} or \code{hexagrid} object.}
+\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.}
 }
 \value{
-A named numeric vector.
+A named \code{numeric} vector, one value for every face of the grid.
 }
 \description{
-This function will return a value that is proportional to the irregularity of a triangonal face or subface.
+This function will return a value that is proportional to the irregularity of a triangonal face or subface. The ratio of the lengths of the shortest and the longest edges.
 }
 \details{
-The value is exactly 1 for an equilateral triangle, and becomes 0 as one of the edges approach 0.
+The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}.
 }
 \examples{
-	g <- trigrid(3)
-	shape <- trishape(g)
-	trishape
+g <- trigrid(3)
+shape <- trishape(g)
+
 
 }

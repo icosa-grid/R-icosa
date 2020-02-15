@@ -1,10 +1,10 @@
 #' 3d plotting of a facelayer of an icosahedral grid or its subset
 #'
-#' The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is 800x800 pixels. In case you want to override this, please
-#' use the function with 'defaultPar3d=FALSE' after running 'rgl::par3d(windowRect=<>)'. 
+#' The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is \code{800x800} pixels. In case you want to override this, please
+#' use the function with \code{defaultPar3d=FALSE} after running \code{\link[rgl]{par3d}}\code{(windowRect=<>)}. 
 #'  
-#' @param defaultPar3d Logical value, whether the default settings for par3d() are to be used (windowRect = c(50, 60, 800, 800), zoom=0.8).
-#' @param frame If set to TRUE the grid line structure will be plotted.
+#' @param defaultPar3d (\code{logical}) Flag indicating whether the default settings for \code{\link[rgl]{par3d}} are to be used \code{(windowRect = c(50, 60, 800, 800), zoom=0.8)}.
+#' @param frame (\code{logical}) If set to TRUE the grid line structure will be plotted.
 #' 
 #' @exportS3Method rgl::plot3d facelayer
 #' @exportS3Method plot3d facelayer
@@ -46,27 +46,25 @@ plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TR
 
 #' Methods of 3d face plotting.
 #' 
-#' This is a generic function used to plot the faces of a facelayer type object. 
-#' 
-#' The function is built on the openGL renderer of the R package \code{rgl}.
-#'  
-#' @param col graphical parameter indicating the colours of the faces. A single value is accepted for logical values. Multiple colors will be passed to grDevices::colorRampPalette(), to create palettes for heat maps in case of numeric values. The defaul plotting method in this case is the reversed grDevices::heat.colors (). In case of categorical data, random colors will be chosen.
-#' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
+#' @param col (\code{character}) Graphical parameter indicating the colours of the faces. A single value is accepted for \code{logical} values. Multiple colors will be passed to \code{\link[grDevices:colorRamp]{colorRampPalette}}, to create palettes for heat maps in case of \code{numeric} values. The default plotting method in this case is the reversed \code{\link[grDevices:palettes]{heat.colors}}. In case of categorical data, random colors will be chosen.
+#' @param breaks (\code{numeric}) Vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
-#' @param discrete Description.
 #' @param legend (\code{logical}) Should the heatmap legend be plotted?
-#' @return The function does not return any value.
 #'
 #' @exportMethod faces3d
 #' @rdname faces3d
+#' @examples
+#' h <- hexagrid(8)
+#' b <- facelayer(h)
+#' values(b)<- rnorm(length(b))
 setMethod(	
 	f="faces3d",
 	signature="facelayer",
-	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, discrete=FALSE, legend=TRUE,  ...){
+	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, legend=TRUE,  ...){
 		# extract the grid that needs to be plotted:
 		actGrid  <- get(x@grid)
 	#	checkLinkedGrid(actGrid, x)
-		
+		discrete<- FALSE
 		#check whether the  grid is actually updated
 		if(sum(x@names%in%rownames(actGrid@faces))!=length(x)) 
 		stop("The facenames in thelinked grid does not match the facelayer object.")

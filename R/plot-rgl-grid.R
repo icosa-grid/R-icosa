@@ -1,8 +1,5 @@
-#' 3d plotting of an icosahedral grid or its subset
+#' 3d plotting of an icosahedral grid, its subset or a data layer
 #' 
-#' This is a generic function used to plot either a \code{trigrid} or a \code{hexagrid} object or their \code{facelayer} in 3d space. 
-#' 
-#' The function is built on the openGL renderer of the R package \code{rgl}.
 #'  
 #' @usage plot3d(x,...)
 #' @rdname plot3d
@@ -21,18 +18,18 @@ if(requireNamespace("rgl", quietly = TRUE)){
 }
 
 
-#' @param x The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) Object to be plotted.
 #' 
-#' @param type A character value specifying the part of the grid to be plotted by the call of the function. 
+#' @param type (\code{character}) Value specifying the part of the grid to be plotted by the call of the function. 
 #' \code{"v"} plots the grid vertex points. 
 #' \code{"e"} draws the grid edges.
 #' \code{"f"} draws the grid faces.
 #' \code{"c"} draws the face centers of the grid.
 #' 
-#' @param sphere Defaults to NULL, adding a central white sphere to the plot. Assigning a numeric value will draw a new sphere with the given radius,
+#' @param sphere (\code{numeric}) Defaults to \code{NULL}, adding a central white sphere to the plot. Assigning a \code{numeric} value will draw a new sphere with the given radius,
 #'		\code{FALSE} does not plot the sphere. 
-#' @param guides Logical value indicating whether the guidelines of the polar coordinate system shall be plotted.
-#' @param add Logical value indicating whether a new plot shall be drawn, or the currently plotted information should be added to the active rgl device.
+#' @param guides (\code{logical}) Value indicating whether the guidelines of the polar coordinate system shall be plotted.
+#' @param add (\code{logical}) Value indicating whether a new plot shall be drawn, or the currently plotted information should be added to the active \code{rgl} device.
 #' 
 #' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
 #' 
@@ -108,7 +105,7 @@ plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, 
 
 #' 3d plotting of an icosahedral grid or its subset
 #' @rdname plot3d
-#' @param color Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.
+#' @param color (\code{character}) Only for the hexagrid plotting: value/values passed to the \code{\link{faces3d}} function instead of \code{col}.
 #' @exportS3Method rgl::plot3d hexagrid
 #' @exportS3Method plot3d hexagrid
 #' @export plot3d.hexagrid
@@ -188,8 +185,8 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 #' 
 #' The function is built on the openGL renderer of the R package \code{rgl}, which needs to be installed for the function to run. Although the function is works without attaching rgl, note that if you want to attach both \code{icosa} and \code{rgl},the \code{rgl} package has to be loaded ifrst otherwise the function will not be usable.
 #'  
-#' @param x The \code{trigrid}, \code{hexagrid}, \code{facelayer} or \code{sp} object to be plotted.
-#' @param arcs Logical value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}}, \code{\link{facelayer}} or \code{sp}) Object to be plotted.
+#' @param arcs \code{logical} Value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.
 #' 
 #' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).
 #' 
@@ -197,9 +194,9 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 #'
 #' @examples
 #' # create a hexagonal grid
-#'     g <- hexagrid(c(2,2))
+#'   g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'     lines3d(g, col="blue")
+#'   lines3d(g, col="blue")
 #' @rdname lines3d
 "lines3d"
 if(requireNamespace("rgl", quietly = TRUE)){
@@ -242,16 +239,16 @@ setMethod(
 )
 
 
-#' Methods of 3d face plotting.
+#' Methods of 3D face plotting.
 #' 
-#' This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space. 
+#' This function is used to plot the faces of either a \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} object in 3D space. 
 #' 
 #' The function is built on the openGL renderer of the R package \code{rgl}.
 #'  
 #' @name faces3d
-#' @param x The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.
+#' @param x The \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} object to be plotted.
 #' 
-#' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}) and the heatMapLegend() function.
+#' @param ... Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}) and the \code{\link{heatMapLegend}} function.
 #' 
 #' @return The function does not return any value.
 #'
@@ -274,12 +271,7 @@ setGeneric(
 
 #' Methods of 3d face plotting.
 #' 
-#' This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space. 
-#' 
-#' The function is built on the openGL renderer of the R package \code{rgl}.
 #'  
-#' @return The function does not return any value.
-#'
 #' @rdname faces3d
 setMethod(
 	"faces3d",
@@ -299,14 +291,7 @@ setMethod(
 
 #' Methods of 3d face plotting.
 #' 
-#' This is a generic function used to plot the faces of either a \code{trigrid} or a \code{hexagrid} object in 3d space. 
-#' 
-#' The function is built on the openGL renderer of the R package \code{rgl}.
-#'  
-#' @return The function does not return any value.
-#'
 #' @rdname faces3d
-
 setMethod(
 	"faces3d",
 	signature="hexagrid",
@@ -334,22 +319,22 @@ setMethod(
 #' 
 #' @name gridlabs3d
 #'  
-#' @param gridObj A \code{trigrid} or \code{hexagrid} object to be plotted.
+#' @param gridObj (\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.
 #' 
-#' @param type A character vector containing either "f", "e" or "v", rendering the names
+#' @param type (\code{character}) Vector containing either \code{"f"}, \code{"e"} or \code{"v"}, rendering the names
 #' of either the faces, edges or vertives respectively.
 #'
-#' @param ... further arguments passed to \code{text3d} of the rgl package.
+#' @param ... Additional arguments passed to \code{\link[rgl:texts]{text3d}} function of the \code{rgl} package.
 #' 
 #' @return The function does not return any value.
 #'
 #' @examples
 #' # create a hexagonal grid
-#'     g <- hexagrid(c(2,2))
+#' g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'	   lines3d(g, guides=FALSE)
+#' lines3d(g, guides=FALSE)
 #' # labels
-#'  gridlabs3d(g)
+#' gridlabs3d(g)
 #' @exportMethod gridlabs3d
 #' @rdname gridlabs3d
 setGeneric(

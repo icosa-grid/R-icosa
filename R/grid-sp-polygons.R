@@ -1,12 +1,12 @@
-#' Add SpatialPolygons object to a predefined slot in a trigrid or hexagrid object
+#' Add a \code{\link[sp]{SpatialPolygons}} object to a predefined slot in a \code{\link{trigrid}} or \code{\link{hexagrid}} object
 #'
 #' @name newsp
 #		
 #' @rdname newsp
-#' @param gridObj an icosahedral grid.
-#' @param res The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icosahedral grid.
+#' @param res (\code{numeric}) The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.
 #' 
-#' @return A trigrid or hexagrid class object.
+#' @return A \code{\link{trigrid}} or \code{\link{hexagrid}} object with the new \code{@sp} slot.
 #' @examples
 #'	a<-trigrid(4)
 #'	a<-newsp(a)
@@ -36,27 +36,29 @@ setMethod(
 
 #' Spatial polygons from an icosahedral grid
 #'
-#' The function will create a SpatialPolygons class 2d representation of the icosahedral grid.
+#' The function will create a \code{\link[sp]{SpatialPolygons}} class 2d representation of the icosahedral grid.
 #'		
 #' @name SpPolygons
 #		
 #' @rdname SpPolygons
-#' @param gridObj an icosahedral grid.
-#' @param res The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icosahedral grid.
+#' @param res (\code{numeric}) The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution with lower tessellation values, and is higher for higher absolute latitudes.
+#' @param ... Arguments passed to class-specific methods.
 #' 
+#' @return A \code{\link[sp]{SpatialPolygons}} class object.
 #' @exportMethod SpPolygons
+#' @examples
+#' a <- trigrid()
+#' sp <- SpPolygons(a)
 setGeneric(
 	name="SpPolygons",
-	def=function(gridObj,res){
+	def=function(gridObj,...){
 		standardGeneric("SpPolygons")
 	}
 
 )
 
-#' Spatial polygons from a triangular grid 
-#'
-#' The function will create a SpatialPolygons class 2d representation of trigrid class object.
-#'		
+	
 #' @rdname SpPolygons
 setMethod(
 	"SpPolygons",
@@ -191,10 +193,7 @@ setMethod(
 	}
 )
 
-#' Spatial polygons from a penta-hexagonal grid
-#'
-#' The function will create a SpatialPolygons class 2d representation of the hexagrid class object
-#'		
+
 #' @rdname SpPolygons
 setMethod(
 	"SpPolygons",

@@ -6,21 +6,26 @@
 \alias{SpPolygons,hexagrid-method}
 \title{Spatial polygons from an icosahedral grid}
 \usage{
-SpPolygons(gridObj, res)
+SpPolygons(gridObj, ...)
 
 \S4method{SpPolygons}{trigrid}(gridObj, res = NULL)
 
 \S4method{SpPolygons}{hexagrid}(gridObj, res = NULL)
 }
 \arguments{
-\item{gridObj}{an icosahedral grid.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) An icosahedral grid.}
 
-\item{res}{The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.}
+\item{...}{Arguments passed to class-specific methods.}
+
+\item{res}{(\code{numeric}) The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution with lower tessellation values, and is higher for higher absolute latitudes.}
+}
+\value{
+A \code{\link[sp]{SpatialPolygons}} class object.
 }
 \description{
-The function will create a SpatialPolygons class 2d representation of the icosahedral grid.
-
-The function will create a SpatialPolygons class 2d representation of trigrid class object.
-
-The function will create a SpatialPolygons class 2d representation of the hexagrid class object
+The function will create a \code{\link[sp]{SpatialPolygons}} class 2d representation of the icosahedral grid.
+}
+\examples{
+a <- trigrid()
+sp <- SpPolygons(a)
 }

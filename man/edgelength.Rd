@@ -10,26 +10,24 @@ edgelength(gridObj, ...)
 \S4method{edgelength}{trigrid}(gridObj, output = "distance")
 }
 \arguments{
-\item{gridObj}{A \code{trigrid} or \code{hexagrid} class object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{{hexagrid}}) A grid object.}
 
-\item{...}{arguments passed to the class specific methods.}
+\item{...}{Arguments passed to the class specific methods.}
 
-\item{output}{Character value, the type of the output. \code{"distance"} will give back the distance
+\item{output}{(\code{character}) The type of the output. \code{"distance"} will give back the distance
 in the metric that was fed to the function in the coordinates or the radius.
 \code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 so in radians.}
 }
 \value{
-A named numeric vector.
+A named \code{numeric} vector.
 }
 \description{
 This function will return the length of all edges in the specified grid object.
-
-This function will return the length of all edges in the specified grid object.
 }
 \examples{
-	g <- trigrid(3)
-	edges <- edgelength(g, output="deg")
-	edges
+g <- trigrid(3)
+edges <- edgelength(g, output="deg")
+edges
 
 }

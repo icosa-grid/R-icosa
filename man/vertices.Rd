@@ -2,21 +2,27 @@
 % Please edit documentation in R/grid-attributes.R
 \name{vertices}
 \alias{vertices}
-\alias{vertices,trigrid,character-method}
-\alias{vertices,facelayer,character-method}
+\alias{vertices,trigrid-method}
+\alias{vertices,facelayer-method}
 \title{The vertices of an icosahedral grid object}
 \usage{
-vertices(x, output)
+vertices(x, ...)
 
-\S4method{vertices}{trigrid,character}(x, output = "polar")
+\S4method{vertices}{trigrid}(x, output = "polar")
 
-\S4method{vertices}{facelayer,character}(x, output = "polar")
+\S4method{vertices}{facelayer}(x, output = "polar")
 }
 \arguments{
-\item{x}{The grid or facelayer object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The icosahedral grid, or linked data object.}
 
-\item{output}{the coordinate system of the output.}
+\item{...}{Additional arguments passed to class-specific methods.}
+
+\item{output}{(\code{character}) The coordinate system of output.}
 }
 \description{
 Shorthand function to return the vertices slot of an icosahedral grid or a grid linked to a facelayer.
+}
+\examples{
+a <- trigrid(1)
+vertices(a)
 }

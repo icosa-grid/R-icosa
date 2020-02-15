@@ -2,16 +2,16 @@
 #' 2d plotting of a facelayer class object
 #' This function will invoke the 2d plotting methods of a grid so data stored in a facelayer object can be displayed.
 #'
-#' The function passes arguments to the plot method of the SpatialPolygons class (€ref). In case a heatmap is plotted and the windows plotting device gets resized,
-#' some misalignments can happen. If you want to use a differently sized window, use windows() to set the height and width before running the function.
-#' @param frame Logical value, if TRUE the grid boundaries will be drawn with black.
-#' @param col Character vector. Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the facelayer contains logical values, a single value is required (defaults to red).
-#' @param border Character value specifying the color of the borders of the cells.
-#' @param alpha Character value of two digits for the fill colors, in hexadecimal value between 0 and 255.
-#' @param breaks Numeric vector stating the breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
+#' The function passes arguments to the plot method of the \code{\link[sp]{SpatialPolygons}} class. In case a heatmap is plotted and the plotting device gets resized,
+#' some misalignments can happen. If you want to use a differently sized window, use \code{\link[grDevices]{x11}} to set the height and width before running the function.
+#' @param frame (\code{logical}) If \code{TRUE} the grid boundaries will be drawn with black.
+#' @param col (\code{character}) Colors passed to a \code{\link[grDevices]{colorRamp}} in case of the \code{\link{facelayer}} contains \code{logical} values, a single value is required (defaults to \code{"red"}).
+#' @param border (\code{character}) Specifyies the color of the borders of the cells.
+#' @param alpha (\code{character}) Two digits for the fill colors, in hexadecimal value between \code{0} and \code{255}.
+#' @param breaks (\code{numeric}) The number of breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param legend (\code{logical}): Should the legend be plotted? 
 #' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
-#' @param discrete \code{logical}: Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
+#' @param discrete (\code{logical}): Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
 #' @rdname plot
 #' @exportMethod plot
 setMethod(

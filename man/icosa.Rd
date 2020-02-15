@@ -13,12 +13,12 @@ using grids based on tessellated icosahedra. The procedures can be set to provid
    to allow 2D and 3D plotting, use raster data and shapefiles.
 }
 \details{
-This is the 0.9 (Beta) version. Notes about found bugs and suggestions are more than welcome!
+This is still the Beta version. Notes about found bugs and suggestions are more than welcome!
 }
 \examples{
 # Create a triangular grid
 tri <- trigrid(c(2,2))
 }
 \author{
-Adam T. Kocsis (adam.kocsis@outlook.com)
+Adam T. Kocsis (adam.t.kocsis@gmail.com)
 }

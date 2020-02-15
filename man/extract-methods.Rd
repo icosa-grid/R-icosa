@@ -15,19 +15,20 @@
 \S4method{[}{gridlayer,ANY,ANY}(x, i) <- value
 }
 \arguments{
-\item{x}{(\code{gridlayer})The gridlayer object to be subsetted.}
+\item{x}{(\code{\link{facelayer}}) The object to be subsetted.}
 
-\item{i}{(\code{logical}, \code{numeric} nor \code{extent} the subscript vector, as in subset().}
+\item{i}{(\code{logical}, \code{numeric} nor \code{extent}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.}
 
-\item{value}{the replacement values.}
+\item{value}{The replacement values.}
+}
+\value{
+The extraction methods return \code{\link{facelayer}}-class objects.
 }
 \description{
-Shorthand to the subset() function.
-
-Shorthand to the subset() function.
+Shorthand to the \code{\link[icosa]{subset}} function.
 
 Function to replace specific elements in a gridlayer object
 }
 \details{
-All these methods are implementing direct replacement in the values slot of a layer, depending on criteria used for subsetting.
+All these methods are implementing direct replacement in the \code{@values} slot of a layer, depending on criteria used for subsetting.
 }

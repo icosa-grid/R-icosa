@@ -2,31 +2,32 @@
 #'
 #' The function extracts subsets of the \code{gridlayer} depending on different criteria.
 #'
-#' The following methods are incorporated into the function: If the subsetVector argument is a vector of integers, they will be interpreted as indices. If the numeric subsetVector contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
+#' The following methods are incorporated into the function: If \code{i} argument is a vector of integers, they will be interpreted as indices. If the \code{numeric} \code{i} contains either the lamin, lamax, lomin or lomax names, the subsetting will be done using the latitude-longitude coordinates outlined by these 4 values. Logical subsetting and subsetting by face names are also possible.
 #'
-#' @param x The gridlayer object to be subsetted.
-#' @param subsetVector Vector object indicating the faces to be subsetted.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object to be subsetted.
+#' @param i (\code{logical}, \code{numeric} or \code{character}) The subscript vector, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
+
 #'
 #' @rdname subset
 #' @exportMethod subset
 setMethod(
 	"subset",
 	signature="gridlayer",
-	definition=function(x, subsetVector){
-		if(is.numeric(subsetVector)){
+	definition=function(x, i){
+		if(is.numeric(i)){
 			#add checking for lat/long subsetting
 			# lat-long mode of subsetting
 			potConds<-c("lamin", "lamax", "lomin", "lomax")
-			if(sum(names(subsetVector)%in%potConds)>0){
+			if(sum(names(i)%in%potConds)>0){
 				#if it contains an unitelligible names
-				if(sum(!names(subsetVector)%in%potConds)>0) 
+				if(sum(!names(i)%in%potConds)>0) 
 					warning("Some subscript condition names were not recognized.")
 				
 				
 				#in case you want something at the dateline
 				normal <- T
-				if(sum(c("lomax", "lomin")%in%names(subsetVector))==2){
-					if(subsetVector["lomin"]>subsetVector["lomax"]){
+				if(sum(c("lomax", "lomin")%in%names(i))==2){
+					if(i["lomin"]>i["lomax"]){
 						normal<- F
 					}
 				}
@@ -40,63 +41,63 @@ setMethod(
 				#longitude
 				if(normal){
 					#minimum longitude condition
-					if("lomin"%in%names(subsetVector)){
-						boolSelect <- boolSelect & pol[,1]>=subsetVector["lomin"]
+					if("lomin"%in%names(i)){
+						boolSelect <- boolSelect & pol[,1]>=i["lomin"]
 					}
 					
 					#maximum longitude condition
-					if("lomax"%in%names(subsetVector)){
-						boolSelect <- boolSelect & pol[,1]<=subsetVector["lomax"]
+					if("lomax"%in%names(i)){
+						boolSelect <- boolSelect & pol[,1]<=i["lomax"]
 					}
 				}else{
 					#minimum longitude condition
-					if("lomin"%in%names(subsetVector)){
-						boolSelect <- boolSelect & pol[,1]>=subsetVector["lomin"]
+					if("lomin"%in%names(i)){
+						boolSelect <- boolSelect & pol[,1]>=i["lomin"]
 					}
 					
 					#maximum longitude condition
-					if("lomax"%in%names(subsetVector)){
-						boolSelect <- boolSelect | pol[,1]<=subsetVector["lomax"]
+					if("lomax"%in%names(i)){
+						boolSelect <- boolSelect | pol[,1]<=i["lomax"]
 					}
 				
 				}
 				
 				#minimum latitude condition
-				if("lamin"%in%names(subsetVector)){
-					boolSelect <- boolSelect & pol[,2]>=subsetVector["lamin"]
+				if("lamin"%in%names(i)){
+					boolSelect <- boolSelect & pol[,2]>=i["lamin"]
 				}
 				
 				#minimum latitude condition
-				if("lamax"%in%names(subsetVector)){
-					boolSelect <- boolSelect & pol[,2]<=subsetVector["lamax"]
+				if("lamax"%in%names(i)){
+					boolSelect <- boolSelect & pol[,2]<=i["lamax"]
 				}
 				
-				subsetVector<-rownames(actGrid@faceCenters)[boolSelect]
+				i<-rownames(actGrid@faceCenters)[boolSelect]
 				# control will pass over to the subsetting by facenames
 
 			}else{
 			
 			# index subsetting
 				y<-x
-				y@names<-y@names[subsetVector]
-				y@values<-y@values[subsetVector]
+				y@names<-y@names[i]
+				y@values<-y@values[i]
 				y@length<-length(y@values)
 			}
 		}
-		if(is.logical(subsetVector)){
-			if(length(subsetVector)==(length(x@names))){
-				subsetVector<-x@names[subsetVector]
+		if(is.logical(i)){
+			if(length(i)==(length(x@names))){
+				i<-x@names[i]
 			}else{
 				stop("Length of logical subscript does not match the facelayer.")
 			}
 		
 		}
 		
-		if(is.character(subsetVector)){
-			if(sum(subsetVector%in%x@names)==length(subsetVector)){
+		if(is.character(i)){
+			if(sum(i%in%x@names)==length(i)){
 				y<-x
-				y@names<-subsetVector
-				y@values<-y@values[x@names%in%subsetVector]
+				y@names<-i
+				y@values<-y@values[x@names%in%i]
 				y@length<-length(y@values)
 			}
 		
@@ -111,11 +112,12 @@ setMethod(
 #subsetting for layers
 #' Extraction from a gridlayer using indices
 #' 
-#' Shorthand to the subset() function.
+#' Shorthand to the \code{\link[icosa]{subset}} function.
 #' 
-#' @param x (\code{gridlayer})The gridlayer object to be subsetted.
-#' @param i (\code{logical}, \code{numeric} nor \code{extent} the subscript vector, as in subset().
+#' @param x (\code{\link{facelayer}}) The object to be subsetted.
+#' @param i (\code{logical}, \code{numeric} nor \code{extent}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
 #' @exportMethod "["
+#' @return The extraction methods return \code{\link{facelayer}}-class objects.
 #' @rdname extract-methods
 setMethod(
 	"[",
@@ -125,11 +127,7 @@ setMethod(
 	
 	}
 )
-
-#' Extraction from a gridlayer using 'Extent' class object 
-#' 
-#' Shorthand to the subset() function.
-#'
+ 
 #' @exportMethod "["
 #' @rdname extract-methods
 setMethod(
@@ -159,9 +157,9 @@ setMethod(
 #' 
 #' Function to replace specific elements in a gridlayer object 
 #' 
-#' All these methods are implementing direct replacement in the values slot of a layer, depending on criteria used for subsetting. 
+#' All these methods are implementing direct replacement in the \code{@values} slot of a layer, depending on criteria used for subsetting. 
 #'
-#' @param value the replacement values.
+#' @param value The replacement values.
 #'
 #' @docType methods
 #' @aliases [<-,gridlayer-method

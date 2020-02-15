@@ -5,7 +5,7 @@
 \alias{gridgraph,trigrid-method}
 \alias{gridgraph,hexagrid-method}
 \alias{gridgraph,facelayer-method}
-\title{Create or instantiate an 'igraph' class graph from the faces of an icosahedral grid}
+\title{Create or instantiate an \code{\link[igraph:make_graph]{graph}} class graph from the faces of an icosahedral grid}
 \usage{
 gridgraph(x, ...)
 
@@ -16,29 +16,17 @@ gridgraph(x, ...)
 \S4method{gridgraph}{facelayer}(x)
 }
 \arguments{
-\item{x}{the icosahedral grid or facelayer.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The icosahedral grid or \code{\link{facelayer}}.}
 
-\item{...}{arguments passed to the class specific methods.}
+\item{...}{Arguments passed to the class specific methods.}
 
-\item{directed}{logical value, defaults to FALSE creating an undirected graph. If TRUE than the graph will be directed.}
+\item{directed}{\code{logical} Defaults to \code{FALSE}, creating an undirected graph. If \code{TRUE}, then the graph will be directed.}
 
-\item{distances}{logical values, defaults to FALSE. If TRUE than the distances between the linked faces will be calculated and will be rendered to the edges as [["dist"]].}
+\item{distances}{\code{logical} Defaults to \code{FALSE}. If \code{TRUE}, then the distances between the linked faces will be calculated and will be rendered to the edges as \code{"dist"}.}
 }
 \value{
 The function returns an undirected igraph graph.
-
-The function returns an 'igraph' graph.
-
-The function returns an 'igraph' graph.
-
-The function returns an 'igraph' graph.
 }
 \description{
-The function can be applied to both grids and facelayers.
-
-The function can be applied to a trigrid class object.
-
-The function can be applied to a hexagrid class object.
-
-The function can be applied to a facelayer class object of logical values. The resulting graph will have the characteristics of the original grid (directed/undirected etc.).
+The function can be applied to both grids and to \code{\link{facelayer}}-class object of \code{logical} values. The resulting graph will have the characteristics of the original grid (directed/undirected etc.).
 }

@@ -36,13 +36,13 @@ lines3d
 \S4method{lines3d}{SpatialPolygonsDataFrame}(x, radius = authRadius, ...)
 }
 \arguments{
-\item{x}{The \code{trigrid}, \code{hexagrid}, \code{facelayer} or \code{sp} object to be plotted.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}}, \code{\link{facelayer}} or \code{sp}) Object to be plotted.}
 
-\item{arcs}{Logical value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.}
+\item{arcs}{\code{logical} Value setting whether great circle arcs or segments shall be drawn betwenn the points of the grid.}
 
 \item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).}
 
-\item{radius}{Used for plotting objects that inherit from Spatial*. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.}
+\item{radius}{(\code{numeric}) Used for plotting objects that inherit from \code{Spatial*}. The radius of the sphere the sp objects are plotted with. Default to the authalic (R2) radius of Earth.}
 }
 \value{
 The function does not return any value.
@@ -56,8 +56,8 @@ The function is built on the openGL renderer of the R package \code{rgl}, which 
 }
 \examples{
 # create a hexagonal grid
-    g <- hexagrid(c(2,2))
+  g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-    lines3d(g, col="blue")
+  lines3d(g, col="blue")
 }
 \keyword{datasets}

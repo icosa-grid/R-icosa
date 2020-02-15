@@ -2,17 +2,20 @@
 % Please edit documentation in R/plot-2d-grid.R
 \name{lines,trigrid-method}
 \alias{lines,trigrid-method}
-\title{Lines method for the trigrid and hexagrid classes}
+\title{Lines method for the \code{trigrid} and \code{hexagrid} classes}
 \usage{
 \S4method{lines}{trigrid}(x, projargs = NULL, ...)
 }
 \arguments{
-\item{x}{the trigrid or hexagrid class object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.}
 
-\item{projargs}{a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.}
+\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
 
-\item{...}{arguments passed to the sp::lines() method of the SpatialPolygons class.}
+\item{...}{Arguments passed to the \code{\link[sp:panel]{sp.lines}} method.}
+}
+\value{
+The function has no return value.
 }
 \description{
-This function will invoke the \code{lines()} method of the SpatialPolygons class.
+This function will invoke the \code{\link[sp:panel]{sp.lines}} method of the \code{\link[sp]{SpatialPolygons}} class.
 }

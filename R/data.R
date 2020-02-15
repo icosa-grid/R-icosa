@@ -1,6 +1,6 @@
-#' Tessellation guide to hexagrid objects
+#' Tessellation guide to \code{\link{hexagrid}} objects
 #' 
-#' The table includes basic properties of grids described with specific tessellation parameters
+#' The table includes basic properties of \code{\link{hexagrid}}s described with specific tessellation parameters
 #' 
 #' @format A \code{data.frame} with 129 observations and 18 variables:
 #' \describe{

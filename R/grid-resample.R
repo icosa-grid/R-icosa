@@ -12,16 +12,16 @@ if(requireNamespace("raster", quietly = TRUE)){
 }
 
 
-#' Resampling of data with a trigrid or a hexagrid object.
+#' Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.
 #'
-#' The function is used to resolve and resample data stored in RasterLayers and facelayers so they can be fitted to and can be plotted by using trigrid or hexagrid objects.
+#' The function is used to resolve and resample data stored in \code{RasterLayer}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
 #'
-#' This method is necessary to utilize rasterized data in the icosa package. The only method currently implemented upscales the raster data and then resolve the values to the trigrid or hexagrid values, using averages. In the case of resampling rasterlayers, the method argument will be passed to the raster::resample() function. 
+#' This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[raster:raster]{RasterLayer}}s, the \code{method} argument will be passed to the \code{\link[raster]{resample}} function. 
 #' @rdname resample
 "resample"
 
-#' Resample method of trigrid
-#' @param na.rm logical value. If a face contains a missing value, should its value be NA as well (FALSE) or calculate the mean anyway (TRUE).
+# Resample method of trigrid
+#' @param na.rm (\code{logical}) If a face contains a missing value, should its value be \code{NA} as well (\code{FALSE}) or calculate the mean anyway (\code{TRUE}).
 #' @rdname resample
 #' @exportMethod resample
 setMethod(

@@ -1,10 +1,11 @@
-#' Plot method for the trigrid and hexagrid classes
+#' Plot method for the \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} classes
 #' 
-#'	This function will invoke the \code{plot()} method of the SpatialPolygons class.
-#' @param x (\code{trigrid}, \code{hexagrid} or \code{facelayer}) The object to be plotted.
-#' @param projargs a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.
-#' @param ... arguments passed to the sp::plot() function.
+#'	This function will invoke the \code{plot} method of the \code{\link[sp]{SpatialPolygons}} class.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object to be plotted.
+#' @param projargs (\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.
+#' @param ... Arguments passed to the \code{plot} function.
 #' @rdname plot
+#' @return The function has no return value.
 #' @exportMethod plot
 "plot"
 
@@ -41,13 +42,14 @@ setMethod(
 	}
 )
 
-#' Lines method for the trigrid and hexagrid classes
+#' Lines method for the \code{trigrid} and \code{hexagrid} classes
 #' 
-#'	This function will invoke the \code{lines()} method of the SpatialPolygons class.
-#' @param x the trigrid or hexagrid class object.
-#' @param projargs a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.
-#' @param ... arguments passed to the sp::lines() method of the SpatialPolygons class.
+#' This function will invoke the \code{\link[sp:panel]{sp.lines}} method of the \code{\link[sp]{SpatialPolygons}} class.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.
+#' @param projargs (\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates. 
+#' @param ... Arguments passed to the \code{\link[sp:panel]{sp.lines}} method.
 #' @rdname lines-methods
+#' @return The function has no return value.
 #' @exportMethod lines
 setMethod(
 	"lines",
@@ -79,15 +81,19 @@ setMethod(
 	}
 )
 
-#' Labels of grid vertices, faces and edges
+#' Labels of grid vertices, faces and edges.
 #' 
 #' This function will show where the grid elements are located.
-#' @param gridObj a trigrid or hexagrid class icosahedral grid.
-#' @param type The type of element to be plotted: either "f" (faces), "v" (vertices) or "e" (edges).
-#' @param projargs a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.
-#' @param ... Arguments passed to the text() function.
-#' @return the function has no return value
+#' @param gridObj (\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.
+#' @param type (\code{character}) The type of element to be plotted: either \code{"f"} (faces), \code{"v"} (vertices) or  \code{"e"} (edges).
+#' @param projargs (\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.
+#' @param ... Arguments passed to the \code{\link[graphics]{text}} function.
+#' @return The function has no return value.
 #' @export
+#' @examples
+#' gr <- hexagrid(sp=TRUE)
+#' plot(gr)
+#' gridlabs(gr)
 gridlabs<-function(gridObj,type="f",projargs=NULL,...){
 	# center back to origin if not there already
 		if(gridObj@center[1]!=0 | gridObj@center[2]!=0 | gridObj@center[3]!=0){
@@ -142,12 +148,13 @@ gridlabs<-function(gridObj,type="f",projargs=NULL,...){
 #' 
 #' The function returns which grid faces contain the points clicked in a plot.
 #' 
-#' @param gridObj (\code{trigrid} or \code{hexagrid}) The grid object.
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) The grid object.
 #' @param n (\code{integer}) The number of points to be looked up.
 #' @param output (\code{character}) Type of output: \code{"faces"} returns only the face names of the points, \code{"full"} returns the coordinates as well.
-#' @param ... arguments passed to the \code{\link[graphics]{locator}} function.
+#' @param ... Arguments passed to the \code{\link[graphics]{locator}} function.
 #' 
 #' @export
+#' @return A vector of \code{character} values, each corresponding to a face identifier.
 cellocator <- function(gridObj,n, output="faces",...){
 	pointset<- locator(n=n, ...)
 	pointset <-cbind(pointset$x, pointset$y)

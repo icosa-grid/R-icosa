@@ -5,7 +5,7 @@
 \alias{resample}
 \alias{resample,Raster,trigrid-method}
 \alias{resample,facelayer,trigrid-method}
-\title{Resampling of data with a trigrid or a hexagrid object.}
+\title{Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.}
 \format{An object of class \code{standardGeneric} of length 1.}
 \usage{
 resample
@@ -15,37 +15,39 @@ resample
 \S4method{resample}{facelayer,trigrid}(x, y, method = NULL, res = 5)
 }
 \arguments{
-\item{x}{a \code{facelayer} class object.}
+\item{x}{(\code{\link[raster:raster]{RasterLayer}}, \code{\link{facelayer}}) Object to resample.}
 
-\item{y}{a \code{hexagrid} or \code{trigrid} object.}
+\item{y}{(\code{\link{hexagrid}} or \code{\link{trigrid}}) Object describing the target structure.}
 
-\item{method}{Character string stating the name of the algorithm used for resampling.}
+\item{method}{(\code{character}) The name of the algorithm used for resampling.}
 
-\item{na.rm}{logical value. If a face contains a missing value, should its value be NA as well (FALSE) or calculate the mean anyway (TRUE).}
+\item{na.rm}{(\code{logical}) If a face contains a missing value, should its value be \code{NA} as well (\code{FALSE}) or calculate the mean anyway (\code{TRUE}).}
 
-\item{res}{Numeric value, indicating the precision of area estimation during the upscaling. In case the "ebaa" method is chosen, the variable indicate the number of breaking points on an edge.}
+\item{res}{(\code{numeric}) Value indicating the precision of area estimation during the upscaling (\code{facelayer}-method). In case the \code{"ebaa"} method is chosen, the variable indicate the number of breaking points on an edge.}
 }
 \value{
-A named numeric vector.
+A named \code{numeric} vector.
 }
 \description{
-The function is used to resolve and resample data stored in RasterLayers and facelayers so they can be fitted to and can be plotted by using trigrid or hexagrid objects.
-
-This function will calculate values for a different resolution icosahedral grid from a facelayer.
-}
-\details{
-This method is necessary to utilize rasterized data in the icosa package. The only method currently implemented upscales the raster data and then resolve the values to the trigrid or hexagrid values, using averages. In the case of resampling rasterlayers, the method argument will be passed to the raster::resample() function.
+The function is used to resolve and resample data stored in \code{RasterLayer}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
 
 The function applies different resampling algorithms. Currently there are only two implemented methods, one for upscaling and one for downscaling. The downscaling method "average" will tabluate all face centers from the high resolution grid that fall on a coarse resolution cell and average them. The upscaling method "ebaa" (edge breakpoint area approximation) will estimate the areas covered by the high resolution cells using the number of edge breakpoints.
 }
+\details{
+This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[raster:raster]{RasterLayer}}s, the \code{method} argument will be passed to the \code{\link[raster]{resample}} function.
+}
 \examples{
-	g <- trigrid(c(4,4))
-	fl <- facelayer(g)
-	fl@values<-rnorm(length(fl))
-	h <- trigrid(4)
-	res <- resample(fl, h)
-	fl2<-facelayer(h)
-	fl2@values[] <- res
+# create a grid
+g <- trigrid(c(4,4))
+# create a data layer
+fl <- facelayer(g)
+fl@values<-rnorm(length(fl))
+# target structure
+h <- trigrid(4)
+# resampling
+res <- resample(fl, h)
+fl2<-facelayer(h)
+fl2@values[] <- res
 
 }
 \keyword{datasets}

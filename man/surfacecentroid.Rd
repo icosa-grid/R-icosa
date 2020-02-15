@@ -18,21 +18,21 @@ surfacecentroid(x, ...)
 \arguments{
 \item{x}{(\code{matrix} or \code{data.frame}) Numeric data, XYZ or longitude-latitude coordinates of the set of points.}
 
-\item{...}{Arguments passed to class-specific methods.}
+\item{...}{Arguments passed to the \code{matrix}-method.}
 
-\item{output}{Character value, the coordinate system of the output points. Can either be \code{"polar"} for
+\item{output}{(\code{character}) The coordinate system of the output points. Can either be \code{"polar"} for
 longitude-latitude or \code{"cartesian"} for XYZ data.}
 
-\item{center}{Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).}
+\item{center}{(\code{numeric}) The center of the sphere in XYZ coordinates (default is 0,0,0).}
 
-\item{radius}{Numeric value, the radius of the circle in case the input points have only polar coordinates.
+\item{radius}{(\code{numeric}) The radius of the circle in case the input points have only polar coordinates.
 Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.}
 }
 \value{
-Either an XYZ or a long-lat numeric vector.
+Either an XYZ or a long-lat \code{numeric} vector.
 }
 \description{
-This function the projected place of the centroid from a pointset on the sphere
+This function the projected place of the centroid from a pointset on the sphere.
 }
 \details{
 The function implements great circle calculations to infer on the place of the centroid, which makes it resource demanding. This is necessary

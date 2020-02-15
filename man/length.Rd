@@ -4,20 +4,18 @@
 \name{length,trigrid-method}
 \alias{length,trigrid-method}
 \alias{length,gridlayer-method}
-\title{The length of a trigrid or, hexagrid class object.}
+\title{The number of faces in a \code{trigrid} or \code{hexagrid} class object.}
 \usage{
 \S4method{length}{trigrid}(x)
 
 \S4method{length}{gridlayer}(x)
 }
 \arguments{
-\item{x}{the object.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object.}
 }
 \value{
-An integer value
+An integer value.
 }
 \description{
 The length of the object is interpreted as the number of faces it contains.
-
-This function returns the number of values present in the \code{gridlayer}.
 }

@@ -5,7 +5,7 @@
 \alias{PolToCar,matrix-method}
 \alias{PolToCar,numeric-method}
 \alias{PolToCar,data.frame-method}
-\title{Conversion of spherical coordinates to 3d Cartesian coordinates}
+\title{Conversion of polar coordinates to 3d Cartesian coordinates}
 \usage{
 PolToCar(x, ...)
 
@@ -20,13 +20,13 @@ PolToCar(x, ...)
 
 \item{...}{Arguments passed to class-specific methods.}
 
-\item{radius}{(\code{}) (\code{numeric} value) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
+\item{radius}{(\code{numeric}) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
 
 \item{origin}{(\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.}
 
-\item{long}{\code{character} If \code{x} is a \code{data.frame}, then the column used as longitudes.}
+\item{long}{(\code{character}) If \code{x} is a \code{data.frame}, then the column used as longitudes.}
 
-\item{lat}{\code{character} If \code{x} is a \code{data.frame}, then the column used as latitudes.}
+\item{lat}{(\code{character}) If \code{x} is a \code{data.frame}, then the column used as latitudes.}
 }
 \value{
 An xyz 3-column numeric \code{matrix}, \code{data.frame} or \code{numeric}, depending on the class of \code{x}.

@@ -1,14 +1,15 @@
-#' Add an igraph object to a predefined slot in a trigrid or hexagrid object
+#' Add an igraph object to a predefined slot in an icosahedral grid
 #'
 #' @name newgraph
 #		
 #' @rdname newgraph
-#' @param gridObj an icosahedral grid.
-#' @param ... arguments passed to the gridgraph() function.
+#' @return A new (\code{\link{trigrid}} or \code{\link{hexagrid}}) object with the recalculated graph.
+#' @param gridObj (\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.
+#' @param ... Arguments passed to the \code{\link{gridgraph}} function.
 #' @examples
-#'		#create a grid
-#'		g<-trigrid(4, graph=FALSE)
-#'		g<-newgraph(g)
+#' #create a grid
+#' g<-trigrid(4, graph=FALSE)
+#' g<-newgraph(g)
 #' 
 #' @exportMethod newgraph
 setGeneric(
@@ -20,14 +21,7 @@ setGeneric(
 
 )
 
-#' Add an igraph object to a predefined slot in a trigrid or hexagrid object
-#'
 #' @rdname newgraph
-#' @examples
-#'		#create a grid
-#'		g<-trigrid(4, graph=FALSE)
-#'		g<-newgraph(g)
-#' 
 setMethod(
 	"newgraph",
 	signature="trigrid",
@@ -39,13 +33,13 @@ setMethod(
 )
 
 
-#' Create or instantiate an 'igraph' class graph from the faces of an icosahedral grid
+#' Create or instantiate an \code{\link[igraph:make_graph]{graph}} class graph from the faces of an icosahedral grid
 #'
-#' The function can be applied to both grids and facelayers.
+#' The function can be applied to both grids and to \code{\link{facelayer}}-class object of \code{logical} values. The resulting graph will have the characteristics of the original grid (directed/undirected etc.). 
 #' @name gridgraph
 #' @return The function returns an undirected igraph graph.
-#' @param x the icosahedral grid or facelayer.
-#' @param ... arguments passed to the class specific methods.
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The icosahedral grid or \code{\link{facelayer}}.
+#' @param ... Arguments passed to the class specific methods.
 #' @rdname gridgraph
 #' @exportMethod gridgraph
 setGeneric(
@@ -58,10 +52,8 @@ setGeneric(
 	
 #' Create or instantiate an 'igraph' class graph from the faces of a triangular grid
 #'
-#' The function can be applied to a trigrid class object.
-#' @return The function returns an 'igraph' graph.
-#' @param directed logical value, defaults to FALSE creating an undirected graph. If TRUE than the graph will be directed.
-#' @param distances logical values, defaults to FALSE. If TRUE than the distances between the linked faces will be calculated and will be rendered to the edges as [["dist"]].
+#' @param directed \code{logical} Defaults to \code{FALSE}, creating an undirected graph. If \code{TRUE}, then the graph will be directed.
+#' @param distances \code{logical} Defaults to \code{FALSE}. If \code{TRUE}, then the distances between the linked faces will be calculated and will be rendered to the edges as \code{"dist"}.
 #' @rdname gridgraph
 setMethod(
 	f="gridgraph",
@@ -140,12 +132,7 @@ setMethod(
 
 
 #' Create or instantiate an 'igraph' class graph from the faces of a penta-hexagonal grid
-#'
-#' The function can be applied to a hexagrid class object.
-#' @return The function returns an 'igraph' graph.
-
 #' @rdname gridgraph
-#' @exportMethod gridgraph
 setMethod(
 	f="gridgraph",
 	signature="hexagrid",
@@ -198,27 +185,27 @@ setMethod(
 #' This function will return neighbouring faces of the input faces. 
 #' @name vicinity
 #' 
-#' @param gridObj A \code{trigrid} or \code{hexagrid} class object. 
+#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) Icosahedral grid object. 
 #' 
-#' @param faces A character vector specifying names of faces. 
+#' @param faces (\code{character}) A vector specifying names of faces. 
 #'
-#' @param order Passed to the igraph::ego() function, an integer value specifying the size of the neighborhood around a face.
+#' @param order (\code{numeric}) Passed to the \code{\link[igraph]{ego}} function, an integer value specifying the size of the neighborhood around a face.
 #'	
-#' @param output Characater value, the type of the output. The default \code{"vector"} 
+#' @param output (\code{character}) The type of the output. The default \code{"vector"} 
 #' 	will give back the names of the faces that adjacent to the faces specified, 
 #' 	including themselves. \code{"list"} will return a list.
 #'
-#' @param self logical value indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
+#' @param self (\code{logical}) Flag indicating whether the input faces should be in the output. For the \code{"list"} output option, the input face names will be
 #' omitted only from those character vectors that contain face names that are related to the face in question.
 #'
 #' @param namedorder (\code{logical}) Should the orders of the neighbouring cells be reported (\code{TRUE}) or just the names of the cells (default, \code{FALSE}).
-#' @param ... arguments passed to the igraph::ego() function
+#' @param ... Arguments passed to the \code{\link[igraph]{ego}} function.
 #' @examples
-#' 	g <- trigrid(3)
-#' 	ne <- vicinity(g, c("F4", "F10"))
-#' 	ne
+#' g <- trigrid(3)
+#' ne <- vicinity(g, c("F4", "F10"))
+#' ne
 #' 
-#' @return A character vector or a list of character vectors.
+#' @return A \code{character} vector or a \code{list} of \code{character} vectors.
 #' 	
 #' @exportMethod vicinity
 #' @rdname vicinity

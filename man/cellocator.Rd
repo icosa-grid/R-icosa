@@ -7,13 +7,16 @@
 cellocator(gridObj, n, output = "faces", ...)
 }
 \arguments{
-\item{gridObj}{(\code{trigrid} or \code{hexagrid}) The grid object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) The grid object.}
 
 \item{n}{(\code{integer}) The number of points to be looked up.}
 
 \item{output}{(\code{character}) Type of output: \code{"faces"} returns only the face names of the points, \code{"full"} returns the coordinates as well.}
 
-\item{...}{arguments passed to the \code{\link[graphics]{locator}} function.}
+\item{...}{Arguments passed to the \code{\link[graphics]{locator}} function.}
+}
+\value{
+A vector of \code{character} values, each corresponding to a face identifier.
 }
 \description{
 The function returns which grid faces contain the points clicked in a plot.

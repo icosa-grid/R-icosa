@@ -6,7 +6,7 @@
 \alias{plot3d.trigrid}
 \alias{plot3d.hexagrid}
 \alias{plot3d.facelayer}
-\title{3d plotting of an icosahedral grid or its subset}
+\title{3d plotting of an icosahedral grid, its subset or a data layer}
 \format{An object of class \code{function} of length 1.}
 \usage{
 plot3d(x,...)
@@ -26,40 +26,35 @@ plot3d(x,...)
 \method{plot3d}{facelayer}(x, type = "f", frame = TRUE, guides = TRUE, defaultPar3d = TRUE, ...)
 }
 \arguments{
-\item{x}{The \code{trigrid}, \code{hexagrid} or \code{facelayer} object to be plotted.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) Object to be plotted.}
 
-\item{type}{A character value specifying the part of the grid to be plotted by the call of the function. 
+\item{type}{(\code{character}) Value specifying the part of the grid to be plotted by the call of the function. 
 \code{"v"} plots the grid vertex points. 
 \code{"e"} draws the grid edges.
 \code{"f"} draws the grid faces.
 \code{"c"} draws the face centers of the grid.}
 
-\item{sphere}{Defaults to NULL, adding a central white sphere to the plot. Assigning a numeric value will draw a new sphere with the given radius,
+\item{sphere}{(\code{numeric}) Defaults to \code{NULL}, adding a central white sphere to the plot. Assigning a \code{numeric} value will draw a new sphere with the given radius,
 \code{FALSE} does not plot the sphere.}
 
-\item{add}{Logical value indicating whether a new plot shall be drawn, or the currently plotted information should be added to the active rgl device.}
+\item{add}{(\code{logical}) Value indicating whether a new plot shall be drawn, or the currently plotted information should be added to the active \code{rgl} device.}
 
-\item{guides}{Logical value indicating whether the guidelines of the polar coordinate system shall be plotted.}
+\item{guides}{(\code{logical}) Value indicating whether the guidelines of the polar coordinate system shall be plotted.}
 
 \item{...}{Further graphical parameters passed to (see \code{\link[rgl]{plot3d}}).}
 
-\item{color}{Only for the hexagrid plotting: character value/values, passed to the faces3d() function instead of col.}
+\item{color}{(\code{character}) Only for the hexagrid plotting: value/values passed to the \code{\link{faces3d}} function instead of \code{col}.}
 
-\item{frame}{If set to TRUE the grid line structure will be plotted.}
+\item{frame}{(\code{logical}) If set to TRUE the grid line structure will be plotted.}
 
-\item{defaultPar3d}{Logical value, whether the default settings for par3d() are to be used (windowRect = c(50, 60, 800, 800), zoom=0.8).}
+\item{defaultPar3d}{(\code{logical}) Flag indicating whether the default settings for \code{\link[rgl]{par3d}} are to be used \code{(windowRect = c(50, 60, 800, 800), zoom=0.8)}.}
 }
 \value{
 The function does not return any value.
 }
 \description{
-This is a generic function used to plot either a \code{trigrid} or a \code{hexagrid} object or their \code{facelayer} in 3d space.
-
-The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is 800x800 pixels. In case you want to override this, please
-use the function with 'defaultPar3d=FALSE' after running 'rgl::par3d(windowRect=<>)'.
-}
-\details{
-The function is built on the openGL renderer of the R package \code{rgl}.
+The function is built on the openGL renderer of the R package \code{rgl}. The default plotting window size is \code{800x800} pixels. In case you want to override this, please
+use the function with \code{defaultPar3d=FALSE} after running \code{\link[rgl]{par3d}}\code{(windowRect=<>)}.
 }
 \examples{
 # create a hexagonal grid

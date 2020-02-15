@@ -21,34 +21,37 @@ heatMapLegend(
 )
 }
 \arguments{
-\item{cols}{Character vector, containnig the ordered colors that are used for the heatmap.}
+\item{cols}{(\code{character}) Vector, containnig the ordered colors that are used for the heatmap.}
 
-\item{vals}{If tick.text is missing, the lowest value in the heatmap}
+\item{vals}{(\code{numeric}) If \code{tick.text} is missing, the lowest value in the heatmap}
 
-\item{varName}{The label of the variable name plotted to the heatmap.}
+\item{varName}{(\code{character}) The label of the variable name plotted to the heatmap.}
 
-\item{tick.text}{The values on the heatmap legend. If missing, will be calculated with minVal and maxVal. Should have the length as 'ticks'.}
+\item{tick.text}{(\code{numeric}) The values on the heatmap legend. If missing, will be calculated with \code{minVal} and \code{maxVal}.}
 
-\item{tick.cex}{Letter size of the values on the legend.}
+\item{tick.cex}{(\code{numeric}) Letter size of the values on the legend.}
 
-\item{barWidth}{The width (percent) of the bar featuring the colors of the heatmap.}
+\item{barWidth}{(\code{numeric}) The width (percent) of the bar featuring the colors of the heatmap.}
 
-\item{barHeight}{The height (percent)of the bar featuring the colors of the heatmap.}
+\item{barHeight}{(\code{numeric}) The height (percent)of the bar featuring the colors of the heatmap.}
 
-\item{tickLength}{The length (percent) of the ticks at the bars.}
+\item{tickLength}{(\code{numeric})  The length (percent) of the ticks at the bars.}
 
-\item{xLeft}{the x coordinate of the lower left hand corner of the bar.}
+\item{xLeft}{(\code{numeric}) The x coordinate of the lower left hand corner of the bar.}
 
-\item{yBot}{the y coordinate of the lower left hand corner of the bar.}
+\item{yBot}{(\code{numeric}) The y coordinate of the lower left hand corner of the bar.}
 
-\item{add}{indicates wheter a new plot should be drawn or not. Defaults to FALSE.}
+\item{add}{(\code{logical}) Indicates wheter a new plot should be drawn or not. Defaults to \code{FALSE}.}
 
-\item{bounds}{Logical vector indicating whether open intervals should be indicated for the legend.}
+\item{bounds}{(\code{logical}) Vector (length 2) indicating whether open intervals should be indicated for the legend.}
 
-\item{...}{arguments passed to the plot() function.}
+\item{...}{Arguments passed to the \code{\link[graphics]{plot}} function.}
+}
+\value{
+The function does not return any value.
 }
 \description{
-This function will invoke the plot function to draw a heatmap legend.
+This function will invoke the \code{\link[graphics]{plot}} function to draw a heatmap legend.
 }
 \details{
 The 'percents' refer to the plotting area measured from the lower left corner.

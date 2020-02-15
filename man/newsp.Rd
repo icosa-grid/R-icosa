@@ -3,22 +3,22 @@
 \name{newsp}
 \alias{newsp}
 \alias{newsp,trigrid-method}
-\title{Add SpatialPolygons object to a predefined slot in a trigrid or hexagrid object}
+\title{Add a \code{\link[sp]{SpatialPolygons}} object to a predefined slot in a \code{\link{trigrid}} or \code{\link{hexagrid}} object}
 \usage{
 newsp(gridObj, res = NULL)
 
 \S4method{newsp}{trigrid}(gridObj, res = NULL)
 }
 \arguments{
-\item{gridObj}{an icosahedral grid.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) An icosahedral grid.}
 
-\item{res}{The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.}
+\item{res}{(\code{numeric}) The number of points inserted between two vertices, passed to \code{\link{SpPolygons}}.}
 }
 \value{
-A trigrid or hexagrid class object.
+A \code{\link{trigrid}} or \code{\link{hexagrid}} object with the new \code{@sp} slot.
 }
 \description{
-Add SpatialPolygons object to a predefined slot in a trigrid or hexagrid object
+Add a \code{\link[sp]{SpatialPolygons}} object to a predefined slot in a \code{\link{trigrid}} or \code{\link{hexagrid}} object
 }
 \examples{
 a<-trigrid(4)

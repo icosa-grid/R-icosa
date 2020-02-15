@@ -3,29 +3,26 @@
 \name{newgraph}
 \alias{newgraph}
 \alias{newgraph,trigrid-method}
-\title{Add an igraph object to a predefined slot in a trigrid or hexagrid object}
+\title{Add an igraph object to a predefined slot in an icosahedral grid}
 \usage{
 newgraph(gridObj, ...)
 
 \S4method{newgraph}{trigrid}(gridObj, ...)
 }
 \arguments{
-\item{gridObj}{an icosahedral grid.}
+\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
 
-\item{...}{arguments passed to the gridgraph() function.}
+\item{...}{Arguments passed to the \code{\link{gridgraph}} function.}
+}
+\value{
+A new (\code{\link{trigrid}} or \code{\link{hexagrid}}) object with the recalculated graph.
 }
 \description{
-Add an igraph object to a predefined slot in a trigrid or hexagrid object
-
-Add an igraph object to a predefined slot in a trigrid or hexagrid object
+Add an igraph object to a predefined slot in an icosahedral grid
 }
 \examples{
-	#create a grid
-	g<-trigrid(4, graph=FALSE)
-	g<-newgraph(g)
-
-	#create a grid
-	g<-trigrid(4, graph=FALSE)
-	g<-newgraph(g)
+#create a grid
+g<-trigrid(4, graph=FALSE)
+g<-newgraph(g)
 
 }

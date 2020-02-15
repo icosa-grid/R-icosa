@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-spherical.R
 \name{chullsphere}
 \alias{chullsphere}
-\title{Spherical convex hull}
+\title{Spherical convex hull.}
 \usage{
 chullsphere(
   data,
@@ -13,28 +13,28 @@ chullsphere(
 )
 }
 \arguments{
-\item{data}{Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.}
+\item{data}{(\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the set of points.}
 
-\item{center}{Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).}
+\item{center}{(\code{numeric}) Vector, The center of the sphere in XYZ coordinates (default is 0,0,0).}
 
-\item{radius}{Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
+\item{radius}{(\code{numeric}) Single value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).}
 
-\item{param}{Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'    the centroid.}
+\item{param}{(\code{numeric}) Single positive integer, indicates the number of divisions in the centroid projection method. The higher the number, the closer the replacement points are to the centroid.}
 
 \item{strict}{(\code{logical}) Strictly convex output is required.}
 }
 \value{
-Either an XYZ or a long-lat numeric vector.
+The indices of the data points forming the convex hull as a (\code{numeric}) vector.
 }
 \description{
-This function calculates a possible implementation of the spherical convex hull
+This function calculates a possible implementation of the spherical convex hull.
 }
 \details{
-With the method \code{centroidprojection} the function calls the surfacecentroid() 
+With the method \code{centroidprojection} the function calls the \code{\link{surfacecentroid}} 
 function to get the a reference point from the shape. Then all the points are 'projected' 
 close to this point using the great circles linking them to the reference point.
 Each such great circle will be devided to an equal number of points and the closest
- will replace the original point coordinates in the convex hull algorithm implemented in \code{grDevices::chull()}.
+ will replace the original point coordinates in the convex hull algorithm implemented in \code{\link[grDevices]{chull}}.
 }
 \examples{
 # generate some random points

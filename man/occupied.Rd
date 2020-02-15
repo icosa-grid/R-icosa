@@ -7,26 +7,28 @@
 occupied(gridObj, data, ...)
 }
 \arguments{
-\item{gridObj}{a \code{trigrid} or \code{hexagrid} object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.}
 
-\item{data}{the queried data.}
+\item{data}{(\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.}
 
-\item{...}{arguments passed to the class specific methods}
+\item{...}{Arguments passed to the class specific methods}
 }
 \value{
-returns a facelayer object
+The function Returns a \code{\link{facelayer}}-class object.
 }
 \description{
-This function will return a \code{facelayer} class object showing which faces are occupied by the input object.
+This function will return a \code{\link{facelayer}} class object showing which faces are occupied by the input object.
 }
 \details{
-This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data. The function creates a link between the facelayer and the relevant grid.
+This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data.
 }
 \examples{
 # create a grid
 g <- trigrid(8, sp=TRUE)
+
 # create random points
 randPoints <- rpsphere(100,output="polar")
+
 # the facelayer occupied by these points
 randomLayer <- occupied(g, randPoints)
 plot(randomLayer)

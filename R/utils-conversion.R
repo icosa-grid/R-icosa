@@ -1,4 +1,4 @@
-#' Conversion of spherical coordinates to 3d Cartesian coordinates
+#' Conversion of polar coordinates to 3d Cartesian coordinates
 #' 
 #' The function uses basic trigonometric relationships to transform longitude/latitude coordinates on a sphere to xyz Cartesian coordinates.
 #' 
@@ -7,7 +7,7 @@
 #' 
 #' @param x (\code{matrix}, \code{numeric}, \code{data.frame}) A 2-column \code{numeric} matrix with the longitude/latitude data.
 #' 
-#' @param radius (\code{}) (\code{numeric} value) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
+#' @param radius (\code{numeric}) The radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
 #'
 #' @param origin (\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.
 #' @param ... Arguments passed to class-specific methods.
@@ -32,8 +32,8 @@
 #' xyz3 <- PolToCar(as.data.frame(longLat))
 setGeneric("PolToCar", function(x,...) standardGeneric("PolToCar"))
 
-#' Matrix-method of PolToCar()
-#'
+# Matrix-method of PolToCar()
+#
 #' @rdname PolToCar
 setMethod(
 	"PolToCar",
@@ -70,8 +70,8 @@ setMethod(
 
 )
 
-#' Numeric method for PolToCar
-#'
+# Numeric method for PolToCar
+#
 #' @rdname PolToCar
 setMethod(
 	"PolToCar", 
@@ -85,10 +85,10 @@ setMethod(
 )	
 
 
-#' Data.frame method for PolToCar
-#'
-#' @param long \code{character} If \code{x} is a \code{data.frame}, then the column used as longitudes. 
-#' @param lat \code{character} If \code{x} is a \code{data.frame}, then the column used as latitudes.
+# Data.frame method for PolToCar
+#
+#' @param long (\code{character}) If \code{x} is a \code{data.frame}, then the column used as longitudes. 
+#' @param lat (\code{character}) If \code{x} is a \code{data.frame}, then the column used as latitudes.
 #' @rdname PolToCar
 setMethod(
 	"PolToCar",
@@ -120,16 +120,11 @@ setMethod(
 
 
 
-
-# do not put generic in doc. 
-
-
-
 #' Conversion of 3d Cartesian coordinates to polar coordinates
 #' 
 #' The function uses basic trigonometric relationships to transform XYZ coordinates to polar coordinates
 #' 
-#' @param x (\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in a Cartesian space.
+#' @param x (\code{matrix}, \code{data.frame}, \code{numeric}) A 3 column data matrix with XYZ coordinates in Cartesian space.
 #' @param origin (\code{numeric}) Vector with length \code{3}, the XYZ coordinates of the sphere center.
 #' @param norad (\code{logical}). Toggles whether the rho coordinate (distance from origin) should be omitted from the output.
 #' @param ... Arguments passed to class-specific methods.

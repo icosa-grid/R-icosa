@@ -6,31 +6,31 @@
 \alias{trigrid}
 \title{A triangular icosahedral grid}
 \arguments{
-\item{tessellation}{An integer vector with the tessellation values. Each number
+\item{tessellation}{(\code{numeric}) An integer vector with the tessellation values. Each number
  describes the number of new edges replacing one original edge. Multiple series of tessellations
     are possible this way. The total tessellation is the product of the tessellation vector. 
 Higher values result in more uniform cell sizes, but the larger number of tessellation series
 increases the speed of lookup functions.}
 
-\item{sp}{A logical value indicating whether the 'SpatialPolygons' class representation of the grid
+\item{sp}{(\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 should be added to the object when the grid is calculated. If set to \code{TRUE} the \code{SpPolygons()} function will be run with with the resolution parameter set to 25. The 
  resulting object will be stored in slot \code{@sp}. As the calculation of this object can substantially increase the grid creation time,
- by default this argument has a value of \code{FALSE}. The 'SpatialPolygons' class representation can be added on demand by running the function \code{newsp}.}
+ by default this argument has a value of \code{FALSE}. The \code{\link[sp]{SpatialPolygons}} class representation can be added on demand by running the function \code{newsp}.}
 
-\item{graph}{A logical value indicating whether the \code{'igraph'} class representation of the grid
-should be added to the object when the grid is calculated. This argument defaults to TRUE because this option has only minor performance load on the grid 
+\item{graph}{(\code{logical}) Flag indicating whether the \code{'igraph'} class representation of the grid
+should be added to the object when the grid is calculated. This argument defaults to \code{TRUE} because this option has only minor performance load on the grid 
 constructor function. For familiarization with the
-object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{str()} on the \code{'igraph'} class slot of the class might flood the console.}
+object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{\link[utils]{str}} on the \code{'igraph'} class slot of the class might flood the console.}
 
-\item{radius}{The radius of the grid. Defaults to the authalic radius of Earth.}
+\item{radius}{(\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.}
 
-\item{center}{The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).}
+\item{center}{(\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).}
 }
 \value{
 A triangular grid object, with class \code{trigrid}.
 }
 \description{
-\code{trigrid} creates a triangular grid based on the
+\code{trigrid()} creates a triangular grid based on the
    tessellation of an icosahedron.
 }
 \details{
@@ -49,7 +49,7 @@ therefore the hierarchical structure created during the tessellation procedure i
 These data are stored in a list in the slot \code{@skeleton} and are 0-indexed integer tables for Rccp-based functions. \code{$v} 
 stores vertex, \code{$f} the edge, and \code{$e} contains the edge data for plotting and calculations. In these tables
 the original hierarchy based orderings of the units are retained, during subsetting, additional vectors are used to indicate
-deactivation of these units. Any sort of meddling with the @skeleton object will lead to unexpected behavior.
+deactivation of these units. Any sort of meddling with the \code{@skeleton} object will lead to unexpected behavior.
 }
 \section{Slots}{
 
@@ -88,10 +88,10 @@ deactivation of these units. Any sort of meddling with the @skeleton object will
 }}
 
 \examples{
-	# single tessellation value
+# single tessellation value
 g <- trigrid(c(8))
 g
 # series of tessellations
-	g1 <- trigrid(c(2,3,4))
+g1 <- trigrid(c(2,3,4))
 g1
 }

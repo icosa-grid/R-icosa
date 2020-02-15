@@ -4,33 +4,33 @@
 \name{hexagrid-class}
 \alias{hexagrid-class}
 \alias{hexagrid}
-\title{A penta-hexagonal icosahedral grid}
+\title{Construct a penta-hexagonal icosahedral grid}
 \arguments{
-\item{tessellation}{An integer vector with the tessellation values. Each number
+\item{tessellation}{(\code{numeric}) An integer vector with the tessellation values. Each number
  describes the number of new edges replacing one original edge. Multiple series of tessellations
     are possible this way. The total tessellation is the product of the tessellation vector. 
 Higher values result in more uniform cell sizes, but the larger number of tessellation series,
-increases the speed of lookup functions}
+increases the speed of lookup functions.}
 
-\item{sp}{A logical value indicating whether the 'SpatialPolygons' class representation of the grid
-should be added to the object when the grid is calculated. If set to true the SpPolygons() function will be run with with the resolution parameter set to 25. The 
- resulting object will be stored in slot @sp. As the calculation of this object can increase the grid creation time substantially
- by default this argument has a value FALSE. This can be added on demand by running the function \code{newsp}.}
+\item{sp}{(\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
+should be added to the object when the grid is calculated. If set to true the \code{\link{SpPolygons}} function will be run with with the resolution parameter set to \code{25}. The 
+ resulting object will be stored in slot \code{@sp}. As the calculation of this object can increase the grid creation time substantially
+ by default this argument has a value \code{FALSE}. This can be added on demand by running the function \code{\link{newsp}}.}
 
-\item{graph}{A logical value indicating whether the 'igraph' class representation of the grid
-should be added to the object when the grid is calculated. This argument defaults to TRUE because this option has only minor performance load on the grid 
+\item{graph}{(\code{logical}) Flag indicating whether the \code{\link[igraph:aaa-igraph-package]{igraph}} class representation of the grid
+should be added to the object when the grid is calculated. This argument defaults to \code{TRUE} because this option has only minor performance load on the grid 
 constructor function. For familiarization with the
-object structure, however, setting this parameter to FALSE might help, as invoking str() on the 'igraph' class slot of the class might flood the console.}
+object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{\link[utils]{str}} on the 'igraph' class slot of the class might flood the console.}
 
-\item{radius}{The radius of the grid. Defaults to the authalic radius of Earth.}
+\item{radius}{(\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.}
 
-\item{center}{The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).}
+\item{center}{(\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to \code{c(0,0,0)}.}
 }
 \value{
 A hexagonal grid object, with class \code{hexagrid}.
 }
 \description{
-\code{hexagrid} creates a hexa-pentagonal grid based on the inversion of a 
+The \code{hexagrid} function constrcucts a hexa-pentagonal grid based on the inversion of a 
    tessellated icosahedron.
 }
 \details{
@@ -38,7 +38,7 @@ Inherits from the \code{trigrid} class.
 
 The grid structure functions as a frame for data graining, plotting and
 calculations. Data can be stored in layers that are linked to the grid object. In the current version only the 
-\code{facelayer} class is implemented which allows the user to render data to the cells
+\code{\link{facelayer}} class is implemented which allows the user to render data to the cells
 of the grid which are called faces. 
 	The grid 'user interface' is made up of four primary tables: the \code{@vertices} table for the coordinates of the vertices,
 	the \code{faceCenters} for the coordinates of the centers of faces,
@@ -74,6 +74,6 @@ deactivation of these units. Any sort of meddling with the @skeleton object will
 }}
 
 \examples{
-		g <- hexagrid(c(8))
-		g1 <- hexagrid(c(2,3,4))
+g <- hexagrid(c(8), sp=TRUE)
+g1 <- hexagrid(c(2,3,4))
 }

@@ -2,22 +2,27 @@
 % Please edit documentation in R/plot-2d-grid.R
 \name{gridlabs}
 \alias{gridlabs}
-\title{Labels of grid vertices, faces and edges}
+\title{Labels of grid vertices, faces and edges.}
 \usage{
 gridlabs(gridObj, type = "f", projargs = NULL, ...)
 }
 \arguments{
-\item{gridObj}{a trigrid or hexagrid class icosahedral grid.}
+\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
 
-\item{type}{The type of element to be plotted: either "f" (faces), "v" (vertices) or "e" (edges).}
+\item{type}{(\code{character}) The type of element to be plotted: either \code{"f"} (faces), \code{"v"} (vertices) or  \code{"e"} (edges).}
 
-\item{projargs}{a projection string for the transformation fo coordinates. Accepts both a CRS class object and a character string that will be transformed to the CRS class.}
+\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
 
-\item{...}{Arguments passed to the text() function.}
+\item{...}{Arguments passed to the \code{\link[graphics]{text}} function.}
 }
 \value{
-the function has no return value
+The function has no return value.
 }
 \description{
 This function will show where the grid elements are located.
+}
+\examples{
+gr <- hexagrid(sp=TRUE)
+plot(gr)
+gridlabs(gr)
 }

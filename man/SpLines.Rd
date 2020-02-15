@@ -3,25 +3,25 @@
 \name{SpLines}
 \alias{SpLines}
 \alias{SpLines,trigrid-method}
-\title{SpatialLines class object from an icosahedral grid}
+\title{Create a \code{\link[sp]{SpatialLines}} class object from an icosahedral grid}
 \usage{
 SpLines(gridObj, ...)
 
 \S4method{SpLines}{trigrid}(gridObj, dateLine = "break", res = NULL)
 }
 \arguments{
-\item{gridObj}{Either a \code{trigrid} or a \code{hexagrid} class object.}
+\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Icosahedral grid object.}
 
-\item{...}{specific details of the new SpatialLines object.}
+\item{...}{Specific details of the new \code{\link[sp]{SpatialLines}} object.}
 
-\item{dateLine}{Specifies that NAs should be introduced at the dateline to break the boundaries of the faces. 
+\item{dateLine}{(\code{logical})Specifies whether \code{NA}s should be introduced at the dateline to break the boundaries of the faces. 
 Can be switched off by setting it to \code{FALSE}.}
 
-\item{res}{The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.}
+\item{res}{(\code{numeric}) The number of points inserted between two vertices, or \code{NULL}, if this is to be set by the package. The default method increases resolution wiht lower tessellation values, and is higher for higher absolute latitudes.}
 }
 \value{
-an object of class SpatialLines.
+An object of class \code{\link[sp]{SpatialLines}}.
 }
 \description{
-The function will create an approporiate 2d render of the grid in the SpatialLines object format defined in the package 'sp'.
+Create a \code{\link[sp]{SpatialLines}} class object from an icosahedral grid
 }

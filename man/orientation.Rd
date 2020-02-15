@@ -5,7 +5,7 @@
 \alias{orientation,trigrid-method}
 \alias{orientation<-}
 \alias{orientation<-,trigrid-method}
-\title{Extracting the grid orientation}
+\title{Extracting and setting the grid orientation}
 \usage{
 orientation(x, ...)
 
@@ -16,20 +16,17 @@ orientation(x) <- value
 \S4method{orientation}{trigrid}(x) <- value
 }
 \arguments{
-\item{x}{(\code{trigrid} or \code{hexagrid}): Input grid.}
+\item{x}{(\code{\link{trigrid}} or \code{\link{hexagrid}}): Input grid.}
 
-\item{...}{values passed on to the rotate() function.}
+\item{...}{Values passed on to the \code{\link[icosa]{rotate}} function.}
 
-\item{display}{The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.}
+\item{display}{(\code{character}) The output unit. In case it is set to \code{"deg"} the output will be in degrees, in case it is \code{"rad"}, then radians.}
 
-\item{value}{the vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.}
+\item{value}{(\code{numeric}) The vector of rotation. Passed as the \code{angles} argument of \code{\link[icosa]{rotate}}.}
+}
+\value{
+In case the function returns does, it returns the orientation angles of the grid (as \code{numeric}).
 }
 \description{
-Extracting the grid orientation
-
-Extracting the grid orientation
-
-Setting the orientation of a trigrid or hexagrid object
-
-Setting the orientation of a trigrid or hexagrid object
+Extracting and setting the grid orientation
 }

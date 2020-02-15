@@ -7,18 +7,18 @@
 rpsphere(n = 1, output = "cartesian", radius = authRadius, origin = c(0, 0, 0))
 }
 \arguments{
-\item{n}{The number of random points to be created.}
+\item{n}{(\code{numeric}) The number of random points to be created.}
 
-\item{output}{The coordinate system of the new points. Can either be 
+\item{output}{(\code{character}) The coordinate system of the new points. Can either be 
 \code{"cartesian"} for XYZ coordiates or \code{"polar"} for spherical, 
 longitude-latitudes coordinates.}
 
-\item{radius}{The radius of the sphere}
+\item{radius}{(\code{numeric}) The radius of the sphere}
 
-\item{origin}{The center of the sphere (XYZ coordinates).}
+\item{origin}{(\code{numeric}) The center of the sphere (XYZ coordinates).}
 }
 \value{
-A 3-column (XYZ) or a 2-column (long-lat) numeric matrix.
+A 3-column (XYZ) or a 2-column (long-lat) \code{numeric} matrix.
 }
 \description{
 This function will create a predefined number of points randomly distributed

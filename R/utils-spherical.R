@@ -1,23 +1,23 @@
-#' Calculation of points along an arc
+#' Calculation of point coordinates along an arc
 #' 
-#' This function calculates points along an arc between two points and and a circle center.
+#' This function calculates points along an arc between two points and a circle center.
 #' 
 #' The function always returns the smaller arc, with angle alpha < pi.
 #' 
-#' @param p1 Numeric vector, XYZ or longitude-latitude coordinates of the first point along the arc.
+#' @param p1 (\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the first point along the arc.
 #' 
-#' @param p2 Numeric vector, XYZ or longitude-latitude coordinates of the last point along the arc.
+#' @param p2 (\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the last point along the arc.
 #' 
-#' @param origin Numeric vector, The center of the circle in XYZ coordinates (default is 0,0,0).
+#' @param origin (\code{numeric}) vector, The center of the circle in XYZ coordinates (default is \code{c(0,0,0)}).
 #' 
-#' @param breaks Single positive integer, the number of points inserted between p1 and p2.
+#' @param breaks (\code{integer}) The number of points inserted between \code{p1} and \code{p2}. Has to be positive.
 #' 
-#' @param onlyNew Logical value whether of p1 and p2 should be omitted from the result or not.
+#' @param onlyNew (\code{logical}) Should \code{p1} and \code{p2} be omitted from the result?
 #' 
-#' @param output Character value, the coordinate system of the output points. Can either be \code{"polar"} for
+#' @param output (\code{character}) The coordinate system of the output points. Can either be \code{"polar"} for
 #' 	longitude-latitude or \code{"cartesian"} for XYZ data.
 #'
-#' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
+#' @param radius (\code{numeric}) Single value, the radius of the circle in case the input points have only polar coordinates.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #' 
 #' @return Either an XYZ or a long-lat numeric matrix.
@@ -70,21 +70,21 @@ arcpoints<-function(p1,p2,breaks=2,origin=c(0,0,0), onlyNew=FALSE, output="carte
 #' 
 #' This function calculates the shortest arc distance between two points.
 #' 
-#' @param p1 Numeric vector, XYZ or longitude-latitude coordinates of the first point along the arc.
+#' @param p1 (\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the first point along the arc.
 #' 
-#' @param p2 Numeric vector, XYZ or longitude-latitude coordinates of the last point along the arc.
+#' @param p2 (\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the last point along the arc.
 #' 
-#' @param origin Numeric vector, the center of the circle in XYZ coordinates (default is 0,0,0).
+#' @param origin (\code{numeric}) Vector, the center of the circle in XYZ coordinates (default is \code{c(0,0,0)}).
 #' 
-#' @param output Character value, the type of the output value. \code{"distance"} will give the distance
+#' @param output (\code{character}) The type of the output value. \code{"distance"} will give the distance
 #'	in the metric that was fed to the function for the coordinates or the radius.
 #'	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 #'	so in radians.
 #'
-#' @param radius Numeric value, the radius of the circle in case the input points have polar coordinates only.
+#' @param radius (\code{numeric}) The radius of the circle in case the input points have polar coordinates only.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #'
-#' @return A single numeric value.
+#' @return A single \code{numeric} value.
 #'
 #' @examples 
 #'	# coordinates of two points
@@ -137,28 +137,28 @@ arcdist <- function(p1, p2, output="distance", origin=c(0,0,0), radius=authRadiu
 
 #' Calculation of distance matrices along arcs
 #' 
-#' This function calculates the shortest arc distance matrix between two set of points.
+#' This function calculates the shortest arc distance matrix between two sets of points.
 #' 
 #' This function will create all possible shortest arc distances between points in the two sets,
 #' 	but not between the points within the sets. The function is useful for great circle distance calculations.
 #' 	For a symmetrical distance matrix leave the \code{points2} argument empty.
 #' 
-#' @param points1 Numeric matrix, XYZ or longitude-latitude coordinates of the first set of points.
+#' @param points1 (\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the first set of points.
 #' 
-#' @param points2 Numeric matrix, XYZ or longitude-latitude coordinates (matrix) of the second set of points. 
+#' @param points2 (\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the second set of points. 
 #'	Leave this empty if you want all the arc distances between a set of points	
 #' 
-#' @param origin Numeric vector, the center of the circle in XYZ coordinates (default is 0,0,0).
+#' @param origin (\code{numeric}) Vector, the center of the circle in XYZ coordinates (default is \code{c(0,0,0)}).
 #' 
-#' @param output Character value, the type of the output value. \code{"distance"} will give back the distance
+#' @param output (\code{character}) The type of the output value. \code{"distance"} will give back the distance
 #' 	in the metric that was fed to the function in the coordinates or the radius.
 #' 	\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
 #' 	so in radians.
 #' 
-#' @param radius Numeric value, the radius of the circle in case the input points have polar coordinates only.
+#' @param radius (\code{numeric}) The radius of the circle in case the input points have polar coordinates only.
 #' 	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #' 
-#' @return A single numeric value.
+#' @return A single \code{numeric} value.
 #' 
 #' @examples
 #' g <- trigrid(c(4))
@@ -279,17 +279,17 @@ rotateOnePoint<-function(coords, angles,origin)
 #' The function uses a three dimension normal distribution to generate points, 
 #' which are then projected to the surface of the sphere.
 #' 
-#' @param n The number of random points to be created.
+#' @param n (\code{numeric}) The number of random points to be created.
 #' 
-#' @param radius The radius of the sphere
+#' @param radius (\code{numeric}) The radius of the sphere
 #' 
-#' @param origin The center of the sphere (XYZ coordinates).
+#' @param origin (\code{numeric}) The center of the sphere (XYZ coordinates).
 #' 
-#' @param output The coordinate system of the new points. Can either be 
+#' @param output (\code{character}) The coordinate system of the new points. Can either be 
 #'	\code{"cartesian"} for XYZ coordiates or \code{"polar"} for spherical, 
 #'	longitude-latitudes coordinates.
 #'
-#' @return A 3-column (XYZ) or a 2-column (long-lat) numeric matrix.
+#' @return A 3-column (XYZ) or a 2-column (long-lat) \code{numeric} matrix.
 #' 
 #' @examples
 #'  randomPoints <- rpsphere(2000, output="polar")
@@ -355,7 +355,7 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 
 #' Surface centroid point of a spherical point cloud
 #' 
-#' This function the projected place of the centroid from a pointset on the sphere
+#' This function the projected place of the centroid from a pointset on the sphere.
 #' 
 #' The function implements great circle calculations to infer on the place of the centroid, which makes it resource demanding. This is necessary
 #'	to avoid a particual error that frequently occurrs with other methods for centroid calculation, namely that the place of the centroid is right,
@@ -363,16 +363,16 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #' 
 #' @param x (\code{matrix} or \code{data.frame}) Numeric data, XYZ or longitude-latitude coordinates of the set of points.
 #' 
-#' @param output Character value, the coordinate system of the output points. Can either be \code{"polar"} for
+#' @param output (\code{character}) The coordinate system of the output points. Can either be \code{"polar"} for
 #' 	longitude-latitude or \code{"cartesian"} for XYZ data.
 #'
-#' @param center Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
+#' @param center (\code{numeric}) The center of the sphere in XYZ coordinates (default is 0,0,0).
 #' 
-#' @param radius Numeric value, the radius of the circle in case the input points have only polar coordinates.
+#' @param radius (\code{numeric}) The radius of the circle in case the input points have only polar coordinates.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #'
-#' @param ... Arguments passed to class-specific methods.
-#' @return Either an XYZ or a long-lat numeric vector.
+#' @param ... Arguments passed to the \code{matrix}-method.
+#' @return Either an XYZ or a long-lat \code{numeric} vector.
 #' 
 #' @examples
 #'	# generate some random points
@@ -494,24 +494,24 @@ setMethod(
 
 
 
-#' Spherical convex hull
+#' Spherical convex hull. 
 #' 
-#' This function calculates a possible implementation of the spherical convex hull
+#' This function calculates a possible implementation of the spherical convex hull.
 #' 
-#' With the method \code{centroidprojection} the function calls the surfacecentroid() 
+#' With the method \code{centroidprojection} the function calls the \code{\link{surfacecentroid}} 
 #'	function to get the a reference point from the shape. Then all the points are 'projected' 
 #'	close to this point using the great circles linking them to the reference point.
 #'	Each such great circle will be devided to an equal number of points and the closest
-#'	 will replace the original point coordinates in the convex hull algorithm implemented in \code{grDevices::chull()}. 
+#'	 will replace the original point coordinates in the convex hull algorithm implemented in \code{\link[grDevices]{chull}}. 
 #' 
-#' @param data  Numeric matrix, XYZ or longitude-latitude coordinates of the set of points.
+#' @param data  (\code{numeric}) Matrix, XYZ or longitude-latitude coordinates of the set of points.
 #' 
-#' @param center Numeric vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
-#' @param radius Single numeric value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
-#' @param param Single positive integer, indicates the number of divisions in the centroidprojection method. The higher the number, the closer the replacement points are to #'	the centroid.
+#' @param center (\code{numeric}) Vector, The center of the sphere in XYZ coordinates (default is 0,0,0).
+#' @param radius (\code{numeric}) Single value, indicating the radius of the sphere. Defaults to the R2 radius of Earth (6371.007km).
+#' @param param (\code{numeric}) Single positive integer, indicates the number of divisions in the centroid projection method. The higher the number, the closer the replacement points are to the centroid.
 #' 
 #' @param strict (\code{logical}) Strictly convex output is required.
-#' @return Either an XYZ or a long-lat numeric vector.
+#' @return The indices of the data points forming the convex hull as a (\code{numeric}) vector.
 #' 
 #' @examples
 #'	# generate some random points

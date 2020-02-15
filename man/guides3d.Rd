@@ -16,43 +16,43 @@ guides3d(
 )
 }
 \arguments{
-\item{axis}{Numeric argument draws the -90(lat. deg. ) +90 (lat. deg.) axis. The plotted radius will be 'axis' times the authalic radius ca. 6371km.}
+\item{axis}{(\code{numeric}) Draws the -90(lat. deg. ) +90 (lat. deg.) axis. The plotted radius will be \code{axis} times the authalic radius, ca. 6371km.}
 
-\item{polgrid}{numeric argument with the length of 2, where the first argument specifies
-the size of the longitudinal and the second the latitudinal divisions (degrees). Setting this argument to NULL will turn this feature off.}
+\item{polgrid}{(\code{numeric}) with the length of \code{2}, where the first argument specifies
+the size of the longitudinal and the second the latitudinal divisions (degrees). Setting this argument to \code{NULL} will turn this feature off.}
 
-\item{textPG}{logical value, indicating whether the coordinate values should be added to the 3d render.}
+\item{textPG}{(\code{logical}) Flag indicating whether the coordinate values should be added to the 3d render.}
 
-\item{res}{numeric argument for graphical resolution of the curves:
+\item{res}{(\code{numeric}) Graphical resolution of the curves:
 the distance in degrees between the points of the rendered guides.}
 
-\item{origin}{Numeric vector of length=3. Indicates the center of the guiding sphere.}
+\item{origin}{(\code{numeric}) Vector of length=3. Indicates the center of the guiding sphere.}
 
-\item{radius}{Numeric values indicating the radius of the guiding sphere. Defaults to the R2 radius of Earth (6371.007km).}
+\item{radius}{(\code{numeric}) Values indicating the radius of the guiding sphere. Defaults to the R2 radius of Earth (6371.007km).}
 
-\item{drad}{Numeric value, indicates the position of coordinate 3d text relative to the guiding sphere radius.}
+\item{drad}{(\code{numeric}) Value, indicates the position of coordinate 3d text relative to the guiding sphere radius.}
 
-\item{...}{additional arguments passed to rgl::segments3d(), rgl::lines3d() and rgl::text3d().}
+\item{...}{Additional arguments passed to \code{\link[rgl:3dobjects]{segments3d}}, \code{\link[rgl:3dobjects]{lines3d}} and \code{\link[rgl:texts]{text3d}}.}
 }
 \value{
 The function does not return any value.
 }
 \description{
 This function plots 3d guidelines for navigation on the surface of the sphere,
-	 includings the drawing of the rotational axis and a polar coordinate system.
+	 includings the rotational axis and a polar coordinate system.
 }
 \details{
 The function is built on the openGL renderer of the R package \code{rgl}.
 }
 \examples{
 # create a hexagonal grid
-    g <- hexagrid(c(2,2))
+  g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-   plot3d(g, guides=FALSE)
+ plot3d(g, guides=FALSE)
 # plot the rotational axis in blue
-		guides3d(axis=2, polgrid=NULL, col="blue")
+  guides3d(axis=2, polgrid=NULL, col="blue")
 # plot the polar grid at 10 degree resolution
-    guides3d(axis=NULL, polgrid=c(10,10), col="red")
+  guides3d(axis=NULL, polgrid=c(10,10), col="red")
 # plot some coordinates
-   guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
+  guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
 }

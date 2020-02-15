@@ -1,5 +1,5 @@
 #' @rdname values
-#' @param ... Arguments passed to class-specific methods.
+#' @param ... Arguments passed to class-specific methods. (Not used.)
 #' @usage values(x,...)
 "values" 
 
@@ -14,11 +14,11 @@ if(requireNamespace("raster", quietly = TRUE)){
 	)
 }
 
-#' Extract and replace values from a gridlayer
+#' Extract and replace values from a gridlayer-derived object (e.g. \code{link{facelayer}}). 
 #'
-#' The function will get the \code{@values} slot of a \code{gridlayer} object.
+#' The function will get the \code{@values} slot of a \code{\link{facelayer}} object.
 #'
-#' @param x a gridlayer derived object.
+#' @param x (\code{\link{facelayer}}) Object.
 #' @rdname values
 #' @exportMethod values
 setMethod(	
@@ -46,7 +46,7 @@ if(requireNamespace("raster", quietly = TRUE)){
 }
 	
 
-#' @param value replacement values.
+#' @param value (\code{logical}, \code{character} or \code{numeric}) Replacement values.
 #' @rdname values
 #' @exportMethod values<-
 setReplaceMethod(	
@@ -63,11 +63,9 @@ setReplaceMethod(
 )
 
 
-#' The length of a \code{gridlayer} class object.
+#' The number of faces in an icosahedral grid.
 #' 
-#' This function returns the number of values present in the \code{gridlayer}.
 #' @rdname length
-#' @exportMethod length
 setMethod(	
 	f="length",
 	signature="gridlayer",
@@ -76,12 +74,12 @@ setMethod(
 	}
 )
 
-#' The face names in a \code{gridlayer} class object
+#' The face names in a \code{\link{facelayer}} class object
 #'
-#' Function to extract the registered face names to which the \code{gridlayer} renders information.
+#' Function to extract the registered face names to which the \code{\link{facelayer}} renders information.
 #'
-#' @param x A \code{gridlayer} class object.
-#' @return \code{character} vector, the names of the faces.
+#' @param x (\code{\link{facelayer}}) Object.
+#' @return A vector of \code{character} values, the names of the faces.
 #' @rdname names
 #' @exportMethod names
 setMethod(	

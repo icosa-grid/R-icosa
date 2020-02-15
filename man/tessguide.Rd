@@ -3,7 +3,7 @@
 \docType{data}
 \name{tessguide}
 \alias{tessguide}
-\title{Tessellation guide to hexagrid objects}
+\title{Tessellation guide to \code{\link{hexagrid}} objects}
 \format{A \code{data.frame} with 129 observations and 18 variables:
 \describe{
 	\item{\code{total}}{The total tessellation of the grid, the number of points inserted between icosahedron vertices along an edge.}
@@ -29,6 +29,6 @@
 tessguide
 }
 \description{
-The table includes basic properties of grids described with specific tessellation parameters
+The table includes basic properties of \code{\link{hexagrid}}s described with specific tessellation parameters
 }
 \keyword{datasets}

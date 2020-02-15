@@ -159,7 +159,7 @@ setMethod(
 
 #' A triangular icosahedral grid
 #' 
-#' \code{trigrid} creates a triangular grid based on the
+#' \code{trigrid()} creates a triangular grid based on the
 #'    tessellation of an icosahedron.
 #'
 #' The grid structure functions as a frame for data graining, plotting and spatial
@@ -177,7 +177,7 @@ setMethod(
 #'	These data are stored in a list in the slot \code{@skeleton} and are 0-indexed integer tables for Rccp-based functions. \code{$v} 
 #'	stores vertex, \code{$f} the edge, and \code{$e} contains the edge data for plotting and calculations. In these tables
 #'	the original hierarchy based orderings of the units are retained, during subsetting, additional vectors are used to indicate
-#'	deactivation of these units. Any sort of meddling with the @skeleton object will lead to unexpected behavior.
+#'	deactivation of these units. Any sort of meddling with the \code{@skeleton} object will lead to unexpected behavior.
 #'	
 #' @slot vertices Matrix of the vertex XYZ coordinates.
 #'
@@ -204,33 +204,33 @@ setMethod(
 #' @slot skeleton data tables with sequential indexing for the C functions.
 #'
 #'
-#' @param tessellation An integer vector with the tessellation values. Each number
+#' @param tessellation (\code{numeric}) An integer vector with the tessellation values. Each number
 #'    describes the number of new edges replacing one original edge. Multiple series of tessellations
 #' 	  are possible this way. The total tessellation is the product of the tessellation vector. 
 #'	  Higher values result in more uniform cell sizes, but the larger number of tessellation series
 #'	  increases the speed of lookup functions.
 #'
-#' @param sp A logical value indicating whether the 'SpatialPolygons' class representation of the grid
+#' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 #'	should be added to the object when the grid is calculated. If set to \code{TRUE} the \code{SpPolygons()} function will be run with with the resolution parameter set to 25. The 
 #'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can substantially increase the grid creation time,
-#'	 by default this argument has a value of \code{FALSE}. The 'SpatialPolygons' class representation can be added on demand by running the function \code{newsp}.
+#'	 by default this argument has a value of \code{FALSE}. The \code{\link[sp]{SpatialPolygons}} class representation can be added on demand by running the function \code{newsp}.
 #'
-#' @param graph A logical value indicating whether the \code{'igraph'} class representation of the grid
-#'	should be added to the object when the grid is calculated. This argument defaults to TRUE because this option has only minor performance load on the grid 
+#' @param graph (\code{logical}) Flag indicating whether the \code{'igraph'} class representation of the grid
+#'	should be added to the object when the grid is calculated. This argument defaults to \code{TRUE} because this option has only minor performance load on the grid 
 #' constructor function. For familiarization with the
-#' object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{str()} on the \code{'igraph'} class slot of the class might flood the console.
+#' object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{\link[utils]{str}} on the \code{'igraph'} class slot of the class might flood the console.
 #'
-#' @param radius The radius of the grid. Defaults to the authalic radius of Earth.
-#' @param center The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
+#' @param radius (\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.
+#' @param center (\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
 #'
 #' @return A triangular grid object, with class \code{trigrid}.
 #' @examples
-#' 	# single tessellation value
-#'	g <- trigrid(c(8))
-#'	g
-#'	# series of tessellations
-#' 	g1 <- trigrid(c(2,3,4))
-#'	g1
+#' # single tessellation value
+#' g <- trigrid(c(8))
+#' g
+#' # series of tessellations
+#' g1 <- trigrid(c(2,3,4))
+#' g1
 #' @exportClass trigrid
 trigrid<-setClass(
 	"trigrid",
@@ -491,16 +491,16 @@ setMethod(
 )
 
 	
-#' A penta-hexagonal icosahedral grid
+#' Construct a penta-hexagonal icosahedral grid
 #' 
-#' \code{hexagrid} creates a hexa-pentagonal grid based on the inversion of a 
+#' The \code{hexagrid} function constrcucts a hexa-pentagonal grid based on the inversion of a 
 #'    tessellated icosahedron.
 #'
 #' Inherits from the \code{trigrid} class.
 #'
 #' The grid structure functions as a frame for data graining, plotting and
 #'	calculations. Data can be stored in layers that are linked to the grid object. In the current version only the 
-#'	\code{facelayer} class is implemented which allows the user to render data to the cells
+#'	\code{\link{facelayer}} class is implemented which allows the user to render data to the cells
 #'	of the grid which are called faces. 
 #' 	The grid 'user interface' is made up of four primary tables: the \code{@vertices} table for the coordinates of the vertices,
 #' 	the \code{faceCenters} for the coordinates of the centers of faces,
@@ -532,30 +532,30 @@ setMethod(
 #'	@slot faceCenters Contains the xyz coordinates of the centers of the faces on the surface of the sphere.	
 #'
 #'
-#' @param tessellation An integer vector with the tessellation values. Each number
+#' @param tessellation (\code{numeric}) An integer vector with the tessellation values. Each number
 #'    describes the number of new edges replacing one original edge. Multiple series of tessellations
 #' 	  are possible this way. The total tessellation is the product of the tessellation vector. 
 #'	  Higher values result in more uniform cell sizes, but the larger number of tessellation series,
-#'	  increases the speed of lookup functions
+#'	  increases the speed of lookup functions.
 #'
-#' @param sp A logical value indicating whether the 'SpatialPolygons' class representation of the grid
-#'	should be added to the object when the grid is calculated. If set to true the SpPolygons() function will be run with with the resolution parameter set to 25. The 
-#'  resulting object will be stored in slot @sp. As the calculation of this object can increase the grid creation time substantially
-#'	 by default this argument has a value FALSE. This can be added on demand by running the function \code{newsp}.
+#' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
+#'	should be added to the object when the grid is calculated. If set to true the \code{\link{SpPolygons}} function will be run with with the resolution parameter set to \code{25}. The 
+#'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can increase the grid creation time substantially
+#'	 by default this argument has a value \code{FALSE}. This can be added on demand by running the function \code{\link{newsp}}.
 #'
-#' @param graph A logical value indicating whether the 'igraph' class representation of the grid
-#'	should be added to the object when the grid is calculated. This argument defaults to TRUE because this option has only minor performance load on the grid 
+#' @param graph (\code{logical}) Flag indicating whether the \code{\link[igraph:aaa-igraph-package]{igraph}} class representation of the grid
+#'	should be added to the object when the grid is calculated. This argument defaults to \code{TRUE} because this option has only minor performance load on the grid 
 #' constructor function. For familiarization with the
-#' object structure, however, setting this parameter to FALSE might help, as invoking str() on the 'igraph' class slot of the class might flood the console.
+#' object structure, however, setting this parameter to \code{FALSE} might help, as invoking \code{\link[utils]{str}} on the 'igraph' class slot of the class might flood the console.
 #'
-#' @param radius The radius of the grid. Defaults to the authalic radius of Earth.
-#' @param center The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
+#' @param radius (\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.
+#' @param center (\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to \code{c(0,0,0)}.
 #'
 #'
 #' @return A hexagonal grid object, with class \code{hexagrid}.
 #' @examples
-#' 		g <- hexagrid(c(8))
-#' 		g1 <- hexagrid(c(2,3,4))
+#' g <- hexagrid(c(8), sp=TRUE)
+#' g1 <- hexagrid(c(2,3,4))
 #' @exportClass hexagrid
 hexagrid<-setClass(
 	"hexagrid",

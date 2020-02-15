@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-spherical.R
 \name{arcpoints}
 \alias{arcpoints}
-\title{Calculation of points along an arc}
+\title{Calculation of point coordinates along an arc}
 \usage{
 arcpoints(
   p1,
@@ -15,27 +15,27 @@ arcpoints(
 )
 }
 \arguments{
-\item{p1}{Numeric vector, XYZ or longitude-latitude coordinates of the first point along the arc.}
+\item{p1}{(\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the first point along the arc.}
 
-\item{p2}{Numeric vector, XYZ or longitude-latitude coordinates of the last point along the arc.}
+\item{p2}{(\code{numeric}) Vector, XYZ or longitude-latitude coordinates of the last point along the arc.}
 
-\item{breaks}{Single positive integer, the number of points inserted between p1 and p2.}
+\item{breaks}{(\code{integer}) The number of points inserted between \code{p1} and \code{p2}. Has to be positive.}
 
-\item{origin}{Numeric vector, The center of the circle in XYZ coordinates (default is 0,0,0).}
+\item{origin}{(\code{numeric}) vector, The center of the circle in XYZ coordinates (default is \code{c(0,0,0)}).}
 
-\item{onlyNew}{Logical value whether of p1 and p2 should be omitted from the result or not.}
+\item{onlyNew}{(\code{logical}) Should \code{p1} and \code{p2} be omitted from the result?}
 
-\item{output}{Character value, the coordinate system of the output points. Can either be \code{"polar"} for
+\item{output}{(\code{character}) The coordinate system of the output points. Can either be \code{"polar"} for
 longitude-latitude or \code{"cartesian"} for XYZ data.}
 
-\item{radius}{Numeric value, the radius of the circle in case the input points have only polar coordinates.
+\item{radius}{(\code{numeric}) Single value, the radius of the circle in case the input points have only polar coordinates.
 Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.}
 }
 \value{
 Either an XYZ or a long-lat numeric matrix.
 }
 \description{
-This function calculates points along an arc between two points and and a circle center.
+This function calculates points along an arc between two points and a circle center.
 }
 \details{
 The function always returns the smaller arc, with angle alpha < pi.
