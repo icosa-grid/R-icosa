@@ -30,4 +30,4 @@ install.packages(
 
 
 See changes at 
-https://github.com/adamkocsis/icosa/blob/devel/inst/NEWS
+https://github.com/adamkocsis/icosa/blob/devel/inst/NEWS.md
