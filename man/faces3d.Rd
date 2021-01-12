@@ -41,7 +41,7 @@ The function is built on the openGL renderer of the R package \code{rgl}.
 # create a hexagonal grid
     g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-    faces3d(g)
+# faces3d(g)
 h <- hexagrid(8)
 b <- facelayer(h)
 values(b)<- rnorm(length(b))

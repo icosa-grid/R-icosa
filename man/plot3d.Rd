@@ -7,7 +7,9 @@
 \alias{plot3d.hexagrid}
 \alias{plot3d.facelayer}
 \title{3d plotting of an icosahedral grid, its subset or a data layer}
-\format{An object of class \code{function} of length 1.}
+\format{
+An object of class \code{function} of length 1.
+}
 \usage{
 plot3d(x,...)
 
@@ -60,10 +62,10 @@ use the function with \code{defaultPar3d=FALSE} after running \code{\link[rgl]{p
 # create a hexagonal grid
     g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-    plot3d(g, col="blue")
+#   plot3d(g, col="blue")
 # make a subset to select faces
    subG <- subset(g, c("F5", "F2"))
 # plot the subset defined above
-    plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
+#    plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
 }
 \keyword{datasets}

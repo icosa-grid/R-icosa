@@ -7,12 +7,22 @@
 "plot3d"
 
 if(requireNamespace("rgl", quietly = TRUE)){
-	# manually copy S3 generic
-	plot3d <- rgl::plot3d
+	# package installed, and not working...
+	if(rgl::rgl.useNULL()){
+		# manually create S3 generic
+		plot3d <-function(x,...){
+			UseMethod("plot3d")
+		}
+
+	# rgl is available to be called
+	}else{
+		# manually copy S3 generic
+		plot3d <- rgl::plot3d
+	}
+
 }else{
 	# manually create S3 generic
 	plot3d <-function(x,...){
-		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 		UseMethod("plot3d")
 	}
 }
@@ -40,67 +50,76 @@ if(requireNamespace("rgl", quietly = TRUE)){
 #' # create a hexagonal grid
 #'     g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'     plot3d(g, col="blue")
+#' #   plot3d(g, col="blue")
 #' # make a subset to select faces
 #'    subG <- subset(g, c("F5", "F2"))
 #' # plot the subset defined above
-#'     plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
+#' #    plot3d(subG, type="f", col=c("orange"), add=TRUE, lwd=1)
 #' @rdname plot3d
 #' @exportS3Method rgl::plot3d trigrid
 #' @exportS3Method plot3d trigrid
 #' @export plot3d.trigrid
 plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, ...){
+	# package not installed
+	if(!requireNamespace("rgl", quietly = TRUE)){
+		stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+	}
+
+	# package installed and it is actually working
+	if(!rgl::rgl.useNULL()){
 	
-	#create new plot?
-	if(add==FALSE)
-	{
-		#checking plotting
-		rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
-		
-		#default sphere plotting
-		if(is.null(sphere)){
-			#get the radius
-			fc<-apply(x@vertices[x@faces[1,],],2,mean)-x@center
-			rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-15
-			blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
-		}else{
-			if(sphere){
-				blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
+		#create new plot?
+		if(add==FALSE)
+		{
+			#checking plotting
+			rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
+			
+			#default sphere plotting
+			if(is.null(sphere)){
+				#get the radius
+				fc<-apply(x@vertices[x@faces[1,],],2,mean)-x@center
+				rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-15
+				blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
+			}else{
+				if(sphere){
+					blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
+				}
 			}
 		}
-	}
-	
-	
-	if(type=="p")
-	{
-		#single point
-		if(length(x@vertices)==3)
-		{
-			rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3],...)
-		}else{
-			rgl::points3d(x@vertices, ...)
-		}
-	}
 		
-	if(type=="l")
-	{
-		lines3d(x, ...)
+		
+		if(type=="p")
+		{
+			#single point
+			if(length(x@vertices)==3)
+			{
+				rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3],...)
+			}else{
+				rgl::points3d(x@vertices, ...)
+			}
+		}
+			
+		if(type=="l")
+		{
+			lines3d(x, ...)
+		}
+		
+		if(type=="f")
+		{
+			faces3d(x,...)
+		}
+		
+		if(type=="n"){
+		
+		}
+		# guides
+		if(guides){
+			guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
+		}
+		
+	}else{
+		message("Your rgl installation is not working.")
 	}
-	
-	if(type=="f")
-	{
-		faces3d(x,...)
-	}
-	
-	if(type=="n"){
-	
-	}
-	# guides
-	if(guides){
-		guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
-	}
-	
-	
 }
 
 #' 3d plotting of an icosahedral grid or its subset
@@ -110,72 +129,81 @@ plot3d.trigrid <- function(x, type=c("l"),sphere=NULL,  add=FALSE, guides=TRUE, 
 #' @exportS3Method plot3d hexagrid
 #' @export plot3d.hexagrid
 plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALSE, guides=TRUE, ...){
-	#create new plot?
-	if(add==FALSE)
-	{
-		#empty plotting plotting
-		rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
-		
-		#default sphere plotting
-		if(is.null(sphere)){
-			fVect<-x@faces[2,!is.na(x@faces[2,])]
-			#get the radius
-			fc<-apply(x@vertices[fVect,],2,mean)-x@center
-			rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-10
-			blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
-		}else{
-			if(sphere){
-				blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
+	if(!requireNamespace("rgl", quietly = TRUE)){
+		stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+	}
+	
+	# prevent access to rgl if it is not working.
+	if(!rgl::rgl.useNULL()){
+
+		#create new plot?
+		if(add==FALSE)
+		{
+			#empty plotting plotting
+			rgl::plot3d(x@vertices, type="n", box=FALSE, axes=FALSE, xlab="", ylab="", zlab="")
+			
+			#default sphere plotting
+			if(is.null(sphere)){
+				fVect<-x@faces[2,!is.na(x@faces[2,])]
+				#get the radius
+				fc<-apply(x@vertices[fVect,],2,mean)-x@center
+				rad<-sqrt(fc[1]^2+fc[2]^2+fc[3]^2)-10
+				blankSphere(x@center[1],x@center[2], x@center[3], radius = rad, color ="white", ng=200, box=FALSE, axes=FALSE)
+			}else{
+				if(sphere){
+					blankSphere(x@center[1],x@center[2], x@center[3], radius = sphere, color ="white", ng=200, box=FALSE, axes=FALSE)
+				}
 			}
 		}
-	}
-	
-	
-	if(type=="p")
-	{
-		#single point
-		if(length(x@vertices)==3)
-		{
-			rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3], col=color,...)
-		}else{
-			rgl::points3d(x@vertices, col=color, ...)
-		}
-	}
 		
-	if(type=="l")
-	{
-		lines3d(x, ...)
-	}
-	
-	if(type=="f")
-	{
-		faces3d(x,...)
-	}
-	
-	if(type=="c")
-	{
-		#single point
-		if(length(x@faceCenters)==3)
+		
+		if(type=="p")
 		{
-			rgl::points3d(x=x@faceCenters[1],y=x@faceCenters[2],z=x@faceCenters[3], col=color, ...)
-		}else{
-			rgl::points3d(x@faceCenters, col=color, ...)
+			#single point
+			if(length(x@vertices)==3)
+			{
+				rgl::points3d(x=x@vertices[1],y=x@vertices[2],z=x@vertices[3], col=color,...)
+			}else{
+				rgl::points3d(x@vertices, col=color, ...)
+			}
 		}
+			
+		if(type=="l")
+		{
+			lines3d(x, ...)
+		}
+		
+		if(type=="f")
+		{
+			faces3d(x,...)
+		}
+		
+		if(type=="c")
+		{
+			#single point
+			if(length(x@faceCenters)==3)
+			{
+				rgl::points3d(x=x@faceCenters[1],y=x@faceCenters[2],z=x@faceCenters[3], col=color, ...)
+			}else{
+				rgl::points3d(x@faceCenters, col=color, ...)
+			}
+		}
+		
+		if(type=="t")
+		{
+			rgl::text3d(x@faceCenters, texts=rownames(x@faceCenters),col=color, ...)
+		}
+		
+		if(type=="n"){
+		
+		}
+		if(guides){
+			guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
+		}
+		
+	}else{
+		message("Your rgl installation is not working.")
 	}
-	
-	if(type=="t")
-	{
-		rgl::text3d(x@faceCenters, texts=rownames(x@faceCenters),col=color, ...)
-	}
-	
-	if(type=="n"){
-	
-	}
-	if(guides){
-		guides3d(col="green", origin=x@center, radius=x@r, lwd=2)
-	}
-	
-	
 }
 
 #' Methods of 3d line plotting
@@ -196,16 +224,28 @@ plot3d.hexagrid <- function(x, type=c("l"),sphere=NULL, color="gray70", add=FALS
 #' # create a hexagonal grid
 #'   g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'   lines3d(g, col="blue")
+#' #  lines3d(g, col="blue")
 #' @rdname lines3d
 "lines3d"
 if(requireNamespace("rgl", quietly = TRUE)){
-	setGeneric("lines3d", def=rgl::lines3d, package="rgl")
+	# package installed, and it is working
+	if(!rgl::rgl.useNULL()){
+		setGeneric(
+			name="lines3d",
+			def=function(x,y=NULL,z=NULL, ...){
+				standardGeneric("lines3d")
+			}
+		)
+
+	# package is working, use its generic
+	}else{
+		setGeneric("lines3d", def=rgl::lines3d, package="rgl")
+	}
+	
 }else{
 	setGeneric(
 		name="lines3d",
 		def=function(x,y=NULL,z=NULL, ...){
-			if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 			standardGeneric("lines3d")
 		}
 	)
@@ -219,22 +259,31 @@ setMethod(
 	"lines3d",
 	signature="trigrid",
 	definition=function(x, arcs=FALSE, ...){
-		v<-x@skeleton$v
-		e<-x@skeleton$e[x@skeleton$aE,]
-		
-		#create edgeMat with a simple Rccp function
-		edgeMat<-.Call(Cpp_icosa_edgeMatTri_, v=v, e=e)
-		
-		# get the list of additional arguments
-		newArgs<-list(...)
-		
-		
-		if(prod(x@tessellation)<16 & arcs){
-			res<-10
-			edgeMat<-.Call(Cpp_icosa_expandEdges_, edgeMat, x@center, res)
+	
+		# rgl not installed, quit immediately
+		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+
+		# prevent access to rgl if it is not working.
+		if(!rgl::rgl.useNULL()){
+			v<-x@skeleton$v
+			e<-x@skeleton$e[x@skeleton$aE,]
+			
+			#create edgeMat with a simple Rccp function
+			edgeMat<-.Call(Cpp_icosa_edgeMatTri_, v=v, e=e)
+			
+			# get the list of additional arguments
+			newArgs<-list(...)
+			
+			
+			if(prod(x@tessellation)<16 & arcs){
+				res<-10
+				edgeMat<-.Call(Cpp_icosa_expandEdges_, edgeMat, x@center, res)
+			}
+			edgeMatExp<-edgeMat
+			rgl::segments3d(x=edgeMatExp[,1],y=edgeMatExp[,2],z=edgeMatExp[,3], ...)
+		}else{
+			message("Your rgl installation is not working.")			
 		}
-		edgeMatExp<-edgeMat
-		rgl::segments3d(x=edgeMatExp[,1],y=edgeMatExp[,2],z=edgeMatExp[,3], ...)
 	}
 )
 
@@ -256,14 +305,14 @@ setMethod(
 #' # create a hexagonal grid
 #'     g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'     faces3d(g)
+#' # faces3d(g)
 #' @exportMethod faces3d
 #' @rdname faces3d
 setGeneric(
 	name="faces3d",
 	package="icosa",
 	def=function(x,...){
-		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+		
 		standardGeneric("faces3d")
 		
 	}
@@ -277,15 +326,22 @@ setMethod(
 	"faces3d",
 	signature="trigrid",
 	definition=function(x, ...){
+		# not to user if rgl is not installed
+		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 		
-		v<-x@skeleton$v
-		f<-x@skeleton$f[as.logical(x@skeleton$aF),1:3]
+		# rgl is installed but not workign
+		if(!rgl::rgl.useNULL()){
 		
-		#create edgeMat with a simple Rccp function
-		triMat<- .Call(Cpp_icosa_triMatTri_, v, f)
-		
-		rgl::triangles3d(x=triMat[,1],y=triMat[,2],z=triMat[,3],...)
+			v<-x@skeleton$v
+			f<-x@skeleton$f[as.logical(x@skeleton$aF),1:3]
 			
+			#create edgeMat with a simple Rccp function
+			triMat<- .Call(Cpp_icosa_triMatTri_, v, f)
+			
+			rgl::triangles3d(x=triMat[,1],y=triMat[,2],z=triMat[,3],...)
+		}else {
+			message("Your rgl installation is not working.")
+		}	
 	}
 )
 
@@ -296,19 +352,27 @@ setMethod(
 	"faces3d",
 	signature="hexagrid",
 	definition=function(x,...){
-		v<-x@skeleton$plotV
-		f<-x@skeleton$f[as.logical(x@skeleton$aSF),1:3]
+		# not to user if rgl is not installed
+		if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
 		
-	#	f2<-f[order(f[,1]),]
-	#	
-	#	f2<-unique(f2)
-		
-		#create edgeMat with a simple Rccp function
-		triMat<- .Call(Cpp_icosa_triMatTri_, v, f)
-		
-		rgl::triangles3d(x=triMat[,1],y=triMat[,2],z=triMat[,3],...)
+		# rgl is installed but not workign
+		if(!rgl::rgl.useNULL()){
+
+			v<-x@skeleton$plotV
+			f<-x@skeleton$f[as.logical(x@skeleton$aSF),1:3]
+			
+		#	f2<-f[order(f[,1]),]
+		#	
+		#	f2<-unique(f2)
+			
+			#create edgeMat with a simple Rccp function
+			triMat<- .Call(Cpp_icosa_triMatTri_, v, f)
+			
+			rgl::triangles3d(x=triMat[,1],y=triMat[,2],z=triMat[,3],...)
 	
-	
+		}else {
+			message("Your rgl installation is not working.")
+		}	
 	}
 )
 
@@ -332,9 +396,9 @@ setMethod(
 #' # create a hexagonal grid
 #' g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#' lines3d(g, guides=FALSE)
+#' # lines3d(g, guides=FALSE)
 #' # labels
-#' gridlabs3d(g)
+#' # gridlabs3d(g)
 #' @exportMethod gridlabs3d
 #' @rdname gridlabs3d
 setGeneric(
@@ -352,27 +416,30 @@ setMethod(
 	"gridlabs3d",
 	signature="trigrid",
 	definition=function(gridObj,type="f",...){
-		
-		# vertex names
-		if("v"%in%type){
-			rgl::text3d(texts=rownames(gridObj@vertices), gridObj@vertices*1.005,...)
-		}
-		
-		
-		if("f"%in%type){
-			rgl::text3d(texts=rownames(gridObj@faceCenters), gridObj@faceCenters*1.005,...)
-		}
-		
-		if("e"%in%type){
-			#the coordinates
-			coords<-apply(gridObj@edges,1,function(x){
-				apply(gridObj@vertices[x,], 2, mean)
-			})
+		# rgl is installed but not workign
+		if(!rgl::rgl.useNULL()){
+			# vertex names
+			if("v"%in%type){
+				rgl::text3d(texts=rownames(gridObj@vertices), gridObj@vertices*1.005,...)
+			}
 			
-			rgl::text3d(t(coords)*1.005, texts=rownames(gridObj@edges),...)
+			
+			if("f"%in%type){
+				rgl::text3d(texts=rownames(gridObj@faceCenters), gridObj@faceCenters*1.005,...)
+			}
+			
+			if("e"%in%type){
+				#the coordinates
+				coords<-apply(gridObj@edges,1,function(x){
+					apply(gridObj@vertices[x,], 2, mean)
+				})
+				
+				rgl::text3d(t(coords)*1.005, texts=rownames(gridObj@edges),...)
+			}
+	
+		}else {
+			message("Your rgl installation is not working.")
 		}
-	
-	
 	}
 )
 	
@@ -381,27 +448,30 @@ setMethod(
 	"gridlabs3d",
 	signature="hexagrid",
 	definition=function(gridObj,type="f",...){
-		
-		# vertex names
-		if("v"%in%type){
-			rgl::text3d(texts=rownames(gridObj@vertices), gridObj@vertices*1.005,...)
-		}
-		
-		
-		if("f"%in%type){
-			rgl::text3d(texts=rownames(gridObj@faceCenters), gridObj@faceCenters*1.005,...)
-		}
-		
-		if("e"%in%type){
-			#the coordinates
-			coords<-apply(gridObj@edges,1,function(x){
-				apply(gridObj@vertices[x,], 2, mean)
-			})
+		# rgl is installed and working
+		if(!rgl::rgl.useNULL()){
+			# vertex names
+			if("v"%in%type){
+				rgl::text3d(texts=rownames(gridObj@vertices), gridObj@vertices*1.005,...)
+			}
 			
-			rgl::text3d(t(coords)*1.005, texts=rownames(gridObj@edges),...)
+			
+			if("f"%in%type){
+				rgl::text3d(texts=rownames(gridObj@faceCenters), gridObj@faceCenters*1.005,...)
+			}
+			
+			if("e"%in%type){
+				#the coordinates
+				coords<-apply(gridObj@edges,1,function(x){
+					apply(gridObj@vertices[x,], 2, mean)
+				})
+				
+				rgl::text3d(t(coords)*1.005, texts=rownames(gridObj@edges),...)
+			}
+	
+		}else {
+			message("Your rgl installation is not working.")
 		}
-	
-	
 	}
 )
 

@@ -30,7 +30,7 @@ This function will display the names of vertices, faces and edges on 3d plots.
 # create a hexagonal grid
 g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-lines3d(g, guides=FALSE)
+# lines3d(g, guides=FALSE)
 # labels
-gridlabs3d(g)
+# gridlabs3d(g)
 }

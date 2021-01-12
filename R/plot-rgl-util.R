@@ -44,13 +44,13 @@ blankSphere <- function (x, y=NULL, z=NULL, res=100, radius = authRadius, color=
 #' # create a hexagonal grid
 #'   g <- hexagrid(c(2,2))
 #' # plot the grid in 3d space
-#'	 plot3d(g, guides=FALSE)
+#' # plot3d(g, guides=FALSE)
 #' # plot the rotational axis in blue
-#'   guides3d(axis=2, polgrid=NULL, col="blue")
+#' # guides3d(axis=2, polgrid=NULL, col="blue")
 #' # plot the polar grid at 10 degree resolution
-#'   guides3d(axis=NULL, polgrid=c(10,10), col="red")
+#' # guides3d(axis=NULL, polgrid=c(10,10), col="red")
 #' # plot some coordinates
-#'   guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
+#' # guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
 #' @export
 guides3d <- function(axis=1.5, polgrid=c(30,30), textPG=FALSE, res=1,  origin=c(0,0,0), radius=authRadius, drad=1.1, ...){
 	if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")

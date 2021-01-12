@@ -1,10 +1,10 @@
 ---
-title: "Introduction to the R package 'icosa' v0.10.0 for global triangular and hexagonal gridding"
+title: "Introduction to the R package 'icosa' v0.10.1 for global triangular and hexagonal gridding"
 author: "Adam T. Kocsis"
 date: '`r Sys.Date()`'
 output: pdf_document
 vignette: >
-  %\VignetteIndexEntry{Introduction to the R package 'icosa' v0.10.0 for global triangular and hexagonal gridding}
+  %\VignetteIndexEntry{Introduction to the R package 'icosa' v0.10.1 for global triangular and hexagonal gridding}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,7 +20,7 @@ knit_hooks$set(rgl = hook_rgl)
 ```
 # 1. Introduction
 
-The purpose of this vignette is to demonstrate the basic usage of the ``icosa`` package, explain object structures and basic functionalities. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point coordinate data. This is just a brief introduction to the package's capabilities. The complete documentation of the package, and relevant tutorials will be posten on the evolv-ED blog (http://www.evolv-ed.net). Previous versions of this document are available at the package's GitHub repository (https://github.com/adamkocsis/icosa/_archive/vignettes).
+The purpose of this vignette is to demonstrate the basic usage of the ``icosa`` package, explain object structures and basic functionalities. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point coordinate data. This is just a brief introduction to the package's capabilities. The complete documentation of the package, and relevant tutorials will be posten on the evolv-ED blog (http://www.evolv-ed.net). Previous versions of this document are available at the package's GitHub repository (https://github.com/adamkocsis/icosa/tree/master/_archive/vignettes).
 
 # 2. The grids
 
@@ -180,9 +180,7 @@ hLow <- hexagrid(c(4,4), sp=TRUE)
 plot(hLow)
 ```
 
-Here are some additional examples of projections using the World Borders Dataset (2) that can be accessed in the ``SpatialPolygonsDataframe`` format using the following chunk of code:
-
-Here are some additional examples of projections using the 'z1' resolution of landy polygons from the OSM archive (2) that can be accessed in the ``SpatialPolygons`` format using the following chunk of code. 
+Here are some additional examples of projections using the 'z1' resolution of landy polygons from the OSM archive that can be accessed in the ``SpatialPolygons`` format using the following chunk of code. 
 
 ```{r tri23, plot=TRUE,dev='png',dpi=300,echo=TRUE, results='hide'}
 # use the rgdal package
@@ -463,7 +461,6 @@ The 'icosa' package development is part of a Deutsche Forschungsgemeinschaft pro
 # References
 
 (1) Moritz, H. 2000. Geodetic Reference System 1980. Journal of Geodesy, 74, 128-162.
-(2) http://openstreetmapdata.com/
-(3) http://www.worldclim.org/
+
 
 

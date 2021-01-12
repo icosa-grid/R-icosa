@@ -1,5 +1,11 @@
 # Change log
 
+## [0.10.1 (build 1017)] - CRAN submission - 2021-01-12
+### Changed
+- fixed warnings when the spherical datum of the grids were loaded
+- added checks for the suggested rgl package
+- minor documentation changes
+
 ## [0.10.0 (build 1016)] - CRAN submission - 2020-02-15
 ### Changed
 - vignette was cut for performance optimization

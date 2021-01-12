@@ -8,7 +8,9 @@
 \alias{[,trigrid,ANY,ANY-method}
 \alias{subset,gridlayer-method}
 \title{Subsetting an icosahedral grid or data layers organized with them}
-\format{An object of class \code{standardGeneric} of length 1.}
+\format{
+An object of class \code{standardGeneric} of length 1.
+}
 \usage{
 subset
 
@@ -56,10 +58,10 @@ logicalSub<-sample(c(TRUE,FALSE), nrow(g@faces), replace=TRUE)
 subG3 <- g[logicalSub]
 
 #plot the subset in 3d space
-plot3d(subG3)
+# plot3d(subG3)
 
 # previously mentioned case around the dateline
 gDateLine<-g[c(lomax=-150, lomin=150)]
-plot3d(gDateLine)
+# plot3d(gDateLine)
 }
 \keyword{datasets}

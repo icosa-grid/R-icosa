@@ -13,7 +13,9 @@
 \alias{lines3d,SpatialPolygons-method}
 \alias{lines3d,SpatialPolygonsDataFrame-method}
 \title{Methods of 3d line plotting}
-\format{An object of class \code{standardGeneric} of length 1.}
+\format{
+An object of class \code{nonstandardGenericFunction} of length 1.
+}
 \usage{
 lines3d
 
@@ -58,6 +60,6 @@ The function is built on the openGL renderer of the R package \code{rgl}, which 
 # create a hexagonal grid
   g <- hexagrid(c(2,2))
 # plot the grid in 3d space
-  lines3d(g, col="blue")
+#  lines3d(g, col="blue")
 }
 \keyword{datasets}

@@ -5,7 +5,9 @@
 \alias{rotate}
 \alias{rotate,trigrid-method}
 \title{Rotation of \code{\link{trigrid}} and \code{\link{hexagrid}} objects}
-\format{An object of class \code{standardGeneric} of length 1.}
+\format{
+An object of class \code{standardGeneric} of length 1.
+}
 \usage{
 rotate
 

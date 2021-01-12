@@ -6,7 +6,9 @@
 \alias{resample,Raster,trigrid-method}
 \alias{resample,facelayer,trigrid-method}
 \title{Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.}
-\format{An object of class \code{standardGeneric} of length 1.}
+\format{
+An object of class \code{standardGeneric} of length 1.
+}
 \usage{
 resample
 

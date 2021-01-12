@@ -239,7 +239,12 @@ setGeneric(
 		"lines3dInt",
 		signature="Line3d",
 		definition=function(x,...){
-			rgl::lines3d(x@coords,...)
+			# rgl is installed and is working
+			if(!rgl::rgl.useNULL()){
+				rgl::lines3d(x@coords,...)
+			}else{
+				message("Your rgl installation is not working.")
+			}
 		}
 	)
 	

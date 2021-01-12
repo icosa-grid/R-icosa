@@ -24,11 +24,11 @@
 #' subG3 <- g[logicalSub]
 #' 
 #' #plot the subset in 3d space
-#' plot3d(subG3)
+#' # plot3d(subG3)
 #' 
 #' # previously mentioned case around the dateline
 #' gDateLine<-g[c(lomax=-150, lomin=150)]
-#' plot3d(gDateLine)
+#' # plot3d(gDateLine)
 #' @rdname subset
 #' @return Subset of the input grid. The class of the original object is retained, the \code{@skeleton} slot contains all previous information.
 #' @exportMethod subset

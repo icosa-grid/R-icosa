@@ -1,7 +1,7 @@
 Package: icosa
 Title: Global Triangular and Penta-Hexagonal Grids Based on Tessellated
     Icosahedra
-Version: 0.10.0
+Version: 0.10.1
 Authors@R: person("Adam T.", "Kocsis", email = "adam.t.kocsis@gmail.com", 
 	role = c("aut", "cre"))
 Collate:
@@ -41,7 +41,7 @@ Description: Employs triangular tessellation to refine icosahedra
     to allow 2D and 3D plotting, use raster data and shapefiles.
 Depends:
     R (>= 3.2.2)
-Date: 2020-02-15
+Date: 2021-01-12
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -52,7 +52,7 @@ Suggests:
     raster,
     rgl
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 LinkingTo: Rcpp
 Imports:
     Rcpp,
@@ -61,6 +61,5 @@ Imports:
     methods,
     stats
 NeedsCompilation: yes
-Packaged: 2020-02-15 20:00:00 UTC; kocsis
 Author: Adam T. Kocsis [aut, cre]
 Maintainer: Adam T. Kocsis <adam.t.kocsis@gmail.com>

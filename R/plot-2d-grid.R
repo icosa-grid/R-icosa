@@ -33,7 +33,6 @@ setMethod(
 			} else{
 				stop("The rgdal package is required to appropriately project this object. ")
 			}
-		
 		}
 	
 		sp::plot(x@sp, ...)

@@ -4,7 +4,8 @@
 \name{tessguide}
 \alias{tessguide}
 \title{Tessellation guide to \code{\link{hexagrid}} objects}
-\format{A \code{data.frame} with 129 observations and 18 variables:
+\format{
+A \code{data.frame} with 129 observations and 18 variables:
 \describe{
 	\item{\code{total}}{The total tessellation of the grid, the number of points inserted between icosahedron vertices along an edge.}
 	\item{\code{level1}}{Level 1 tessellation.}
@@ -24,7 +25,8 @@
 	\item{\code{size}}{The size of the grid in bytes.}
 	\item{\code{size_sp}}{The size of the grid object in bytes, with the 'sp' member.}
 	\item{\code{timeLocate_5000}}{Time to locate 5000 points with an Intel Xeon E-1650 processor in seconds.}
-}}
+}
+}
 \usage{
 tessguide
 }

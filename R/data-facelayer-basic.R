@@ -8,7 +8,7 @@
 #' @examples
 #' g <- trigrid(c(4,4))
 #' fl <- facelayer(g, 1:length(g))
-#' faces3d(fl)
+#' # faces3d(fl)
 #' @exportClass facelayer
 #' @return A \code{facelayer} class object.
 facelayer <- setClass(

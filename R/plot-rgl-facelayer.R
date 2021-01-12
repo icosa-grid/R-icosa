@@ -11,7 +11,10 @@
 #' @rdname plot3d
 #' @export plot3d.facelayer
 plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TRUE, ...){
-	
+	if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+		
+	# rgl is installed and is working
+	if(!rgl::rgl.useNULL()){
 		# default par3d options
 		if(defaultPar3d){
 			rgl::par3d(windowRect = c(50, 60, 800, 800), zoom=0.8)
@@ -40,9 +43,12 @@ plot3d.facelayer <- function(x,type="f",frame=TRUE, guides=TRUE, defaultPar3d=TR
 		#no plotting
 		if(type=="n"){
 		}
-		
-	
+	}else{
+		message("Your rgl installation is not working.")
 	}
+
+	
+}
 
 #' Methods of 3d face plotting.
 #' 
@@ -61,6 +67,11 @@ setMethod(
 	f="faces3d",
 	signature="facelayer",
 	definition= function(x,col="heat",breaks=NULL, inclusive=TRUE, legend=TRUE,  ...){
+	if(!requireNamespace("rgl", quietly = TRUE)) stop("Install the 'rgl' package and reload 'icosa' to use this function.")
+		
+	# rgl is installed and is working
+	if(!rgl::rgl.useNULL()){
+
 		# extract the grid that needs to be plotted:
 		actGrid  <- get(x@grid)
 	#	checkLinkedGrid(actGrid, x)
@@ -378,5 +389,10 @@ setMethod(
 			}
 		}	
 	#	legend3d()
+	
+	}else{
+		message("Your rgl installation is not working.")
+	}
+
 	}
 )

@@ -279,7 +279,7 @@ setMethod(
 			# add the CRS for spatial transformations
 			#supress scientific notation
 			options(scipen=999)
-			.Object@proj4string <- sp::CRS(paste("+proj=longlat +a=", round(radius*1000), " +b=", round(radius*1000), sep=""))
+			.Object@proj4string <- suppressWarnings(sp::CRS(paste("+proj=longlat +a=", round(radius*1000), " +b=", round(radius*1000), sep="")))
 			
 			
 		# extract the skeleton	

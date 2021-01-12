@@ -6,7 +6,9 @@
 \alias{plot,trigrid,ANY-method}
 \alias{plot,facelayer,ANY-method}
 \title{Plot method for the \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} classes}
-\format{An object of class \code{standardGeneric} of length 1.}
+\format{
+An object of class \code{standardGeneric} of length 1.
+}
 \usage{
 plot
 

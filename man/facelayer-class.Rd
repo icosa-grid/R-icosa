@@ -19,5 +19,5 @@ The grids themselves are scaffolds for the assigned data. The data are stored in
 \examples{
 g <- trigrid(c(4,4))
 fl <- facelayer(g, 1:length(g))
-faces3d(fl)
+# faces3d(fl)
 }

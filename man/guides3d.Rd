@@ -48,11 +48,11 @@ The function is built on the openGL renderer of the R package \code{rgl}.
 # create a hexagonal grid
   g <- hexagrid(c(2,2))
 # plot the grid in 3d space
- plot3d(g, guides=FALSE)
+# plot3d(g, guides=FALSE)
 # plot the rotational axis in blue
-  guides3d(axis=2, polgrid=NULL, col="blue")
+# guides3d(axis=2, polgrid=NULL, col="blue")
 # plot the polar grid at 10 degree resolution
-  guides3d(axis=NULL, polgrid=c(10,10), col="red")
+# guides3d(axis=NULL, polgrid=c(10,10), col="red")
 # plot some coordinates
-  guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
+# guides3d(axis=NULL, polgrid=c(30,30), textPG=TRUE, col="orange", cex=1.4)
 }
