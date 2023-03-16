@@ -1,0 +1,15 @@
+pre {
+  background-color: #fffbf0;
+  border: 1px solid #ffeca6;
+}
+
+#toc > .nav a.nav-link.active{
+  background-color: #ffeca6;
+}
+
+.navbar-dark input[type="search"]{
+  background-color: #784e30;
+}
+.navbar-dark .navbar-nav .active > .nav-link {
+  background-color: #784e30;
+}

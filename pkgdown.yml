@@ -1,0 +1,17 @@
+pandoc: 2.9.2.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  icosa_1_installation: icosa_1_installation.html
+  icosa_2_essentials: icosa_2_essentials.html
+  icosa_3_grids: icosa_3_grids.html
+  icosa_4_grid_details: icosa_4_grid_details.html
+  icosa_5_interfacing: icosa_5_interfacing.html
+  icosa_6_grid_bound_data: icosa_6_grid_bound_data.html
+  icosa_7_grid_graph: icosa_7_grid_graph.html
+  icosa_8_3d_plotting: icosa_8_3d_plotting.html
+last_built: 2023-03-16T11:15Z
+urls:
+  reference: https://adamkocsis.github.io/icosa/reference
+  article: https://adamkocsis.github.io/icosa/articles
+
