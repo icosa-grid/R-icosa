@@ -1,0 +1,54 @@
+url: https://adamkocsis.github.io/icosa
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+  bslib:
+    primary: "#f1af09"
+
+navbar:
+  structure:
+    left: [tutorials, reference, internals, howtos]
+    right: [search, github]
+  components:
+    tutorials:
+      text: Tutorials
+      menu:
+        - text: "1. Installation"
+          href: articles/icosa_1_installation.html 
+        - text: "2. Essentials"
+          href: articles/icosa_2_icosa_essentials.html
+        - text: "3. Grid construction"
+          href: articles/icosa_3_grids.html 
+        - text: "4. Grid details"
+          href: articles/icosa_4_grid_details.html 
+        - text: "5. Interfacing with data"
+          href: articles/icosa_5_interfacing.html 
+        - text: "6. Grid-bound data"
+          href: articles/icosa_6_grid_bound_data.html 
+        - text: "7. Grids as graphs"
+          href: articles/icosa_7_grid_graph.html 
+        - text: "8. 3D ploting"
+          href: articles/icosa_8_3d_plotting.html 
+    internals:
+      text: Internals
+      menu: 
+      - href: news/index.html
+        text: Changelog 
+      - href: articles/internals.html
+        text: Internal structure
+    howtos:
+      text: How-to guides on EvolvED
+      href: "https://www.evolv-ed.net/"
+
+
+authors:
+  Adam T. Kocsis:
+    href: "https://palaeobiology.nat.fau.de/people/instructors/kocsis/"
+  Deutsche Forschungsgemeinschaft:
+    href: https://www.dfg.de/en/index.jsp
+    html: <img src='https://www.dfg.de/includes/bausteine/open_graph_de/dfgfallback.jpg' alt='dfg' width='80' />
+  FAU GeoZentrum Nordbayern:
+    href: https://www.gzn.nat.fau.eu/
+    html: <img src='https://www.gzn.nat.fau.de/files/2017/05/cropped-gzn-logo.jpg' alt='geozentrum' width='80' />
+
+

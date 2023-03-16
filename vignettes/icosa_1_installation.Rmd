@@ -1,0 +1,17 @@
+---
+title: "1. Installation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{1. Installation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Stable version
+
+## Installing from CRAN
+
+## Installing from GithUB
+
+# In-development 

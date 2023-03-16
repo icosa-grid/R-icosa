@@ -1,0 +1,18 @@
+---
+title: "3. Grid types and resolutions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{3. Grid types and resolutions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+# Triangular grids
+
+# Hexagonal grids
+
+# Lookup table
+
+# Distortion patterns

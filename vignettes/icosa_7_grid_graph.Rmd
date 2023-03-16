@@ -1,0 +1,15 @@
+---
+title: "7. Grids as graphs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{7. Grids as graphs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# The graph slot
+
+# Neighbouring faces 
+
+# Example operations
+

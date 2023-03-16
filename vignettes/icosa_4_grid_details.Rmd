@@ -1,0 +1,19 @@
+---
+title: "4. Grid details, structure and lower-level operations."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{4. Grid details, structure and lower-level operations.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# The grid as an R object
+
+# Slots
+
+
+# The grid as `sp` and `sf` vector entity
+
+
+
+

@@ -1,0 +1,16 @@
+---
+title: "6. Grid-bound data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{6. Grid-bound data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Basic understanding
+
+# Creating 
+
+
+# Plotting 
+idea

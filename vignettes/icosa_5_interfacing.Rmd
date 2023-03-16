@@ -1,0 +1,12 @@
+---
+title: "5. Interfacing with other data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{5. Interfacing with other data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Location of points
+
+# Occupied faces 

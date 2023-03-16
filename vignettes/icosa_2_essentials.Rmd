@@ -1,0 +1,26 @@
+---
+title: "2. Essentials"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{2. Essentials}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+- Why?
+
+# Creating a grid
+
+- showing the grid
+- hexagrid
+- plotting the 2d-version with sf and with world map
+
+# Example data
+
+- load data from package 
+- locating data
+- tabulating data
+- plotting the data: occupancy and density
+
+
