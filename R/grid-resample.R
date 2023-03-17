@@ -1,7 +1,7 @@
 # Resampling
 # define generic function depending on whether a package namespace is present
-if(requireNamespace("raster", quietly = TRUE)){
-	setGeneric("resample", def=raster::resample)
+if(requireNamespace("terra", quietly = TRUE)){
+	setGeneric("resample", def=terra::resample)
 }else{
 	setGeneric(
 		name="resample",
@@ -14,9 +14,9 @@ if(requireNamespace("raster", quietly = TRUE)){
 
 #' Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.
 #'
-#' The function is used to resolve and resample data stored in \code{RasterLayer}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
+#' The function is used to resolve and resample data stored in \code{SpatRaster}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
 #'
-#' This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[raster:raster]{RasterLayer}}s, the \code{method} argument will be passed to the \code{\link[raster]{resample}} function. 
+#' This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[terra:rast]{SpatRaster}}s, the \code{method} argument will be passed to the \code{\link[terra]{resample}} function. 
 #' @rdname resample
 "resample"
 
@@ -26,21 +26,21 @@ if(requireNamespace("raster", quietly = TRUE)){
 #' @exportMethod resample
 setMethod(
 	"resample",
-	signature=c("Raster", "trigrid"),
-	definition=function(x,y, method="ngb", na.rm=TRUE){
+	signature=c("SpatRaster", "trigrid"),
+	definition=function(x,y, method="near", na.rm=TRUE){
 		
-		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
+		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 		
 		# copy the raster
 		x2<-x
 		
 		#determine up
-		if(y@edgeLength[2]<=max(raster::res(x))*4){
-			up<-round(max(raster::res(x))/y@edgeLength[2]*4)
+		if(y@edgeLength[2]<=max(terra::res(x))*4){
+			up<-round(max(terra::res(x))/y@edgeLength[2]*4)
 			#set the upscaling
-			raster::res(x2)<-raster::res(x)/up
+			terra::res(x2)<-terra::res(x)/up
 			#resample the original raster
-			x3<-raster::resample(x, x2, method)
+			x3<-terra::resample(x, x2, method=method)
 		}else{
 			x3<-x2
 		}
@@ -48,12 +48,12 @@ setMethod(
 		
 		# calculate the coordinates
 		# resolution
-		resX<-(x3@extent@xmax-x3@extent@xmin)/x3@ncols
-		resY<-(x3@extent@ymax-x3@extent@ymin)/x3@nrows
+		resX<-(terra::ext(x3)[2]-terra::ext(x3)[1])/dim(x3)[2]
+		resY<-(terra::ext(x3)[4]-terra::ext(x3)[3])/dim(x3)[1]
 		
 		# coordinates of columns and rows
-		xCoords <- seq(x3@extent@xmin+(resX/2), x3@extent@xmax-resX/2, resX)
-		yCoords <- rev(seq(x3@extent@ymin+(resY/2), x3@extent@ymax-resY/2, resY))
+		xCoords <- seq(terra::ext(x3)[1]+(resX/2), terra::ext(x3)[2]-resX/2, resX)
+		yCoords <- rev(seq(terra::ext(x3)[3]+(resY/2), terra::ext(x3)[4]-resY/2, resY))
 		
 		#table format
 		xVals<-rep(xCoords, length(yCoords))
@@ -64,7 +64,7 @@ setMethod(
 		cells<-locate(y, coords)
 		
 		# the new values in the triangular grid
-		mVal<-tapply(INDEX=cells, X=values(x3), mean, na.rm=na.rm)
+		mVal<-tapply(INDEX=cells, X=terra::values(x3), mean, na.rm=na.rm)
 		
 		return(mVal)
 	}

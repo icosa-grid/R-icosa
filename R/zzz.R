@@ -52,9 +52,11 @@ NULL
 
 # package namespace variables
 	origin<-c(0,0,0)
-	authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
-	meanRadius<-6371.0087714 # mean radius (R1) based on Mortiz, 1980
-	volRadius <-6371.0007900 # radius of sphere of same volume
+#	authRadius<-6371.0071810 # authalic radius (R2) based on Moritz, 1980
+# updated! to confomr with ESRI:37008
+	authRadius<-6370.997 
+#	meanRadius<-6371.0087714 # mean radius (R1) based on Mortiz, 1980
+#	volRadius <-6371.0007900 # radius of sphere of same volume
 
 .onUnload <- function (libpath) {
 	library.dynam.unload("icosa", libpath)

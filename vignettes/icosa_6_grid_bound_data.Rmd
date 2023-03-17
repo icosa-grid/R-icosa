@@ -7,10 +7,17 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Basic understanding
 
-# Creating 
+# Named vectors
+
+$\phi- 1 = \phi -1$
+
+# sf-style data
+ mbu
+# gridlayers
+
+## Creating 
 
 
-# Plotting 
+## Plotting 
 idea

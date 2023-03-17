@@ -10,6 +10,7 @@
 #' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.
 #' 
 #' @param data (\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.
+#' @param out (\code{character}) What shall be the output class? Can be either \code{\link{facelayer}} or \code{logical} (default.)
 #'
 #' @param ... Arguments passed to the class specific methods
 #'
@@ -24,12 +25,14 @@
 #'
 #'	# the facelayer occupied by these points
 #'	randomLayer <- occupied(g, randPoints)
-#'	plot(randomLayer)
-#'	points(randPoints, col="blue", pch="+")
+#'	#plot(randomLayer)
+#'	#points(randPoints, col="blue", pch="+")
 #'	
 #'
 #' @export	
-occupied  <- function(gridObj, data,...){
+occupied  <- function(gridObj, data, out="logical",...){
+
+	if(!out%in%c("logical", "facelayer")) stop("Invalid 'out' argument.")
 	
 	# do spatial transformation if a CRS is present
 	if(methods::.hasSlot(data, "proj4string")){
@@ -57,8 +60,17 @@ occupied  <- function(gridObj, data,...){
 	endObj@values<-rep(FALSE, length(endObj))
 	endObj@values[translNum]<-TRUE
 
-	# get the name of the grid - 
-	endObj@grid<-deparse(substitute(gridObj))
+	# output type can vary
+	if(out=="logical"){
+		logic <- values(endObj)
+		names(logic) <- names(endObj)
+		endObj <- logic
+	}
+
+	if(out=="facelayer"){
+		# get the name of the grid - 
+		endObj@grid<-deparse(substitute(gridObj))
+	}
 	return(endObj)
 
 }
@@ -194,7 +206,7 @@ setMethod(
 	"OccupiedFaces",
 	signature=c("trigrid", "SpatialPolygons"),
 	definition=function(gridObj, data){
-		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
+		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 				
 		borders<-NA
 		
@@ -204,16 +216,16 @@ setMethod(
 		#look these up
 		lineFaces<-OccupiedFaces(gridObj, coordLine)
 		
-		# create a raster from the SpatialPolygons
-		r <-raster::raster()
+		# create a SpatRaster from the SpatialPolygons
+		r <-terra::rast()
 		
 		# set the resolution to that of the grid
-		raster::res(r)<-min(edgelength(gridObj, output="deg"))/4
+		terra::res(r)<-min(edgelength(gridObj, output="deg"))/4
 		
-		#rasterize it
-		data<-raster::rasterize(data,r)
+		#rasterize it - cast it as SpatVector
+		data<-terra::rasterize(terra::vect(data),r)
 				
-		# use the OccupiedFaces method of the raster
+		# use the OccupiedFaces method of the SpatRaster
 		inFaces<-OccupiedFaces(gridObj, data)
 		fl <- inFaces | lineFaces
 		return(fl)
@@ -233,30 +245,44 @@ setMethod(
 )
 
 
+#for sf: fall to SpatialPolygonsDataFrame
+setMethod(
+	"OccupiedFaces",
+	signature=c("trigrid", "sf"),
+	definition=function(gridObj, data){
+		temp<-methods::as(data,"Spatial")
+
+		
+		# this works for spatialpolygons and spatialpolygonsdataframes
+		fl <- OccupiedFaces(gridObj, temp)
+		return(fl)
+	}
+)
+
 # for spatial points
 setMethod(
 	"OccupiedFaces",
-	signature=c("trigrid", "RasterLayer"),
+	signature=c("trigrid", "SpatRaster"),
 	definition=function(gridObj, data){
-		if(!requireNamespace("raster", quietly = TRUE)) stop("Install the 'raster' package to run this function.")
+		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 		
 		borders<-NA
 		resGrid<-mean(edgelength(gridObj,"deg"))
 		# if the default resolution of the raster is too coarse for the trigrid
-		if(resGrid<(4*raster::res(data)[1]) | resGrid<(4*raster::res(data)[2])){
+		if(resGrid<(4*terra::res(data)[1]) | resGrid<(4*terra::res(data)[2])){
 			#upscale
 			r<-data
-			raster::res(r)<-resGrid/4
-			data<-raster::resample(data, r, "ngb")
+			terra::res(r)<-resGrid/4
+			data<-terra::resample(data, r, method="near")
 		}
 		
-		xmin<-data@extent@xmin
-		xmax<-data@extent@xmax
-		ymin<-data@extent@ymin
-		ymax<-data@extent@ymax
+		xmin<-terra::ext(data)[1]
+		xmax<-terra::ext(data)[2]
+		ymin<-terra::ext(data)[3]
+		ymax<-terra::ext(data)[4]
 		
-		xres<-raster::res(data)[1]
-		yres<-raster::res(data)[2]
+		xres<-terra::res(data)[1]
+		yres<-terra::res(data)[2]
 		
 		xs<-seq(xmin+xres/2, xmax-xres/2,xres)
 		ys<-seq(ymax-yres/2, ymin+yres/2,-yres)
@@ -267,7 +293,7 @@ setMethod(
 		
 		cells<-locate(gridObj, mat)
 		
-		occup<-tapply(X=raster::values(data), INDEX=cells, function(x){sum(!is.na(x))})
+		occup<-tapply(X=terra::values(data), INDEX=cells, function(x){sum(!is.na(x))})
 		occupiedCells<-names(occup)[occup>0]
 		
 		fl<-rep(FALSE, length(gridObj))

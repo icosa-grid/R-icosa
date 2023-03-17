@@ -2,7 +2,7 @@
 #' 
 #' The function applies different resampling algorithms. Currently there are only two implemented methods, one for upscaling and one for downscaling. The downscaling method "average" will tabluate all face centers from the high resolution grid that fall on a coarse resolution cell and average them. The upscaling method "ebaa" (edge breakpoint area approximation) will estimate the areas covered by the high resolution cells using the number of edge breakpoints.
 #' 
-#' @param x (\code{\link[raster:raster]{RasterLayer}}, \code{\link{facelayer}}) Object to resample.  
+#' @param x (\code{\link[terra:rast]{SpatRaster}}, \code{\link{facelayer}}) Object to resample.  
 #' 
 #' @param y  (\code{\link{hexagrid}} or \code{\link{trigrid}}) Object describing the target structure.
 #' @param res (\code{numeric}) Value indicating the precision of area estimation during the upscaling (\code{facelayer}-method). In case the \code{"ebaa"} method is chosen, the variable indicate the number of breaking points on an edge.

@@ -115,7 +115,7 @@ setMethod(
 #' Shorthand to the \code{\link[icosa]{subset}} function.
 #' 
 #' @param x (\code{\link{facelayer}}) The object to be subsetted.
-#' @param i (\code{logical}, \code{numeric} nor \code{extent}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
+#' @param i (\code{logical}, \code{numeric} or \code{\link[raster:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
 #' @exportMethod "["
 #' @return The extraction methods return \code{\link{facelayer}}-class objects.
 #' @rdname extract-methods
@@ -132,15 +132,16 @@ setMethod(
 #' @rdname extract-methods
 setMethod(
 	"[",
-	signature=c("gridlayer","Extent", "missing"),
+	signature=c("gridlayer","SpatExtent", "missing"),
 	definition=function(x,i){
 		#check the extent object
+		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 		
 		actGrid <- get(x@grid)
 		pol <- CarToPol(actGrid@faceCenters, origin=actGrid@center)
 		
-		boolLong<-pol[,1]>=i@xmin & pol[,1]<=i@xmax
-		boolLat<-pol[,2]>=i@ymin & pol[,2]<=i@ymax
+		boolLong<-pol[,1]>=terra::ext(i)[1] & pol[,1]<=terra::ext(i)[2]
+		boolLat<-pol[,2]>=terra::ext(i)[3] & pol[,2]<=terra::ext(i)[4]
 		
 		nm<-rownames(pol)[boolLong & boolLat]
 	

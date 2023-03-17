@@ -1,5 +1,17 @@
 # Change log
 
+## [0.11 (build 1017)] - CRAN submission - 2023-03-x
+
+### Added
+- new example data
+- occupied() - support for sf-type input
+
+### Changed
+- Changed basic reference from 1980 authalic sphere to ESRI:37008 
+- omitted suggested package 'raster' and replaced it with 'terra'
+- the occupied() function no by default returns a named vector
+
+
 ## [0.10.1 (build 1017)] - CRAN submission - 2021-01-12
 ### Changed
 - fixed warnings when the spherical datum of the grids were loaded

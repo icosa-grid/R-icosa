@@ -1,6 +1,6 @@
 
-if(requireNamespace("raster", quietly = TRUE)){
-	setGeneric("rotate", def=raster::rotate)
+if(requireNamespace("terra", quietly = TRUE)){
+	setGeneric("rotate", def=terra::rotate)
 }else{
 	setGeneric(
 		name="rotate",

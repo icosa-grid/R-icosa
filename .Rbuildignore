@@ -4,3 +4,9 @@ README.md
 _archive
 README.Rmd
 tests
+vignettes/icosa_3_grids.Rmd
+vignettes/icosa_4_grid_details.Rmd
+vignettes/icosa_5_interfacing.Rmd
+vignettes/icosa_6_grid_bound_data.Rmd
+vignettes/icosa_7_grid_graph.Rmd
+vignettes/icosa_8_3d_plotting.Rmd

@@ -47,7 +47,9 @@ setMethod(
 		if(length(radius)!=1 | !is.numeric(radius)) stop("Invalid \'radius\' value.")
 		
 		#essential! check whether the long is first and lat is second
-		if(max(abs(longLat[,2]))>90) stop("Latitudinal data should be in the second column of the matrix.")
+#		if(max(abs(longLat[,2]))>=90) stop("Latitudinal data should be in the second column of the matrix.")
+		# rounding issues might happen
+		if(max(abs(longLat[,2]))>=90.01) stop(paste("Found latitude: ", max(abs(longLat[,2]))))
 		
 		xVar<-cos(longLat[,2]/180*pi)*cos(longLat[,1]/180*pi)
 		yVar<-cos(longLat[,2]/180*pi)*sin(longLat[,1]/180*pi)
