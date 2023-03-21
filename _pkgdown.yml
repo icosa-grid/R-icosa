@@ -16,7 +16,7 @@ navbar:
         - text: "1. Installation"
           href: articles/icosa_1_installation.html 
         - text: "2. Essentials"
-          href: articles/icosa_2_icosa_essentials.html
+          href: articles/icosa_2_essentials.html
         - text: "3. Grid construction"
           href: articles/icosa_3_grids.html 
         - text: "4. Grid details"
