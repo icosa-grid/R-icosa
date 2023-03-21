@@ -4,6 +4,10 @@ README.md
 _archive
 README.Rmd
 tests
+docs
+_pkgdown.yml
+pkgdown
+index.*
 vignettes/icosa_3_grids.Rmd
 vignettes/icosa_4_grid_details.Rmd
 vignettes/icosa_5_interfacing.Rmd

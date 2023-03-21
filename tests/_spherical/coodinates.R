@@ -1,21 +1,27 @@
-library(testthat)
 library(icosa)
-library(restools)
+library(tinytest)
 
-setwd("/mnt/sky/Dropbox/WorkSpace/2014-09-08_icosa/icosa")
+setwd(file.path(Sys.getenv("WorkSpace"), "/2014-09-08_icosa/icosa"))
 
 set.seed(0)
-xy <- rpsphere(30, output="polar")
-xyz <- rpsphere(30, output="cartesian")
+xy <- rpsphere(300, output="polar")
+xyz <- rpsphere(300, output="cartesian")
 
 # simple conversion tests
-test_dir("tests/generic/conversions/", reporter=SummaryReporter)
+run_test_file("tests/generic/conversions/test_CarToPol_methods.R")
+run_test_file("tests/generic/conversions/test_PolToCar_methods.R")
 	
 # location 
 # trigrid 
 gr <- trigrid(c(4,4))
-test_dir("tests/generic/locate/", reporter=SummaryReporter)
+run_test_file("tests/generic/locate/test_locate_dispatch.R")
 
 gr <- hexagrid(c(4,4))
-test_dir("tests/generic/locate/", reporter=SummaryReporter)
+run_test_file("tests/generic/locate/test_locate_dispatch.R")
+
+# surfacecentroids
+
+# basic testing
+run_test_file("tests/generic/surfacecentroid/test_surfacecentroids.R")
+
 

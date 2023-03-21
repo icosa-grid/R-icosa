@@ -4,18 +4,19 @@
 \alias{lines,trigrid-method}
 \title{Lines method for the \code{trigrid} and \code{hexagrid} classes}
 \usage{
-\S4method{lines}{trigrid}(x, projargs = NULL, ...)
+\S4method{lines}{trigrid}(x, crs = NULL, ...)
 }
 \arguments{
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.}
 
-\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
-
 \item{...}{Arguments passed to the \code{\link[sp:panel]{sp.lines}} method.}
+
+\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
 }
 \value{
 The function has no return value.
 }
 \description{
-This function will invoke the \code{\link[sp:panel]{sp.lines}} method of the \code{\link[sp]{SpatialPolygons}} class.
+This function will invoke the method of the \code{\link[sp]{SpatialPolygons}} class.
+This function will invoke the \code{lines} method of the \code{\link[sf:sf]{sf}} or the  \code{\link[sp]{SpatialPolygons}} class.
 }

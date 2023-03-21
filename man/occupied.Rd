@@ -4,12 +4,14 @@
 \alias{occupied}
 \title{Faces occupied by the specified object}
 \usage{
-occupied(gridObj, data, ...)
+occupied(gridObj, data, out = "logical", ...)
 }
 \arguments{
 \item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.}
 
 \item{data}{(\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.}
+
+\item{out}{(\code{character}) What shall be the output class? Can be either \code{\link{facelayer}} or \code{logical} (default.)}
 
 \item{...}{Arguments passed to the class specific methods}
 }
@@ -31,8 +33,8 @@ randPoints <- rpsphere(100,output="polar")
 
 # the facelayer occupied by these points
 randomLayer <- occupied(g, randPoints)
-plot(randomLayer)
-points(randPoints, col="blue", pch="+")
+#plot(randomLayer)
+#points(randPoints, col="blue", pch="+")
 
 
 }

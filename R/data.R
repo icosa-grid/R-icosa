@@ -23,4 +23,4 @@
 #' 	\item{\code{size_sp}}{The size of the grid object in bytes, with the 'sp' member.}
 #' 	\item{\code{timeLocate_5000}}{Time to locate 5000 points with an Intel Xeon E-1650 processor in seconds.}
 #' }
-"tessguide"
+"hexguide"

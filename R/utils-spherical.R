@@ -378,7 +378,7 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #'	# generate some random points
 #'	allData <- rpsphere(1000)
 #'	# select only a subset
-#'	points<-allData[allData[,2]>1500,]
+#'	points<-allData[allData[,3]>1500,]
 #' # transform to 2d
 #'  points2 <- CarToPol(points, norad=TRUE)
 #'	# the spherical centroid
@@ -387,7 +387,7 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #'	
 #'	#3d plot
 #'	plot(points2, xlim=c(-180, 180), ylim=c(-90, 90))
-#'	points(sc[1], sc[2], col="red", cex=5)
+#'	points(sc[1], sc[2], col="red", cex=5, pch=3)
 #'
 #' @exportMethod surfacecentroid
 #' @rdname surfacecentroid
@@ -470,24 +470,19 @@ setMethod(
 	"surfacecentroid",
 	signature=c(x="SpatialPoints"),
 	function(x,...){
-		# if it has a proj4
-		if(methods::.hasSlot(x, "proj4string")){
-			# and it's not NA
-			if(!is.na(x@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					x<-sp::spTransform(x, sp::CRS("+proj=longlat"))@coords
-				} else{
-					stop("The 'rgdal' package is required to appropriately project this object. ")
-				}
-			}else{
-				x <- x@coords 
-			}
-		}else{
-			x <- x@coords 
+		# take it as it is, make it sf
+		sfPoints <- sf::st_as_sf(x)
+			
+		if(!is.na(sf::st_crs(sfPoints))){
+			# translate coordinates to WGS84
+			sfPoints <- sf::st_transform(sfPoints, "EPSG:4326")
 		}
 
-		locate(x, ...)
+		# separate the coordinates
+		coords <- sf::st_coordinates(sfPoints)
+	
+		# the matrix method	
+		surfacecentroid(coords, ...)
 	}
 )
 

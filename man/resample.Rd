@@ -3,7 +3,7 @@
 \docType{data}
 \name{resample}
 \alias{resample}
-\alias{resample,Raster,trigrid-method}
+\alias{resample,SpatRaster,trigrid-method}
 \alias{resample,facelayer,trigrid-method}
 \title{Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.}
 \format{
@@ -12,12 +12,12 @@ An object of class \code{standardGeneric} of length 1.
 \usage{
 resample
 
-\S4method{resample}{Raster,trigrid}(x, y, method = "ngb", na.rm = TRUE)
+\S4method{resample}{SpatRaster,trigrid}(x, y, method = "near", na.rm = TRUE)
 
 \S4method{resample}{facelayer,trigrid}(x, y, method = NULL, res = 5)
 }
 \arguments{
-\item{x}{(\code{\link[raster:raster]{RasterLayer}}, \code{\link{facelayer}}) Object to resample.}
+\item{x}{(\code{\link[terra:rast]{SpatRaster}}, \code{\link{facelayer}}) Object to resample.}
 
 \item{y}{(\code{\link{hexagrid}} or \code{\link{trigrid}}) Object describing the target structure.}
 
@@ -31,12 +31,12 @@ resample
 A named \code{numeric} vector.
 }
 \description{
-The function is used to resolve and resample data stored in \code{RasterLayer}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
+The function is used to resolve and resample data stored in \code{SpatRaster}s and \code{\link{facelayer}}s so they can be fitted to and can be plotted by using \code{\link{trigrid}} or \code{\link{hexagrid}} objects.
 
 The function applies different resampling algorithms. Currently there are only two implemented methods, one for upscaling and one for downscaling. The downscaling method "average" will tabluate all face centers from the high resolution grid that fall on a coarse resolution cell and average them. The upscaling method "ebaa" (edge breakpoint area approximation) will estimate the areas covered by the high resolution cells using the number of edge breakpoints.
 }
 \details{
-This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[raster:raster]{RasterLayer}}s, the \code{method} argument will be passed to the \code{\link[raster]{resample}} function.
+This method is necessary to utilize rasterized data in the \code{\link{icosa}} package. The only method currently implemented upscales the raster data and then resolves the values to the \code{\link{trigrid}} or \code{\link{hexagrid}} values, using averages. In the case of resampling \code{\link[terra:rast]{SpatRaster}}s, the \code{method} argument will be passed to the \code{\link[terra]{resample}} function.
 }
 \examples{
 # create a grid

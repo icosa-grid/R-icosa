@@ -187,7 +187,7 @@ setMethod(
 #			Sys.sleep(0.1)
 #		}
 		
-		endObj<-suppressWarnings(sp::SpatialPolygons(finalList, proj4string=gridObj@proj4string))
+		endObj<-suppressWarnings(sp::SpatialPolygons(finalList, proj4string=methods::as(gridObj@crs, "CRS")))
 		
 		return(endObj)
 	}
@@ -401,7 +401,7 @@ setMethod(
 		
 		# switch off the warnings
 		
-		suppressWarnings(nproj <- CRS("+proj=longlat +a=6371007 +b=6371007"))
+		suppressWarnings(nproj <- methods::as(gridObj@crs, "CRS"))
 		
 		endObj<-sp::SpatialPolygons(finalList, proj4string=nproj)
 		

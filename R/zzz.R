@@ -5,7 +5,7 @@
 #'    custom resolution. Both the primary triangular and their inverted penta-
 #'   hexagonal grids are available for implementation. Additional functions
 #'    are provided to position points (latitude-longitude data) on the grids,
-#'    to allow 2D and 3D plotting, use raster data and shapefiles.
+#'    to allow 2D and 3D plotting, use raster and vector spatial data.
 #' 
 #' This is still the Beta version. Notes about found bugs and suggestions are more than welcome!
 #'
@@ -17,6 +17,10 @@
 #' @name icosa
 #' @useDynLib icosa, .registration = TRUE, .fixes="Cpp"
 
+#' @importFrom sf st_crs
+#' @importFrom sf st_as_sf
+#' @importFrom sf st_transform
+#' @importFrom sf st_coordinates
 #' @importFrom Rcpp sourceCpp
 #' @importFrom sp coordinates
 #' @importFrom igraph graph_from_data_frame

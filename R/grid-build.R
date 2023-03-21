@@ -198,9 +198,10 @@ setMethod(
 #' @slot edgeLength the length of an average edge in km and degrees.
 #' @slot graph an 'igraph' class graph object.
 #' @slot length integer vector of length=3. The number of vertices, edges and faces in this order.
-#' @slot proj4string a CRS class object indicating the model in the PROJ.4 system
+#' @slot crs a CRS class object, by design this is the authalic sphere (ESRI:37008)
 #' @slot r the radius of the grid
 #' @slot sp The SpatialPolygons representation of the grid. If missing, it can be created with newsp().
+#' @slot sf The sf representation of the grid. If missing, it can be created with newsf().
 #' @slot skeleton data tables with sequential indexing for the C functions.
 #'
 #'
@@ -210,6 +211,7 @@ setMethod(
 #'	  Higher values result in more uniform cell sizes, but the larger number of tessellation series
 #'	  increases the speed of lookup functions.
 #'
+#' @param deg (\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{triguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
 #' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 #'	should be added to the object when the grid is calculated. If set to \code{TRUE} the \code{SpPolygons()} function will be run with with the resolution parameter set to 25. The 
 #'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can substantially increase the grid creation time,
@@ -222,6 +224,7 @@ setMethod(
 #'
 #' @param radius (\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.
 #' @param center (\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to (0,0,0).
+#' @param verbose (\code{logical}) Should messages be printed during grid creation? 
 #'
 #' @return A triangular grid object, with class \code{trigrid}.
 #' @examples
@@ -231,6 +234,8 @@ setMethod(
 #' # series of tessellations
 #' g1 <- trigrid(c(2,3,4))
 #' g1
+#' # based on approximate size (4 degrees edge length)
+#' g2 <- trigrid(deg=4) 
 #' @exportClass trigrid
 trigrid<-setClass(
 	"trigrid",
@@ -241,7 +246,8 @@ trigrid<-setClass(
 		faceCenters="matrix",
 		orientation="numeric",
 		belts="numeric",
-		proj4string="CRS",
+		sf="ANY",
+		crs="crs",
 		graph="ANY"
 	)
 )
@@ -251,8 +257,11 @@ trigrid<-setClass(
 setMethod(
 	"initialize",
 	signature="trigrid",
-	definition=function(.Object, tessellation=1, sp=FALSE, graph=TRUE, radius=authRadius, center=origin){
+	definition=function(.Object, tessellation=1, deg=NULL, sf=FALSE, sp=FALSE, graph=TRUE, radius=authRadius, center=origin, verbose=TRUE){
 		
+		# set tessellation based on approximation of edge length
+		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="trigrid", verbose=verbose) 
+
 		# trial variables
 	#	tessellation<-c(2,2,2,2)
 	#	authRadius<-6371
@@ -279,7 +288,7 @@ setMethod(
 			# add the CRS for spatial transformations
 			#supress scientific notation
 			options(scipen=999)
-			.Object@proj4string <- suppressWarnings(sp::CRS(paste("+proj=longlat +a=", round(radius*1000), " +b=", round(radius*1000), sep="")))
+			.Object@crs <- sf::st_crs("ESRI:37008")
 			
 			
 		# extract the skeleton	
@@ -471,12 +480,22 @@ setMethod(
 		
 		#2d grid!
 		if(sp==TRUE){
-				.Object@sp<-SpPolygons(.Object, res=25)
+			.Object@sp<-SpPolygons(.Object, res=25)
 		}else{
 			dummy<-NA
 			
 			.Object@sp<-dummy
 		}
+
+		if(sf==TRUE){
+			.Object@sf<-sf::st_as_sf(SpPolygons(.Object, res=25))
+			.Object@sf$faces <- rownames(.Object@faces)
+			rownames(.Object@sf) <- rownames(.Object@faces)
+		}else{
+			dummy<-NA
+			.Object@sf<-dummy
+		}
+
 		# correct the coordinates with the center data
 		for(vc in 1:3){
 			.Object@vertices[,vc]<-.Object@vertices[,vc]+center[vc]
@@ -538,6 +557,8 @@ setMethod(
 #'	  Higher values result in more uniform cell sizes, but the larger number of tessellation series,
 #'	  increases the speed of lookup functions.
 #'
+#' @param deg (\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{hexguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
+#'
 #' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 #'	should be added to the object when the grid is calculated. If set to true the \code{\link{SpPolygons}} function will be run with with the resolution parameter set to \code{25}. The 
 #'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can increase the grid creation time substantially
@@ -550,12 +571,15 @@ setMethod(
 #'
 #' @param radius (\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.
 #' @param center (\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to \code{c(0,0,0)}.
+#' @param verbose (\code{logical}) Should messages be printed during grid creation? 
 #'
 #'
 #' @return A hexagonal grid object, with class \code{hexagrid}.
 #' @examples
-#' g <- hexagrid(c(8), sp=TRUE)
+#' g <- hexagrid(c(8), sf=TRUE)
 #' g1 <- hexagrid(c(2,3,4))
+#' # based on approximate size (4 degrees edge length)
+#' g2 <- hexagrid(deg=4) 
 #' @exportClass hexagrid
 hexagrid<-setClass(
 	"hexagrid",
@@ -568,8 +592,11 @@ hexagrid<-setClass(
 setMethod(
 	"initialize",
 	signature="hexagrid",
-	definition=function(.Object, tessellation=1, sp=FALSE, graph=TRUE, center=origin, radius=authRadius){
+	definition=function(.Object, tessellation=1, deg=NULL, sp=FALSE, sf=FALSE, graph=TRUE, center=origin, radius=authRadius, verbose=TRUE){
 			
+		# set tessellation based on approximation of edge length
+		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="hexagrid", verbose=verbose) 
+
 		tGrid<-trigrid(tessellation, radius=radius)
 		# v part of the skeleton and the active vertices
 			# new $v: first part original vertices of the trigrid (faceCenters)
@@ -746,7 +773,7 @@ setMethod(
 		
 			#temporary solutions
 			.Object@r <- tGrid@r
-			.Object@proj4string<- tGrid@proj4string
+			.Object@crs<- tGrid@crs
 			.Object@orientation<-c(0,0,0)
 			.Object@center <- center
 		
@@ -765,6 +792,15 @@ setMethod(
 			.Object@sp<-dummy
 		}
 		
+		if(sf==TRUE){
+			.Object@sf<-sf::st_as_sf(SpPolygons(.Object, res=25))
+			.Object@sf$faces <- rownames(.Object@faces)
+			rownames(.Object@sf) <- rownames(.Object@faces)
+		}else{
+			dummy<-NA
+			.Object@sf<-dummy
+		}
+
 		# translate the 3d information with the center
 		for(vc in 1:3){
 			.Object@vertices[,vc] <- .Object@vertices[,vc]+center[vc]
@@ -784,3 +820,50 @@ setMethod(
 
 
 
+
+gridLookUp <- function(deg, gr, verbose=TRUE){
+	if(gr=="hexagrid"){
+		data(hexguide, envir=environment())
+		tessguide <- hexguide
+	}
+	if(gr=="trigrid"){
+		data(triguide, envir=environment())
+		tessguide <- triguide
+	}
+	if(!is.numeric(deg)) stop("The 'deg' argument has to be numeric.")
+	if(length(deg)!=1) stop("You must provide a single value as 'deg'.")
+	if(is.na(deg)) stop("The 'deg' argument cannot be NA.")
+
+	
+	# the difference of given and supplied
+	differences <- abs(tessguide$meanEdgeLength_deg-deg)
+
+	# select the coarser of the solutions
+	select <- which.min(differences)[1]
+
+	
+	# the full tessellation vector
+	fullVect <- as.numeric(tessguide[select, paste0("level", 1:4)])
+
+	# omit missing
+	vect <- fullVect[!is.na(fullVect)]
+
+	# omit extra 1s
+	if(prod(vect)==1){
+		vect <- 1
+	}else{
+		vect<- vect[vect!=1]
+	}
+
+	if(select==length(differences))
+		stop(paste("'deg' is lower than then lowest resolution in the guide, given for tessellation = c(",paste0(vect, collapse=", "),
+			").\nPlease set the 'tessellation' argument manually."))
+
+	if(verbose) message(
+		paste0(
+			"Selecting ",gr," with tessellation vector: c(", paste0(vect, collapse=", "),").\nMean edge length: ", 
+			tessguide[select, "meanEdgeLength_deg"], " degrees."))
+	
+	return(vect)
+
+}

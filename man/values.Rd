@@ -5,7 +5,7 @@
 \alias{values}
 \alias{values,gridlayer-method}
 \alias{values<-}
-\alias{values<-,gridlayer-method}
+\alias{values<-,gridlayer,ANY-method}
 \title{Extract and replace values from a gridlayer-derived object (e.g. \code{link{facelayer}}).}
 \format{
 An object of class \code{standardGeneric} of length 1.
@@ -19,7 +19,7 @@ values(x,...)
 
 values(x) <- value
 
-\S4method{values}{gridlayer}(x) <- value
+\S4method{values}{gridlayer,ANY}(x) <- value
 }
 \arguments{
 \item{x}{(\code{\link{facelayer}}) Object.}

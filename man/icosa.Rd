@@ -10,7 +10,7 @@ using grids based on tessellated icosahedra. The procedures can be set to provid
    custom resolution. Both the primary triangular and their inverted penta-
   hexagonal grids are available for implementation. Additional functions
    are provided to position points (latitude-longitude data) on the grids,
-   to allow 2D and 3D plotting, use raster data and shapefiles.
+   to allow 2D and 3D plotting, use raster and vector spatial data.
 }
 \details{
 This is still the Beta version. Notes about found bugs and suggestions are more than welcome!

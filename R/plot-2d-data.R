@@ -10,6 +10,7 @@
 #' @param alpha (\code{character}) Two digits for the fill colors, in hexadecimal value between \code{0} and \code{255}.
 #' @param breaks (\code{numeric}) The number of breakpoints between the plotted levels. The argument is passed to the \code{\link[base]{cut}} function. 
 #' @param legend (\code{logical}): Should the legend be plotted? 
+#' @param crs (\code{character} or \code{\link[sf:st_crs]{crs}}) A coordinate system for the transformation of coordinates.
 #' @param inclusive (\code{logical}): If there are values beyond the limits of breaks, should these be represented in the plot (\code{TRUE}) or left out completely \code{FALSE}?
 #' @param discrete (\code{logical}): Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap. 
 #' @rdname plot
@@ -17,7 +18,7 @@
 setMethod(
 	"plot",
 	signature="facelayer",
-	definition=function(x,projargs=NULL,col="heat",border=NA, alpha=NULL, frame=FALSE,legend=TRUE, breaks=NULL, inclusive=TRUE, discrete=FALSE,  ...){
+	definition=function(x,crs=NULL,col="heat",border=NA, alpha=NULL, frame=FALSE,legend=TRUE, breaks=NULL, inclusive=TRUE, discrete=FALSE,  ...){
 		actGrid<-get(x@grid)
 		checkLinkedGrid(actGrid, x)
 		
@@ -39,14 +40,8 @@ setMethod(
 		}
 		
 		#transformation is necessary
-		if(!is.null(projargs)){
-		#	requireNamespace("rgdal")
-		# need rgdal
-			if(requireNamespace("rgdal", quietly = TRUE)){
-				actGrid@sp<-sp::spTransform(actGrid@sp, projargs)
-			} else{
-				stop("The rgdal package is required to appropriately project this object. ")
-			}
+		if(!is.null(crs)){
+			actGrid@sp <- methods::as(sf::st_transform(sf::st_as_sf(actGrid@sp), crs), "Spatial")
 		}
 		#check whether the  grid is actually updated
 		if(sum(x@names%in%rownames(actGrid@faces))!=length(x)) 
@@ -316,7 +311,68 @@ setMethod(
 			
 		}
 	
-	
 	}
 
+)
+
+
+#' Plotting loosly referenced data with grid objects using sf's plotting methods
+#' 
+#' The function matches data referred to the grid and plots it with sf's plotting methods.
+#' 
+#' @param x A named vector. Names refer to face names
+#' @param y An icosahedral grid (trigrid-class).
+#' @param crs coordinate reference system
+#' @param main The main title of the plot
+#' @return the Function has no return value
+#' @rdname plotdata
+#' @name plot
+#' @examples
+#' A simple grid, with sf-representation
+#' gr <- hexagrid(4, sf=TRUE)
+#' dat <- 1:nrow(gr@faces)
+#' names(dat) <- paste0("F", dat)
+#' plot(x=dat, y=gr)
+#' @exportMethod plot
+setMethod(
+	"plot",
+	signature=c("vector", "trigrid"),
+	definition=function(x, y, crs=NULL, main="",  ...){
+
+		if(!inherits(y@sf, "sf")) stop("The grid has no @sf representation.\nUse newsf() to create a 2d representation")
+		if(is.null(names(x))) stop("'x' must have the grid's faces as names.")
+
+		# the sf part 
+		thesf <- y@sf
+    	thesf$dat <- x[rownames(thesf)]
+		if(any(!names(x)%in%rownames(thesf))) stop("'x' must have the grid's faces as names.")
+
+		if(!is.null(crs)){
+			thesf <- sf::st_transform(thesf,crs)
+		}
+
+		# plot the data
+		plot(thesf[, "dat"], main=main, ...)
+
+	
+	}
+)
+
+#' @name plot
+#' @exportMethod plot
+#' @rdname plotdata
+setMethod(
+	"plot",
+	signature=c("table", "trigrid"),
+	definition=function(x, y, crs=NULL, main="",  ...){
+
+		# transform the table to a vector
+		namedVect <- as.numeric(x)
+		names(namedVect) <- names(x)
+
+		# execute the vector-based method
+		plot(namedVect, y, crs=crs, main=main, ...)
+
+	
+	}
 )

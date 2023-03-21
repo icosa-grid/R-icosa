@@ -665,17 +665,16 @@ setMethod(
 
 
 
-# utility function to do a spatial transformation, in case the object has a CRS projection
+# utility function to do a spatial transformation, in case the object has a CRS 
 normalizeProj<- function(data){
-	if(methods::.hasSlot(data, "proj4string")){
+	if(inherits(data, "Spatial")){
+		# transform to sf
+		sfData <- sf::st_as_sf(data)
+
 		# and it's not NA
-		if(!is.na(data@proj4string)){
-			# need rgdal
-			if(requireNamespace("rgdal", quietly = TRUE)){
-				data<-sp::spTransform(data, CRS("+proj=longlat +a=6371000 +b=6371000"))
-			} else{
-				stop("The rgdal package is required to appropriately project this object. ")
-			}
+		if(!is.na(sf::st_crs(sfData))){
+			sfData <- sf::st_transform(sfData, "ESRI:37008")
+			data <- methods::as(sfData, "Spatial")
 		}
 	}
 	return(data)

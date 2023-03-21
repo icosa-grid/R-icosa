@@ -12,7 +12,7 @@ An object of class \code{standardGeneric} of length 1.
 \usage{
 plot
 
-\S4method{plot}{trigrid,ANY}(x, projargs = NULL, ...)
+\S4method{plot}{trigrid,ANY}(x, crs = NULL, ...)
 
 \S4method{plot}{facelayer,ANY}(
   x,
@@ -31,7 +31,7 @@ plot
 \arguments{
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object to be plotted.}
 
-\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
+\item{crs}{(\code{character} or \code{\link[sf:st_crs]{crs}}) A coordinate system for the transformation of coordinates.}
 
 \item{...}{Arguments passed to the \code{plot} function.}
 
@@ -55,7 +55,7 @@ plot
 The function has no return value.
 }
 \description{
-This function will invoke the \code{plot} method of the \code{\link[sp]{SpatialPolygons}} class.
+This function will invoke the \code{plot} method of the \code{\link[sf:sf]{sf}} or the  \code{\link[sp]{SpatialPolygons}} class.
 
 The function passes arguments to the plot method of the \code{\link[sp]{SpatialPolygons}} class. In case a heatmap is plotted and the plotting device gets resized,
 some misalignments can happen. If you want to use a differently sized window, use \code{\link[grDevices]{x11}} to set the height and width before running the function.

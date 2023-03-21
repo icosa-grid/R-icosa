@@ -18,15 +18,17 @@
 #'
 #' @examples
 #'	# create a grid
-#'	g <- trigrid(8, sp=TRUE)
+#'	g <- trigrid(8, sf=TRUE)
 #'
 #'	# create random points
 #'	randPoints <- rpsphere(100,output="polar")
 #'
-#'	# the facelayer occupied by these points
-#'	randomLayer <- occupied(g, randPoints)
-#'	#plot(randomLayer)
-#'	#points(randPoints, col="blue", pch="+")
+#'	# the faces occupied by these points
+#'	occ <- occupied(g, randPoints)
+#'  
+#'  # plot using sf slot independently
+#'	plot(g@sf[occ,"geometry"])
+#'	points(randPoints, col="red", pch="+")
 #'	
 #'
 #' @export	
@@ -35,15 +37,14 @@ occupied  <- function(gridObj, data, out="logical",...){
 	if(!out%in%c("logical", "facelayer")) stop("Invalid 'out' argument.")
 	
 	# do spatial transformation if a CRS is present
-	if(methods::.hasSlot(data, "proj4string")){
+	if(inherits(data, "Spatial")){
+		# transform to sf
+		sfData <- sf::st_as_sf(data)
 		# and only if it is not NA
-		if(!is.na(data@proj4string)){
-			# need rgdal
-			if(requireNamespace("rgdal", quietly = TRUE)){
-				data<-sp::spTransform(data, gridObj@proj4string)
-			} else{
-				stop("The rgdal package is required to appropriately project this object. ")
-			}
+		if(!is.na(sf::st_crs(sfData))){
+			#  change crs
+			data<-sf::st_transform(sfData, gridObj@crs)
+			# no need to transform back to sp, this will be done by OccupiedFaces
 		}
 	}
 	
@@ -506,30 +507,36 @@ setMethod(
 	}
 )
 
+# locate method of trigrid - sf 
+#' @rdname locate
+setMethod(
+	"locate",
+	signature=c(x="trigrid", y="sf"),
+	function(x,y,...){
+
+		# and it's not NA
+		if(!is.na(sf::st_crs(y))){
+			y <-sf::st_transform(y, x@crs)
+		}
+
+		#  separate matrix method
+		y <- sf::st_coordinates(y)
+
+		# use matrix-method
+		locate(x, y, ...)
+	}
+)
 # locate method of trigrid - SpatialPoints
 #' @rdname locate
 setMethod(
 	"locate",
 	signature=c(x="trigrid", y="SpatialPoints"),
 	function(x,y,...){
-		# if it has a proj4
-		if(methods::.hasSlot(y, "proj4string")){
-			# and it's not NA
-			if(!is.na(y@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					y<-sp::spTransform(y, x@proj4string)@coords
-				} else{
-					stop("The 'rgdal' package is required to appropriately project this object. ")
-				}
-			}else{
-				y <- y@coords 
-			}
-		}else{
-			y <- y@coords 
-		}
+		# force to sf
+		sfData <- sf::st_as_sf(y)
 
-		locate(x, y, ...)
+		# use  sf-method 
+		locate(x, sfData, ...)
 	}
 )
 
@@ -539,23 +546,11 @@ setMethod(
 	"locate",
 	signature=c(x="trigrid", y="SpatialPointsDataFrame"),
 	function(x,y,...){
-		# if it has a proj4
-		if(methods::.hasSlot(y, "proj4string")){
-			# and it's not NA
-			if(!is.na(y@proj4string)){
-				# need rgdal
-				if(requireNamespace("rgdal", quietly = TRUE)){
-					y<-sp::spTransform(y, x@proj4string)@coords
-				} else{
-					stop("The 'rgdal' package is required to appropriately project this object. ")
-				}
-			}else{
-				y <- y@coords 
-			}
-		}else{
-			y <- y@coords 
-		}
 
+		# force this to SpatialPoints
+		y<- methods::as(y, "SpatialPoints")
+
+		# use SpatialPoints method 
 		locate(x, y, ...)
 	}
 )

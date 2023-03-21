@@ -3,21 +3,21 @@
 \docType{methods}
 \name{[,gridlayer,ANY,missing-method}
 \alias{[,gridlayer,ANY,missing-method}
-\alias{[,gridlayer,Extent,missing-method}
+\alias{[,gridlayer,SpatExtent,missing-method}
 \alias{[<-,gridlayer,ANY,ANY-method}
 \alias{[<-,gridlayer-method}
 \title{Extraction from a gridlayer using indices}
 \usage{
 \S4method{[}{gridlayer,ANY,missing}(x, i)
 
-\S4method{[}{gridlayer,Extent,missing}(x, i)
+\S4method{[}{gridlayer,SpatExtent,missing}(x, i)
 
 \S4method{[}{gridlayer,ANY,ANY}(x, i) <- value
 }
 \arguments{
 \item{x}{(\code{\link{facelayer}}) The object to be subsetted.}
 
-\item{i}{(\code{logical}, \code{numeric} nor \code{extent}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.}
+\item{i}{(\code{logical}, \code{numeric} or \code{\link[raster:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.}
 
 \item{value}{The replacement values.}
 }

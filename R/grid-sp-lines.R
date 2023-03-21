@@ -118,7 +118,8 @@ setMethod(
 				
 			})
 		}
-		endObj<-sp::SpatialLines(finalList, proj4string=CRS("+proj=longlat +a=6371007 +b=6371007"))
+		# KEEP AS CRS for now...
+		endObj<-sp::SpatialLines(finalList, proj4string=methods::as(gridObj@crs, "CRS"))
 	}
 )
 	

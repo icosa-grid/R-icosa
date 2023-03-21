@@ -78,11 +78,13 @@ deactivation of these units. Any sort of meddling with the \code{@skeleton} obje
 
 \item{\code{length}}{integer vector of length=3. The number of vertices, edges and faces in this order.}
 
-\item{\code{proj4string}}{a CRS class object indicating the model in the PROJ.4 system}
+\item{\code{crs}}{a CRS class object, by design this is the authalic sphere (ESRI:37008)}
 
 \item{\code{r}}{the radius of the grid}
 
 \item{\code{sp}}{The SpatialPolygons representation of the grid. If missing, it can be created with newsp().}
+
+\item{\code{sf}}{The sf representation of the grid. If missing, it can be created with newsf().}
 
 \item{\code{skeleton}}{data tables with sequential indexing for the C functions.}
 }}
