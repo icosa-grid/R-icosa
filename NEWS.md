@@ -1,15 +1,30 @@
 # Change log
 
-## [0.11 (build 1017)] - CRAN submission - 2023-03-x
+## icosa 0.11.0 - 2023-03-x
 
 ### Added
-- new example data
+- resolution based grid creation, e.g. hexagrid(deg=5)
+- Resolution guides for both the 'hexagrid' and 'trigrid' classes (hexguide and triguide, respectively), 120 grids each
+- Package webpage as URL in DESCRIPTION
+- Interface for the sf package. 
+- The newsf() function
+- plot-vector-trigrid method for plotting data with sf's methods
+- new example data: NaturalEarth land polygons
+- new slot for the trigrid class for sf-type representation
 - occupied() - support for sf-type input
 
 ### Changed
 - Changed basic reference from 1980 authalic sphere to ESRI:37008 
-- omitted suggested package 'raster' and replaced it with 'terra'
-- the occupied() function no by default returns a named vector
+- The @proj4string (PROJ4) slot of 'trigrid' was replaced by @crs (sf)
+- trigrid-plot method now uses the sf-type as the basis of plotting
+- Omitted suggested package 'raster' and replaced it with 'terra'
+- The occupied() function no by default returns a named vector
+- The vignettes are now html vignettes
+- the 'tessguide' object is renamed to 'hexguide'
+
+### Removed
+- Dependency on raster and rgdal
+- OSM z1 land polygons
 
 
 ## [0.10.1 (build 1017)] - CRAN submission - 2021-01-12
