@@ -37,7 +37,7 @@ To make installation less problematic, the windows binary version of the package
 
 ```{r stablewin, eval=FALSE}
 install.packages(
-	"https://github.com/adamkocsis/icosa/raw/main/_archive/binaries/Win_x64_x86/icosa_0.11.0.zip", 
+	"https://github.com/adamkocsis/icosa/raw/master/_archive/binaries/Win_x64_x86/icosa_0.11.0.zip", 
 	repos=NULL)
 ```
 
@@ -47,7 +47,7 @@ For the sake of completeness and simplicity, the sources of the stable version a
 
 ```{r stable, eval=FALSE}
 install.packages(
-	"https://github.com/adamkocsis/icosa/raw/main/_archive/source/icosa_0.11.0.tar.gz", 
+	"https://github.com/adamkocsis/icosa/raw/master/_archive/source/icosa_0.11.0.tar.gz", 
 	repos=NULL, type="source")
 ```
 
