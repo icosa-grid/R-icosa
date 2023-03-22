@@ -7,6 +7,9 @@
     <loc>https://adamkocsis.github.io/icosa/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>https://adamkocsis.github.io/icosa/articles/archive.html</loc>
+  </url>
+  <url>
     <loc>https://adamkocsis.github.io/icosa/articles/icosa_1_installation.html</loc>
   </url>
   <url>
@@ -31,6 +34,9 @@
     <loc>https://adamkocsis.github.io/icosa/articles/icosa_8_3d_plotting.html</loc>
   </url>
   <url>
+    <loc>https://adamkocsis.github.io/icosa/articles/icosa_cran.html</loc>
+  </url>
+  <url>
     <loc>https://adamkocsis.github.io/icosa/articles/index.html</loc>
   </url>
   <url>
@@ -38,6 +44,9 @@
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/index.html</loc>
+  </url>
+  <url>
+    <loc>https://adamkocsis.github.io/icosa/news/index.html</loc>
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/CarToPol.html</loc>
@@ -88,6 +97,9 @@
     <loc>https://adamkocsis.github.io/icosa/reference/faces3d.html</loc>
   </url>
   <url>
+    <loc>https://adamkocsis.github.io/icosa/reference/gridensity.html</loc>
+  </url>
+  <url>
     <loc>https://adamkocsis.github.io/icosa/reference/gridgraph.html</loc>
   </url>
   <url>
@@ -104,6 +116,9 @@
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/hexagrid-class.html</loc>
+  </url>
+  <url>
+    <loc>https://adamkocsis.github.io/icosa/reference/hexguide.html</loc>
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/icosa.html</loc>
@@ -128,6 +143,9 @@
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/newgraph.html</loc>
+  </url>
+  <url>
+    <loc>https://adamkocsis.github.io/icosa/reference/newsf.html</loc>
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/newsp.html</loc>
@@ -166,13 +184,13 @@
     <loc>https://adamkocsis.github.io/icosa/reference/surfacecentroid.html</loc>
   </url>
   <url>
-    <loc>https://adamkocsis.github.io/icosa/reference/tessguide.html</loc>
-  </url>
-  <url>
     <loc>https://adamkocsis.github.io/icosa/reference/translate.html</loc>
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/trigrid-class.html</loc>
+  </url>
+  <url>
+    <loc>https://adamkocsis.github.io/icosa/reference/triguide.html</loc>
   </url>
   <url>
     <loc>https://adamkocsis.github.io/icosa/reference/trishape.html</loc>
