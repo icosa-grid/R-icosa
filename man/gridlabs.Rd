@@ -4,14 +4,14 @@
 \alias{gridlabs}
 \title{Labels of grid vertices, faces and edges.}
 \usage{
-gridlabs(gridObj, type = "f", projargs = NULL, ...)
+gridlabs(gridObj, type = "f", crs = NULL, ...)
 }
 \arguments{
 \item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
 
 \item{type}{(\code{character}) The type of element to be plotted: either \code{"f"} (faces), \code{"v"} (vertices) or  \code{"e"} (edges).}
 
-\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
+\item{crs}{(\code{character} or \code{\link[sf:st_crs]{crs}}) A coordinate system for the transformation of coordinates.}
 
 \item{...}{Arguments passed to the \code{\link[graphics]{text}} function.}
 }

@@ -133,7 +133,7 @@ setMethod(
 			
 		}
 		#when the values are logical
-		if(class(x@values)=="logical"){
+		if(inherits(x@values,"logical")){
 			#set default color value
 			faces3d(actGrid,col=col,...)
 		}
@@ -208,7 +208,7 @@ setMethod(
 			# this is the ui sequence	
 			faceColors<-cols[trans2]
 			
-			if(class(actGrid)=="trigrid"){
+			if(inherits(actGrid,"trigrid") & !inherits(actGrid, "hexagrid")){
 				
 				#in the inner sequence
 				#create a source vector as if it was complete
@@ -225,7 +225,7 @@ setMethod(
 			
 				
 			}
-			if(class(actGrid)=="hexagrid"){
+			if(inherits(actGrid, "hexagrid")){
 				
 				tu <- as.numeric(t(actGrid@skeleton$uiF[names(x),]))
 				
@@ -301,13 +301,13 @@ setMethod(
 		
 		#when all the values are colors
 		#plot faces as 
-		if(class(x@values)=="character" & sum(x@values%in%grDevices::colors())==x@length){
+		if(inherits(x@values, "character") & sum(x@values%in%grDevices::colors())==x@length){
 			faces3d(actGrid, col=x@values, plot="faces",...)
 			
 		}
 		
 		# when the values are text | they are not colors
-		if(class(x@values)=="character" & !sum(x@values%in%grDevices::colors())==x@length){
+		if(inherits(x@values, "character") & !sum(x@values%in%grDevices::colors())==x@length){
 			# state the labels in 3d on the face (using the centers of the faces)
 			colorAll <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = TRUE)]
 			active<-factor(x@values)
@@ -319,7 +319,7 @@ setMethod(
 			
 			faceColors<-cols[as.numeric(active)]
 			
-			if(class(actGrid)=="trigrid"){
+			if(inherits(actGrid, "trigrid") & !inherits(actGrid, "hexagrid")){
 				
 				#in the inner sequence
 				#create a source vector as if it was complete
@@ -336,7 +336,7 @@ setMethod(
 			
 				
 			}
-			if(class(actGrid)=="hexagrid"){
+			if(inherits(actGrid, "hexagrid")){
 				
 				tu <- as.numeric(t(actGrid@skeleton$uiF[names(x),]))
 				
@@ -381,7 +381,7 @@ setMethod(
 		}
 		
 		# when the values are factors!
-		if(class(x@values)=="factor"){
+		if(inherits(x@values, "factor")){
 			# depending on the number of levels, more color palettes might be useful
 			if(length(levels(factor(x@values))) <= 7){
 				faces3d(actGrid, col=rep(as.numeric(x@values),each=3), ...)

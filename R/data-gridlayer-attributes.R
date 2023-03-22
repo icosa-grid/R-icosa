@@ -48,6 +48,7 @@ if(requireNamespace("terra", quietly = TRUE)){
 
 #' @param value (\code{logical}, \code{character} or \code{numeric}) Replacement values.
 #' @rdname values
+#' @aliases values<-,gridlayer-method
 #' @exportMethod values<-
 setReplaceMethod(	
 	f="values",

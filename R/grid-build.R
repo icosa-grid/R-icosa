@@ -577,9 +577,8 @@ setMethod(
 #' @return A hexagonal grid object, with class \code{hexagrid}.
 #' @examples
 #' g <- hexagrid(c(8), sf=TRUE)
-#' g1 <- hexagrid(c(2,3,4))
 #' # based on approximate size (4 degrees edge length)
-#' g2 <- hexagrid(deg=4) 
+#' g1 <- hexagrid(deg=4) 
 #' @exportClass hexagrid
 hexagrid<-setClass(
 	"hexagrid",

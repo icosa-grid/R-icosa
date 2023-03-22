@@ -1,0 +1,27 @@
+---
+title: "About icosa in one line. Tutorials available on package website"
+description: >
+  Alternatives to install the icosa R package. 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{About icosa in one line. Tutorials available on package website}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# About
+
+The icosa package implements triangular tessellation to refine regular icosahedra in 3d space - which can be used as horizontal grids, such as this: 
+
+```{R, fig.out=8, fig.width=4}
+library(icosa)
+gr <- hexagrid(deg=10, sf=TRUE) # create grid
+plot(gr)
+```
+
+# Tutorials moved to package website 
+
+To make the package as small as possible, the tutorials on how to use the package are available at the package website:   
+https://adamkocsis.github.io/icosa/ 
+
+

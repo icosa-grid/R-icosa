@@ -99,7 +99,7 @@ setMethod(
 				
 				# basic algorithm
 				# 1. break down every single edge of the finer, new grid using SplitArc() and produce a table with xyz coordinates
-				if(class(y)=="trigrid"){
+				if(inherits(y,"trigrid") & !inherits(y, "hexagrid")){
 					newGridF<-y@skeleton$f[y@skeleton$f[,4]==(length(y@tessellation)-1),]
 					
 					# c++ function will look up produce these points
@@ -109,7 +109,7 @@ setMethod(
 					fNames<-names(sort(y@skeleton$uiF))
 					newNames <- fNames[newPoints[,4]]
 				}
-				if(class(y)=="hexagrid"){
+				if(inherits(y, "hexagrid")){
 					newGridF<-y@skeleton$f[y@skeleton$f[,4]==-6,]
 				
 					# c++ function will look up produce these points
@@ -153,3 +153,142 @@ setMethod(
 	
 )
 
+
+#' @exportMethod resample
+#' @rdname resample
+setMethod(
+	"resample",
+	signature=c("facelayer", "SpatRaster"),
+	definition=function(x, y,method=NULL,res=5){
+		# make a copy of the original entity
+		newRast <- y
+		
+		# get raster coordinates
+		allCoords <- as.data.frame(terra::xyFromCell(y, 1:terra::ncell(y)))
+
+		# make the sf with crs
+		sfPoints <- sf::st_as_sf(
+			as.data.frame(allCoords), coords=c("x", "y"), crs=terra::crs(y))
+		# locate the points
+		tiedGrid <- dynGet(x@grid)
+
+		# look up the cells
+		cells <- locate(tiedGrid, sfPoints)	
+
+		# get the appropriate values
+		terra::values(newRast) <- values(x)[cells]
+
+		# return the thing
+		return(newRast)
+
+})
+
+
+#' Icosahedral grid-based density estimation
+#'
+#' Spatial density estimation algorithm based on rotation of icosahedral grids.
+#'
+#' Any points set can be binned to an icosahedral grid (i.e. number of incidences can be counted), which will be dependent on the exact positions of grid cells. Rotating the grid in 3d space will result in a different distribution of counts. This distribution can be resampled to a standard orientation structure. The size of the icosahedral grid cells act as a bandwidth parameter.
+#'
+#' The implemented algorithm 1) takes a point cloud (\code{x})) and an icosahedral grid \code{y} 2) randomly rotates the icosahedral grid, 3) looks up the points falling on grid cells, 4) resamples the grid to a constant orientation object (either \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link[terra:rast]{SpatRaster}}). Steps 2-4 are repeated \code{trial} times, and then \code{FUN} is applied to every vector of values that have same spatial position.
+#' 
+#' @param x Matrix of longitude, latitude data, \code{\link[sf:sf]{sf}} class, or \code{\link[sp:SpatialPoints]{SpatialPoints}} Point cloud.
+#' @param y \code{\link{trigrid}} or \code{\link{hexagrid}} An icosahedral grid.
+#' @param out \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link[terra:rast]{SpatRaster}}output structure.
+#' @param trials \code{numeric} value, the number of iterations.  
+#' @param FUN \code{function} The function to be applied on the iteration results.
+#' @return Either named numeric vector, or a \code{\link[terra:rast]{SpatRaster}} object. If FUN is set to \code{NULL}, the output will be either a \code{matrix} or \code{\link[terra:rast]{SpatRaster}}.
+#' @examples
+#' # example to be run if terra is present
+#' if(requireNamespace("terra", quietly=TRUE)){
+#' 
+#'  # randomly generated points
+#'  x <- rpsphere(100, output="polar")
+#' 
+#'  # bandwidth grid
+#'  y <- hexagrid(deg=10)
+#' 
+#'  # output structure
+#'  out <- terra::rast(res=2)
+#'
+#'  # the function
+#'  o <- gridensity(x, y, out, trials=10)
+#' 
+#'  # visualize results
+#'  terra::plot(o)
+#'  points(x, pch=3)
+#' }
+#' 
+#' @export
+gridensity <- function(x, y, out, trials=100, FUN=mean){
+	# find function
+	FUN <- match.fun(mean)
+
+	if(inherits(out, "SpatRaster")){
+		if(!requireNamespace("terra", quietly=T)) stop("This module requires the 'terra' package.")
+
+		for(i in 1:trials){
+			# execute a random rotation
+			newY <- rotate(y)
+
+			# locate the points on the rotated grid 
+			cells <- locate(newY, x)
+
+			# tabulate their counts
+			cellTab <- table(cells)
+
+			# put them on a facelayer
+			fl<- facelayer(newY)
+			fl[] <- cellTab
+
+			# resample to output
+			newZ <- resample(fl, out)
+			terra::values(newZ)[is.na(terra::values(newZ))] <- 0
+
+			if(i == 1){
+				stack <- newZ
+			}else{
+				stack <- c(stack, newZ)
+			}
+			cat(i, "\r")
+			flush.console()
+		}
+
+		if(!is.null(FUN)){
+			res <- terra::app(stack, fun=FUN)
+		}else{
+			res <- stack
+		}
+	}
+
+	if(inherits(out, "trigrid")){
+		stack <- matrix(NA, ncol=nrow(out@faces), nrow=trials)
+		colnames(stack)  <- rownames(out@faces)
+
+		for(i in 1:trials){
+			# execute a random rotation
+			newY <- rotate(y)
+
+			cells <- locate(newY, x)
+			cellTab <- table(cells)
+			fl<- facelayer(newY)
+			fl[] <- cellTab
+
+			newZ <- resample(fl, out)
+			newZ[is.na(newZ)] <- 0
+			
+			stack[i,names(newZ)] <- newZ
+			cat(i, "\r")
+			flush.console()
+		}
+
+		# calculate the thing for all of them
+		if(!is.null(FUN)){
+			res <- apply(stack, 2, FUN=FUN)
+		}else{
+			res <- stack
+		}
+	}
+	return(res)
+
+}

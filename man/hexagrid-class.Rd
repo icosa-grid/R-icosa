@@ -12,6 +12,8 @@
 Higher values result in more uniform cell sizes, but the larger number of tessellation series,
 increases the speed of lookup functions.}
 
+\item{deg}{(\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{hexguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.}
+
 \item{sp}{(\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 should be added to the object when the grid is calculated. If set to true the \code{\link{SpPolygons}} function will be run with with the resolution parameter set to \code{25}. The 
  resulting object will be stored in slot \code{@sp}. As the calculation of this object can increase the grid creation time substantially
@@ -25,6 +27,8 @@ object structure, however, setting this parameter to \code{FALSE} might help, as
 \item{radius}{(\code{numeric}) The radius of the grid. Defaults to the authalic radius of Earth.}
 
 \item{center}{(\code{numeric}) The origin of the grid in the reference Cartesian coordinate system. Defaults to \code{c(0,0,0)}.}
+
+\item{verbose}{(\code{logical}) Should messages be printed during grid creation?}
 }
 \value{
 A hexagonal grid object, with class \code{hexagrid}.
@@ -74,6 +78,7 @@ deactivation of these units. Any sort of meddling with the @skeleton object will
 }}
 
 \examples{
-g <- hexagrid(c(8), sp=TRUE)
-g1 <- hexagrid(c(2,3,4))
+g <- hexagrid(c(8), sf=TRUE)
+# based on approximate size (4 degrees edge length)
+g1 <- hexagrid(deg=4) 
 }

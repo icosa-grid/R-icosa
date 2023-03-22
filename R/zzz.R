@@ -52,6 +52,8 @@
 #' @importFrom stats rnorm
 #' @importFrom stats runif
 #' @importFrom utils combn
+#' @importFrom utils flush.console
+#' @importFrom utils data
 NULL
 
 # package namespace variables
@@ -66,3 +68,6 @@ NULL
 	library.dynam.unload("icosa", libpath)
 }
 
+	# placeholders for lazy loading
+	hexguide <- NULL
+	triguide <- NULL

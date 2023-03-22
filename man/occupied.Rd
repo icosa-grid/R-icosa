@@ -26,15 +26,17 @@ This is a wrapper function on the \code{OccupiedFaces} methods that are specific
 }
 \examples{
 # create a grid
-g <- trigrid(8, sp=TRUE)
+g <- trigrid(8, sf=TRUE)
 
 # create random points
 randPoints <- rpsphere(100,output="polar")
 
-# the facelayer occupied by these points
-randomLayer <- occupied(g, randPoints)
-#plot(randomLayer)
-#points(randPoints, col="blue", pch="+")
+# the faces occupied by these points
+occ <- occupied(g, randPoints)
+ 
+ # plot using sf slot independently
+plot(g@sf[occ,"geometry"])
+points(randPoints, col="red", pch="+")
 
 
 }

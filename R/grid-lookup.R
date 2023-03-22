@@ -747,7 +747,7 @@ setMethod(
 #' @export
 pos<-function(gridObj, names, output="polar"){
 	
-	if(!class(gridObj)%in%c("trigrid", "hexagrid")) stop("Invalid gridObj argument.")
+	if(!inherits(gridObj, "trigrid")) stop("Invalid gridObj argument.")
 	if(!output%in%c("polar", "cartesian")) stop("Invalid output argument.")
 	
 	names<-as.character(names)
@@ -822,7 +822,7 @@ approximateFace<-function(coords, n, d, gridObj, onlyOne=FALSE, output="skeleton
 	# matrix of random coordinates around this point
 	randMat<-cbind(coords[1]+stats::rnorm(n,0,d), coords[2]+stats::rnorm(n,0,d), coords[3]+stats::rnorm(n,0,d))
 	
-	if(class(gridObj)=="hexagrid"){
+	if(inherits(gridObj,"hexagrid")){
 		temp<-suppressWarnings(locate(gridObj, randMat, output=output, randomborder=FALSE, forceNA=TRUE))
 	}else{
 		temp<-suppressWarnings(locate(gridObj, randMat, output=output, randomborder=FALSE))

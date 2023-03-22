@@ -8,9 +8,12 @@ docs
 _pkgdown.yml
 pkgdown
 index.*
+vignettes/icosa_1_installation.Rmd
+vignettes/icosa_2_essentials.Rmd
 vignettes/icosa_3_grids.Rmd
 vignettes/icosa_4_grid_details.Rmd
 vignettes/icosa_5_interfacing.Rmd
 vignettes/icosa_6_grid_bound_data.Rmd
 vignettes/icosa_7_grid_graph.Rmd
 vignettes/icosa_8_3d_plotting.Rmd
+vignettes/archive.Rmd

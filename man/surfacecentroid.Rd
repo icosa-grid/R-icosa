@@ -43,7 +43,7 @@ to avoid a particual error that frequently occurrs with other methods for centro
 # generate some random points
 allData <- rpsphere(1000)
 # select only a subset
-points<-allData[allData[,2]>1500,]
+points<-allData[allData[,3]>1500,]
 # transform to 2d
  points2 <- CarToPol(points, norad=TRUE)
 # the spherical centroid
@@ -52,6 +52,6 @@ sc
 
 #3d plot
 plot(points2, xlim=c(-180, 180), ylim=c(-90, 90))
-points(sc[1], sc[2], col="red", cex=5)
+points(sc[1], sc[2], col="red", cex=5, pch=3)
 
 }

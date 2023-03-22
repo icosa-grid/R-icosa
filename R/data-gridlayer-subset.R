@@ -115,7 +115,7 @@ setMethod(
 #' Shorthand to the \code{\link[icosa]{subset}} function.
 #' 
 #' @param x (\code{\link{facelayer}}) The object to be subsetted.
-#' @param i (\code{logical}, \code{numeric} or \code{\link[raster:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
+#' @param i (\code{logical}, \code{numeric} or \code{\link[terra:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.
 #' @exportMethod "["
 #' @return The extraction methods return \code{\link{facelayer}}-class objects.
 #' @rdname extract-methods

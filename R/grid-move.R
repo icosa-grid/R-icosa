@@ -76,7 +76,7 @@ setMethod(
 			x@skeleton$v<-verticesSkel
 		
 		# in case the trigrid is a hexagrid too
-		if(class(x)=="hexagrid"){
+		if(inherits(x,"hexagrid")){
 			plotV<-t(apply(x@skeleton$plotV, 1, rotateOnePoint, angles=angles, origin=orig))
 			colnames(plotV)<-c("x","y","z")
 			x@skeleton$plotV <- plotV

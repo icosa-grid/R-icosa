@@ -5,6 +5,7 @@
 \alias{locate,trigrid,matrix-method}
 \alias{locate,trigrid,numeric-method}
 \alias{locate,trigrid,data.frame-method}
+\alias{locate,trigrid,sf-method}
 \alias{locate,trigrid,SpatialPoints-method}
 \alias{locate,trigrid,SpatialPointsDataFrame-method}
 \alias{locate,hexagrid,matrix-method}
@@ -17,6 +18,8 @@ locate(x, y, ...)
 \S4method{locate}{trigrid,numeric}(x, y, ...)
 
 \S4method{locate}{trigrid,data.frame}(x, y, ...)
+
+\S4method{locate}{trigrid,sf}(x, y, ...)
 
 \S4method{locate}{trigrid,SpatialPoints}(x, y, ...)
 

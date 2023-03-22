@@ -5,6 +5,7 @@
 \alias{resample}
 \alias{resample,SpatRaster,trigrid-method}
 \alias{resample,facelayer,trigrid-method}
+\alias{resample,facelayer,SpatRaster-method}
 \title{Resampling of data involving a \code{\link{trigrid}} or a \code{\link{hexagrid}} object.}
 \format{
 An object of class \code{standardGeneric} of length 1.
@@ -15,6 +16,8 @@ resample
 \S4method{resample}{SpatRaster,trigrid}(x, y, method = "near", na.rm = TRUE)
 
 \S4method{resample}{facelayer,trigrid}(x, y, method = NULL, res = 5)
+
+\S4method{resample}{facelayer,SpatRaster}(x, y, method = NULL, res = 5)
 }
 \arguments{
 \item{x}{(\code{\link[terra:rast]{SpatRaster}}, \code{\link{facelayer}}) Object to resample.}

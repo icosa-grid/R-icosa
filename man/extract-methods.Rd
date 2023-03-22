@@ -17,7 +17,7 @@
 \arguments{
 \item{x}{(\code{\link{facelayer}}) The object to be subsetted.}
 
-\item{i}{(\code{logical}, \code{numeric} or \code{\link[raster:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.}
+\item{i}{(\code{logical}, \code{numeric} or \code{\link[terra:ext]{SpatExtent}}) The subscript vector, or extent, specifying the faces that are used for subsetting. As in \code{\link[base]{subset}}.}
 
 \item{value}{The replacement values.}
 }

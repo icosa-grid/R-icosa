@@ -2,8 +2,11 @@ Package: icosa
 Title: Global Triangular and Penta-Hexagonal Grids Based on Tessellated
     Icosahedra
 Version: 0.11.0
-Authors@R: person("Adam T.", "Kocsis", email = "adam.t.kocsis@gmail.com", 
-	role = c("aut", "cre"))
+Authors@R: c(
+	person(given="Adam T.", family="Kocsis", role=c("cre", "aut"),
+		   email="adam.t.kocsis@gmail.com", comment=c(ORCID="0000-0002-9028-665X")),
+	person(given="Deutsche Forschungsgemeinschaft", role="fnd"),
+	person(given="FAU GeoZentrum Nordbayern", role="fnd"))
 Collate:
     zzz.R
     data.R
@@ -34,15 +37,10 @@ Collate:
     plot-rgl-grid.R
     plot-rgl-facelayer.R
     plot-rgl-sp3d.R
-Description: Employs triangular tessellation to refine icosahedra
-    defined in 3d space. The procedures can be set to provide a grid with a
-    custom resolution. Both the primary triangular and their inverted penta-
-    hexagonal grids are available for implementation. Additional functions
-    are provided to position points (latitude-longitude data) on the grids,
-    to allow 2D and 3D plotting, use raster data and shapefiles.
+Description: Implementation of icospheres in three dimensions. The spherical-trinangular tesselation procedures can be set to create grids with a wide range of resolution. Both the primary triangular and their inverted penta- hexagonal grids can be calculated. Additional functions are provided that allow 2D and 3D plotting of the grids and associated data, the interaction of the grids with other raster and vector data, and treating the grids as a graph objects.
 Depends:
-    R (>= 3.2.2)
-Date: 2023-03-12
+    R (>= 3.5.0)
+Date: 2023-03-20
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -51,8 +49,9 @@ Suggests:
     rmarkdown,
     terra,
     rgl
+URL: https://adamkocsis.github.io/icosa/
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 LinkingTo: Rcpp
 Imports:
     Rcpp,
@@ -62,5 +61,5 @@ Imports:
     stats,
 	sf
 NeedsCompilation: yes
-Author: Adam T. Kocsis [aut, cre]
+BugReports: https://github.com/adamkocsis/icosa/issues
 Maintainer: Adam T. Kocsis <adam.t.kocsis@gmail.com>

@@ -4,14 +4,20 @@
 \alias{lines,trigrid-method}
 \title{Lines method for the \code{trigrid} and \code{hexagrid} classes}
 \usage{
-\S4method{lines}{trigrid}(x, crs = NULL, ...)
+\S4method{lines}{trigrid}(x, crs = NULL, col = 1, lwd = 1, lty = 1, ...)
 }
 \arguments{
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.}
 
-\item{...}{Arguments passed to the \code{\link[sp:panel]{sp.lines}} method.}
+\item{crs}{(\code{character} or \code{\link[sf:st_crs]{crs}}) A coordinate system for the transformation of coordinates.}
 
-\item{projargs}{(\code{character} or \code{\link[sp:CRS-class]{CRS}}) A projection string for the transformation fo coordinates.}
+\item{col}{Line colors - as in \code{\link[graphics:par]{par}}}
+
+\item{lwd}{Line thickness - as in \code{\link[graphics:par]{par}}}
+
+\item{lty}{Line type - as in \code{\link[graphics:par]{par}}}
+
+\item{...}{Arguments passed to the \code{\link[sp:panel]{sp.lines}} method.}
 }
 \value{
 The function has no return value.

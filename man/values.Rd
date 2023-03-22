@@ -6,6 +6,7 @@
 \alias{values,gridlayer-method}
 \alias{values<-}
 \alias{values<-,gridlayer,ANY-method}
+\alias{values<-,gridlayer-method}
 \title{Extract and replace values from a gridlayer-derived object (e.g. \code{link{facelayer}}).}
 \format{
 An object of class \code{standardGeneric} of length 1.
