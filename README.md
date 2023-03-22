@@ -1,33 +1,43 @@
-# icosa
-R package for global triangular and penta-gexagonal grids based on tessellated icosahedra (v0.10.0)
 
-## News
+# icosa <img src="man/figures/logo.png" align="right" />
 
-I initilized the developmental repository of the `icosa` package, which has been under continuous testing in the past year. I have not been attending to this project, as I have been too occupied with research and my other package. 
+[![](https://img.shields.io/badge/devel%20version-0.11.0-green.svg)](https://github.com/adamkocsis/icosa)
+[![](https://www.r-pkg.org/badges/version/icosa?color=blue)](https://cran.r-project.org/package=icosa)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/icosa?color=yellow)](https://cran.r-project.org/package=icosa)
+[![CRAN
+checks](https://badges.cranchecks.info/summary/icosa.svg)](https://cran.r-project.org/web/checks/check_results_icosa.html)
 
-## About
+## Package website
 
-This repository contains the under development versions of the package as well as those that were uploaded to the CRAN.
-
+The website of the package is deployed at
+<https://adamkocsis.github.io/icosa/>
 
 ## Installation
 
-1. The stable version of the package is openly available from the CRAN servers. Just type in
-```
-`install.packages("icosa")`
-```
+1.  The stable version of the package is openly available from the CRAN
+    servers. Just type in
 
-and the package will be installed. In case you would like to experiment with the under development versions, please take a look at the points below
+<!-- end list -->
 
-2. If you have a compiler installed, you can install the latest version from the source tarball, with
-```
-install.packages(
-  "https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.0.tar.gz", 
-  repos=NULL, type="source")
-```
-3. I will also provide binaries for Windows. If you want to, you can try them. 
-`install.packages("https://github.com/adamkocsis/icosa/raw/master/_bin/Win_x64_x86/icosa_0.10.0.zip", repos=NULL, type="win.binary")`
+    `install.packages("icosa")`
 
+and the package will be installed. In case you would like to experiment
+with the under development versions, please take a look at the points
+below
 
-See changes at 
-https://github.com/adamkocsis/icosa/blob/devel/inst/NEWS.md
+2.  If you have a compiler installed, you can install the latest version
+    from the source tarball, with
+
+<!-- end list -->
+
+    install.packages(
+      "https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.0.tar.gz", 
+      repos=NULL, type="source")
+
+3.  I will also provide binaries for Windows. If you want to, you can
+    try them.
+    `install.packages("https://github.com/adamkocsis/icosa/raw/master/_bin/Win_x64_x86/icosa_0.10.0.zip",
+    repos=NULL, type="win.binary")`
+
+See changes at
+<https://github.com/adamkocsis/icosa/blob/devel/inst/NEWS.md>

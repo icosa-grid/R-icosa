@@ -15,6 +15,10 @@ library(badger)
 `r badge_cran_download("icosa", "grand-total", "yellow")`
 `r badge_cran_checks("icosa")`
 
+## Package website
+
+The website of the package is deployed at https://adamkocsis.github.io/icosa/ 
+
 
 ## Installation
 

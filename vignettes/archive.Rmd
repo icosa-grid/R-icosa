@@ -9,7 +9,22 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# About
+# v0.11.0
+
+- source tarball: [icosa_0.11.0.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.11.0.tar.gz)
+
+* * *
+
+# v0.10.1
+
+- source tarball: [icosa_0.10.1.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.1.tar.gz)
+
+* * *
+
+# v0.10.0
+
+- source tarball: [icosa_0.10.0.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.0.tar.gz)
+
 
 
 

@@ -18,18 +18,18 @@ navbar:
           href: articles/icosa_1_installation.html 
         - text: "2. Essentials"
           href: articles/icosa_2_essentials.html
-        - text: "3. Grid construction"
-          href: articles/icosa_3_grids.html 
-        - text: "4. Grid details"
-          href: articles/icosa_4_grid_details.html 
-        - text: "5. Interfacing with data"
-          href: articles/icosa_5_interfacing.html 
-        - text: "6. Grid-bound data"
-          href: articles/icosa_6_grid_bound_data.html 
-        - text: "7. Grids as graphs"
-          href: articles/icosa_7_grid_graph.html 
-        - text: "8. 3D ploting"
-          href: articles/icosa_8_3d_plotting.html 
+        # - text: "3. Grid construction"
+        #   href: articles/icosa_3_grids.html 
+        # - text: "4. Grid details"
+        #   href: articles/icosa_4_grid_details.html 
+        # - text: "5. Interfacing with data"
+        #   href: articles/icosa_5_interfacing.html 
+        # - text: "6. Grid-bound data"
+        #   href: articles/icosa_6_grid_bound_data.html 
+        # - text: "7. Grids as graphs"
+        #   href: articles/icosa_7_grid_graph.html 
+        # - text: "8. 3D ploting"
+        #   href: articles/icosa_8_3d_plotting.html 
     internals:
       text: Internals
       menu: 
