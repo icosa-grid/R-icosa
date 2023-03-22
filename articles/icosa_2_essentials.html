@@ -116,7 +116,7 @@
 <span><span class="co"># 10000 random points</span></span>
 <span><span class="va">randPoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rpsphere.html">rpsphere</a></span><span class="op">(</span><span class="fl">10000</span>, output<span class="op">=</span><span class="st">"polar"</span><span class="op">)</span></span>
 <span><span class="co"># the first 6 points</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">randPoints</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">randPoints</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             long        lat</span></span>
 <span><span class="co">## [1,]  -43.998368 -16.764084</span></span>
 <span><span class="co">## [2,] -105.191289   6.095493</span></span>
@@ -149,7 +149,7 @@
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">ne</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="st">"gray"</span>, border<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plotting the point cloud</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000055"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000055"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/vispoints-1.png" width="864"></p>
 <p>Note that the points appear to have a non-random distribution: they seem to have higher density in lower-latitude areas. But this is in fact a distorting effect of not the points, but the <a href="https://en.wikipedia.org/wiki/Equirectangular_projection" class="external-link">equirectangular map projection</a> itself! The points are are created with 3D normal distributions and then they are projected to the surface of the sphere around the center of this distribution.</p>
 </div>

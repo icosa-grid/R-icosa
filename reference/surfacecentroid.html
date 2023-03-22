@@ -125,12 +125,12 @@ to avoid a particual error that frequently occurrs with other methods for centro
 <span class="r-in"><span><span class="co"># the spherical centroid</span></span></span>
 <span class="r-in"><span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">surfacecentroid</span><span class="op">(</span><span class="va">points2</span>, output<span class="op">=</span><span class="st">"polar"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sc</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       long        lat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -139.25046   86.48941 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      long       lat </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 118.54414  86.67835 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#3d plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot.html">plot</a></span><span class="op">(</span><span class="va">points2</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">sc</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">sc</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col<span class="op">=</span><span class="st">"red"</span>, cex<span class="op">=</span><span class="fl">5</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">sc</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">sc</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col<span class="op">=</span><span class="st">"red"</span>, cex<span class="op">=</span><span class="fl">5</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="surfacecentroid-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
