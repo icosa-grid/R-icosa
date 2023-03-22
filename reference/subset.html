@@ -25,12 +25,6 @@ The function extracts subsets of the gridlayer depending on different criteria."
   <div class="dropdown-menu" aria-labelledby="dropdown-tutorials">
     <a class="dropdown-item" href="../articles/icosa_1_installation.html">1. Installation</a>
     <a class="dropdown-item" href="../articles/icosa_2_essentials.html">2. Essentials</a>
-    <a class="dropdown-item" href="../articles/icosa_3_grids.html">3. Grid construction</a>
-    <a class="dropdown-item" href="../articles/icosa_4_grid_details.html">4. Grid details</a>
-    <a class="dropdown-item" href="../articles/icosa_5_interfacing.html">5. Interfacing with data</a>
-    <a class="dropdown-item" href="../articles/icosa_6_grid_bound_data.html">6. Grid-bound data</a>
-    <a class="dropdown-item" href="../articles/icosa_7_grid_graph.html">7. Grids as graphs</a>
-    <a class="dropdown-item" href="../articles/icosa_8_3d_plotting.html">8. 3D ploting</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -130,7 +124,7 @@ to surfaces bounded by longitude/latitude data. In the latter case, the the vect
 <span class="r-in"><span>    </span></span>
 <span class="r-in"><span><span class="co">#additional way of subsetting</span></span></span>
 <span class="r-in"><span><span class="va">subG2</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">15</span><span class="op">]</span> <span class="co"># selects faces F1 through F15</span></span></span>
-<span class="r-in"><span><span class="va">logicalSub</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">logicalSub</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">subG3</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="va">logicalSub</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#plot the subset in 3d space</span></span></span>

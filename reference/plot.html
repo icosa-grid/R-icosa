@@ -29,12 +29,6 @@ The function matches data referred to the grid and plots it with sf's plotting m
   <div class="dropdown-menu" aria-labelledby="dropdown-tutorials">
     <a class="dropdown-item" href="../articles/icosa_1_installation.html">1. Installation</a>
     <a class="dropdown-item" href="../articles/icosa_2_essentials.html">2. Essentials</a>
-    <a class="dropdown-item" href="../articles/icosa_3_grids.html">3. Grid construction</a>
-    <a class="dropdown-item" href="../articles/icosa_4_grid_details.html">4. Grid details</a>
-    <a class="dropdown-item" href="../articles/icosa_5_interfacing.html">5. Interfacing with data</a>
-    <a class="dropdown-item" href="../articles/icosa_6_grid_bound_data.html">6. Grid-bound data</a>
-    <a class="dropdown-item" href="../articles/icosa_7_grid_graph.html">7. Grids as graphs</a>
-    <a class="dropdown-item" href="../articles/icosa_8_3d_plotting.html">8. 3D ploting</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -176,7 +170,7 @@ some misalignments can happen. If you want to use a differently sized window, us
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># A simple grid, with sf-representation</span></span></span>
 <span class="r-in"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="hexagrid-class.html">hexagrid</a></span><span class="op">(</span><span class="fl">4</span>, sf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gr</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gr</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">plot</span><span class="op">(</span>x<span class="op">=</span><span class="va">gr</span>, y<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-1.png" alt="" width="700" height="433"></span>
