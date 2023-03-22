@@ -3,7 +3,8 @@ template:
   bootstrap: 5
   bootswatch: cosmo
   bslib:
-    primary: "#f1af09"
+    primary: "#578734"
+#    primary: "#f1af09"
 
 navbar:
   structure:
@@ -34,12 +35,107 @@ navbar:
       menu: 
       - href: news/index.html
         text: Changelog 
-      - href: articles/internals.html
-        text: Internal structure
+      - href: articles/archive.html
+        text: Package archive 
     howtos:
       text: How-to guides on EvolvED
       href: "https://www.evolv-ed.net/"
 
+reference:
+- title: internal
+  contents:
+  - icosa
+- title: Grid creation
+  desc: >
+    Items relevant for creating grids. 
+  contents:
+  - trigrid
+  - hexagrid
+  - triguide
+  - hexguide
+- title: Grid properties
+  desc: >
+    Functions useful to access properties, attributes and subparts of the grid.
+  contents:
+  - vertices
+  - orientation
+  - edges
+  - faces
+  - length,trigrid-method
+  - centers
+  - edgelength
+  - surfacearea
+  - trishape
+  - pos
+- title: Grids as graphs
+  desc: >
+    Functions relevant to treating the icosahedral grids as graph (network objects).
+    These methods rely and interface with the 'igraph' package.
+  contents:
+  - gridgraph
+  - vicinity
+- title: Grid operations
+  desc: >
+    Functions useful for modifying grid structure.
+  contents:
+  - SpLines
+  - SpPolygons
+  - newsf
+  - newsp
+  - newgraph
+  - rotate
+  - translate
+  - subset
+- title: 2D plotting
+  desc: >
+    Functions useful for 2d plotting and interaction with 2d plots.
+    These functions rely either on the sf or sp packages.
+  contents:
+  - plot
+  - lines,trigrid-method
+  - gridlabs
+  - cellocator
+  - heatMapLegend
+- title: 3D plotting
+  desc: >
+    Functions useful for 3d plotting.
+    These items rely on the 'rgl' package.
+  contents:
+  - plot3d
+  - lines3d
+  - faces3d
+  - gridlabs3d
+  - guides3d
+- title: Interfacing
+  desc: >
+    Items needed for external data to interact with the grids. 
+  contents:
+  - locate
+  - occupied
+  - resample
+  - gridensity
+- title: Gridlayer/facelayer
+  desc: >
+    In development native grid-based data containers. 
+  contents:
+  - facelayer
+  - names,gridlayer-method
+  - values
+  - resample
+  - '[,gridlayer,ANY,missing-method'
+- title: Utilities
+  desc: >
+     Functions for general use in spherical geometry, such as distance measurement, coordinate conversion.
+     In general, these apply to point data. 
+  contents:
+  - rpsphere
+  - CarToPol
+  - PolToCar
+  - arcdist
+  - arcdistmat
+  - arcpoints
+  - surfacecentroid
+  - chullsphere
 
 authors:
   Adam T. Kocsis:

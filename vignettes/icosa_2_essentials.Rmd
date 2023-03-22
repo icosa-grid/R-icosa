@@ -21,15 +21,13 @@ knit_hooks$set(rgl = hook_rgl)
 
 The purpose of this tutorial is to demonstrate the basic usage of the ``icosa`` package. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point vector data and variables that depend on the density of such data. 
 
-Note that this is just a brief introduction to the package's capabilities. The complete documentation of the package and the rest of the tutorials will be made available on the [package website](https://adamkocsis.github.io/icosa/). Relevant how-to guides will be posted on the evolv-ED blog (http://www.evolv-ed.net). 
-
+Note that this is just a brief introduction to the package's capabilities. The complete documentation of the package and the rest of the tutorials will be made available on the [package website](https://adamkocsis.github.io/icosa/). Relevant how-to guides will be posted on the evolv-ED blog (https://www.evolv-ed.net/). 
 
 * * *
 
 ## Point Data 
 
 The primary problem with ecological samples is that due to density and uniformity issues, the data points are to be aggregated to distinct units. As coordinate recording is very efficient on the 2d surface of a polar coordinate system (i.e. latiude and longitude data), this was primarly achieved by rectangular gridding of the surface (for instance 1° times 1° grid cells). Unfortunately, this method suffers from systematic biasing effects: as the poles are approached, the cells become smaller in area, and come closer to each other. 
-
 
 #### Random points on the sphere
 
@@ -93,7 +91,7 @@ counts <- rasterize(randPoints,r, fun=length)
 counts
 ```
 
-The density of these points can be easilly visualized with a plot.
+The counts of these points can be easilly visualized with a plot.
 
 ```{r rastplot, fig.width=10, fig.height=5}
 # the raster itself
@@ -104,9 +102,9 @@ plot(ne$geometry, col=NA, border="black", add=TRUE)
 ```
 
 
-The density of points
+The point counts have a similar latitudinal pattern as we saw with their distribution: as latitude increases, the cell sizes decrease and the expected number of points in them decreases.0
 
-One solution to this problem can be the use of a different projection. For instance the [Lambert's Cylindrical Equal Area](https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection) projection (`["EPSG:54034"](https://epsg.io/54034)`) can be used instead of the Equirectangular projection. This will, however distort the polar cells that will become more and more elongated with higher the latitude values.   
+One solution to this problem can be the use of a different projection. For instance the [Lambert's Cylindrical Equal Area](https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection) projection (`["EPSG:54034"](https://epsg.io/54034)`) can be used instead of the Equirectangular projection. This will, however distort the polar cells that will become more and more elongated with higher the latitude values - which might be a problem, or might not.   
 
 * * *
 
@@ -147,15 +145,17 @@ Once `icosa` is loaded, you can create such a penta-hexagonal grid with a single
 hexa <- hexagrid(deg=5, sf=TRUE)
 ```
 
-- The argument `deg` refers to the expected length of the edge length of grid in degrees. This is given as angular distance between two cell vertices - same as degrees longitudinally (or latitudinally on the equator), 1° =~111 km. This is used to select a `tessellation` vector, which is directly controlling the grid resolution: how the faces of icosahedron are split up. The higher the product of this vector, the higher the resolution - ie. the more cells there will be in the grid.  
+- The argument `deg` refers to the expected length of the edge length of the grid. This is given as angular distance between two cell vertices in **degrees** - which means same as degrees longitudinally (or latitudinally on the equator), 1° =~111 km. This is used to select a `tessellation` vector, which is directly controlling the grid resolution: how the faces of icosahedron are split up. The higher the product of this vector, the higher the resolution - ie. the more cells there will be in the grid. The example `c(2, 4)` means that the original icosahedrons edges are split up 2 * 4 = 8 times. 
 
-- The argument `sf=TRUE` indicates that we want to create a representation of the grid that can be used for additional spatial calculations (using the `sf` package) for example, to do 2D (projection-based) plotting. Since this is not always needed, and can significantly decrease performance, you need to indicate this when you create the grid. 
+- The argument `sf=TRUE` indicates that we want to create a representation of the grid that can be used for additional spatial operations using the `sf` package, for example 2D (projection-based) plotting. Since this is not always needed, and can significantly decrease performance, you have to indicate that you need this option. 
 
 If you type in the name of the object, you can some immediate properties about the structure and resolution of the grid.
 
 ```{r show, echo=TRUE}
 hexa
 ```
+
+The most important detail here is th the number of faces of the 3d body (642) i.e. the number of cells in the grid.
 
 * * *
 
@@ -211,7 +211,7 @@ cells <- locate(hexa, randPoints)
 str(cells)
 ```
 
-The output of `locate()` is designed so it would be usable as a new column in the table of coordinates (optional):
+The output of `locate()` is so designed that it can be used as a new column in the table of coordinates (optional):
 
 ```{r columns}
 # transform this to a data frame
@@ -224,7 +224,7 @@ head(rdf)
 
 #### Counting the cells
 
-To assess the density of points, we need to count the number of points in every cell - which is actually nothing else, but the tabulation of the number of times that a face appears. This we can easilly do with the `table()` function:
+To assess the density of points, we need to count the number of points in every cell - which is actually nothing else, but the tabulation of the number of times that a point falls on a cell. This we can easilly do with the `table()` function:
 
 ```{r table}
 tCells <- table(cells)
@@ -235,16 +235,16 @@ str(tCells)
 
 #### Plotting the frequency
 
-There is a number of ways to visualize this number on the map, the simplest is to use a dedicated method of `plot()`, that takes such a named entity and the grid (with an `sf` representation, as [above](#land-polygons)) and plots this with the features made available via `sf`:
+There is a number of ways to visualize this number on the map, the simplest is to use a dedicated method of `plot()`, that takes the grid (with an `sf` representation, as [above](#land-polygons)) and a named entity (vector, table) and plots this with the features made available via `sf`:
 
 ```{r visdistrib, fig.width=9, fig.height=4.5}
-plot(tCells, hexa)
+plot(hexa, tCells)
 ```
 
 You can modify this plotting in any way you could with `sf::plot()`. For instance, if you want to use a different color scheme, a different binning
 
 ```{r visdistrib_custom, fig.width=9, fig.height=4.5}
-plot(tCells, hexa,
+plot(hexa, tCells, 
 	border="white",
 	pal=c("#440154FF", "#2D708EFF", "#29AF7FFF", "#FDE725FF"), 
 	breaks=c(0, 10, 15, 20, 40)
@@ -255,7 +255,7 @@ You can also set the plotted cooordinate reference system directly here in the p
 
 ```{r final, fig.width=9, fig.height=4.5}
 # the base map
-plot(tCells, hexa,
+plot(hexa, tCells, 
 	crs="ESRI:54009", 
 	border="white",
 	pal=c("#440154FF", "#2D708EFF", "#29AF7FFF", "#FDE725FF"), 
@@ -270,11 +270,11 @@ neMoll <- sf::st_transform(ne, "ESRI:54009")
 
 ```
 
-... you can also put them on top. Just make sure to set `reset=FALSE`:
+... you can also put them on top. Just make sure to set `reset=FALSE` (see `sf::plot` why):
 
 ```{r final2,fig.width=9, fig.height=4.5}
 # the base map
-plot(tCells, hexa,
+plot(hexa, tCells,
 	crs="ESRI:54009", 
 	border="white",
 	pal=c("#440154FF", "#2D708EFF", "#29AF7FFF", "#FDE725FF"), 
@@ -319,7 +319,6 @@ plot(faceInfo$lat, faceInfo$count,
 
 There is no latitudinal trend in the points, but you can see that the spread decreases latitudinally (because there are fewer cells) at high latitudes.
 
-
 ## Summary 
 
 If you have some data (e.g. `randPoints`) and you want to execute the binning and plotting, you can do it with this much code - now using a different, coarser resolution grid:
@@ -328,8 +327,7 @@ If you have some data (e.g. `randPoints`) and you want to execute the binning an
 gr <- hexagrid(deg=10, sf=TRUE) # create grid
 cells<- locate(gr, randPoints) # locate points
 tab <- table(cells) # tabulate, calculate
-plot(tab, gr) # plot named vector/table
+plot(gr, tab) # plot named vector/table
 ```
 
 
-If you are interested in more tutorials, you can continue from [3: Grid types and resolutions](https://adamkocsis.github.io/icosa/articles/icosa_3_grids.html) on the [package's webpage](https://adamkocsis.github.io/icosa/).
