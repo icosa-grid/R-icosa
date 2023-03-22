@@ -1,5 +1,5 @@
 
-# icosa <img src="man/figures/logo.png" align="right" />
+# icosa <img src="man/figures/logo.png" align="right"/>
 
 [![](https://img.shields.io/badge/devel%20version-0.11.0-green.svg)](https://github.com/adamkocsis/icosa)
 [![](https://www.r-pkg.org/badges/version/icosa?color=blue)](https://cran.r-project.org/package=icosa)

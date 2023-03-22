@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(badger)
 ```
 
-# icosa <img src="man/figures/logo.png" align="right" />
+# icosa <img src="man/figures/logo.png" align="right"/>
 
 `r badge_devel("adamkocsis/icosa", "green")`
 `r badge_cran_release("icosa", "blue")`

@@ -23,12 +23,9 @@ resolution. Both the primary triangular and their inverted
 penta-hexagonal grids are available for implementation. Additional
 functions are provided to position points (latitude-longitude data) on
 the grids, to allow 2D and 3D plotting, use raster data and shapefiles.
-\* \* \*
+
+-----
 
 ## Notes
 
-#### History
-
 This is a beta version, and like R, comes with absolutely no warranty.
-
-#### Aim
