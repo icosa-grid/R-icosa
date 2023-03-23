@@ -3,6 +3,7 @@ README.md
 \.git
 _archive
 README.Rmd
+README.html
 tests
 docs
 _pkgdown.yml
