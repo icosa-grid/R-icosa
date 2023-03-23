@@ -37,7 +37,7 @@ Collate:
     plot-rgl-grid.R
     plot-rgl-facelayer.R
     plot-rgl-sp3d.R
-Description: Implementation of icospheres in three dimensions. The spherical-triangular tessellation can be set to create grids with custom resolutions. Both the primary triangular and their inverted penta-hexagonal grids can be calculated. Additional functions are provided that allow 2D and 3D plotting of the grids and associated data, the interaction of the grids with other raster and vector objects, and treating the grids as a graphs.
+Description: Implementation of icosahedral grids in three dimensions. The spherical-triangular tessellation can be set to create grids with custom resolutions. Both the primary triangular and their inverted penta-hexagonal grids can be calculated. Additional functions are provided that allow plotting of the grids and associated data, the interaction of the grids with other raster and vector objects, and treating the grids as a graphs.
 Depends:
     R (>= 3.5.0)
 Date: 2023-03-23

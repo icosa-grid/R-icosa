@@ -206,13 +206,13 @@ setMethod(
 #'  x <- rpsphere(100, output="polar")
 #' 
 #'  # bandwidth grid
-#'  y <- hexagrid(deg=10)
+#'  y <- hexagrid(deg=13)
 #' 
 #'  # output structure
-#'  out <- terra::rast(res=2)
+#'  out <- terra::rast(res=5)
 #'
 #'  # the function
-#'  o <- gridensity(x, y, out, trials=10)
+#'  o <- gridensity(x, y, out, trials=7)
 #' 
 #'  # visualize results
 #'  terra::plot(o)
