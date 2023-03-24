@@ -1,5 +1,12 @@
 url: https://adamkocsis.github.io/icosa
 template:
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: The icosa sticker.
+    twitter:
+      creator: "@atkocsis"
+      card: summary_large_image
   bootstrap: 5
   bootswatch: cosmo
   bslib:
