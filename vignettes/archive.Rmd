@@ -9,22 +9,34 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# v0.11.0
+## v0.11.0 
 
-- source tarball: [icosa_0.11.0.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.11.0.tar.gz)
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802878-blue.svg)](https://doi.org/10.5281/zenodo.7802878)
 
-* * *
-
-# v0.10.1
-
-- source tarball: [icosa_0.10.1.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.1.tar.gz)
-
-* * *
-
-# v0.10.0
-
-- source tarball: [icosa_0.10.0.tar.gz](https://github.com/adamkocsis/icosa/raw/master/_archive/sources/icosa_0.10.0.tar.gz)
+- source tarball: [icosa_0.11.0.tar.gz](https://zenodo.org/record/7802878/files/icosa_0.11.0.tar.gz?download=1)
+- project snapshot: [adamkocsis/icosa-0.11.0.zip](https://zenodo.org/record/7798916/files/adamkocsis/icosa-0.11.0.zip?download=1)
 
 
+## v0.10.1
 
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802807-blue.svg)](https://doi.org/10.5281/zenodo.7802807)
+
+- source tarball: [icosa_0.10.1.tar.gz](https://zenodo.org/record/7802807/files/icosa_0.10.1.tar.gz?download=1)
+
+
+
+## v0.10.0
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802804-blue.svg)](https://doi.org/10.5281/zenodo.7802804)
+
+- source tarball: [icosa_0.10.0.tar.gz](https://zenodo.org/record/7802804/files/icosa_0.10.0.tar.gz?download=1)
+
+
+## v0.9.81
+
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802768-blue.svg)](https://doi.org/10.5281/zenodo.7802768)
+
+- source tarball: [icosa_0.9.81.tar.gz](https://zenodo.org/record/7802768/files/icosa_0.9.81.tar.gz?download=1)
 
