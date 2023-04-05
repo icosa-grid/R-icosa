@@ -92,23 +92,42 @@
 <img src="logo.png" class="logo" alt=""><h1 id="icosa-">icosa <a class="anchor" aria-label="anchor" href="#icosa-"></a>
 </h1>
 </div>
-<p><a href="https://github.com/adamkocsis/icosa" class="external-link"><img src="https://img.shields.io/badge/devel%20version-0.11.0-green.svg"></a> <a href="https://cran.r-project.org/package=icosa" class="external-link"><img src="https://www.r-pkg.org/badges/version/icosa?color=blue"></a> <a href="https://cran.r-project.org/package=icosa" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/icosa?color=yellow"></a> <a href="https://cran.r-project.org/web/checks/check_results_icosa.html" class="external-link"><img src="https://badges.cranchecks.info/summary/icosa.svg" alt="CRAN checks"></a></p>
+<p><a href="https://github.com/adamkocsis/icosa" class="external-link"><img src="https://img.shields.io/badge/devel%20version-0.11.0-green.svg"></a> <a href="https://cran.r-project.org/package=icosa" class="external-link"><img src="https://www.r-pkg.org/badges/version/icosa?color=blue"></a> <a href="https://cran.r-project.org/package=icosa" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/icosa?color=yellow"></a> <a href="https://cran.r-project.org/web/checks/check_results_icosa.html" class="external-link"><img src="https://badges.cranchecks.info/summary/icosa.svg" alt="CRAN checks"></a> <a href="https://doi.org/10.5281/zenodo.7798915" class="external-link"><img src="https://img.shields.io/badge/doi-10.5281/zenodo.7798915-blue.svg"></a></p>
 <div class="section level4">
 <h4 id="triangular-and-penta-hexagonal-grids-based-on-tessellated-icosahedra">Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra<a class="anchor" aria-label="anchor" href="#triangular-and-penta-hexagonal-grids-based-on-tessellated-icosahedra"></a>
 </h4>
-<p>icosa (originally εἴκοσι) is greek for twenty, and refers to the icosahedron.</p>
+<p>icosa (originally εἴκοσι) is greek for twenty, and refers to the icosahedron. The ‘icosa’ extension is an implementation of icosahedral grids in three dimensions. The spherical-triangular tessellation can be set to create grids with custom resolutions. Both the primary triangular and their inverted penta-hexagonal grids can be calculated. Additional functions are provided that allow plotting of the grids and associated data, the interaction of the grids with other raster and vector objects, and treating the grids as a graphs.</p>
 <p>These grids are often called icospheres, and have an important use in material design, architecture, computer graphics and chemistry.</p>
+<hr>
 </div>
-<div class="section level2">
-<h2 id="package-descriptions">Package descriptions<a class="anchor" aria-label="anchor" href="#package-descriptions"></a>
-</h2>
-<p>Employs triangular tessellation to refine icosahedra defined in 3d space. The procedures can be set to provide a grid with a custom resolution. Both the primary triangular and their inverted penta-hexagonal grids are available for implementation. Additional functions are provided to position points (latitude-longitude data) on the grids, to allow 2D and 3D plotting, use raster data and shapefiles.</p>
+<div class="section level4">
+<h4 id="similar-packages">Similar packages<a class="anchor" aria-label="anchor" href="#similar-packages"></a>
+</h4>
+<p>Implementations of similar grids are available in R with the <a href="https://h3geo.org/" class="external-link">H3 library</a> (<a href="https://obrl-soil.github.io/h3jsr/" class="external-link">h3-js</a>) and the <a href="https://github.com/r-barnes/dggridR" class="external-link">ddgridR</a> libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, 3D-based operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It also allows access to not only hexagonal, but triangular grids as well.</p>
 <hr>
 </div>
 <div class="section level2">
-<h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+<h2 id="plans">Plans<a class="anchor" aria-label="anchor" href="#plans"></a>
 </h2>
-<p>This is a beta version, and like R, comes with absolutely no warranty.</p>
+<div class="section level4">
+<h4 id="near">Near<a class="anchor" aria-label="anchor" href="#near"></a>
+</h4>
+<ul>
+<li>Finishing vignettes in <strong>Tutorials</strong>
+</li>
+<li>Paper about the package (long overdue)</li>
+<li>Moving internal vector-representation from <code>sp</code> to <code>sf</code>
+</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="distant">Distant<a class="anchor" aria-label="anchor" href="#distant"></a>
+</h4>
+<ul>
+<li>Customization of tesselation that allows tweaking of cell sizes and shapes - depending on needs</li>
+<li>Writing a C++ library from the core functionality and porting it to Pyhton and Julia</li>
+</ul>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
