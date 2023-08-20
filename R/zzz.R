@@ -15,6 +15,8 @@
 #' # Create a triangular grid
 #' tri <- trigrid(c(2,2))
 #' @name icosa
+"_PACKAGE"
+
 #' @useDynLib icosa, .registration = TRUE, .fixes="Cpp"
 
 #' @importFrom sf st_crs

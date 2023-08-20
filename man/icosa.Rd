@@ -3,6 +3,7 @@
 \docType{package}
 \name{icosa}
 \alias{icosa}
+\alias{icosa-package}
 \title{Global Triangular and Hexa-Pentagonal Grids Based on Tessellated Icosahedra}
 \description{
 The \bold{icosa} package provides tools to aggregate and analyze geographic data
@@ -18,6 +19,14 @@ This is still the Beta version. Notes about found bugs and suggestions are more 
 \examples{
 # Create a triangular grid
 tri <- trigrid(c(2,2))
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://adamkocsis.github.io/icosa/}
+  \item Report bugs at \url{https://github.com/adamkocsis/icosa/issues}
+}
+
 }
 \author{
 Adam T. Kocsis (adam.t.kocsis@gmail.com)
