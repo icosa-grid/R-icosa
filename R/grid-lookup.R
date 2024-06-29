@@ -9,7 +9,7 @@
 #'
 #' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.
 #' 
-#' @param data (\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.
+#' @param data (\code{matrix}, \code{data.frame}, \code{sf} or \code{Spatial}) The queried data.
 #' @param out (\code{character}) What shall be the output class? Can be either \code{\link{facelayer}} or \code{logical} (default.)
 #'
 #' @param ... Arguments passed to the class specific methods
