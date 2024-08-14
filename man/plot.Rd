@@ -30,9 +30,15 @@ plot
   ...
 )
 
-\S4method{plot}{trigrid,vector}(x, y, crs = NULL, main = "", ...)
+\S4method{plot}{trigrid,numeric}(x, y, crs = NULL, main = "", ...)
+
+\S4method{plot}{trigrid,array}(x, y, crs = NULL, main = "", ...)
 
 \S4method{plot}{trigrid,table}(x, y, crs = NULL, main = "", ...)
+
+\S4method{plot}{trigrid,character}(x, y, crs = NULL, main = "", ...)
+
+\S4method{plot}{trigrid,logical}(x, y, crs = NULL, main = "", ...)
 }
 \arguments{
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The object to be plotted.}
@@ -57,7 +63,12 @@ plot
 
 \item{discrete}{(\code{logical}): Do the heatmaps symbolize a discrete or a continuous variable? This argument only affects the legend of the heatmap.}
 
-\item{y}{A named vector or table with names that refer to face names of the grid.}
+\item{y}{Data or part of the grid to be plotted. If it is an unnamed character vector, then it is expected to be
+a set of faces, which will be treated as a subscript that indicates the faces to be plotted.
+If it is a logical vector, then it is expeced to be subscript, indicating a similar operation.
+If it is a named logical or character vector, table with names, or single-dimensional named array
+then the names are expected to refer to faces of the grid \code{x}. The default sf-based plotting method
+will apply to the data type.}
 
 \item{main}{The main title of the plot}
 }

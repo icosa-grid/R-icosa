@@ -7,6 +7,7 @@
 
 ### Fixed 
 - Grids can now be created without attaching the package
+- Plotting methods of loosely related data items 
 
 ### Chnaged
 

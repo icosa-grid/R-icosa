@@ -320,7 +320,12 @@ setMethod(
 #' 
 #' The function matches data referred to the grid and plots it with sf's plotting methods.
 #' 
-#' @param y A named vector or table with names that refer to face names of the grid.
+#' @param y Data or part of the grid to be plotted. If it is an unnamed character vector, then it is expected to be
+#' a set of faces, which will be treated as a subscript that indicates the faces to be plotted.
+#' If it is a logical vector, then it is expeced to be subscript, indicating a similar operation.
+#' If it is a named logical or character vector, table with names, or single-dimensional named array
+#' then the names are expected to refer to faces of the grid \code{x}. The default sf-based plotting method
+#' will apply to the data type.
 #' @param main The main title of the plot
 #' @rdname plot
 #' @name plot
@@ -335,7 +340,7 @@ setMethod(
 #' @exportMethod plot
 setMethod(
 	"plot",
-	signature=c("trigrid", "vector"),
+	signature=c("trigrid", "numeric"),
 	definition=function(x, y, crs=NULL, main="",  ...){
 
 		if(!inherits(x@sf, "sf")) stop("The grid has no @sf representation.\nUse newsf() to create a 2d representation")
@@ -344,7 +349,7 @@ setMethod(
 		# the sf part 
 		thesf <- x@sf
     	thesf$dat <- y[rownames(thesf)]
-		if(any(!names(y)%in%rownames(thesf))) stop("'y' must have the grid's faces as names.")
+		if(any(!names(y)%in%faces(x))) stop("'y' must have the grid's faces as names.")
 
 		if(!is.null(crs)){
 			thesf <- sf::st_transform(thesf,crs)
@@ -352,6 +357,25 @@ setMethod(
 
 		# plot the data
 		plot(thesf[, "dat"], main=main, ...)
+
+	
+	}
+)
+
+#' @name plot
+#' @rdname plot
+setMethod(
+	"plot",
+	signature=c("trigrid", "array"),
+	definition=function(x, y, crs=NULL, main="",  ...){
+		if(length(dim(y))!=1) stop("You can only plot 1-dimensional arrays!")
+
+		# transform the array to a vector
+		namedVect <- as.vector(y)
+		names(namedVect) <- names(y)
+
+		# execute the vector-based method
+		plot(x=x, y=namedVect, crs=crs, main=main, ...)
 
 	
 	}
@@ -372,5 +396,87 @@ setMethod(
 		plot(x=x, y=namedVect, crs=crs, main=main, ...)
 
 	
+	}
+)
+
+
+#' @name plot
+#' @rdname plot
+setMethod(
+	"plot",
+	signature=c("trigrid", "character"),
+	definition=function(x, y, crs=NULL, main="",  ...){
+
+		if(!inherits(x@sf, "sf")) stop("The grid has no @sf representation.\nUse newsf() to create a 2d representation")
+
+		# the sf part
+		thesf <- x@sf
+
+		# only do this if there are no names on the values
+		if(is.null(names(y))){
+			# make sure that the selected cell names are unique
+			y <- unique(y)
+
+			# also omit any missing values
+			y <- y[!is.na(y)]
+
+			if(any(!y%in%faces(x))) stop("The character vector must contain only the names of the faces of grid.")
+
+			# subset
+			sfcSubgrid <- thesf[y,"geometry"]
+
+			if(!is.null(crs)){
+				sfcSubgrid <- sf::st_transform(sfcSubgrid,crs)
+			}
+
+			# plot the data
+			plot(sfcSubgrid, main=main, ...)
+		}else{
+			if(is.null(names(y))) stop("'y' must have the grid's faces as names.")
+
+			# the sf part
+			thesf <- x@sf
+			thesf$dat <- y[rownames(thesf)]
+			if(any(!names(y)%in%faces(x))) stop("'y' must have the grid's faces as names.")
+
+			if(!is.null(crs)){
+				thesf <- sf::st_transform(thesf,crs)
+			}
+
+			# plot the data
+			plot(thesf[, "dat"], main=main, ...)
+
+		}
+
+
+	}
+)
+
+#' @name plot
+#' @rdname plot
+setMethod(
+	"plot",
+	signature=c("trigrid", "logical"),
+	definition=function(x, y, crs=NULL, main="",  ...){
+
+		if(!inherits(x@sf, "sf")) stop("The grid has no @sf representation.\nUse newsf() to create a 2d representation")
+
+		# the sf part
+		thesf <- x@sf
+
+		# only do this if the length matches the number of faces
+		if(length(y)!=length(faces(x))) stop("The logical vector must have the same number values as there are grid faces.")
+		if(any(is.na(y))) stop("'y' must not include missing values!")
+
+		# subset
+		sfcSubgrid <- thesf[y,"geometry"]
+
+		if(!is.null(crs)){
+			sfcSubgrid <- sf::st_transform(sfcSubgrid,crs)
+		}
+
+		# plot the data
+		plot(sfcSubgrid, main=main, ...)
+
 	}
 )
