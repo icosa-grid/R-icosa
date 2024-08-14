@@ -26,7 +26,7 @@ navbar:
         - text: "2. Essentials"
           href: articles/icosa_2_essentials.html
         # - text: "3. Grid construction"
-        #   href: articles/icosa_3_grids.html 
+        #  href: articles/icosa_3_grids.html
         # - text: "4. Grid details"
         #   href: articles/icosa_4_grid_details.html 
         # - text: "5. Interfacing with data"
@@ -149,9 +149,7 @@ authors:
     href: "https://palaeobiology.nat.fau.de/people/instructors/kocsis/"
   Deutsche Forschungsgemeinschaft:
     href: https://www.dfg.de/en/index.jsp
-    html: <img src='https://www.dfg.de/includes/bausteine/open_graph_de/dfgfallback.jpg' alt='dfg' width='80' />
+    html: <img src='https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/dfg.png?raw=true' alt='dfg' width='80' />
   FAU GeoZentrum Nordbayern:
     href: https://www.gzn.nat.fau.eu/
-    html: <img src='https://www.gzn.nat.fau.de/files/2017/05/cropped-gzn-logo.jpg' alt='geozentrum' width='80' />
-
-
+    html: <img src='https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true' alt='geozentrum' width='80' />
