@@ -1,9 +1,11 @@
-library(icosa)
 library(tinytest)
 
-setwd(file.path(Sys.getenv("WorkSpace"), "/2014-09-08_icosa/icosa"))
+setwd(file.path(Sys.getenv("Software"), "/icosa/icosa"))
 
+# can icosa grid be created without attaching the package?
+expect_message(one <- icosa:::hexagrid())
 
+library(icosa)
 # the lookup function
 lookup <- icosa:::gridLookUp
 

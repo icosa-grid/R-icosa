@@ -822,11 +822,11 @@ setMethod(
 
 gridLookUp <- function(deg, gr, verbose=TRUE){
 	if(gr=="hexagrid"){
-		data(hexguide, envir=environment())
+		data(hexguide, envir=environment(), package="icosa")
 		tessguide <- hexguide
 	}
 	if(gr=="trigrid"){
-		data(triguide, envir=environment())
+		data(triguide, envir=environment(), package="icosa")
 		tessguide <- triguide
 	}
 	if(!is.numeric(deg)) stop("The 'deg' argument has to be numeric.")
