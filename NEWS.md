@@ -4,6 +4,10 @@
 
 ### Added 
 - missing support of `sfc`-class objects for the `occupied` function (`OccupiedFaces` method)
+
+### Fixed 
+- Grids can now be created without attaching the package
+
 # icosa 0.11.0 - 2023-03-21
 
 ### Added
