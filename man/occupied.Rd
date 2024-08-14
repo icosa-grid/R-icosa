@@ -9,7 +9,7 @@ occupied(gridObj, data, out = "logical", ...)
 \arguments{
 \item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.}
 
-\item{data}{(\code{matrix}, \code{data.frame} or \code{Spatial}) The queried data.}
+\item{data}{(\code{matrix}, \code{data.frame}, \code{sf} or \code{Spatial}) The queried data.}
 
 \item{out}{(\code{character}) What shall be the output class? Can be either \code{\link{facelayer}} or \code{logical} (default.)}
 

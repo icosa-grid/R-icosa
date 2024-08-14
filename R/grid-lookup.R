@@ -246,6 +246,19 @@ setMethod(
 )
 
 
+setMethod(
+	"OccupiedFaces",
+	signature=c("trigrid", "sfc"),
+	definition=function(gridObj, data){
+		temp<-methods::as(data,"Spatial")
+
+		
+		# this works for spatialpolygons and spatialpolygonsdataframes
+		fl <- OccupiedFaces(gridObj, temp)
+		return(fl)
+	}
+)
+
 #for sf: fall to SpatialPolygonsDataFrame
 setMethod(
 	"OccupiedFaces",

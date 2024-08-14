@@ -1,5 +1,9 @@
 # Change log of the R package 'icosa'
 
+# icosa 0.12.0 pre - Underway
+
+### Added 
+- missing support of `sfc`-class objects for the `occupied` function (`OccupiedFaces` method)
 # icosa 0.11.0 - 2023-03-21
 
 ### Added
