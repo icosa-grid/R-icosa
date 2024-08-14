@@ -51,7 +51,7 @@ Suggests:
     rgl
 URL: https://adamkocsis.github.io/icosa/
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 LinkingTo: Rcpp
 Imports:
     Rcpp,

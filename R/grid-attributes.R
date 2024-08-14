@@ -82,13 +82,17 @@ setMethod(
 	}
 )
 
-#' The faces of a 3d object
+#' The face names of a trigrid or hexagrid object
 #'
-#' Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a \code{\link{facelayer}}. 
+#' Shorthand function to get the face names of an icosahedral grid or a grid linked to a \code{\link{facelayer}}.
+#'
 #' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or facelayer object.
 #' @name faces
 #' @rdname faces
-#' @return The faces of the grid as a \code{character} matrix.
+#' @return The names of the faces of the grid as a \code{character} vector.
+#' @examples
+#' ball <- hexagrid(2)
+#' faces(ball)
 #' @exportMethod faces
 setGeneric(
 	name="faces",
@@ -102,7 +106,7 @@ setMethod(
 	f="faces",
 	signature="trigrid",
 	definition= function(x){
-		return(x@faces)
+		return(rownames(x@faces))
 	}
 )
 
@@ -112,21 +116,9 @@ setMethod(
 	signature="gridlayer",
 	definition= function(x){
 		actGrid<-get(x@grid)
-		return(actGrid@faces)
+		return(rownames(actGrid@faces))
 	}
 )
-
-#	#' @rdname faces
-#	#' @exportMethod faces
-#	setMethod(	
-#		f="faces",
-#		signature="facelayer",
-#		definition= function(x){
-#			actGrid<-get(x@grid)
-#			return(actGrid@faces)
-#		}
-#	)
-
 
 #' The edges of a 3d object
 #'
@@ -511,5 +503,3 @@ setMethod(
 	
 	}
 )
-
-		

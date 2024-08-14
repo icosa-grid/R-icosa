@@ -4,7 +4,7 @@
 \alias{faces}
 \alias{faces,trigrid-method}
 \alias{faces,gridlayer-method}
-\title{The faces of a 3d object}
+\title{The face names of a trigrid or hexagrid object}
 \usage{
 faces(x)
 
@@ -16,8 +16,12 @@ faces(x)
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) The grid or facelayer object.}
 }
 \value{
-The faces of the grid as a \code{character} matrix.
+The names of the faces of the grid as a \code{character} vector.
 }
 \description{
-Shorthand function to get the faces slot of an icosahedral grid or a grid linked to a \code{\link{facelayer}}.
+Shorthand function to get the face names of an icosahedral grid or a grid linked to a \code{\link{facelayer}}.
+}
+\examples{
+ball <- hexagrid(2)
+faces(ball)
 }

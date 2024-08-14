@@ -2,8 +2,8 @@
 % Please edit documentation in R/zzz.R
 \docType{package}
 \name{icosa}
-\alias{icosa}
 \alias{icosa-package}
+\alias{icosa}
 \title{Global Triangular and Hexa-Pentagonal Grids Based on Tessellated Icosahedra}
 \description{
 The \bold{icosa} package provides tools to aggregate and analyze geographic data

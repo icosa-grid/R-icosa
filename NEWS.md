@@ -8,6 +8,10 @@
 ### Fixed 
 - Grids can now be created without attaching the package
 
+### Chnaged
+
+- The underutilized `faces()` function now returns only the row names of grids and facelayer objects.
+
 # icosa 0.11.0 - 2023-03-21
 
 ### Added
