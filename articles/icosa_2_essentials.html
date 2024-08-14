@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="2. Essentials: Binning Point Data">
@@ -86,6 +86,9 @@
   </div>
 </nav><div class="container template-article">
 
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>2. Essentials: Binning Point Data</h1>
@@ -100,28 +103,46 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The purpose of this tutorial is to demonstrate the basic usage of the <code>icosa</code> package. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point vector data and variables that depend on the density of such data.</p>
-<p>Note that this is just a brief introduction to the package’s capabilities. The complete documentation of the package and the rest of the tutorials will be made available on the <a href="https://adamkocsis.github.io/icosa/">package website</a>. Relevant how-to guides will be posted on the evolv-ED blog (<a href="https://www.evolv-ed.net/" class="external-link uri">https://www.evolv-ed.net/</a>).</p>
+<p>The purpose of this tutorial is to demonstrate the basic usage of the
+<code>icosa</code> package. The primary targeted application of the
+package is in global biological sciences (e.g. in macroecological,
+biogeographical analyses), but other fields might find the structures
+and procedures relevant, given that they operate with point vector data
+and variables that depend on the density of such data.</p>
+<p>Note that this is just a brief introduction to the package’s
+capabilities. The complete documentation of the package and the rest of
+the tutorials will be made available on the <a href="https://adamkocsis.github.io/icosa/">package website</a>. Relevant
+how-to guides will be posted on the evolv-ED blog (<a href="https://www.evolv-ed.net/" class="external-link uri">https://www.evolv-ed.net/</a>).</p>
 <hr>
 </div>
 <div class="section level2">
-<h2 id="point-data">Point Data<a class="anchor" aria-label="anchor" href="#point-data"></a>
+<h2 id="rationale-point-data">Rationale: Point Data<a class="anchor" aria-label="anchor" href="#rationale-point-data"></a>
 </h2>
-<p>The primary problem with ecological samples is that due to density and uniformity issues, the data points are to be aggregated to distinct units. As coordinate recording is very efficient on the 2d surface of a polar coordinate system (i.e. latiude and longitude data), this was primarly achieved by rectangular gridding of the surface (for instance 1° times 1° grid cells). Unfortunately, this method suffers from systematic biasing effects: as the poles are approached, the cells become smaller in area, and come closer to each other.</p>
+<p>One of the many problems with ecological samples is that due to
+density and uniformity issues, the data points are to be aggregated to
+distinct units. As coordinate recording is very efficient on the 2d
+surface of a polar coordinate system (i.e. latiude and longitude data),
+this was primarly achieved by rectangular gridding of the surface (for
+instance 1° times 1° grid cells). Unfortunately, this method suffers
+from systematic biasing effects: as the poles are approached, the cells
+become smaller in area, and come closer to each other.</p>
 <div class="section level4">
 <h4 id="random-points-on-the-sphere">Random points on the sphere<a class="anchor" aria-label="anchor" href="#random-points-on-the-sphere"></a>
 </h4>
-<p>We can illustrate this problem by generating random points and assign them to different spatial bins. The <code>icosa</code> package has a utility function to generate such points:</p>
+<p>We can illustrate this problem by generating random points and assign
+them to different spatial bins. The <code>icosa</code> package has a
+utility function to generate such points:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://adamkocsis.github.io/icosa/">icosa</a></span><span class="op">)</span></span></code></pre></div>
-<p>The function <code><a href="../reference/rpsphere.html">rpsphere()</a></code> generates randomly distributed points on the surface of a sphere.</p>
+<p>The function <code><a href="../reference/rpsphere.html">rpsphere()</a></code> generates randomly distributed
+points on the surface of a sphere.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set seed for exact reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co"># 10000 random points</span></span>
 <span><span class="va">randPoints</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rpsphere.html">rpsphere</a></span><span class="op">(</span><span class="fl">10000</span>, output<span class="op">=</span><span class="st">"polar"</span><span class="op">)</span></span>
 <span><span class="co"># the first 6 points</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">randPoints</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">randPoints</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             long        lat</span></span>
 <span><span class="co">## [1,]  -43.998368 -16.764084</span></span>
 <span><span class="co">## [2,] -105.191289   6.095493</span></span>
@@ -133,11 +154,18 @@
 <div class="section level4">
 <h4 id="land-polygons">Land Polygons<a class="anchor" aria-label="anchor" href="#land-polygons"></a>
 </h4>
-<p>You can visualize this pointset and plot them on a map, with some example data, such as the <a href="https://www.naturalearthdata.com/downloads/110m-physical-vectors/" class="external-link">land polygons from Natural Earth</a> - which are included in the package. You can load and plot such vector data with the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code></a> package. You can install it from the CRAN with the regular <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code></p>
+<p>You can visualize this pointset and plot them on a map, with some
+example data, such as the <a href="https://www.naturalearthdata.com/downloads/110m-physical-vectors/" class="external-link">land
+polygons from Natural Earth</a> - which are included in the package for
+the sake of this tutorial. You can load and plot such vector data with
+the <a href="https://cran.r-project.org/package=sf" class="external-link"><code>sf</code></a>
+package. You can install it from the CRAN with the regular
+<code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE</span></span></code></pre>
-<p>Once the package is loaded, you can load the data with <code><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">sf::st_read()</a></code>:</p>
+<pre><code><span><span class="co">## Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre>
+<p>Once the package is installed, you can load the example data with
+<code><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">sf::st_read()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># reading in example data</span></span>
 <span><span class="va">ne</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"icosa"</span><span class="op">)</span>, <span class="st">"extdata/ne_110m_land.shx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -149,28 +177,50 @@
 <span><span class="co">## Dimension:     XY</span></span>
 <span><span class="co">## Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 83.64513</span></span>
 <span><span class="co">## Geodetic CRS:  WGS 84</span></span></code></pre>
+<p>This vector data object can be plotted easilly and we can use it to
+contextualize the <code>randPoints</code> object - which can represent
+any kind of point data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plotting the world map</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">ne</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="st">"gray"</span>, border<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plotting the point cloud</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000055"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="icosa_2_essentials_files/figure-html/vispoints-1.png" width="864"></p>
-<p>Note that the points appear to have a non-random distribution: they seem to have higher density in lower-latitude areas. But this is in fact a distorting effect of not the points, but the <a href="https://en.wikipedia.org/wiki/Equirectangular_projection" class="external-link">equirectangular map projection</a> itself! The points are are created with 3D normal distributions and then they are projected to the surface of the sphere around the center of this distribution.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000055"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="icosa_2_essentials_files/figure-html/vispointshidden-1.png" width="864"></p>
 </div>
+<div class="section level4 alert alert-primary" role="info">
+<h4 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a>
+</h4>
+<p>The default margins of <code>sf</code> plots can be too large! The
+margins of some of these plots were set with:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span>,<span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>Note that the points appear to have a non-random distribution: they
+seem to have higher density in lower-latitude areas. But this is in fact
+a distorting effect of not the points, but the <a href="https://en.wikipedia.org/wiki/Equirectangular_projection" class="external-link">equirectangular
+map projection</a> itself! The points are are created with 3D normal
+distributions and then they are projected to the surface of the sphere
+around the center of this distribution.</p>
 <div class="section level4">
 <h4 id="binning-with-a-gaussian-uv-grid">Binning with a Gaussian (UV)-grid<a class="anchor" aria-label="anchor" href="#binning-with-a-gaussian-uv-grid"></a>
 </h4>
-<p>Let’s count these data points in a simple longitude-latitude (Gaussian, polar, or UV) grid, which you can easilly implement with the <a href="https://cran.r-project.org/package=terra" class="external-link"><code>terra</code></a> package (i.e. raster)! Similar to <code>sf</code> this package can be installed from the CRAN with <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/" class="external-link">terra</a></span><span class="op">)</span></span></code></pre></div>
-<p>Let’s make a 10x10° raster grid, and count the number of points in every cell:</p>
+<p>Let’s count these data points in a simple longitude-latitude
+(Gaussian, polar, or UV) grid, which you can easilly implement with the
+<a href="https://cran.r-project.org/package=terra" class="external-link"><code>terra</code></a>
+package (i.e. raster)! Similar to <code>sf</code> this package can be
+installed from the CRAN with <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function
+call.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></code></pre></div>
+<p>Let’s make a 10x10° raster grid, and count the number of points in
+every cell:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># a 10-degree resolution grid</span></span>
-<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span>res<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span>res<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># count the number of points in raster cells</span></span>
-<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rasterize.html" class="external-link">rasterize</a></span><span class="op">(</span><span class="va">randPoints</span>,<span class="va">r</span>, fun<span class="op">=</span><span class="va">length</span><span class="op">)</span></span>
+<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rasterize.html" class="external-link">rasterize</a></span><span class="op">(</span><span class="va">randPoints</span>,<span class="va">r</span>, fun<span class="op">=</span><span class="va">length</span><span class="op">)</span></span>
 <span><span class="va">counts</span></span></code></pre></div>
 <pre><code><span><span class="co">## class       : SpatRaster </span></span>
 <span><span class="co">## dimensions  : 18, 36, 1  (nrow, ncol, nlyr)</span></span>
@@ -178,64 +228,109 @@
 <span><span class="co">## extent      : -180, 180, -90, 90  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">## coord. ref. : lon/lat WGS 84 </span></span>
 <span><span class="co">## source(s)   : memory</span></span>
-<span><span class="co">## name        : lyr.1 </span></span>
-<span><span class="co">## min value   :     1 </span></span>
-<span><span class="co">## max value   :    44</span></span></code></pre>
+<span><span class="co">## name        : values </span></span>
+<span><span class="co">## min value   :      1 </span></span>
+<span><span class="co">## max value   :     44</span></span></code></pre>
 <p>The counts of these points can be easilly visualized with a plot.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the raster itself</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plotting the map on plot</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">ne</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="cn">NA</span>, border<span class="op">=</span><span class="st">"black"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/rastplot-1.png" width="960"></p>
-<p>The point counts have a similar latitudinal pattern as we saw with their distribution: as latitude increases, the cell sizes decrease and the expected number of points in them decreases.0</p>
-<p>One solution to this problem can be the use of a different projection. For instance the <a href="https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection" class="external-link">Lambert’s Cylindrical Equal Area</a> projection (<code>["EPSG:54034"](https://epsg.io/54034)</code>) can be used instead of the Equirectangular projection. This will, however distort the polar cells that will become more and more elongated with higher the latitude values - which might be a problem, or might not.</p>
+<p>The point counts have a similar latitudinal pattern as we saw with
+their distribution: as latitude increases, the cell sizes decrease and
+the expected number of points in them decreases.0</p>
+<p>One solution to this problem can be the use of a different
+projection. For instance the <a href="https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection" class="external-link">Lambert’s
+Cylindrical Equal Area</a> projection
+(<code>["EPSG:54034"](https://epsg.io/54034)</code>) can be used instead
+of the Equirectangular projection. This will, however distort the polar
+cells that will become more and more elongated with higher the latitude
+values - which might be a problem, or might not.</p>
 <hr>
 </div>
 </div>
 <div class="section level2">
 <h2 id="about-icosahedral-grids">About icosahedral grids<a class="anchor" aria-label="anchor" href="#about-icosahedral-grids"></a>
 </h2>
-<p>The <code>icosa</code> package approaches this problem by not using a rectangular grid, i.e. a grid that has cells that are rectangular shape.</p>
-<p>Instead, <code>icosa</code> relies on the tessellation of a <a href="https://en.wikipedia.org/wiki/Regular_icosahedron" class="external-link">regular icosahedron</a> to a given resolution. This procedure ends up with a polyhedral object of triangular faces of higly isometric properties: very similar shapes of cells which are roughly equally distanced, and similar in cell area. Such bodies are often called icospheres.</p>
-<p>Here is how such grid looks like in 3D (also plotted with <code>icosa</code>, see a later tutorial for such plotting):</p>
+<p>The <code>icosa</code> package approaches this problem by not using a
+rectangular grid, i.e. a grid that has cells that are rectangular
+shape.</p>
+<p>Instead, <code>icosa</code> relies on the tessellation of a <a href="https://en.wikipedia.org/wiki/Regular_icosahedron" class="external-link">regular
+icosahedron</a> to a given resolution. This procedure ends up with a
+polyhedral object of triangular faces of higly isometric properties:
+very similar shapes of cells which are roughly equally distanced, and
+similar in cell area. Such bodies are often called icospheres.</p>
+<p>Here is how such grid looks like in 3D (also plotted with
+<code>icosa</code>, see a later tutorial for such plotting):</p>
 <p><img src="icosa_2_essentials_files/figure-html/plot3d-1.png" width="960"></p>
-<p>Still, triangular grids are somewhat unintuitive, because distances between the cell can vary considerably: the corner of a cell is much farther away from the center than the side. For this reason, we usually use the inverted versions of these grids: the triangle cell-midpoints become the corners of the cells (i.e. vertices), which defines a grid where cells are hexagonal - with exactly 12 pentagons (where the vertices of the icosahedron used to be). This is the inverted version of the grid above:</p>
+<p>Still, triangular grids are somewhat unintuitive, because distances
+between the cell can vary considerably: the corner of a cell is much
+farther away from the center than the side. For this reason, we usually
+use the inverted versions of these grids: the triangle cell-midpoints
+become the corners of the cells (i.e. vertices), which defines a grid
+where cells are hexagonal - with exactly 12 pentagons (where the
+vertices of the icosahedron used to be). This is the inverted version of
+the grid above:</p>
 <p><img src="icosa_2_essentials_files/figure-html/plot3d_hex-1.png" width="960"></p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="creating-an-icosahedral-grid">Creating an icosahedral grid<a class="anchor" aria-label="anchor" href="#creating-an-icosahedral-grid"></a>
 </h2>
-<p>Once <code>icosa</code> is loaded, you can create such a penta-hexagonal grid with a single line of code, using the <code><a href="../reference/hexagrid-class.html">hexagrid()</a></code> function:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p>Once <code>icosa</code> is loaded, you can create such a
+penta-hexagonal grid with a single line of code, using the
+<code><a href="../reference/hexagrid-class.html">hexagrid()</a></code> function:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a trigrid class object</span></span>
 <span><span class="va">hexa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hexagrid-class.html">hexagrid</a></span><span class="op">(</span>deg<span class="op">=</span><span class="fl">5</span>, sf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Selecting hexagrid with tessellation vector: c(2, 4).</span></span>
 <span><span class="co">## Mean edge length: 4.993 degrees.</span></span></code></pre>
 <ul>
-<li><p>The argument <code>deg</code> refers to the expected length of the edge length of the grid. This is given as angular distance between two cell vertices in <strong>degrees</strong> - which means same as degrees longitudinally (or latitudinally on the equator), 1° =~111 km. This is used to select a <code>tessellation</code> vector, which is directly controlling the grid resolution: how the faces of icosahedron are split up. The higher the product of this vector, the higher the resolution - ie. the more cells there will be in the grid. The example <code>c(2, 4)</code> means that the original icosahedrons edges are split up 2 * 4 = 8 times.</p></li>
-<li><p>The argument <code>sf=TRUE</code> indicates that we want to create a representation of the grid that can be used for additional spatial operations using the <code>sf</code> package, for example 2D (projection-based) plotting. Since this is not always needed, and can significantly decrease performance, you have to indicate that you need this option.</p></li>
+<li><p>The argument <code>deg</code> refers to the expected length of
+the edge length of the grid. This is given as angular distance between
+two cell vertices in <strong>degrees</strong> - which means the same as
+degrees longitudinally (or latitudinally on the equator), 1° =~111 km.
+This is used to select a <code>tessellation</code> vector, which is
+directly controlling the grid resolution, describing how the faces of
+icosahedron are split up. The higher the product of this vector, the
+higher the resolution - ie. the more cells there will be in the grid.
+The example <code>c(2, 4)</code> means that the original icosahedrons
+edges are split up 2 * 4 = 8 times. This triangular grid
+(<code>trigrid</code>) is then inverted (vertices become cell
+midpoints), which results in penta-hexagonal grid.</p></li>
+<li><p>The argument <code>sf=TRUE</code> indicates that we want to
+create a representation of the grid that can be used for additional
+spatial operations using the <code>sf</code> package, for example 2D
+(projection-based) plotting. Since this is not always needed, and can
+significantly decrease performance, you have to indicate that you need
+this option.</p></li>
 </ul>
-<p>If you type in the name of the object, you can some immediate properties about the structure and resolution of the grid.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p>If you type in the name of the object, you can immediately see some
+properties about the structure and resolution of the grid.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hexa</span></span></code></pre></div>
 <pre><code><span><span class="co">## A/An hexagrid object with 1280 vertices, 1920 edges and 642 faces.</span></span>
 <span><span class="co">## The mean grid edge length is 555.24 km or 4.99 degrees.</span></span>
 <span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
-<p>The most important detail here is th the number of faces of the 3d body (642) i.e. the number of cells in the grid.</p>
+<p>The most important detail here is the number of faces of the 3d body
+(642) i.e. the number of cells in the grid.</p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="plotting-the-grid-in-2d">Plotting the grid in 2d<a class="anchor" aria-label="anchor" href="#plotting-the-grid-in-2d"></a>
 </h2>
-<p>If you have generated the <code>sf</code>-represenation as above, the <code><a href="../reference/plot.html">plot()</a></code> function can be invoked on the grid to see its 2D (longitude-latitude projection).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span></span></code></pre></div>
-<p><img src="icosa_2_essentials_files/figure-html/plotting-1.png" width="960"></p>
-<p>Putting the map and points generated above is just as easy as with any other kind of mapping object:</p>
+<p>If you have generated the <code>sf</code>-represenation as above, the
+<code><a href="../reference/plot.html">plot()</a></code> function can be invoked on the grid to see its 2D
+(longitude-latitude projection).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span></span></code></pre></div>
+<p><img src="icosa_2_essentials_files/figure-html/plottinghidden-1.png" width="960"></p>
+<p>Putting the map and points generated above is just as easy as with
+any other kind of mapping object:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plotting the world map</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">ne</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="st">"gray"</span>, border<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span>
 <span></span>
@@ -243,43 +338,108 @@
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plotting the point cloud</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000022"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="icosa_2_essentials_files/figure-html/plotting2-1.png" width="960"></p>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">randPoints</span>, col<span class="op">=</span><span class="st">"#FF000022"</span>, pch<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="icosa_2_essentials_files/figure-html/plotting2hidden-1.png" width="960"></p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="spatial-binning-with-the-hexagrid">Spatial binning with the <code>hexagrid</code><a class="anchor" aria-label="anchor" href="#spatial-binning-with-the-hexagrid"></a>
 </h2>
-<p>The grids themselves can only be useful if we can figure out how the points actually interact with them: for instance, if we want to repeat the same <a href="#binning-with-a-gaussian-uv-grid">binning as earlier</a>, but with the grid that we created earlier. To make this process as flexible and useful as possible, we will be doing this in three short steps:</p>
+<p>The grids themselves can only be useful if we can figure out how the
+points actually interact with them: for instance, if we want to repeat
+the same <a href="#binning-with-a-gaussian-uv-grid">binning as
+earlier</a>, but with the grid that we created earlier. To make this
+process as flexible and useful as possible, we will be doing this in
+three short steps:</p>
 <ol style="list-style-type: decimal">
-<li>Finding the cells that the points fall onto with <code><a href="../reference/locate.html">locate()</a></code>
+<li>Finding the cells that the points fall onto with
+<code><a href="../reference/locate.html">locate()</a></code>
 </li>
 <li>Count the number of points in a cell. (using base R)</li>
 <li>Plot the counts on the grid</li>
 </ol>
-<p>The cells of the icoshedral grid are named with the convention <code>"F&lt;integer&gt;"</code> (<code>"F"</code> stands for <code>face</code>), such as as <code>"F12"</code>. You can see how these are distributed using the <code><a href="../reference/gridlabs.html">gridlabs()</a></code> function:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p>The cells of the icoshedral grid are named with the convention
+<code>"F&lt;integer&gt;"</code> (<code>"F"</code> stands for
+<code>face</code>), such as as <code>"F12"</code>. You can see how these
+are distributed using the <code><a href="../reference/gridlabs.html">gridlabs()</a></code> function:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/gridlabs.html">gridlabs</a></span><span class="op">(</span><span class="va">hexa</span>, cex<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="icosa_2_essentials_files/figure-html/gridlabs-1.png" width="960"></p>
-<p>Cells names are assigned according to a spiral from the North pole of the grid.</p>
+<p><img src="icosa_2_essentials_files/figure-html/gridlabshidden-1.png" width="960"></p>
+<p>Cells names are assigned according to a spiral from the North pole of
+the grid.</p>
 <div class="section level4">
 <h4 id="point-lookup---locate">Point lookup - <code>locate()</code><a class="anchor" aria-label="anchor" href="#point-lookup---locate"></a>
 </h4>
-<p>The only thing that we need to able to do with the grid to make this process feasible is the ability to find the cells on which every points falls. This is a very basic feature, but with this we can do most computations that we might want to do with the grid.</p>
-<p>The <code><a href="../reference/locate.html">locate()</a></code> function returns the name of the cell under a point: one cell name for every coordinate pairs. The function takes the grid (<code>hexa</code>), and the point coordinates (<code>randPoints</code>) as arguments and returns a vector of cell names:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<p>The only thing that we need to able to do with the grid to make this
+process feasible is the ability to find the cells on which every points
+falls. This is a very basic feature, but with this we can do most
+computations that we might want to do with the grid.</p>
+<p>Simplest way to illustrate this is with a couple of points. Let’s try
+it with the first 5 from the randomly generated set:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># the first five points</span></span>
+<span><span class="va">examples</span> <span class="op">&lt;-</span> <span class="va">randPoints</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span>
+<span><span class="va">examples</span></span></code></pre></div>
+<pre><code><span><span class="co">##             long        lat</span></span>
+<span><span class="co">## [1,]  -43.998368 -16.764084</span></span>
+<span><span class="co">## [2,] -105.191289   6.095493</span></span>
+<span><span class="co">## [3,]  -20.456553 -10.867072</span></span>
+<span><span class="co">## [4,]    3.011043  26.776595</span></span>
+<span><span class="co">## [5,]   -7.820389  67.246328</span></span></code></pre>
+<p>We can easily plot this object on the gird map we created above:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># visualize exact locations</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">examples</span>, col<span class="op">=</span><span class="st">"#FF0000"</span>, pch<span class="op">=</span><span class="fl">3</span>, cex<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># add an identifier </span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>label<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">examples</span><span class="op">)</span>, <span class="va">examples</span>, col<span class="op">=</span><span class="st">"#FF0000"</span>, pch<span class="op">=</span><span class="fl">3</span>, pos<span class="op">=</span><span class="fl">2</span>, cex<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="icosa_2_essentials_files/figure-html/gridlabpointsreal-1.png" width="960"></p>
+<p>The <code><a href="../reference/locate.html">locate()</a></code> function returns the name of the cell under
+a point: one cell name for every coordinate pairs. The function takes
+the grid (<code>hexa</code>), and the point coordinates
+(<code>examples</code>) as arguments and returns a vector of cell
+names:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exampleCells</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/locate.html">locate</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">examples</span><span class="op">)</span></span>
+<span><span class="va">exampleCells</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "F405" "F277" "F367" "F208" "F25"</span></span></code></pre>
+<p>Note that the we plotted the number identifiers so it is clearly
+visible which point is which. The ordering of the face/cell names will
+match that of the points. The match is easier to see if we highlight the
+cells the points fall on:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># replot the map for clarity</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Subsetting the sf representation of the grid</span></span>
+<span><span class="co"># This will have a shorthand soon!</span></span>
+<span><span class="va">subSF</span> <span class="op">&lt;-</span> <span class="va">hexa</span><span class="op">@</span><span class="va">sf</span><span class="op">[</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">exampleCells</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">subSF</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="st">"green"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># labels</span></span>
+<span><span class="fu"><a href="../reference/gridlabs.html">gridlabs</a></span><span class="op">(</span><span class="va">hexa</span>, cex<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># points again</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/lines.html" class="external-link">points</a></span><span class="op">(</span><span class="va">examples</span>, col<span class="op">=</span><span class="st">"#FF0000"</span>, pch<span class="op">=</span><span class="fl">3</span>, cex<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="icosa_2_essentials_files/figure-html/highlightinghidden-1.png" width="960"></p>
+<p>This localization of the points does a lot of heavy lifting in
+<code>icosa</code>, and it can be applied thousands/millions of points
+at once.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/locate.html">locate</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">randPoints</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cells</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  chr [1:10000] "F405" "F277" "F367" "F208" "F25" "F510" "F79" "F539" "F481" ...</span></span></code></pre>
-<p>The output of <code><a href="../reference/locate.html">locate()</a></code> is so designed that it can be used as a new column in the table of coordinates (optional):</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<p>To keep things orgnanized this output of <code><a href="../reference/locate.html">locate()</a></code> is so
+designed that it can be used as a new column in the table of coordinates
+(optional):</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># transform this to a data frame</span></span>
 <span><span class="va">rdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">randPoints</span><span class="op">)</span></span>
 <span><span class="co"># assign the face names as a column</span></span>
 <span><span class="va">rdf</span><span class="op">$</span><span class="va">cells</span> <span class="op">&lt;-</span> <span class="va">cells</span></span>
 <span><span class="co"># the first 6 rows</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rdf</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rdf</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          long        lat cells</span></span>
 <span><span class="co">## 1  -43.998368 -16.764084  F405</span></span>
 <span><span class="co">## 2 -105.191289   6.095493  F277</span></span>
@@ -291,32 +451,45 @@
 <div class="section level4">
 <h4 id="counting-the-cells">Counting the cells<a class="anchor" aria-label="anchor" href="#counting-the-cells"></a>
 </h4>
-<p>To assess the density of points, we need to count the number of points in every cell - which is actually nothing else, but the tabulation of the number of times that a point falls on a cell. This we can easilly do with the <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> function:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<p>To assess the density of points, we need to count the number of
+points in every cell - which is actually nothing else, but the
+tabulation of the number of times that a point falls on a cell. This we
+can easilly do with the <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> function:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tCells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cells</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tCells</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  'table' int [1:642(1d)] 9 17 10 23 15 24 21 15 17 11 ...</span></span>
 <span><span class="co">##  - attr(*, "dimnames")=List of 1</span></span>
 <span><span class="co">##   ..$ cells: chr [1:642] "F1" "F10" "F100" "F101" ...</span></span></code></pre>
-<p>… which gives us the number of points that fall on one particular cell (cell name in the <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names()</a></code> attribute), frequency as the value.</p>
+<p>… which gives us the number of points that fall on one particular
+cell (cell name in the <code><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names()</a></code> attribute), frequency as the
+value.</p>
 </div>
 <div class="section level4">
 <h4 id="plotting-the-frequency">Plotting the frequency<a class="anchor" aria-label="anchor" href="#plotting-the-frequency"></a>
 </h4>
-<p>There is a number of ways to visualize this number on the map, the simplest is to use a dedicated method of <code><a href="../reference/plot.html">plot()</a></code>, that takes the grid (with an <code>sf</code> representation, as <a href="#land-polygons">above</a>) and a named entity (vector, table) and plots this with the features made available via <code>sf</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<p>There is a number of ways to visualize this number on the map, the
+simplest is to use a dedicated method of <code><a href="../reference/plot.html">plot()</a></code>, that takes
+the grid (with an <code>sf</code> representation, as <a href="#land-polygons">above</a>) and a named entity (vector, table) and
+plots this with the features made available via <code>sf</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">tCells</span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/visdistrib-1.png" width="864"></p>
-<p>You can modify this plotting in any way you could with <code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot()</a></code>. For instance, if you want to use a different color scheme, a different binning</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<p>You can modify this plotting in any way you could with
+<code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot()</a></code>. For instance, if you want to use a different
+color scheme, a different binning</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">tCells</span>, </span>
 <span>    border<span class="op">=</span><span class="st">"white"</span>,</span>
 <span>    pal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#440154FF"</span>, <span class="st">"#2D708EFF"</span>, <span class="st">"#29AF7FFF"</span>, <span class="st">"#FDE725FF"</span><span class="op">)</span>, </span>
 <span>    breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">20</span>, <span class="fl">40</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/visdistrib_custom-1.png" width="864"></p>
-<p>You can also set the plotted cooordinate reference system directly here in the plotting command. For instance, if you would like this to be plotted directly on a Mollweide projection (<code>"ESRI:54009"</code>):</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<p>You can also set the plotted cooordinate reference system directly
+here in the plotting command. For instance, if you would like this to be
+plotted directly on a Mollweide projection
+(<code>"ESRI:54009"</code>):</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the base map</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">tCells</span>, </span>
 <span>    crs<span class="op">=</span><span class="st">"ESRI:54009"</span>, </span>
@@ -326,10 +499,11 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/final-1.png" width="864"></p>
 <p>If you do not forget to transform the landmasses</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">neMoll</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">ne</span>, <span class="st">"ESRI:54009"</span><span class="op">)</span></span></code></pre></div>
-<p>… you can also put them on top. Just make sure to set <code>reset=FALSE</code> (see <code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot</a></code> why):</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<p>… you can also put them on top. Just make sure to set
+<code>reset=FALSE</code> (see <code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot</a></code> why):</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the base map</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">tCells</span>,</span>
 <span>    crs<span class="op">=</span><span class="st">"ESRI:54009"</span>, </span>
@@ -342,54 +516,69 @@
 <span><span class="co"># the landmasses tranparent gray with black contour</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">neMoll</span><span class="op">$</span><span class="va">geometry</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"#66666688"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/final2-1.png" width="864"></p>
-<p>All these options come from <code>sf:plot()</code>. If you familiarize yourself with how to use that,then only your imagination will be the limit!</p>
+<p>All these options come from <code>sf:plot()</code>. If you
+familiarize yourself with how to use that,then only your imagination
+will be the limit!</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="using-the-result-in-calculations">Using the result in calculations<a class="anchor" aria-label="anchor" href="#using-the-result-in-calculations"></a>
 </h2>
-<p>The by-product of this workflow is that now we get explicit access to not only the cells’ name, but also their attributes. For instance if you want to see whether the number of points in a cell has a latitudinal pattern, you just need to get the coordinates of the face centers, and assign them to the densities. You can get these with <code><a href="../reference/centers.html">centers()</a></code>:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<p>The by-product of this workflow is that now we get explicit access to
+not only the cells’ name, but also their attributes. For instance if you
+want to see whether the number of points in a cell has a latitudinal
+pattern, you just need to get the coordinates of the face centers, and
+assign them to the densities. You can get these with
+<code><a href="../reference/centers.html">centers()</a></code>:</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># translate the returned 2-column matrix to a data.frame</span></span>
-<span><span class="va">faceInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="../reference/centers.html">centers</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">faceInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="../reference/centers.html">centers</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># the first 6 rows</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    long      lat</span></span>
-<span><span class="co">## F1  -90 90.00000</span></span>
+<span><span class="co">## F1    0 90.00000</span></span>
 <span><span class="co">## F2 -162 82.07063</span></span>
 <span><span class="co">## F3  -90 82.07063</span></span>
 <span><span class="co">## F4  -18 82.07063</span></span>
 <span><span class="co">## F5   54 82.07063</span></span>
 <span><span class="co">## F6  126 82.07063</span></span></code></pre>
-<p>which returns the longitude and latitude coordinates of the face centers. Now we just need to assign the counts to these, which is easy with base R using the <code>rownames</code> as a character subscript and assigning the result as a new column of <code>faceInfo</code>:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<p>which returns the longitude and latitude coordinates of the face
+centers. Now we just need to assign the counts to these, which is easy
+with base R using the <code>rownames</code> as a character subscript and
+assigning the result as a new column of <code>faceInfo</code>:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">faceInfo</span><span class="op">$</span><span class="va">count</span> <span class="op">&lt;-</span> <span class="va">tCells</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co"># the first 6 rows</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    long      lat count</span></span>
-<span><span class="co">## F1  -90 90.00000     9</span></span>
+<span><span class="co">## F1    0 90.00000     9</span></span>
 <span><span class="co">## F2 -162 82.07063    13</span></span>
 <span><span class="co">## F3  -90 82.07063    16</span></span>
 <span><span class="co">## F4  -18 82.07063    20</span></span>
 <span><span class="co">## F5   54 82.07063    18</span></span>
 <span><span class="co">## F6  126 82.07063    18</span></span></code></pre>
-<p>Now it is easy to see whether there is an association with latitude:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<p>Now it is easy to see whether there is an association with
+latitude:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">faceInfo</span><span class="op">$</span><span class="va">lat</span>, <span class="va">faceInfo</span><span class="op">$</span><span class="va">count</span>, </span>
 <span>    xlab<span class="op">=</span><span class="st">"Latitude (deg)"</span>, ylab<span class="op">=</span><span class="st">"Point count"</span>, </span>
 <span>    pch<span class="op">=</span><span class="fl">16</span>, col<span class="op">=</span><span class="st">"#99000044"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="icosa_2_essentials_files/figure-html/latplot-1.png" width="960"></p>
-<p>There is no latitudinal trend in the points, but you can see that the spread decreases latitudinally (because there are fewer cells) at high latitudes.</p>
+<p>There is no latitudinal trend in the points, but you can see that the
+spread decreases latitudinally (because there are fewer cells) at high
+latitudes.</p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>If you have some data (e.g. <code>randPoints</code>) and you want to execute the binning and plotting, you can do it with this much code - now using a different, coarser resolution grid:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<p>If you have some data (e.g. <code>randPoints</code>) and you want to
+execute the binning and plotting, you can do it with this much code -
+now using a different, coarser resolution grid:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hexagrid-class.html">hexagrid</a></span><span class="op">(</span>deg<span class="op">=</span><span class="fl">10</span>, sf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># create grid</span></span></code></pre></div>
 <pre><code><span><span class="co">## Selecting hexagrid with tessellation vector: c(2, 2).</span></span>
 <span><span class="co">## Mean edge length: 9.994 degrees.</span></span></code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cells</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/locate.html">locate</a></span><span class="op">(</span><span class="va">gr</span>, <span class="va">randPoints</span><span class="op">)</span> <span class="co"># locate points</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cells</span><span class="op">)</span> <span class="co"># tabulate, calculate</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">gr</span>, <span class="va">tab</span><span class="op">)</span> <span class="co"># plot named vector/table</span></span></code></pre></div>
@@ -403,7 +592,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://www.dfg.de/includes/bausteine/open_graph_de/dfgfallback.jpg" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://www.gzn.nat.fau.de/files/2017/05/cropped-gzn-logo.jpg" alt="geozentrum" width="80"></a>.</p>
+<p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/dfg.png?raw=true" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true" alt="geozentrum" width="80"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

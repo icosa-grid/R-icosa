@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="1. Installation">
@@ -88,6 +88,9 @@
   </div>
 </nav><div class="container template-article">
 
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>1. Installation</h1>
@@ -102,10 +105,13 @@
 <div class="section level2">
 <h2 id="stable-version-from-the-cran">Stable version from the CRAN<a class="anchor" aria-label="anchor" href="#stable-version-from-the-cran"></a>
 </h2>
-<p>The stable version of the package is available on <a href="https://cran.r-project.org/package=icosa" class="external-link">CRAN servers</a>, which means that you can install it with the regular <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function.</p>
+<p>The stable version of the package is available on <a href="https://cran.r-project.org/package=icosa" class="external-link">CRAN servers</a>, which
+means that you can install it with the regular
+<code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"icosa"</span><span class="op">)</span></span></code></pre></div>
-<p>If for some reason, the installlation from CRAN fails, you might need to look into alternative methods.</p>
+<p>If for some reason, the installlation from CRAN fails, you might need
+to look into alternative methods.</p>
 </div>
 <div class="section level2">
 <h2 id="alternative-methods">Alternative methods<a class="anchor" aria-label="anchor" href="#alternative-methods"></a>
@@ -113,7 +119,11 @@
 <div class="section level4">
 <h4 id="stable-version-from-github-from-source">Stable version from GitHub from source<a class="anchor" aria-label="anchor" href="#stable-version-from-github-from-source"></a>
 </h4>
-<p>For the sake of completeness and simplicity, the sources of the stable version are also available on GitHub. The <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function can be used to install this from source - but you will have to install dependencies of the package, and you have to have a compiler installed on your system</p>
+<p>For the sake of completeness and simplicity, the sources of the
+stable version are also available on GitHub. The
+<code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function can be used to install this
+from source - but you will have to install dependencies of the package,
+and you have to have a compiler installed on your system</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
 <span>    <span class="st">"https://github.com/adamkocsis/icosa/raw/master/_archive/source/icosa_0.11.0.tar.gz"</span>, </span>
@@ -122,18 +132,29 @@
 <div class="section level4">
 <h4 id="development-version---the-raw">Development version - the raw<a class="anchor" aria-label="anchor" href="#development-version---the-raw"></a>
 </h4>
-<p>If you encounter technical problems with the package that are not described anywhere, you might want to take a look at the <a href="https://github.com/adamkocsis/icosa/tree/devel" class="external-link">development version</a>.</p>
-<p>If you wish to install the development version, I recommend a manual installation:<br>
+<p>If you encounter technical problems with the package that are not
+described anywhere, you might want to take a look at the <a href="https://github.com/adamkocsis/icosa/tree/devel" class="external-link">development
+version</a>.</p>
+<p>If you wish to install the development version, I recommend a manual
+installation:<br>
 1. Clone the repository to your local hard drive.<br>
-2. Make sure that you have the package dependencies, and a compiler installed: on Windows, <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">RTools</a> should include all the tools you need, on Mac, you will need to have <a href="https://developer.apple.com/xcode/" class="external-link">XCode</a> - if you use GNU/Linux, you have to go down deeper in the rabbit hole :).<br>
-3. Open a terminal and navigate to the directory where you cloned. The <code>icosa</code> directory should be visible from there.<br>
+2. Make sure that you have the package dependencies, and a compiler
+installed: on Windows, <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">RTools</a> should
+include all the tools you need, on Mac, you will need to have <a href="https://developer.apple.com/xcode/" class="external-link">XCode</a> - if you use
+GNU/Linux, you have to go down deeper in the rabbit hole :).<br>
+3. Open a terminal and navigate to the directory where you cloned. The
+<code>icosa</code> directory should be visible from there.<br>
 4. Run this line in the terminal</p>
 <pre><code>R CMD INSTALL icosa</code></pre>
 <ul>
 <li>
-<em>If you see an error suggesting that <code>R</code> is not found, you have to add it to your <code>PATH</code> environmental variable.</em><br>
+<em>If you see an error suggesting that <code>R</code> is not found,
+you have to add it to your <code>PATH</code> environmental
+variable.</em><br>
 </li>
-<li><em>If the R packages that <code>icosa</code> depend on are not installed, you have to install them manually, or you will get an error.</em></li>
+<li><em>If the R packages that <code>icosa</code> depend on are not
+installed, you have to install them manually, or you will get an
+error.</em></li>
 <li>You can also try <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">devtools::install_github()</a></code>.</li>
 </ul>
 </div>
@@ -146,7 +167,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://www.dfg.de/includes/bausteine/open_graph_de/dfgfallback.jpg" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://www.gzn.nat.fau.de/files/2017/05/cropped-gzn-logo.jpg" alt="geozentrum" width="80"></a>.</p>
+<p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/dfg.png?raw=true" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true" alt="geozentrum" width="80"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
