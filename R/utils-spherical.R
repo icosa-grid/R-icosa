@@ -173,33 +173,37 @@ arcdistmat<-function(points1, points2=NULL, origin=c(0,0,0), output="distance", 
 	if(!output%in%c("distance", "deg", "rad")) stop("Invalid \'output\' argument.")
 	if(output=="distance") method<-T
 	if(output%in%c("deg", "rad")) method<-F
-	
+
+	# if the second argument is present
 	present<-T
 	if(is.null(points2)){
 		points2<-points1
 		present<-F
 	}
-	
+
+	# if the input values are not numeric
 	if(!is.numeric(points1) | !is.numeric(points2) | !is.numeric(origin)) stop("Invalid coordinate input.")
 	
-	
+
+	# poorly formatted value
 	if(!ncol(points1)%in%c(2,3) | 
 		!ncol(points2)%in%c(2,3) | 
 		!sum(is.finite(origin))%in%c(2,3)) stop("Invalid coordinate input.")
-	
+
+	# there should not be any NAs
 	if(sum(is.na(points1))>0 | sum(is.na(points2))>0) stop("The coordinates include NAs")
+
+
+	# Ensure that coordinates are passed as Cartesian
 	if(ncol(points1)==2){
 		points1<-PolToCar(matrix(points1, ncol=2),radius=radius, origin=origin)
-		points1<-points1[1,]
 	}
 	
-	
-	
+	# Ensure that coordinates are passed as Cartesian
 	if(ncol(points2)==2){
 		points2<-PolToCar(matrix(points2, ncol=2),radius=radius, origin=origin)
-		points2<-points2[1,]
 	}
-		
+
 	if(present){
 		distMat<- .Call(Cpp_icosa_ArcDistMat_, points1, points2, origin, method)
 	}else{
