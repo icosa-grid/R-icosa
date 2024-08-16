@@ -413,9 +413,7 @@ cells the points fall on:</p>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Subsetting the sf representation of the grid</span></span>
-<span><span class="co"># This will have a shorthand soon!</span></span>
-<span><span class="va">subSF</span> <span class="op">&lt;-</span> <span class="va">hexa</span><span class="op">@</span><span class="va">sf</span><span class="op">[</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">exampleCells</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">subSF</span><span class="op">$</span><span class="va">geometry</span>, col<span class="op">=</span><span class="st">"green"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">hexa</span>, <span class="va">exampleCells</span>, col<span class="op">=</span><span class="st">"green"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># labels</span></span>
 <span><span class="fu"><a href="../reference/gridlabs.html">gridlabs</a></span><span class="op">(</span><span class="va">hexa</span>, cex<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span>
