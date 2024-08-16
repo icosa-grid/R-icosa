@@ -1,0 +1,14 @@
+citHeader("To cite icosa in publications, use the following citation:")
+
+bibentry(bibtype = "Misc",
+  title        = "icosa: Global Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra",
+  author       = c(as.person("Ádám T. Kocsis")),
+  url          = "https://doi.org/10.5281/zenodo.7802878",
+  year		= 2024,
+  textVersion  =
+	  paste(
+		"Kocsis, Á.T. (2024).",
+        "icosa: Global Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra. v0.12.0.",
+		"Zenodo. https://doi.org/10.5281/zenodo.7802878"
+	)
+)
