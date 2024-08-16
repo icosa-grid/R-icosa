@@ -296,9 +296,7 @@ Note that the we plotted the number identifiers so it is clearly visible which p
 plot(hexa)
 
 # Subsetting the sf representation of the grid
-# This will have a shorthand soon!
-subSF <- hexa@sf[unique(exampleCells), ]
-plot(subSF$geometry, col="green", add=TRUE)
+plot(hexa, exampleCells, col="green", add=TRUE)
 
 # labels
 gridlabs(hexa, cex=0.5)

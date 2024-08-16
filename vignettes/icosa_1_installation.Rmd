@@ -35,7 +35,7 @@ For the sake of completeness and simplicity, the sources of the stable version a
 
 ```{r stable, eval=FALSE}
 install.packages(
-	"https://zenodo.org/records/7802878/files/icosa_0.11.0.tar.gz?download=1", 
+	"https://zenodo.org/records/13333485/files/icosa_0.11.1.tar.gz?download=1", 
 	repos=NULL, type="source")
 ```
 

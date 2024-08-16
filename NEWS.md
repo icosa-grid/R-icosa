@@ -2,6 +2,8 @@
 
 # icosa 0.11.1 - 2024-08-16
 
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.13333485-blue.svg)](https://doi.org/10.5281/zenodo.13333485)
+
 ### Added 
 
 - The `arcs()` function to visualize great circle paths between multiple points.
@@ -19,6 +21,8 @@
 - The underutilized `faces()` function now returns only the row names of grids and facelayer objects.
 
 # icosa 0.11.0 - 2023-03-21
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802878-blue.svg)](https://doi.org/10.5281/zenodo.7802878)
 
 ### Added
 
@@ -53,6 +57,10 @@
 * * *
 
 # icosa 0.10.1 - 2021-01-12
+
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.7802807-blue.svg)](https://doi.org/10.5281/zenodo.7802807)
+
 ### Changed
 - fixed warnings when the spherical datum of the grids were loaded
 - added checks for the suggested rgl package

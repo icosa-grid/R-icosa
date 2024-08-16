@@ -1,7 +1,7 @@
 library(icosa)
 library(tinytest)
 
-setwd(file.path(Sys.getenv("WorkSpace"), "/2014-09-08_icosa/icosa"))
+setwd(file.path(Sys.getenv("Software"), "/icosa/icosa"))
 
 set.seed(0)
 xy <- rpsphere(300, output="polar")

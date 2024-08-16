@@ -1,5 +1,3 @@
-context("plot3d works in 3 different ways")
-
 test_that("icosa loaded on its own",{
 	library(icosa)
 	devtools::reload("icosa")

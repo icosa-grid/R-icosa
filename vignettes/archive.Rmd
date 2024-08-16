@@ -9,6 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## v0.11.1 
+
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.13333485-blue.svg)](https://doi.org/10.5281/zenodo.13333485)
+
+- source tarball: [icosa_0.11.1.tar.gz](https://zenodo.org/records/13333485/files/icosa_0.11.1.tar.gz?download=1)
+
+
 ## v0.11.0 
 
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.7802878-blue.svg)](https://doi.org/10.5281/zenodo.7802878)
