@@ -1,12 +1,14 @@
+# Test when the raster is finer resolution than the trigrid
 expect_silent(oc <- occupied(gr,r))
 expect_true(inherits(oc, "logical"))
-expect_equal(sol, sum(oc))
+rastCoords <- xyFromCell(r, 1:ncell(r))[!is.na(values(r)),]
+
+# this should be the same as the result of locate
+expect_silent(located <- locate(gr, rastCoords))
+expect_equal(sort(unique(located)), sort(names(oc[oc])))
 
 
+# facelayer output
 expect_silent(fl <- occupied(gr,r, out="facelayer"))
 expect_true(inherits(fl, "facelayer"))
-expect_equal(sol, sum(fl))
-
-#plot(r, col="red")
-#plot(fl, add=TRUE, col="#00990044", border="black")
-
+expect_equal(sort(names(fl)[values(fl)]), sort(unique(located)))

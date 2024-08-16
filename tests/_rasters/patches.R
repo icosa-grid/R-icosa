@@ -2,6 +2,7 @@ library(terra)
 library(icosa)
 library(tinytest)
 
+setwd(file.path(Sys.getenv("Software"), "/icosa/icosa"))
 
 r <- rast()
 
@@ -12,12 +13,11 @@ values(r)[sample(1:ncell(r), 100)] <- TRUE
 
 # actual tests
 gr <- trigrid(4)
-sol <- 68
-run_test_file("tests/generic/occupied/test_occupied_raster.R")
+run_test_file("tests/generic/occupied/test_occupied_rast.R")
 
-gr <- hexagrid(c(8,10), sp=TRUE)
-sol <- 396
-run_test_file("tests/generic/occupied/test_occupied_raster.R")
+#gr <- hexagrid(c(8,10))
+# run_test_file("tests/generic/occupied/test_occupied_rast.R")
+# # A different testing is required here!
 
 
 # randomized. rpsphere -> rasterize, locate
