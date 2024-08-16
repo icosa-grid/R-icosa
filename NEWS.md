@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0 pre - Underway
+# icosa 0.11.1 - 2024-08-16
 
 ### Added 
 

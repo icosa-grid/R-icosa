@@ -1,7 +1,7 @@
 Package: icosa
 Title: Global Triangular and Penta-Hexagonal Grids Based on Tessellated
     Icosahedra
-Version: 0.11.0
+Version: 0.11.1
 Authors@R: c(
 	person(given="Adam T.", family="Kocsis", role=c("cre", "aut"),
 		   email="adam.t.kocsis@gmail.com", comment=c(ORCID="0000-0002-9028-665X")),
@@ -40,7 +40,7 @@ Collate:
 Description: Implementation of icosahedral grids in three dimensions. The spherical-triangular tessellation can be set to create grids with custom resolutions. Both the primary triangular and their inverted penta-hexagonal grids can be calculated. Additional functions are provided that allow plotting of the grids and associated data, the interaction of the grids with other raster and vector objects, and treating the grids as a graphs.
 Depends:
     R (>= 3.5.0)
-Date: 2023-03-23
+Date: 2024-08-16
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
