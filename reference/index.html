@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">icosa</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/adamkocsis/icosa/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/icosa-grid/R-icosa/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -118,7 +118,7 @@
           
           <code><a href="faces.html">faces()</a></code> 
         </dt>
-        <dd>The faces of a 3d object</dd>
+        <dd>The face names of a trigrid or hexagrid object</dd>
       </dl><dl><dt>
           
           <code><a href="length.html">length(<i>&lt;trigrid&gt;</i>)</a></code> <code><a href="length.html">length(<i>&lt;gridlayer&gt;</i>)</a></code> 
@@ -234,7 +234,7 @@
 
       <dl><dt>
           
-          <code><a href="plot.html">plot</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;facelayer&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;vector&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;table&gt;</i>)</a></code> 
+          <code><a href="plot.html">plot</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;facelayer&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;numeric&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;array&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;table&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="plot.html">plot(<i>&lt;trigrid&gt;</i>,<i>&lt;logical&gt;</i>)</a></code> 
         </dt>
         <dd>Plot method for the <code>trigrid</code>, <code>hexagrid</code> or <code>facelayer</code> classes</dd>
       </dl><dl><dt>
@@ -401,6 +401,11 @@
           <code><a href="arcpoints.html">arcpoints()</a></code> 
         </dt>
         <dd>Calculation of point coordinates along an arc</dd>
+      </dl><dl><dt>
+          
+          <code><a href="arcs.html">arcs()</a></code> 
+        </dt>
+        <dd>Function to plot a set of great circle arcs between points</dd>
       </dl><dl><dt>
           
           <code><a href="surfacecentroid.html">surfacecentroid()</a></code> 

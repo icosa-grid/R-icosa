@@ -16,7 +16,7 @@ The function matches data referred to the grid and plots it with sf's plotting m
     
     <a class="navbar-brand me-2" href="../index.html">icosa</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@ The function matches data referred to the grid and plots it with sf's plotting m
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/adamkocsis/icosa/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/icosa-grid/R-icosa/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -61,7 +61,7 @@ The function matches data referred to the grid and plots it with sf's plotting m
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Plot method for the <code><a href="trigrid-class.html">trigrid</a></code>, <code><a href="hexagrid-class.html">hexagrid</a></code> or <code><a href="facelayer-class.html">facelayer</a></code> classes</h1>
-      <small class="dont-index">Source: <a href="https://github.com/adamkocsis/icosa/blob/HEAD/R/plot-2d-grid.R" class="external-link"><code>R/plot-2d-grid.R</code></a>, <a href="https://github.com/adamkocsis/icosa/blob/HEAD/R/plot-2d-data.R" class="external-link"><code>R/plot-2d-data.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/icosa-grid/R-icosa/blob/HEAD/R/plot-2d-grid.R" class="external-link"><code>R/plot-2d-grid.R</code></a>, <a href="https://github.com/icosa-grid/R-icosa/blob/HEAD/R/plot-2d-data.R" class="external-link"><code>R/plot-2d-data.R</code></a></small>
       <div class="d-none name"><code>plot.Rd</code></div>
     </div>
 
@@ -94,10 +94,19 @@ some misalignments can happen. If you want to use a differently sized window, us
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for trigrid,vector</span></span>
+<span><span class="co"># S4 method for trigrid,numeric</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, crs <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for trigrid,array</span></span>
 <span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, crs <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for trigrid,table</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, crs <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for trigrid,character</span></span>
+<span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, crs <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for trigrid,logical</span></span>
 <span><span class="fu">plot</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, crs <span class="op">=</span> <span class="cn">NULL</span>, main <span class="op">=</span> <span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -152,7 +161,12 @@ some misalignments can happen. If you want to use a differently sized window, us
 
 
 <dt>y</dt>
-<dd><p>A named vector or table with names that refer to face names of the grid.</p></dd>
+<dd><p>Data or part of the grid to be plotted. If it is an unnamed character vector, then it is expected to be
+a set of faces, which will be treated as a subscript that indicates the faces to be plotted.
+If it is a logical vector, then it is expeced to be subscript, indicating a similar operation.
+If it is a named logical or character vector, table with names, or single-dimensional named array
+then the names are expected to refer to faces of the grid <code>x</code>. The default sf-based plotting method
+will apply to the data type.</p></dd>
 
 
 <dt>main</dt>

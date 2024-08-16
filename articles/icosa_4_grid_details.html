@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">icosa</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/adamkocsis/icosa/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/icosa-grid/R-icosa/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -94,7 +94,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>4. Grid details, structure and lower-level operations.</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/adamkocsis/icosa/blob/HEAD/vignettes/icosa_4_grid_details.Rmd" class="external-link"><code>vignettes/icosa_4_grid_details.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/icosa-grid/R-icosa/blob/HEAD/vignettes/icosa_4_grid_details.Rmd" class="external-link"><code>vignettes/icosa_4_grid_details.Rmd</code></a></small>
       <div class="d-none name"><code>icosa_4_grid_details.Rmd</code></div>
     </div>
 
@@ -107,6 +107,18 @@
 <div class="section level2">
 <h2 id="slots">Slots<a class="anchor" aria-label="anchor" href="#slots"></a>
 </h2>
+</div>
+<div class="section level2">
+<h2 id="crs-slot">CRS slot<a class="anchor" aria-label="anchor" href="#crs-slot"></a>
+</h2>
+<p>When dealing with properly georeferenced data, the model ellipsoid
+(or in this case, the sphere) is to be taken into account when the data
+and the grid interact. Therefore a slot called <code>crs</code> is added
+to the grid object, which contains a CRS class string generated
+automatically from the input radius. With the default settings this
+is:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#tri@crs</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="the-grid-as-sp-and-sf-vector-entity">The grid as <code>sp</code> and <code>sf</code> vector entity<a class="anchor" aria-label="anchor" href="#the-grid-as-sp-and-sf-vector-entity"></a>

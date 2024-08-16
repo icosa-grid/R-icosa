@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="icosa">
-<title>3. Grid types and resolutions • icosa</title>
+<title>3. Grid construction • icosa</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="3. Grid types and resolutions">
+<meta property="og:title" content="3. Grid construction">
 <meta property="og:description" content="icosa">
 <meta property="og:image" content="https://adamkocsis.github.io/icosa/reference/figures/logo.png">
 <meta property="og:image:alt" content="The icosa sticker.">
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">icosa</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/adamkocsis/icosa/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/icosa-grid/R-icosa/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -91,10 +91,10 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>3. Grid types and resolutions</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>3. Grid construction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/adamkocsis/icosa/blob/HEAD/vignettes/icosa_3_grids.Rmd" class="external-link"><code>vignettes/icosa_3_grids.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/icosa-grid/R-icosa/blob/HEAD/vignettes/icosa_3_grids.Rmd" class="external-link"><code>vignettes/icosa_3_grids.Rmd</code></a></small>
       <div class="d-none name"><code>icosa_3_grids.Rmd</code></div>
     </div>
 
@@ -103,17 +103,546 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
+<p>Grid objects are used as reference points for the geometry of 2D and
+3D operations. This tutorial focuses on the grid structures, how the
+grids are derived, how and the types that can be created with
+<code>icosa</code>.</p>
+<div class="section level3">
+<h3 id="grids-as-objects">Grids as objects<a class="anchor" aria-label="anchor" href="#grids-as-objects"></a>
+</h3>
+<p>In their basic form, the grids themselves are 3D objects, that
+consist of <strong>vertices</strong> (points), <strong>edges</strong>
+(segments between two points), and <strong>faces</strong> (polygons
+defined with a sequence of points). In spatial analyses, faces are
+usually referred to as <strong>cells</strong>.</p>
+<p>Note that only points have 3D information, both edges and faces are
+defined using them: which effectively means that that it is up to the
+interpretation whether edges are interpreted as linear segments (that
+define polyhedra), or arcs: i.e. portions of great circle segments.
+Similarly, faces can be interpreted both as planar triangles and as
+spherical triangles. All calculations in <code>icosa</code> are
+implemented in XYZ Cartesian space.</p>
+<p>In order to derive the grids <code>icosa</code> uses a spherical
+model for Earth, which is based on the <a href="">authalic radius</a>
+(6371.007 km, the radius of a sphere that has the same volume as the
+actual shape of the planet) as defined in <a href="">ESRI:37008</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="the-ideal-grid">The ideal grid<a class="anchor" aria-label="anchor" href="#the-ideal-grid"></a>
+</h3>
+<p>An optimal horizontal grid would have completely uniform structure,
+with its points distributed completely evenly on the sphere. This means
+that faces (i.e. cells) defined using these points would have identical
+<strong>size</strong>, <strong>shape</strong> and <strong>relative
+distance</strong> from each other - a criterion that that turns out to
+be problematic: only the platonic solids have vertices that fulfill
+these criteria perfectly.</p>
+<p>In the <code>icosa</code> package all grids are derived from the <a href="">regular icosahedron</a>, a platonic solid that has the highest
+number of faces, which is 20 (seen below):</p>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://icosa-grid.github.io/R-icosa/" class="external-link">icosa</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmurdoch/rgl" class="external-link">rgl</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a trigrid class object</span></span>
+<span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trigrid-class.html">trigrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot the object in 3d</span></span>
+<span><span class="co"># warnings occur on some systems due to rgl fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/faces3d.html">faces3d</a></span><span class="op">(</span><span class="va">tri</span>, guides<span class="op">=</span><span class="cn">F</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># rotate viewport</span></span>
+<span><span class="fu"><a href="https://dmurdoch.github.io/rgl/dev/reference/viewpoint.html" class="external-link">view3d</a></span><span class="op">(</span> theta <span class="op">=</span><span class="fl">30</span>, phi <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/plot3d-1.png" width="960"></p>
+<p>This coarse resolution is hardly acceptable for the analysis of
+spatial heterogeneity, which means that we have to find a way to
+increase the number of cells in a uniform way.</p>
+</div>
+<div class="section level3">
+<h3 id="tessellation">Tessellation<a class="anchor" aria-label="anchor" href="#tessellation"></a>
+</h3>
+<p>Tessellation is the process of taking a polygon (i.e. triangle), and
+breaking it up into smaller triangles. Tessellation of a regular
+triangle is trivial, but it is useful to illustrate the concept
+(e.g. below).</p>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># very verbose code to produce the figure below...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># This is a beautiful programming exercise:</span></span>
+<span><span class="co"># can you implement a function that does this for an arbitrary number of edges?</span></span>
+<span></span>
+<span><span class="co"># tessellation = 1</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">"Tessellation (#new edge on triangle side) = 1"</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># original points of a regular triangle</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># triangle- as matrix</span></span>
+<span><span class="va">triangle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># draw</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0.34</span>,<span class="fl">0.53</span>,<span class="fl">0.2</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the point</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span></span>
+<span>    x<span class="op">=</span><span class="va">triangle</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">triangle</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, </span>
+<span>    label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">triangle</span><span class="op">)</span>, pos<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ------------------------------------------------------------------------------</span></span>
+<span><span class="co"># tessellation =2</span></span>
+<span><span class="co"># breaking segments in two - mid between points</span></span>
+<span><span class="va">ab</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">A</span><span class="op">+</span><span class="va">B</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">bc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">B</span><span class="op">+</span><span class="va">C</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">ca</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">C</span><span class="op">+</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span></span>
+<span><span class="co"># create new set of triangles</span></span>
+<span><span class="va">triangle1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">ab</span>, <span class="va">ca</span><span class="op">)</span></span>
+<span><span class="va">triangle2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">ca</span>, <span class="va">ab</span>, <span class="va">bc</span><span class="op">)</span></span>
+<span><span class="va">triangle3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">ab</span>, <span class="va">B</span>, <span class="va">bc</span><span class="op">)</span></span>
+<span><span class="va">triangle4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">ca</span>, <span class="va">bc</span>, <span class="va">C</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># empty plot</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">"Tessellation (#new edge on triangle side) = 2"</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># te colors of the triangles</span></span>
+<span><span class="va">greens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0.34</span>,<span class="fl">0.53</span>,<span class="fl">0.2</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,length.out<span class="op">=</span><span class="fl">4</span><span class="op">+</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot the triangles</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle1</span>, col<span class="op">=</span><span class="va">greens</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle2</span>, col<span class="op">=</span><span class="va">greens</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle3</span>, col<span class="op">=</span><span class="va">greens</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle4</span>, col<span class="op">=</span><span class="va">greens</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the points</span></span>
+<span><span class="va">unpoint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">ab</span>, <span class="va">bc</span>, <span class="va">ca</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># putl labels</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span></span>
+<span>    x<span class="op">=</span><span class="va">unpoint</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">unpoint</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, </span>
+<span>    label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">unpoint</span><span class="op">)</span>, pos<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ------------------------------------------------------------------------------</span></span>
+<span><span class="co"># tessellation = 3</span></span>
+<span></span>
+<span><span class="co"># points derived with simple coordinate geometry</span></span>
+<span><span class="co"># difference vector reduced, offset from subtracted</span></span>
+<span><span class="va">a1b</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">B</span><span class="op">-</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span> <span class="op">+</span> <span class="va">A</span></span>
+<span><span class="va">a2b</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">B</span><span class="op">-</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="fl">2</span> <span class="op">+</span> <span class="va">A</span></span>
+<span><span class="va">b1c</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">C</span><span class="op">-</span><span class="va">B</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span> <span class="op">+</span> <span class="va">B</span></span>
+<span><span class="va">b2c</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">C</span><span class="op">-</span><span class="va">B</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="fl">2</span> <span class="op">+</span> <span class="va">B</span></span>
+<span><span class="va">c1a</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">C</span><span class="op">-</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span> <span class="op">+</span> <span class="va">A</span></span>
+<span><span class="va">c2a</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">C</span><span class="op">-</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span><span class="op">*</span><span class="fl">2</span> <span class="op">+</span> <span class="va">A</span></span>
+<span><span class="va">mid</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">A</span><span class="op">+</span><span class="va">B</span><span class="op">+</span><span class="va">C</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span></span>
+<span></span>
+<span><span class="co"># the triangles</span></span>
+<span><span class="va">triangles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">a1b</span>, <span class="va">c1a</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">a1b</span>, <span class="va">a2b</span>, <span class="va">mid</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">a2b</span>, <span class="va">B</span>, <span class="va">b1c</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">a1b</span>, <span class="va">mid</span>, <span class="va">c1a</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">a2b</span>, <span class="va">b1c</span>, <span class="va">mid</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">c1a</span>, <span class="va">mid</span>, <span class="va">c2a</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">7</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">mid</span>, <span class="va">b1c</span>, <span class="va">b2c</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">8</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">mid</span>, <span class="va">b2c</span>, <span class="va">c2a</span><span class="op">)</span></span>
+<span><span class="va">triangles</span><span class="op">[[</span><span class="fl">9</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">c2a</span>, <span class="va">b2c</span>, <span class="va">C</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># define color sequence</span></span>
+<span><span class="va">greens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0.34</span>,<span class="fl">0.53</span>,<span class="fl">0.2</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,length.out<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">triangles</span><span class="op">)</span><span class="op">+</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># empty plot</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>    xlab<span class="op">=</span><span class="st">"Tessellation (#new edge on triangle side) = 3"</span>,</span>
+<span>     ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plotting the triangles</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">triangles</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangles</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, col<span class="op">=</span><span class="va">greens</span><span class="op">[</span><span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the point coordinates </span></span>
+<span><span class="va">unpoint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>    <span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, </span>
+<span>    <span class="va">a1b</span>, <span class="va">a2b</span>, <span class="va">b1c</span>, <span class="va">b2c</span>, <span class="va">c1a</span>, <span class="va">c2a</span>,</span>
+<span>    <span class="va">mid</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the names of the points</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span></span>
+<span>    x<span class="op">=</span><span class="va">unpoint</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">unpoint</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, </span>
+<span>    label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">unpoint</span><span class="op">)</span>,</span>
+<span>    pos<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/tessel-1.png" width="960"></p>
+<p>In this case, the edges of the triangles are split to equal segments,
+which in turn define smaller regular triangles. The number of resulting
+segments on an original edge defines the resulting number of triangles:
+if there are <em>n</em> new segments, there will be <span class="math inline">\(n^2\)</span> number of triangles.</p>
+<p>Moreover, once the new triangles are created, the process can be
+repeated recursively, creating a newer, smaller set of triangles. This
+recursive iteration can be represented as a vector of positive integer
+numbers (which we can call the <strong>tessellation vector</strong>),
+for example:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>Which indicates that that the edge of a triangle is to split once
+into two (leading to 4 triangles), and then all resulting edges to be
+split into 3 (creating <span class="math inline">\(4 * 3^2 = 36\)</span>
+triangles), and then the resulting edges are also split into 2, leading
+to a total of <span class="math inline">\(36 * 4 = 144\)</span>
+triangles. This means that a total of <span class="math inline">\(2 * 3
+* 2 = 12\)</span> (i.e. the product of the tessellation vector)
+resulting edges will be created for every original edge (note that <span class="math inline">\(12^2 = 144\)</span>!). In the planar case and with
+regular triangles, this leads to the same result as doing a single
+12-fold subdivision, but leads to slightly different results in the
+spherical case.</p>
+<p>Since an icosahedron has 20 triangles/faces, the total number of
+faces will be <span class="math inline">\(n^2 * 20\)</span>. Therefore
+the <strong>tessellation vector</strong> is the control of grid
+resolution.</p>
+<p>Despite its intuitive nature, the implementation of this process is
+not trivial for spherical triangles (which have arcs instead of linear
+segments as edges) and becomes a source of distortions (<a href="">see
+below</a>). The exact implementation will be explained in a later
+article focusing on the tessellation.</p>
+<hr>
+</div>
 </div>
 <div class="section level2">
 <h2 id="triangular-grids">Triangular grids<a class="anchor" aria-label="anchor" href="#triangular-grids"></a>
 </h2>
+<p>Triangular grids are directly dervied from the regular icosahedron
+using a spherical version of the tessellation method described above.
+These (and all other grids, including the <a href=""><code>hexagrid</code>s</a>) belong in the
+<code>trigrid-class</code> and can be constructed with the
+<code><a href="../reference/trigrid-class.html">trigrid()</a></code> function.</p>
+<div class="section level3">
+<h3 id="a-primitive-triangular-grid">A primitive triangular grid<a class="anchor" aria-label="anchor" href="#a-primitive-triangular-grid"></a>
+</h3>
+<p>Without any arguments, this will construct a regular icosahedron -
+with all the attributes that any other grid object has.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># loading the package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://icosa-grid.github.io/R-icosa/" class="external-link">icosa</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a trigrid class object</span></span>
+<span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trigrid-class.html">trigrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the show() method displays basic information of the object </span></span>
+<span><span class="va">tri</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An trigrid object with 12 vertices, 30 edges and 20 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 7053.65 km or 63.43 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<p>All calculations are natively done in xyz Cartesian space, and (as
+indicated above) this can be visualized with 3D plotting tools. The
+implemented 3d plotting functions work with R’s interactive
+implementation of openGL (in the CRAN package <code>rgl</code>) - see
+later tutorials about details.</p>
+<p>A simple icosahedron looks as such (with an internal sphere added to
+make the render more intuitive to understand):</p>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># warnings occur on some systems due to rgl fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">tri</span>, guides<span class="op">=</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/plot3dtri-1.png" width="960"></p>
+<p>Without any specified additional entry, the created object will an
+icosahedron with the center of <code>c(0,0,0)</code> Cartesian
+coordinates and the authalic radius of Earth used as the distance
+between the object center and the vertices. These can be altered by
+setting the <code>radius</code> and <code>center</code> arguments if
+necessary (e.g. for composing 3d imagery).</p>
+</div>
+<div class="section level3">
+<h3 id="tessellating-a-triangular-grid">Tessellating a triangular grid<a class="anchor" aria-label="anchor" href="#tessellating-a-triangular-grid"></a>
+</h3>
+<p>Setting the first, <code>tessellation</code> argument of the
+<code><a href="../reference/trigrid-class.html">trigrid()</a></code> function can be used to create higher-resolution
+grids. The input to this argument is a <strong>tessellation
+vector</strong> as described <a href="">above</a>. For instance this
+line of code will instantiate a triangular grid with the tessellation
+vector set to <code>8</code> (every side of the icosahedron is split
+into 8 new edges):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a trigrid class object</span></span>
+<span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trigrid-class.html">trigrid</a></span><span class="op">(</span>tessellation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gl</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An trigrid object with 642 vertices, 1920 edges and 1280 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 961.08 km or 8.64 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot the object in 3d</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">gl</span>, guides<span class="op">=</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/trigrid_3d-1.png" width="960"></p>
+<p>Choosing a vector with a higher product leads to a more complex,
+higher-resolution grid:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a trigrid class object</span></span>
+<span><span class="va">gh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trigrid-class.html">trigrid</a></span><span class="op">(</span>tessellation<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gh</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An trigrid object with 2562 vertices, 7680 edges and 5120 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 481.07 km or 4.33 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot the object in 3d</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">gh</span>, guides<span class="op">=</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/trigrid_higher_3d-1.png" width="960"></p>
+</div>
+<div class="section level3">
+<h3 id="controlling-grid-resolution">Controlling grid resolution<a class="anchor" aria-label="anchor" href="#controlling-grid-resolution"></a>
+</h3>
+<p>You have probably noted the decrease in overall performance - which
+is the overhead of the 3D implementation and the flexibilty that these
+grids offer: the higher the tessellation, the longer it takes to
+calculate a grid, and the bigger it is in the computer’s memory. Also,
+tessellation is easy to understand from the point of creating a grid,
+but it is very unintiutive from the point of application, where we tend
+to think in <em>degrees</em> and <em>kilometers</em>. If you would like
+to explore the connection between grid resolution, size, performance and
+tesselation, you can do so using the <code>triguide</code> built-in
+object.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">triguide</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">triguide</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 'data.frame':    120 obs. of  18 variables:</span></span>
+<span><span class="co">##  $ total             : num  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">##  $ level1            : num  1 1 1 2 1 2 1 2 3 2 ...</span></span>
+<span><span class="co">##  $ level2            : num  1 2 3 2 5 3 7 4 3 5 ...</span></span>
+<span><span class="co">##  $ level3            : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ level4            : logi  NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ faces             : int  20 80 180 320 500 720 980 1280 1620 2000 ...</span></span>
+<span><span class="co">##  $ vertices          : int  12 42 92 162 252 362 492 642 812 1002 ...</span></span>
+<span><span class="co">##  $ meanEdgeLength_deg: num  63.4 33.9 22.9 17.2 13.8 ...</span></span>
+<span><span class="co">##  $ sdEdgeLength_deg  : num  0 2.15 1.291 1.12 0.702 ...</span></span>
+<span><span class="co">##  $ meanEdgeLength_km : num  7054 3765 2541 1914 1534 ...</span></span>
+<span><span class="co">##  $ sdEdgeLength_km   : num  0 239.1 143.5 124.6 78.1 ...</span></span>
+<span><span class="co">##  $ meanArea_km2      : num  25503281 6375820 2833698 1593955 1020131 ...</span></span>
+<span><span class="co">##  $ sdArea_km2        : num  0 537061 173567 137740 41942 ...</span></span>
+<span><span class="co">##  $ time              : num  0.019 0.021 0.026 0.03 0.043 ...</span></span>
+<span><span class="co">##  $ time_sf           : num  0.265 0.363 0.513 0.726 0.994 ...</span></span>
+<span><span class="co">##  $ size              : chr  "0.03 MB" "0.07 MB" "0.14 MB" "0.25 MB" ...</span></span>
+<span><span class="co">##  $ size_sf           : chr  "0.07 MB" "0.24 MB" "0.52 MB" "0.92 MB" ...</span></span>
+<span><span class="co">##  $ timeLocate_5000   : num  0.017 0.019 0.021 0.02 0.027 ...</span></span></code></pre>
+<p>Check out <code><a href="../reference/triguide.html">?triguide</a></code> for the meaning of the columns You
+can use this object to</p>
+<p>To make the instantiation of grids somewhat more straightforward, you
+can also provide the desired edge-length in degrees (argument
+<code>deg</code>), and tessellation vector that leads to the closest
+result will be provided to you. For instance, if you would like to have
+a grid with approximately 5° of edge length, you can get it with:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">five</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trigrid-class.html">trigrid</a></span><span class="op">(</span>deg<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Selecting trigrid with tessellation vector: c(2, 7).</span></span>
+<span><span class="co">## Mean edge length: 4.944 degrees.</span></span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">five</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An trigrid object with 1962 vertices, 5880 edges and 3920 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 549.79 km or 4.94 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<p>Note that this will not lead to an exactly 5°- resolution grid, but
+it still can serve as a good approximation.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="hexagonal-grids">Hexagonal grids<a class="anchor" aria-label="anchor" href="#hexagonal-grids"></a>
 </h2>
+<div class="section level3">
+<h3 id="rationale">Rationale<a class="anchor" aria-label="anchor" href="#rationale"></a>
+</h3>
+<p>Triangular grids are intutive ways of breaking up a spherical surface
+to similar entities and they can be used for discretization of spatial.
+You could register data at the centers of the triangles, but there are
+several problems with that: triangular cells are very anisometric, the
+vertices are very far away from the cell centerpoints compared to the
+middle of the edges, so the degree to which a single point can represent
+points in the cell varies.</p>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># This is a beautiful programming exercise:</span></span>
+<span><span class="co"># can you implement a function that does this for an arbitrary number of edges?</span></span>
+<span><span class="va">green</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0.34</span>,<span class="fl">0.53</span>,<span class="fl">0.2</span>, <span class="fl">0.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># triangle</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">""</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># original points of a regular triangle</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># triangle- as matrix</span></span>
+<span><span class="va">triangle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># draw</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">triangle</span>, col<span class="op">=</span><span class="va">green</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">triangle</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">triangle</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">triangle</span><span class="op">)</span>,pos<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># triangle midpoint</span></span>
+<span><span class="va">mid</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">A</span><span class="op">+</span><span class="va">B</span><span class="op">+</span><span class="va">C</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>label<span class="op">=</span><span class="st">"O"</span>, x<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, pos<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># midpoint - vertex</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span>x0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, x1<span class="op">=</span><span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, y1<span class="op">=</span><span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">midb</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">B</span><span class="op">+</span><span class="va">mid</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">midb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">midb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"a = "</span>, <span class="fu"><a href="https://rspatial.github.io/terra/reference/math-generics.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">mid</span><span class="op">-</span><span class="va">midb</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>, pos<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># midpoint - edgemid</span></span>
+<span><span class="va">bc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">B</span><span class="op">+</span><span class="va">C</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span>x0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, x1<span class="op">=</span><span class="va">bc</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, y1<span class="op">=</span><span class="va">bc</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col<span class="op">=</span><span class="st">"gray50"</span><span class="op">)</span></span>
+<span><span class="va">midbc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">mid</span><span class="op">+</span><span class="va">bc</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">midbc</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">midbc</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"b = "</span>, <span class="fu"><a href="https://rspatial.github.io/terra/reference/math-generics.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">mid</span><span class="op">-</span><span class="va">midbc</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>, pos<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="st">"gray50"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ------------------------------------------------------------------------------</span></span>
+<span><span class="co"># square</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span>,<span class="fl">1.05</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span>,<span class="fl">1.05</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">""</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">D</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">square</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span>, <span class="va">C</span>, <span class="va">D</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">square</span>, col<span class="op">=</span><span class="va">green</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">square</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,<span class="va">square</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">square</span><span class="op">)</span>,pos<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># midpoint</span></span>
+<span><span class="va">mid</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">A</span> <span class="op">+</span> <span class="va">B</span> <span class="op">+</span> <span class="va">C</span> <span class="op">+</span> <span class="va">D</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, y<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, label<span class="op">=</span><span class="st">"O"</span>, pos<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mid-vertex</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span>x0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, x1<span class="op">=</span><span class="fl">1</span>, y0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, y1<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># mid edge mid</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span>x0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, x1<span class="op">=</span><span class="fl">0.5</span>, y0<span class="op">=</span><span class="va">mid</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, y1<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># ------------------------------------------------------------------------------</span></span>
+<span><span class="co"># hexagon</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span>,<span class="fl">1.05</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span>,<span class="fl">1.05</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">""</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ------------------------------------------------------------------------------</span></span>
+<span><span class="co"># A circle</span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span></span>
+<span>    <span class="cn">NULL</span>, <span class="cn">NULL</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, axes<span class="op">=</span><span class="cn">FALSE</span>, </span>
+<span>    xlab<span class="op">=</span><span class="st">""</span>, </span>
+<span>    ylab<span class="op">=</span><span class="st">""</span>, asp<span class="op">=</span><span class="fl">1</span>, cex.lab<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span>, length.out<span class="op">=</span><span class="fl">360</span><span class="op">)</span></span>
+<span><span class="va">circle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span><span class="op">*</span><span class="fl">0.5</span><span class="op">+</span><span class="fl">0.5</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span><span class="op">*</span><span class="fl">0.5</span><span class="op">+</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="va">circle</span>, col<span class="op">=</span><span class="va">green</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span>label<span class="op">=</span><span class="st">"O"</span>, x<span class="op">=</span><span class="fl">0.5</span>, y<span class="op">=</span><span class="fl">0.5</span>, pos<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">O</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="va">circle</span><span class="op">[</span><span class="fl">45</span>, <span class="op">]</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">circle</span><span class="op">[</span><span class="fl">120</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span>x0<span class="op">=</span><span class="fl">0.5</span>, x1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, y0<span class="op">=</span><span class="fl">0.5</span>, y1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">B</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">oa</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">O</span><span class="op">+</span><span class="va">A</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">ob</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">O</span><span class="op">+</span><span class="va">B</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">oa</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">oa</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,  pos<span class="op">=</span><span class="fl">4</span>, label<span class="op">=</span><span class="st">"r = 0.5"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">ob</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">ob</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,  pos<span class="op">=</span><span class="fl">2</span>, label<span class="op">=</span><span class="st">"r = 0.5"</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/cells-1.png" width="960"></p>
+<p>Also, some spatial calculations rely on the concept of neighborhood -
+knowning what cells are in contact. Triangular grids summer from the
+same issues as rectangular grids: neighborhood can be defined
+differently, depending on the pattern of contact. Based on analogies
+from chess, you talk either about a ‘rook’ or ‘queen’-neighborhood, when
+shared edges or shared vertices are considered to be the base criteria
+for neighborhood, respectively.</p>
+</div>
+<div class="section level3">
+<h3 id="grid-inversion">Grid inversion<a class="anchor" aria-label="anchor" href="#grid-inversion"></a>
+</h3>
+<p>Using hexagons solve both of these problems. Hexagonal-cells can be
+defined with inversion: replacing the grid vertices with face-centers of
+the triangular grids, and inserting vertices at the center of of the
+faces. This inversion operation follows the tessellation procedure, and
+uses already created <code>trigrid-class</code> objects and produces
+<code>hexagrid-class</code> entities:</p>
+<p>Executing this proces on the icosahedron
+(<code>tessellation=1</code>), ironically, produces an object without
+any hexagonal faces, the result of this operation is a regular
+pentagon-dodecahedron:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a hexagrid class object</span></span>
+<span><span class="va">dodecahedron</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hexagrid-class.html">hexagrid</a></span><span class="op">(</span>tessellation<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">dodecahedron</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An hexagrid object with 20 vertices, 30 edges and 12 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 4649.1 km or 41.81 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot the object in 3d</span></span>
+<span><span class="co"># warnings occur on some systems due to rgl fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/faces3d.html">faces3d</a></span><span class="op">(</span><span class="va">dodecahedron</span>, guides<span class="op">=</span><span class="cn">F</span>, col<span class="op">=</span><span class="st">"gray"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># rotate viewport</span></span>
+<span><span class="fu"><a href="https://dmurdoch.github.io/rgl/dev/reference/viewpoint.html" class="external-link">view3d</a></span><span class="op">(</span> theta <span class="op">=</span><span class="fl">80</span>, phi <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/plot3dhex-1.png" width="960"></p>
+<p>Hexagons are introduced when more complex triangular grids are
+inverted.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a hexagrid class object</span></span>
+<span><span class="va">hexa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hexagrid-class.html">hexagrid</a></span><span class="op">(</span>tessellation<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">hexa</span></span></code></pre></div>
+<pre><code><span><span class="co">## A/An hexagrid object with 320 vertices, 480 edges and 162 faces.</span></span>
+<span><span class="co">## The mean grid edge length is 1111.9 km or 10 degrees.</span></span>
+<span><span class="co">## Use plot3d() to see a 3d render.</span></span></code></pre>
+<details><summary>
+Source
+</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot the object in 3d</span></span>
+<span><span class="co"># warnings occur on some systems due to rgl fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">hexa</span>, guides<span class="op">=</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># rotate viewport</span></span>
+<span><span class="fu"><a href="https://dmurdoch.github.io/rgl/dev/reference/viewpoint.html" class="external-link">view3d</a></span><span class="op">(</span> theta <span class="op">=</span><span class="fl">80</span>, phi <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="icosa_3_grids_files/figure-html/plot3dhex2-1.png" width="960"></p>
+<p>As a matter of fact, it is impossible to create these hexagonal grids
+without the introduction of pentagons, exactly 12 of them, that are
+positioned at the vertices of the icosahedron. For this reason, it is
+better to call these penta-hexagonal grids.</p>
+<p>These objects are practically Goldberg polyhedra.</p>
+</div>
+<div class="section level3">
+<h3 id="hexagrid-resolution-control">Hexagrid resolution control<a class="anchor" aria-label="anchor" href="#hexagrid-resolution-control"></a>
+</h3>
+</div>
 </div>
 <div class="section level2">
-<h2 id="lookup-table">Lookup table<a class="anchor" aria-label="anchor" href="#lookup-table"></a>
+<h2 id="d-mapping">2D mapping<a class="anchor" aria-label="anchor" href="#d-mapping"></a>
 </h2>
 </div>
 <div class="section level2">
