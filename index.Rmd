@@ -12,7 +12,7 @@ library(badger)
 
 ##### Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra
 
-`r badge_devel("adamkocsis/icosa", "green")`
+`r badge_devel("icosa-grid/R-icosa", "green")`
 `r badge_cran_release("icosa", "blue")`
 `r badge_cran_download("icosa", "grand-total", "yellow")`
 `r badge_cran_checks("icosa")`

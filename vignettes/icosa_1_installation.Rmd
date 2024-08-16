@@ -29,19 +29,19 @@ If for some reason, the installlation from CRAN fails, you might need to look in
 
 ## Alternative methods
 
-#### Stable version from GitHub from source
+#### Stable version from Zenodo (source)
 
 For the sake of completeness and simplicity, the sources of the stable version are also available on GitHub. The `install.packages()` function can be used to install this from source - but you will have to install dependencies of the package, and you have to have a compiler installed on your system 
 
 ```{r stable, eval=FALSE}
 install.packages(
-	"https://github.com/adamkocsis/icosa/raw/master/_archive/source/icosa_0.11.0.tar.gz", 
+	"https://zenodo.org/records/7802878/files/icosa_0.11.0.tar.gz?download=1", 
 	repos=NULL, type="source")
 ```
 
 #### Development version - the raw 
 
-If you encounter technical problems with the package that are not described anywhere, you might want to take a look at the [development version](https://github.com/adamkocsis/icosa/tree/devel).
+If you encounter technical problems with the package that are not described anywhere, you might want to take a look at the [development version](https://github.com/icosa-grid/R-icosa/tree/devel).
 
 If you wish to install the development version, I recommend a manual installation:  
 1. Clone the repository to your local hard drive.  

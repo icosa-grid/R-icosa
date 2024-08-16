@@ -3,7 +3,7 @@
 
 ##### Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra
 
-[![](https://img.shields.io/badge/devel%20version-0.11.1-green.svg)](https://github.com/adamkocsis/icosa)
+[![](https://img.shields.io/badge/devel%20version-0.11.1-green.svg)](https://github.com/icosa-grid/R-icosa)
 [![](https://www.r-pkg.org/badges/version/icosa?color=blue)](https://cran.r-project.org/package=icosa)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/icosa?color=yellow)](https://cran.r-project.org/package=icosa)
 [![CRAN
