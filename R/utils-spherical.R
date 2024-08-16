@@ -702,7 +702,7 @@ setMethod(
 	function(x, breaks=100, breakAtDateline=TRUE, plot=TRUE, ...){
 		# if there is just one point
 		if(nrow(x)==1){
-			points(x, ...)
+			graphics::points(x, ...)
 			invisible(x)
 		}else{
 
@@ -789,7 +789,7 @@ setMethod(
 
 
 			# once this is done, it is safe to visualize
-			if(plot) lines(longlat, ...)
+			if(plot) graphics::lines(longlat, ...)
 
 			# return this if needed
 			invisible(longlat)

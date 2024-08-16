@@ -329,7 +329,10 @@ setMethod(
 #' @param main The main title of the plot
 #' @rdname plot
 #' @name plot
-#' @aliases plot,trigrid,vector-method
+#' @aliases plot,trigrid,array-method
+#' @aliases plot,trigrid,character-method
+#' @aliases plot,trigrid,logical-method
+#' @aliases plot,trigrid,numeric-method
 #' @aliases plot,trigrid,table-method
 #' @examples
 #' # A simple grid, with sf-representation

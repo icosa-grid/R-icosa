@@ -141,6 +141,7 @@ reference:
   - arcdist
   - arcdistmat
   - arcpoints
+  - arcs
   - surfacecentroid
   - chullsphere
 

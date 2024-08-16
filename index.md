@@ -3,7 +3,7 @@
 
 ##### Triangular and Penta-Hexagonal Grids Based on Tessellated Icosahedra
 
-[![](https://img.shields.io/badge/devel%20version-0.11.0-green.svg)](https://github.com/adamkocsis/icosa)
+[![](https://img.shields.io/badge/devel%20version-0.11.1-green.svg)](https://github.com/adamkocsis/icosa)
 [![](https://www.r-pkg.org/badges/version/icosa?color=blue)](https://cran.r-project.org/package=icosa)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/icosa?color=yellow)](https://cran.r-project.org/package=icosa)
 [![CRAN
@@ -23,7 +23,7 @@ treating the grids as a graphs.
 These grids are often called icospheres, and have an important use in
 material design, architecture, computer graphics and chemistry.
 
------
+------------------------------------------------------------------------
 
 ### Similar packages
 
@@ -39,19 +39,19 @@ the R environment for spatially isotropic analysis - especially when it
 comes to latitudinal patterns. It also allows access to not only
 hexagonal, but triangular grids as well.
 
------
+------------------------------------------------------------------------
 
 ### Plans
 
 #### Near
 
-  - Finishing vignettes in **Tutorials**
-  - Paper about the package (long overdue)
-  - Moving internal vector-representation from `sp` to `sf`
+- Finishing vignettes in **Tutorials**
+- Paper about the package (long overdue)
+- Moving internal vector-representation from `sp` to `sf`
 
 #### Distant
 
-  - Customization of tesselation that allows tweaking of cell sizes and
-    shapes - depending on needs
-  - Writing a C++ library from the core functionality and porting it to
-    Python and Julia
+- Customization of tesselation that allows tweaking of cell sizes and
+  shapes - depending on needs
+- Writing a C++ library from the core functionality and porting it to
+  Python and Julia

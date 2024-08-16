@@ -22,6 +22,6 @@ plot(gr)
 # Tutorials moved to package website 
 
 To make the package as small as possible, the tutorials on how to use the package are available at the package website:   
-https://adamkocsis.github.io/icosa/ 
+https://icosa-grid.github.io/R-icosa/ 
 
 

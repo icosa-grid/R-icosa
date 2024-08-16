@@ -23,8 +23,8 @@ tri <- trigrid(c(2,2))
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://adamkocsis.github.io/icosa/}
-  \item Report bugs at \url{https://github.com/adamkocsis/icosa/issues}
+  \item \url{https://icosa-grid.github.io/R-icosa/}
+  \item Report bugs at \url{https://github.com/icosa-grid/R-icosa/issues}
 }
 
 }

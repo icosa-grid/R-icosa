@@ -40,6 +40,7 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom grDevices colors
 #' @importFrom grDevices heat.colors
+#' @importFrom graphics points
 #' @importFrom graphics grid
 #' @importFrom graphics par
 #' @importFrom graphics rect

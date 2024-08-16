@@ -5,7 +5,10 @@
 \alias{plot}
 \alias{plot,trigrid,ANY-method}
 \alias{plot,facelayer,ANY-method}
-\alias{plot,trigrid,vector-method}
+\alias{plot,trigrid,array-method}
+\alias{plot,trigrid,character-method}
+\alias{plot,trigrid,logical-method}
+\alias{plot,trigrid,numeric-method}
 \alias{plot,trigrid,table-method}
 \title{Plot method for the \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}} classes}
 \format{
