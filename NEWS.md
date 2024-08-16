@@ -4,7 +4,9 @@
 
 ### Added 
 
+- The `arcs()` function to visualize great circle paths between multiple points.
 - missing support of `sfc`-class objects for the `occupied` function (`OccupiedFaces` method)
+- CITATION entry 
 
 ### Fixed 
 

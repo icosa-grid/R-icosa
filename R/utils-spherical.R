@@ -704,94 +704,95 @@ setMethod(
 		if(nrow(x)==1){
 			points(x, ...)
 			invisible(x)
-		}
+		}else{
 
-		# reserve space for all
-		noGaps <- matrix(NA, ncol=2, nrow=nrow(x) + breaks*(nrow(x)-1))
+			# reserve space for all
+			noGaps <- matrix(NA, ncol=2, nrow=nrow(x) + breaks*(nrow(x)-1))
 
-		# for all the points
-		for(i in 2:nrow(x)){
+			# for all the points
+			for(i in 2:nrow(x)){
 
-			# separate the points
-			first <- x[i-1,, drop=FALSE]
+				# separate the points
+				first <- x[i-1,, drop=FALSE]
 
-			# save the very first point
-			if(i==2) noGaps[1, ] <- first
-			second <- x[i,, drop=FALSE]
+				# save the very first point
+				if(i==2) noGaps[1, ] <- first
+				second <- x[i,, drop=FALSE]
 
-			# calculate the arcs between them
-			oneset <- arcpoints(first, second, breaks=breaks, output="polar", onlyNew=TRUE)
+				# calculate the arcs between them
+				oneset <- arcpoints(first, second, breaks=breaks, output="polar", onlyNew=TRUE)
 
-			# where to save the main part
-			mainPosition <- 2:(breaks+1) + (i-2)*(breaks+1)
-			lastPosition <- breaks+2 + (i-2)*(breaks+1)
+				# where to save the main part
+				mainPosition <- 2:(breaks+1) + (i-2)*(breaks+1)
+				lastPosition <- breaks+2 + (i-2)*(breaks+1)
 
-			# insert this
-			noGaps[mainPosition,] <- oneset
-			noGaps[lastPosition,] <- second
-
-		}
-
-		# insert missing values into datelines
-		if(breakAtDateline){
-			# based on absolute differences in longitude
-			absDiff <- abs(diff(noGaps[,1]))
-
-			# positions of the breaks
-			breakPos <- which(absDiff>300)
-
-			# do this only if there are any breakpoints
-			if(length(breakPos) > 0){
-				# The restructured matrix
-				longlat <- matrix(NA, ncol=2, nrow=nrow(noGaps)+length(breakPos))
-
-				# do the until the very last
-				for (i in 1:length(breakPos)){
-					if(i == 1){
-						firstSource <- 1
-						firstTarget<- 1
-					}else{
-						firstSource <- breakPos[i-1]+1
-						firstTarget <- breakPos[i-1]+i
-					}
-
-					# where to copy from
-					sourceIndex <- firstSource:breakPos[i]
-
-					# where to copy
-					targetIndex <-firstTarget:(breakPos[i] + i-1)
-
-					# the actual copy
-					longlat[targetIndex,] <- noGaps[sourceIndex,]
-
-				}
-
-				# then copy over the last bit
-				firstSource <- breakPos[i]+1
-				firstTarget <- breakPos[i]+i+1 # pretend next loop!
-				sourceIndex <- firstSource:nrow(noGaps)
-				targetIndex <- firstTarget:nrow(longlat)
-				longlat[targetIndex,] <- noGaps[sourceIndex,]
-
-
-
-			# nothing needs to be done
-			}else{
-				longlat <- noGaps
+				# insert this
+				noGaps[mainPosition,] <- oneset
+				noGaps[lastPosition,] <- second
 
 			}
 
+			# insert missing values into datelines
+			if(breakAtDateline){
+				# based on absolute differences in longitude
+				absDiff <- abs(diff(noGaps[,1]))
+
+				# positions of the breaks
+				breakPos <- which(absDiff>300)
+
+				# do this only if there are any breakpoints
+				if(length(breakPos) > 0){
+					# The restructured matrix
+					longlat <- matrix(NA, ncol=2, nrow=nrow(noGaps)+length(breakPos))
+
+					# do the until the very last
+					for (i in 1:length(breakPos)){
+						if(i == 1){
+							firstSource <- 1
+							firstTarget<- 1
+						}else{
+							firstSource <- breakPos[i-1]+1
+							firstTarget <- breakPos[i-1]+i
+						}
+
+						# where to copy from
+						sourceIndex <- firstSource:breakPos[i]
+
+						# where to copy
+						targetIndex <-firstTarget:(breakPos[i] + i-1)
+
+						# the actual copy
+						longlat[targetIndex,] <- noGaps[sourceIndex,]
+
+					}
+
+					# then copy over the last bit
+					firstSource <- breakPos[i]+1
+					firstTarget <- breakPos[i]+i+1 # pretend next loop!
+					sourceIndex <- firstSource:nrow(noGaps)
+					targetIndex <- firstTarget:nrow(longlat)
+					longlat[targetIndex,] <- noGaps[sourceIndex,]
 
 
-		}else{
-			longlat <- noGaps
+
+				# nothing needs to be done
+				}else{
+					longlat <- noGaps
+
+				}
+
+
+
+			}else{
+				longlat <- noGaps
+			}
+
+
+			# once this is done, it is safe to visualize
+			if(plot) lines(longlat, ...)
+
+			# return this if needed
+			invisible(longlat)
 		}
-
-
-		# once this is done, it is safe to visualize
-		if(plot) lines(longlat, ...)
-
-		# return this if needed
-		invisible(longlat)
 	}
 )
