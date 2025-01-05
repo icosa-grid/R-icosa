@@ -213,12 +213,15 @@ setMethod(
 		v<-gridObj@skeleton$v
 		f<-gridObj@skeleton$vF[as.logical(gridObj@skeleton$aF),]
 		
-		# pentagons
+		# the number of pentagons
 		pent<-sum(is.na(f[,6]))
 		
 		# based on the outer representation!!!
+		# logical vector showing which faces are pentagons in the inner representation
 		pentLogInner <- is.na(apply(f, 1, sum))
+		# empty vector
 		pentLogOuter <- rep(NA, length(pentLogInner))
+		# logical vector showing which are the pentagons in the outer representation (UI)
 		pentLogOuter[gridObj@skeleton$aF] <- pentLogInner
 
 	#	res<-30
@@ -234,19 +237,20 @@ setMethod(
 			maxres <- minres+100
 
 			# then the latitudinal correction needs to be added
-				# the frequency of cells in latitudinal belts
 				# the belts ordered to the outer representation
 				outerBelt <- gridObj@belts
 			#	innerBelt <- rep(NA, length(outerBelt))
 				# reorder from outer to inner respresentation
+				# in which belt is a face (innner representation)
 				innerBelt <- outerBelt[gridObj@skeleton$aF]
 
+				# the frequency of cells in latitudinal belts
 				tabBelt <- table(innerBelt)
 
 				# how many plus vertices are needed in each belt?
 				plusBelt <- round((maxres-minres)/as.numeric(tabBelt))
 
-				# final resolution vector
+				# final resolution vector (inner order)
 				res <- minres+plusBelt[innerBelt]
 
 		}else{
@@ -258,6 +262,7 @@ setMethod(
 		}
 		
 		#extend to make a matrix
+		# Rcpp::sourceCpp("src/Rcppsource_.cpp")
 		temp<- .Call(Cpp_icosa_ExpandBoundariesToCols_, f, v, res, gridObj@center, pent)
 
 		tempRes <- temp

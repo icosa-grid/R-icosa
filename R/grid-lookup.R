@@ -250,11 +250,32 @@ setMethod(
 	"OccupiedFaces",
 	signature=c("trigrid", "sfc"),
 	definition=function(gridObj, data){
-		temp<-methods::as(data,"Spatial")
 
-		
-		# this works for spatialpolygons and spatialpolygonsdataframes
-		fl <- OccupiedFaces(gridObj, temp)
+		# the geometry types
+		geoms<- sf::st_geometry_type(data)
+
+		# the different geometry types
+		geoTypes <- unique(geoms)
+
+		# transform all of these sequentially and perform occupied
+		for(i in 1:length(geoTypes)){
+			# a single type of data
+			singleType <- data[geoms==geoTypes[i]]
+
+			# transform this to spatial
+			spatial <-methods::as(singleType,"Spatial")
+
+			# and look it up
+			partial <- OccupiedFaces(gridObj, spatial)
+
+			if(i ==1){
+				fl <- partial
+			}else{
+				fl <- fl | partial
+			}
+		}
+
+		# return
 		return(fl)
 	}
 )
@@ -264,11 +285,10 @@ setMethod(
 	"OccupiedFaces",
 	signature=c("trigrid", "sf"),
 	definition=function(gridObj, data){
-		temp<-methods::as(data,"Spatial")
 
-		
-		# this works for spatialpolygons and spatialpolygonsdataframes
-		fl <- OccupiedFaces(gridObj, temp)
+		# only needs the geometry
+		fl <- OccupiedFaces(gridObj, data$geometry)
+
 		return(fl)
 	}
 )

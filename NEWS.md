@@ -1,5 +1,11 @@
 # Change log of the R package 'icosa'
 
+# icosa 0.11.2 - 2025-01-05
+
+### Fixed
+
+- The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
+
 # icosa 0.11.1 - 2024-08-16
 
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.13333485-blue.svg)](https://doi.org/10.5281/zenodo.13333485)
