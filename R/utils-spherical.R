@@ -169,6 +169,11 @@ arcdist <- function(p1, p2, output="distance", origin=c(0,0,0), radius=authRadiu
 #'
 #'	@export
 arcdistmat<-function(points1, points2=NULL, origin=c(0,0,0), output="distance", radius=authRadius){
+
+	# coerce from data.frame
+	if(inherits(points1, "data.frame")) points1 <- as.matrix(points1)
+	if(inherits(points2, "data.frame")) points2 <- as.matrix(points2)
+
 	# output argument
 	if(!output%in%c("distance", "deg", "rad")) stop("Invalid \'output\' argument.")
 	if(output=="distance") method<-T
@@ -794,5 +799,14 @@ setMethod(
 			# return this if needed
 			invisible(longlat)
 		}
+	}
+)
+
+#' @rdname arcs
+setMethod(
+	"arcs",
+	signature=c(x="data.frame"),
+	function(x,  ...){
+		arcs(as.matrix(x), ...)
 	}
 )

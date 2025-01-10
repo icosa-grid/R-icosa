@@ -3,11 +3,14 @@
 \name{arcs}
 \alias{arcs}
 \alias{arcs,matrix-method}
+\alias{arcs,data.frame-method}
 \title{Function to plot a set of great circle arcs between points}
 \usage{
 arcs(x, ...)
 
 \S4method{arcs}{matrix}(x, breaks = 100, breakAtDateline = TRUE, plot = TRUE, ...)
+
+\S4method{arcs}{data.frame}(x, ...)
 }
 \arguments{
 \item{x}{A matrix of longitude and latitude points (WGS 84 longlat)}

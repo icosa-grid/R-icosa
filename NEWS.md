@@ -2,6 +2,9 @@
 
 # icosa 0.11.2 - 2025-01-05
 
+### Added
+
+- `data.frame`-method for the `arcs` function.
 ### Fixed
 
 - The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
