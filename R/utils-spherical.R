@@ -710,6 +710,39 @@ setMethod(
 			graphics::points(x, ...)
 			invisible(x)
 		}else{
+			# figure out whether there are missing values in the matrix
+			misses <- is.na(x[,1])
+
+			# recursive case
+			if(any(misses)){
+
+				ind <- rep(NA, length(misses))
+
+				counter <- 1
+
+				for(i in 1:length(misses)){
+					# if it is not a missing value
+					if(!misses[i]){
+						ind[i] <- counter
+					}else{
+						# increment
+						counter <- counter + 1
+					}
+				}
+				# subset this to the parts
+				parts <- split(1:nrow(x), ind)
+
+				# what needs to be returned
+				res <- NULL
+				for(i in 1:length(parts)){
+					one <- arcs(x[parts[[i]],,  drop=FALSE], breakAtDateline=breakAtDateline, plot=plot, ...)
+				}
+
+				invisible(res)
+
+
+			# base case
+			}else{
 
 			# reserve space for all
 			noGaps <- matrix(NA, ncol=2, nrow=nrow(x) + breaks*(nrow(x)-1))
@@ -798,6 +831,7 @@ setMethod(
 
 			# return this if needed
 			invisible(longlat)
+		}
 		}
 	}
 )
