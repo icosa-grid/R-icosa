@@ -56,6 +56,10 @@ setMethod(
 		if(suppressWarnings(!is.na(x@sp))){
 			message("Please rerun newsp() to regenerate the 2d representation!")
 		}
+
+		if(suppressWarnings(!is.na(x@sf))){
+			message("Please rerun newsf() to regenerate the 2d representation!")
+		}
 		
 		
 		# rotate the points
