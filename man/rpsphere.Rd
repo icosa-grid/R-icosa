@@ -25,7 +25,7 @@ This function will create a predefined number of points randomly distributed
 on the surface of a sphere with a given radius.
 }
 \details{
-The function uses a three dimension normal distribution to generate points, 
+The function uses a three dimensional gaussian distribution to generate points,
 which are then projected to the surface of the sphere.
 }
 \examples{

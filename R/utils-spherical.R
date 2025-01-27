@@ -285,7 +285,7 @@ rotateOnePoint<-function(coords, angles,origin)
 #' This function will create a predefined number of points randomly distributed
 #' on the surface of a sphere with a given radius.
 #' 
-#' The function uses a three dimension normal distribution to generate points, 
+#' The function uses a three dimensional gaussian distribution to generate points,
 #' which are then projected to the surface of the sphere.
 #' 
 #' @param n (\code{numeric}) The number of random points to be created.
@@ -364,12 +364,10 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 
 #' Surface centroid point of a spherical point cloud
 #' 
-#' This function the projected place of the centroid from a pointset on the sphere.
-#' 
-#' The function implements great circle calculations to infer on the place of the centroid, which makes it resource demanding. This is necessary
-#'	to avoid a particual error that frequently occurrs with other methods for centroid calculation, namely that the place of the centroid is right,
-#' 	but on the opposite hemisphere.
-#' 
+#' This function calculated the projected place of the centroid from a pointset on the sphere.
+#'
+#' The function calculates the position of the centroid in 3D space (inside the sphere/Earth), which is then projected to the surface.
+#'
 #' @param x (\code{matrix} or \code{data.frame}) Numeric data, XYZ or longitude-latitude coordinates of the set of points.
 #' 
 #' @param output (\code{character}) The coordinate system of the output points. Can either be \code{"polar"} for

@@ -9,7 +9,13 @@
 \usage{
 surfacecentroid(x, ...)
 
-\S4method{surfacecentroid}{matrix}(x, output = "polar", center = c(0, 0, 0), radius = authRadius)
+\S4method{surfacecentroid}{matrix}(
+  x,
+  output = "polar",
+  center = c(0, 0, 0),
+  radius = authRadius,
+  w = NULL
+)
 
 \S4method{surfacecentroid}{data.frame}(x, ...)
 
@@ -27,17 +33,18 @@ longitude-latitude or \code{"cartesian"} for XYZ data.}
 
 \item{radius}{(\code{numeric}) The radius of the circle in case the input points have only polar coordinates.
 Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.}
+
+\item{w}{(\code{numeric}) If the points need to be weighed differently, then this can be indicated here.
+The argument is passed to \code{\link[stats]{weighted.mean}}.}
 }
 \value{
 Either an XYZ or a long-lat \code{numeric} vector.
 }
 \description{
-This function the projected place of the centroid from a pointset on the sphere.
+This function calculated the projected place of the centroid from a pointset on the sphere.
 }
 \details{
-The function implements great circle calculations to infer on the place of the centroid, which makes it resource demanding. This is necessary
-to avoid a particual error that frequently occurrs with other methods for centroid calculation, namely that the place of the centroid is right,
-	but on the opposite hemisphere.
+The function calculates the position of the centroid in 3D space (inside the sphere/Earth), which is then projected to the surface.
 }
 \examples{
 # generate some random points
