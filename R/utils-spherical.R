@@ -236,25 +236,27 @@ arcdistmat<-function(points1, points2=NULL, origin=c(0,0,0), output="distance", 
 	return(distMat)
 }
 
-
+#the rotation matrix
+rotMat<-function(theta)
+{
+	mat<-matrix(NA,ncol=2,nrow=2)
+	mat[1,1]<-cos(theta)
+	mat[1,2]<--sin(theta)
+	mat[2,1]<-sin(theta)
+	mat[2,2]<-cos(theta)
+	return(mat)
+}
 
 #function to rotate a single point
+# @param coords A 3-value vector (cartesian)
+# @param angles A 3-value vector (cartesian)
+# @param origin A 3-value vector (cartesian)
 rotateOnePoint<-function(coords, angles,origin)
 {
 	#coords<-c(0,1,0)
 	#angles<-c(pi/2,pi/2,pi)
 	
-	#the rotation matrix
-	rotMat<-function(theta)
-	{
-		mat<-matrix(NA,ncol=2,nrow=2)
-		mat[1,1]<-cos(theta)
-		mat[1,2]<--sin(theta)
-		mat[2,1]<-sin(theta)
-		mat[2,2]<-cos(theta)
-		return(mat)
-	}
-	
+
 	#location vector
 	locVec<-coords-origin
 			
@@ -277,7 +279,108 @@ rotateOnePoint<-function(coords, angles,origin)
 	return(locVec)
 
 }
-	
+
+# Rcpp wrapper for coordinate rotations
+rotateMultiplePoints <- function(coords, angles, origin){
+
+	# make sure that this works even when the coordinate vector is submitted
+	if(is.null(dim(coords))) coords <- matrix(coords, ncol=3, nrow=1)
+
+	# execute the coordinate rotation
+	result <-  .Call(Cpp_icosa_rotatePointMatrix_, coordinates=coords, angleVec=angles, originVec=origin)
+
+	# if the data were a vector, make the results that as well
+	if(nrow(result)==1) result <- as.numeric(result)
+
+	return(result)
+}
+
+
+if(requireNamespace("terra", quietly = TRUE)){
+	setGeneric("rotate", def=terra::rotate)
+}else{
+	setGeneric(
+		name="rotate",
+		def=function(x,...){
+			standardGeneric("rotate")
+		}
+	)
+}
+
+
+#' @param long (\code{numeric}) Rotation in degrees longitude. If given, \code{angles} will be ignored. (see Method 2 description for details!)
+#' @param lat (\code{numeric}) Rotation in degrees latitude at \code{reflong}. If given, \code{angles} will be ignored. (see Method 2 description for details!)
+#' @param reflong (\code{numeric}) Reference longitude. If not given it will default to the centroid of the points as given by \code{\link{surfacecentroid}}. (see Method 2 description for details!)
+#' @param radius The radius of the sphere, relevant only if the \code{output="cartesian"} and \code{x} is a longitude-latitude matrix.
+#' @param output The output format of the rotations, either \code{"polar"} or \code{cartesian}.
+#' @rdname rotate
+setMethod(
+	f="rotate",
+	signature="matrix",
+	definition= function(x, angles="random", long=0, lat=0, reflong=NULL, origin=c(0,0,0), radius=authRadius, output="polar"){
+
+		# 1. argument defense and preparation
+		# for longitude-latitude data
+		if(ncol(x)==2){
+			# transform the
+			x <- PolToCar(x, radius=radius)
+		}
+
+		if(ncol(x)!=3){
+			stop("'x' has to be either 2 column long-lat matrix, or 3d Cartesian data.")
+		}
+		# defend long and lat
+
+	 	# base case - rotation with 3d angles
+		if(long==0 & lat==0){
+
+			# select random if not given
+			if(sum(angles=="random")) angles<-c(stats::runif(3,0,2*pi))
+
+			coords <- rotateMultiplePoints(x, angles=angles, origin=origin)
+
+		# recursion: longlat rotation
+		}else{
+			# get reference longitude
+			if(!is.null(reflong)){
+				if(length(reflong)!=1) stop("You must provide a single reference longitude.")
+				if(-180 > reflong | reflong > 180) stop("You must provide a valid reference longitude.")
+
+			}else{
+				# get the centroid of the point cloud
+				centroid <- surfacecentroid(x, output="polar")
+
+				# the reference longitude deduced from the points
+				reflong <- centroid[1]
+			}
+
+			# reference longitude in radians
+			refRad <- reflong /180 * pi
+
+			# the rotation longitude and latitude
+			longRad <- long / 180*pi
+			latRad <- lat / 180*pi
+
+			# 1. rotate back so the reference longitude is perpendicular to the y axis
+			refCentered <- rotate(x, angles=c(0,0,-refRad), output="cartesian")
+
+			# 2. latitudinal rotation
+			latRotated <- rotate(refCentered, angles=c(0,latRad, 0), output="cartesian")
+
+			# 3. longtiudinal rotation
+			coords <- rotate(latRotated, angles=c(0,0, refRad + longRad), output="cartesian")
+		}
+
+		# return 3d coordinates unless
+		if(output=="polar"){
+		# return long and lat
+			 coords <- CarToPol(coords, norad=TRUE)
+		}
+
+		return(coords)
+})
+
+
 
 # function to create random points on the sphere
 #' Random point generation on the surface of a sphere
@@ -378,6 +481,9 @@ rpsphere <- function(n=1, output="cartesian", radius=authRadius, origin=c(0,0,0)
 #' @param radius (\code{numeric}) The radius of the circle in case the input points have only polar coordinates.
 #'	Unused when XYZ coordinates are entered. Defaults to the authalic radius of Earth ca. 6371.007km.
 #'
+#' @param w (\code{numeric}) If the points need to be weighed differently, then this can be indicated here.
+#'  The argument is passed to \code{\link[stats]{weighted.mean}}.
+#'
 #' @param ... Arguments passed to the \code{matrix}-method.
 #' @return Either an XYZ or a long-lat \code{numeric} vector.
 #' 
@@ -408,7 +514,7 @@ setGeneric(
 setMethod(
 	"surfacecentroid",
 	signature=c(x="matrix"), 
-	function(x, output="polar", center=c(0,0,0), radius=authRadius){
+	function(x, output="polar", center=c(0,0,0), radius=authRadius, w=NULL){
 		if(nrow(x)<2) return(x)
 		#data argument
 		# which formatting?
@@ -422,7 +528,24 @@ setMethod(
 		}
 
 		#the 3d centroid of the point cloud
+		if(is.null(w)){
 			centroid3d<-apply(x, 2, mean, na.rm=TRUE)
+		}else{
+			# defend the weights
+			if(length(w)!=nrow(x)) stop("You need to provide as many weights as many points.")
+			if(!is.numeric(w)) stop("The weights need to be numeric.")
+
+			# calculate centroid
+			centroid3d <- c(
+			 	weighted.mean(x=x[,1], w=w, na.rm=TRUE),
+			 	weighted.mean(x=x[,2], w=w, na.rm=TRUE),
+			 	weighted.mean(x=x[,3], w=w, na.rm=TRUE)
+			)
+
+			# assign appropriate names
+			names(centroid3d) <- colnames(x)
+
+		}
 			if(output=="cartesian"){
 				radVec<-(centroid3d-center)
 				retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad

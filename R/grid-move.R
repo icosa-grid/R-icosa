@@ -1,23 +1,19 @@
 
-if(requireNamespace("terra", quietly = TRUE)){
-	setGeneric("rotate", def=terra::rotate)
-}else{
-	setGeneric(
-		name="rotate",
-		def=function(x,...){
-			standardGeneric("rotate")
-		}
-	)
-}
-
-
-#' Rotation of \code{\link{trigrid}} and \code{\link{hexagrid}} objects
+#' Rotation of 3d objects
 #'
-#' @param x (\code{\link{trigrid}} or \code{\link{hexagrid}}) Input grid. 
-#' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). 
+#' Multiple implementations of rotations for coordinate transformation.
+#'
+#' The function implements 3D rotations of various class of objects, that are ultimately reduced to individual points. Internally, point rotation is implemented with 3-axis rotations,
+#' that are implemented in the X-Y-Z order (note that 3d rotations are not commutative!). For this reason it is not recommended to re-rotate an already rotated grid, unless the purpose is to achieve random orientation.
+#' Method 2 parametrizes rotation with three arguments (\code{long}, \code{lat}, \code{reflong}), that can be easier to control. Longitudinal rotations are invariant to the position of the point cloud, but latitudinal
+#' rotation is not. A horizontal rotation axis will be set perpendicular to the reference longitude (\code{reflong})for latitude-oriented rotation
+#' (i.e. the latitude difference will equal the latitudinal rotation value only at the reference longitude). If this is not given, than the reference longitude will be the centroid of the point cloud.
+#'
+#' @param x (\code{matrix}, \code{\link{trigrid}}, \code{\link{hexagrid}}) Input coordinates or grid.
+#' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). Rotations are executed in X-Y-Z order.
 #' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
 #' @rdname rotate
-#' @return Another \code{\link{trigrid}} or \code{\link{hexagrid}} class object.
+#' @return Same class object as \code{x}.
 #' @exportMethod rotate
 "rotate"
 
@@ -57,32 +53,36 @@ setMethod(
 			message("Please rerun newsp() to regenerate the 2d representation!")
 		}
 
-		if(suppressWarnings(!is.na(x@sf))){
+		if(suppressWarnings(sum(is.na(x@sf))==0)){
 			message("Please rerun newsf() to regenerate the 2d representation!")
 		}
 		
 		
 		# rotate the points
-			vertices<-t(apply(x@vertices, 1, rotateOnePoint, angles=angles, origin=orig))
-			colnames(vertices)<-c("x","y","z")
-		
+			vertices <- rotateMultiplePoints(x@vertices, angles=angles, origin=orig)
+			# vertices<-t(apply(x@vertices, 1, rotateOnePoint, angles=angles, origin=orig))
+			# colnames(vertices)<-c("x","y","z")
+
 		#do the same for the face centers
-			faceCenters<-t(apply(x@faceCenters, 1, rotateOnePoint, angles=angles, origin=orig))
-			colnames(faceCenters)<-c("x","y","z")
+			faceCenters <- rotateMultiplePoints(x@faceCenters, angles=angles, origin=orig)
+			# faceCenters<-t(apply(x@faceCenters, 1, rotateOnePoint, angles=angles, origin=orig))
+			# colnames(faceCenters)<-c("x","y","z")
 		
 		# skeleton
-			verticesSkel<-t(apply(x@skeleton$v, 1, rotateOnePoint, angles=angles, origin=orig))
-			colnames(verticesSkel)<-c("x","y","z")
+			verticesSkel <- rotateMultiplePoints(x@skeleton$v, angles=angles, origin=orig)
+			# verticesSkel<-t(apply(x@skeleton$v, 1, rotateOnePoint, angles=angles, origin=orig))
+			# colnames(verticesSkel)<-c("x","y","z")
 		
 		# add the new, rotated tables to the original object's copy
-			x@vertices<-vertices
-			x@faceCenters<-faceCenters
-			x@skeleton$v<-verticesSkel
+			x@vertices <- vertices
+			x@faceCenters <- faceCenters
+			x@skeleton$v <- verticesSkel
 		
 		# in case the trigrid is a hexagrid too
 		if(inherits(x,"hexagrid")){
-			plotV<-t(apply(x@skeleton$plotV, 1, rotateOnePoint, angles=angles, origin=orig))
-			colnames(plotV)<-c("x","y","z")
+			plotV <- rotateMultiplePoints(x@skeleton$plotV, angles=angles, origin=orig)
+			# plotV<-t(apply(x@skeleton$plotV, 1, rotateOnePoint, angles=angles, origin=orig))
+			# colnames(plotV)<-c("x","y","z")
 			x@skeleton$plotV <- plotV
 		
 		}

@@ -60,6 +60,7 @@ extern SEXP _icosa_whichMinVector_(SEXP);
 extern SEXP _icosa_xxxxyyyyzzzz_(SEXP, SEXP);
 extern SEXP _icosa_xyz1(SEXP);
 extern SEXP _icosa_xyz1xyz1xyz1xyz1_(SEXP, SEXP);
+extern SEXP _icosa_rotatePointMatrix_(SEXP, SEXP, SEXP);
 
 static const R_CMethodDef CEntries[] = {
   {"_locateTriangle_", (DL_FUNC) &_locateTriangle_, 11},
@@ -67,6 +68,7 @@ static const R_CMethodDef CEntries[] = {
 };
 
 static const R_CallMethodDef CallEntries[] = {
+  {"_icosa_rotatePointMatrix_",         (DL_FUNC) &_icosa_rotatePointMatrix_,      3},
   {"_icosa_Aggregate_",                 (DL_FUNC) &_icosa_Aggregate_,                 3},
   {"_icosa_AllNeighboursTri_",          (DL_FUNC) &_icosa_AllNeighboursTri_,          2},
   {"_icosa_AllShapeTri_",               (DL_FUNC) &_icosa_AllShapeTri_,               2},

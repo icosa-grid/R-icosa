@@ -5,6 +5,8 @@
 ### Added
 
 - `data.frame`-method for the `arcs` function.
+### Changed
+- The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
 
 ### Fixed
 
