@@ -13,6 +13,7 @@
 - The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
 - The `arcs` function returns broken arcs when missing value rows are included in the input matrix
 - Documentation of the `surfacecentroid` function.
+- The `resample` method of a facelayer could not find the associated grid object in every frame.
 
 # icosa 0.11.1 - 2024-08-16
 

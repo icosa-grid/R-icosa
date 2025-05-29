@@ -170,7 +170,7 @@ setMethod(
 		sfPoints <- sf::st_as_sf(
 			as.data.frame(allCoords), coords=c("x", "y"), crs=terra::crs(y))
 		# locate the points
-		tiedGrid <- dynGet(x@grid)
+		tiedGrid <- dynGet(x@grid, minframe=0L)
 
 		# look up the cells
 		cells <- locate(tiedGrid, sfPoints)	
@@ -218,7 +218,8 @@ setMethod(
 #'  terra::plot(o)
 #'  points(x, pch=3)
 #' }
-#' 
+#'
+#' @rdname grapply
 #' @export
 gridensity <- function(x, y, out, trials=100, FUN=mean){
 	# find function
@@ -292,3 +293,133 @@ gridensity <- function(x, y, out, trials=100, FUN=mean){
 	return(res)
 
 }
+
+
+#' Grid Rotation Apply
+#'
+#' Discretization with iteratively rotated icosahedral grids
+#'
+#' Simple discretization of spatial data can be subject to error due to the random assignment to grid cells. \code{grapply} offers a framework for the Monte Carlo estimation of the expectation of function that normally can be applied to
+#' a discretized set of points
+#' @param x Matrix of longitude, latitude data, \code{\link[sf:sf]{sf}} class, or \code{\link[sp:SpatialPoints]{SpatialPoints}} Point cloud.
+#' @param y \code{\link{trigrid}} or \code{\link{hexagrid}} An icosahedral grid.
+#' @param out \code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link[terra:rast]{SpatRaster}}output structure.
+#' @param trials \code{numeric} value, the number of iterations.
+#' @param FUN \code{function} The function to be applied on the iteration results. It defaults to the number of points, but it can be used to
+#' @param APP \code{function} The function to be applied on the iteration results. If set to \code{NULL}, it will return the stack of results for subsequent processing.
+#' @examples
+#' # example to be run if terra is present
+#' if(requireNamespace("terra", quietly=TRUE)){
+#'
+#'  # randomly generated points
+#'  x <- rpsphere(100, output="polar")
+#'
+#'  # bandwidth grid
+#'  y <- hexagrid(deg=13)
+#'
+#'  # output structure
+#'  out <- terra::rast(res=5)
+#'
+#'  # the function
+#'  o <- grapply(x, y, out, iter=7, FUN=nrow)
+#'
+#'  # visualize results
+#'  terra::plot(o)
+#'  points(x, pch=3)
+#' }
+#'
+#' @export
+#' @rdname grapply
+setGeneric(
+	name="grapply",
+	def=function(x,out, ...){
+		standardGeneric("grapply")
+	}
+)
+
+#' @rdname grapply
+setMethod(
+	"grapply",
+	signature=c(x="data.frame", out="SpatRaster"),
+	definition=function(x, out, y, coords=c("long", "lat"), iter=100, FUN=nrow, APP=mean, miss=NA, APP.args=NULL){
+
+		# function to iterate
+		ITER <- match.fun(FUN)
+
+		# the averaging function
+		APP <- match.fun(APP)
+
+		# protype run-> enforce single argument return
+		if(!requireNamespace("terra", quietly=T)) stop("This function requires the 'terra' package.")
+
+		# the coordinates
+		coordDat <- x[, coords]
+
+		# iterate
+		for(i in 1:iter){
+			# execute a random rotation
+			newY <- rotate(y)
+
+			# locate the points on the rotated grid
+			cells <- locate(newY, coordDat)
+
+			# redefine object
+			thisX <- cbind(x, cell=cells)
+
+			# the function
+			current <- ITER(thisX)
+
+			# put them on a facelayer
+			fl<- facelayer(newY)
+			fl[] <-current
+
+			# resample to output
+			newZ <- resample(fl, out)
+			if(!is.na(miss)){
+				terra::values(newZ)[is.na(terra::values(newZ))] <- miss
+			}
+
+			if(i == 1){
+				stack <- newZ
+			}else{
+				stack <- c(stack, newZ)
+			}
+			cat(i, "\r")
+			flush.console()
+		}
+
+		if(!is.null(APP)){
+			# the configures
+			conf <- list(x=stack, fun=APP)
+
+			# the provided arguments
+			conf <- c(conf, APP.args)
+
+			# do a call
+			res <- do.call(terra::app, conf)
+
+		}else{
+			res <- stack
+		}
+
+		return(res)
+})
+
+#' @rdname grapply
+setMethod(
+	"grapply",
+	signature=c(x="matrix", out="SpatRaster"),
+	definition=function(x, out, y=NULL, z, iter=100, FUN=nrow, APP=mean){
+
+
+})
+
+
+
+#' @rdname grapply
+setMethod(
+	"grapply",
+	signature=c(x="matrix", out="trigrid"),
+	definition=function(x, out, y, z, iter=100, FUN=nrow, APP=mean){
+
+})
