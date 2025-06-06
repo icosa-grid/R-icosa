@@ -20,7 +20,7 @@ setMethod("show", signature ="gridlayer",
 		#	cat(paste(class(object), "of", object@grid ,"with", object@length, class(object@values), "values\n", sep=" "))
 		#	cat(object@values, fill=TRUE)
 			
-			actGrid<-get(object@grid)
+			actGrid<-dynGet(object@grid, minframe=0L)
 			
 			
 			cat(paste("class        : ", class(object),"\n", sep=""))

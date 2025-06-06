@@ -7,7 +7,7 @@ setMethod(
 	signature="facelayer",
 	definition=function(x){
 		# the grid object of the facelayer
-		actGrid <- get(x@grid)
+		actGrid <- dynGet(x@grid, minframe=0L)
 		
 		checkLinkedGrid(actGrid, x)
 		

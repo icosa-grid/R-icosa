@@ -33,7 +33,7 @@ setMethod(
 				}
 				
 				#get the facecenters
-				actGrid<-get(x@grid)
+				actGrid<-dynGet(x@grid, minframe=0L)
 				pol <- CarToPol(actGrid@faceCenters, norad=TRUE, origin=actGrid@center)
 				
 				boolSelect<-rep(T, nrow(pol))
@@ -137,7 +137,7 @@ setMethod(
 		#check the extent object
 		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 		
-		actGrid <- get(x@grid)
+		actGrid <- dynGet(x@grid, minframe=0L)
 		pol <- CarToPol(actGrid@faceCenters, origin=actGrid@center)
 		
 		boolLong<-pol[,1]>=terra::ext(i)[1] & pol[,1]<=terra::ext(i)[2]
@@ -202,7 +202,7 @@ setReplaceMethod(
 					}
 					
 					#get the facecenters
-					actGrid<-get(x@grid)
+					actGrid<-dynGet(x@grid, minframe=0L)
 					pol <- CarToPol(actGrid@faceCenters, norad=TRUE, origin=actGrid@center)
 					
 					boolSelect<-rep(T, nrow(pol))
@@ -246,7 +246,7 @@ setReplaceMethod(
 	
 				}else{
 					# index subsetting
-					actGrid<-get(x@grid)
+					actGrid<-dynGet(x@grid, minframe=0L)
 	
 					subGrid<-subset(actGrid,i)
 					i<-rownames(subGrid@faces)

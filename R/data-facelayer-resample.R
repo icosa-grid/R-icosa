@@ -31,7 +31,7 @@ setMethod(
 	signature=c("facelayer", "trigrid"),
 	definition=function(x, y,method=NULL,res=5){
 	#x:layer, y new grid
-		oldGrid<-get(x@grid)
+		oldGrid<-dynGet(x@grid, minframe=0L)
 		values<-x@values
 		#only if values is a numeric vector!
 		if(!is.numeric(x@values)){
