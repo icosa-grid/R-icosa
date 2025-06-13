@@ -503,3 +503,72 @@ setMethod(
 	
 	}
 )
+
+#' Spacing of cell centers
+#'
+#' This function will return the distance between neighboring face centers.
+#'
+#' The value for every pair is given in either degrees or kilometers depending on \code{degree}.
+#'
+#' @name spacing
+#' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.
+#' @param degree (\code{logical}) Should the output be returned in degrees or in kóilometers?
+#'
+#' @examples
+#' h <- hexagrid(3)
+#' spacing(h)
+#'
+#'
+#' @return A named \code{numeric} vector, one value for every for every neighboring cell pair.
+#'
+#' @rdname spacing
+#' @exportMethod spacing
+setGeneric(
+	name="spacing",
+	def=function(x,...){
+		standardGeneric("spacing")
+	}
+)
+
+#' @rdname spacing
+setMethod(
+	"spacing",
+	signature="trigrid",
+	definition=function(x, degree=TRUE){
+		if(suppressWarnings(is.na(x@graph)[1])){
+			stop("Slot @graph of 'x' is empty. Use newgraph() to add an igraph respresentation. ")
+		}
+
+		# the edge list
+		edgeList <- as.matrix(x@graph, matrix.type="edgelist")
+
+		# the coordinates of the centers
+		centerCoords <- centers(x, output="cartesian")
+
+		# radius to use
+		radius <- sqrt(sum((x@center-centerCoords[1,])^2))
+
+		# output type
+		if(degree){
+			output <- "deg"
+		}else{
+			output <- "distance"
+		}
+
+		# the spacing between the centers
+		spaces <- apply(edgeList, 1, function(y){
+			arcdist(
+				p1=centerCoords[y[1],],
+				p2=centerCoords[y[2],],
+				origin=x@center, radius=radius, output=output)
+		})
+
+		# name the values
+		names(spaces) <- paste(edgeList[,1], edgeList[,2], sep="--")
+
+		# return
+		return(spaces)
+
+	}
+)
+# spacing test: translated grid

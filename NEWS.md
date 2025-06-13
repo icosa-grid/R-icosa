@@ -1,9 +1,10 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-1 - 2025-06-06
+# icosa 0.12.0-2 - 2025-06-13
 
 ### Added
 
+- The `spacing` function to measure the distance between face centers.
 - `data.frame`-method for the `arcs` function.
 ### Changed
 - The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
