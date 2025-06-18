@@ -5,7 +5,11 @@
 ### Added
 
 - The `spacing` function to measure the distance between face centers.
+- General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
+- Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
+
+
 ### Changed
 - The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
 
@@ -37,6 +41,8 @@
 ### Changed
 
 - The underutilized `faces()` function now returns only the row names of grids and facelayer objects.
+
+* * *
 
 # icosa 0.11.0 - 2023-03-21
 
