@@ -347,7 +347,7 @@ setMethod(
 		ITER <- match.fun(FUN)
 
 		# the averaging function
-		APP <- match.fun(APP)
+		if(!is.null(APP)) APP <- match.fun(APP)
 
 		# protype run-> enforce single argument return
 		if(!requireNamespace("terra", quietly=T)) stop("This function requires the 'terra' package.")
