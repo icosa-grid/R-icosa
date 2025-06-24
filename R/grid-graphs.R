@@ -290,6 +290,7 @@ setMethod(
 #' Make an spdep-style neighbor list for an icosahedral grid
 #'
 #' @param x A trigrid class object
+#' @param queen Should he queen neighborhood be returned?
 #' @return Neighbor-list object such as thoses defined in spdep.
 #' @examples
 #' # calculate a grid
@@ -297,21 +298,56 @@ setMethod(
 #' neighborList <- face2nb(hex)
 #' neighborList
 #' @export
-face2nb <- function(x){
+face2nb <- function(x, queen=FALSE){
 
 	if(!inherits(x, "trigrid")) stop("The function requires an icosahedral grid object.")
 
-	# calculate the neighbors
-	faceList <- icosa::vicinity(gridObj=x, faces=faces(x), output="list", self=FALSE)
+	# default
+	if(!(queen) | inherits(x, "hexagrid")){
 
-	# remove the face identifier
-	faceInts <- lapply(faceList, function(x){
-		as.integer(gsub("F","", x))
-	})
+		# calculate the neighbors
+		faceList <- icosa::vicinity(gridObj=x, faces=faces(x), output="list", self=FALSE)
+
+		# remove the face identifier
+		faceInts <- lapply(faceList, function(x){
+			sort(as.integer(gsub("F","", x)))
+		})
+	# for the queen trigrid method (slower)
+	}else{
+
+		# calculate the neighbors (3rd order)
+		faceList <- icosa::vicinity(gridObj=x, faces=faces(x), output="list", self=TRUE, order=3)
+
+		# remove the face identifier
+		faceInts <- lapply(faceList, function(y){
+
+			# focal vertices
+			focal <- x@faces[y[1], ]
+
+			# others
+			other <- x@faces[y[-1], ]
+
+			#
+			thisVic <-apply(other, 1, function(b){
+				any(b%in%focal)
+			})
+
+			res <- names(thisVic)[thisVic]
+
+
+			sort(as.integer(gsub("F","", res)))
+		})
+
+	}
 
 	# add attributes
 	class(faceInts) <- "nb"
 	attributes(faceInts)$region.id <- faces(x)
+	if(queen){
+		attributes(faceInts)$type <- "queen"
+	}else{
+		attributes(faceInts)$type <- "rook"
+	}
 
 	# return
 	return(faceInts)

@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-2 - 2025-06-13
+# icosa 0.12.0-3 - 2025-06-24
 
 ### Added
 
@@ -19,6 +19,11 @@
 - The `arcs` function returns broken arcs when missing value rows are included in the input matrix
 - Documentation of the `surfacecentroid` function.
 - Facelayer objects could not find the associated grid object in every frame.
+
+
+### Known issues
+
+- Warnings are produced with some `trigrid` objects when the grid's sf representation is created.
 
 * * *
 
