@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-3 - 2025-06-24
+# icosa 0.12.0-4 - 2025-06-24
 
 ### Added
 
@@ -12,12 +12,13 @@
 
 ### Changed
 - The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
+- The `hexagrid`-method of the `surfacearea` function returns a named numeric instead of a named array (as it does for the `trigrid` class).
 
 ### Fixed
 
 - The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
 - The `arcs` function returns broken arcs when missing value rows are included in the input matrix
-- Documentation of the `surfacecentroid` function.
+- Documentation of the `surfacecentroid`, `surfacearea` and `trishape` functions.
 - Facelayer objects could not find the associated grid object in every frame.
 
 

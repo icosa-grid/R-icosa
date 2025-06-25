@@ -346,7 +346,7 @@ setMethod(
 #' This function will return the areas of all cells in the specified grid object.
 #' 
 #' @name surfacearea
-#' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) Object. 
+#' @param x (\code{\link{trigrid}} or \code{\link{hexagrid}}) Object.
 #' 
 #' 
 #' @examples
@@ -354,14 +354,14 @@ setMethod(
 #' surfaces <- surfacearea(g)
 #' surfaces
 #' 
-#' @return A named \code{numeric} vector, in the metric that was given to the function in the coordinates or the radius. \code{"deg"} will output the the distance in degrees, \code{"rad"} will do so in radians.
+#' @return A named \code{numeric} vector, in the metric that was given to the function in the coordinates or the radius of the grid. Default grid configurations yield values in square kilometers.
 #' 	
 #' @rdname surfacearea
 #' @exportMethod surfacearea
 setGeneric(
 	name="surfacearea",
 	package="icosa",
-	def=function(gridObj){
+	def=function(x){
 		standardGeneric("surfacearea")
 		
 	}
@@ -371,26 +371,26 @@ setGeneric(
 setMethod(
 	"surfacearea", 
 	signature="trigrid", 
-	def=function(gridObj){
+	def=function(x){
 		# get the highest resolution faces
-		newF <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aF),1:3]
-		v <- gridObj@skeleton$v
+		newF <- x@skeleton$f[as.logical(x@skeleton$aF),1:3]
+		v <- x@skeleton$v
 		
 		# call the surface calculation function
 		surfInner <-  .Call(Cpp_icosa_spherTriSurfs,
 			v=v, 
 			f=newF, 
-			origin=gridObj@center, 
+			origin=x@center,
 			pi=pi
 		)
 		
 		# reorganize the faces: outer representation
-		ord<-gridObj@skeleton$aF[as.logical(gridObj@skeleton$aF)]
+		ord<-x@skeleton$aF[as.logical(x@skeleton$aF)]
 		
 		surfOuter<-surfInner
 		surfOuter[ord]<- surfInner
 		
-		names(surfOuter) <- rownames(gridObj@faces)
+		names(surfOuter) <- rownames(x@faces)
 		
 		return(surfOuter)
 	}
@@ -400,21 +400,21 @@ setMethod(
 setMethod(
 	"surfacearea", 
 	signature="hexagrid", 
-	def=function(gridObj){
+	def=function(x){
 		# get the highest resolution faces
-		newF <- gridObj@skeleton$f[as.logical(gridObj@skeleton$aSF),1:3]
-		v <- gridObj@skeleton$v
+		newF <- x@skeleton$f[as.logical(x@skeleton$aSF),1:3]
+		v <- x@skeleton$v
 		
 		# call the surface calculation function
 		surfInner <-  .Call(Cpp_icosa_spherTriSurfs, 
 			v=v, 
 			f=newF, 
-			origin=gridObj@center, 
+			origin=x@center,
 			pi=pi
 		)
 		
 		# the subfaces belong to these face IDs in the outer representation
-		aS<-gridObj@skeleton$aSF[as.logical(gridObj@skeleton$aSF)]
+		aS<-x@skeleton$aSF[as.logical(x@skeleton$aSF)]
 		
 		# calculate the sums of all subface areas in a face, and order them
 		doubleSurf<-tapply(INDEX=aS, X=surfInner, sum)
@@ -424,8 +424,12 @@ setMethod(
 		
 		# augment the names attributes
 		names(singleSurf)<- paste("F", names(singleSurf), sep="")
+
+		# enforce numeric
+		res <- as.numeric(singleSurf)
+		names(res) <- names(singleSurf)
 		
-		return(singleSurf)
+		return(res)
 	}
 )
 
@@ -434,7 +438,7 @@ setMethod(
 #' 
 #' This function will return a value that is proportional to the irregularity of a triangonal face or subface. The ratio of the lengths of the shortest and the longest edges.
 #' 
-#' The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}.
+#' The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}. The values for hexagrid objects are face-specific means of subface values.
 #'
 #' @name trishape
 #' @param gridObj (\code{\link{trigrid}}, \code{\link{hexagrid}}) Object. 

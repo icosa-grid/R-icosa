@@ -22,7 +22,7 @@ A named \code{numeric} vector, one value for every face of the grid.
 This function will return a value that is proportional to the irregularity of a triangonal face or subface. The ratio of the lengths of the shortest and the longest edges.
 }
 \details{
-The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}.
+The value is exactly \code{1} for an equilateral triangle, and becomes \code{0} as one of the edges approach \code{0}. The values for hexagrid objects are face-specific means of subface values.
 }
 \examples{
 g <- trigrid(3)

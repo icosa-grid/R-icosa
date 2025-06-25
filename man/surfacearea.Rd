@@ -6,17 +6,17 @@
 \alias{surfacearea,hexagrid-method}
 \title{Areas of grid cell surfaces}
 \usage{
-surfacearea(gridObj)
+surfacearea(x)
 
-\S4method{surfacearea}{trigrid}(gridObj)
+\S4method{surfacearea}{trigrid}(x)
 
-\S4method{surfacearea}{hexagrid}(gridObj)
+\S4method{surfacearea}{hexagrid}(x)
 }
 \arguments{
-\item{gridObj}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Object.}
+\item{x}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Object.}
 }
 \value{
-A named \code{numeric} vector, in the metric that was given to the function in the coordinates or the radius. \code{"deg"} will output the the distance in degrees, \code{"rad"} will do so in radians.
+A named \code{numeric} vector, in the metric that was given to the function in the coordinates or the radius of the grid. Default grid configurations yield values in square kilometers.
 }
 \description{
 This function will return the areas of all cells in the specified grid object.
