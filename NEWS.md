@@ -1,10 +1,11 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-4 - 2025-06-24
+# icosa 0.12.0-5 - 2025-06-25
 
 ### Added
 
 - The `spacing` function to measure the distance between face centers.
+- The `patches` and `holes` functions to analyze shape patterns.
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
