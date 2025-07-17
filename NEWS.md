@@ -14,6 +14,7 @@
 ### Changed
 - The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
 - The `hexagrid`-method of the `surfacearea` function returns a named numeric instead of a named array (as it does for the `trigrid` class).
+- Increased the default resolution of sf-representations for coarse level grids (from 10 to 20 splits).
 
 ### Fixed
 
