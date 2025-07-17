@@ -5,6 +5,7 @@
 ### Added
 
 - The `spacing` function to measure the distance between face centers.
+- The `vertexradius` function to measure the distance between face centers and face vertices.
 - The `patches` and `holes` functions to analyze shape patterns.
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.

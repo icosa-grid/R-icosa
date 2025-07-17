@@ -576,3 +576,68 @@ setMethod(
 	}
 )
 # spacing test: translated grid
+
+
+#' Calculate the vertex radii of icosahedral grid faces
+#'
+#' Great circle distances between face centers and vertices
+#'
+#' @name vertexradius
+#' @param x (\code{\link{trigrid}} or \code{\link{hexagrid}}) Object.
+#' @param degree (\code{logical}) Should the output be returned in degrees or in kóilometers?
+#'
+#' @export
+#' @examples
+#' # example grid
+#' g <- trigrid(3)
+#'
+#' # all vertexradius
+#' vertrads <- vertexradius(g)
+#'
+#' # face average
+#' averages <- apply(vertrads, 1, mean, na.rm=TRUE)
+#'
+#' @return A \code{numeric} matrix that matches in structure with the \code{@faces} slot of the provided grid \code{x}.
+#' Distances measured on each face are in the same row.
+vertexradius <- function(x, degree=TRUE){
+
+	# output every face center-vertex combination
+	faceTab <- x@faces
+
+	# create a container
+	res <- matrix(NA, ncol=ncol(faceTab), nrow=nrow(faceTab))
+
+	# the face centers
+	cents <- x@faceCenters
+	verts <- x@vertices
+
+	# the grid radius (to make it sure))
+	radius  <- sqrt(sum((x@center-cents[1,])^2))
+
+	# switch output
+	if(degree){
+		output <- "deg"
+	}else{
+		output <- "distance"
+	}
+
+	# go through all faces
+	for(i in 1:nrow(res)){
+
+		# where are these there
+		bNoNA <- !is.na(faceTab[i,])
+		# calculate distances
+		thisFace <- arcdistmat(
+			points1=cents[rownames(faceTab)[i], , drop=FALSE],
+			points2=verts[faceTab[i, bNoNA], ],
+			origin=x@center, output=output, radius=radius)
+
+		# store
+		res[i, bNoNA] <- thisFace
+
+	}
+	rownames(res) <- rownames(faceTab)
+
+	# return
+	return(res)
+}
