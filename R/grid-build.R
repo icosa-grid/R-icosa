@@ -185,16 +185,16 @@ setMethod(
 #'
 #' @slot edges Matrix of the vertices forming the edges.
 #'
-#'	@slot tessellation Contains the tessellation vector.
+#' @slot tessellation Contains the tessellation vector.
 #'
-#'	@slot orientation Contains the grid orientation in xyz 3d space, values in radian relative to the (0,1,0) direction.
+#' @slot orientation Contains the grid orientation in xyz 3d space, values in radian relative to the (0,1,0) direction.
 #'
-#'	@slot center is the xyz coordinates of the grids origin/center.
+#' @slot center is the xyz coordinates of the grids origin/center.
 #'
-#'	@slot div vector contains the number of faces that a single face of the previous tessellation level is decomposed to.
+#' @slot div vector contains the number of faces that a single face of the previous tessellation level is decomposed to.
 #'
-#'	@slot faceCenters contains the xyz coordinates of the centers of the faces on the surface of the sphere.	
-#'	@slot belts Vector of integers indicating the belt the face belongs to.
+#' @slot faceCenters contains the xyz coordinates of the centers of the faces on the surface of the sphere.
+#' @slot belts Vector of integers indicating the belt the face belongs to.
 #' @slot edgeLength the length of an average edge in km and degrees.
 #' @slot graph an 'igraph' class graph object.
 #' @slot length integer vector of length=3. The number of vertices, edges and faces in this order.
