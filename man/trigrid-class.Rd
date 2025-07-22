@@ -14,6 +14,8 @@ increases the speed of lookup functions.}
 
 \item{deg}{(\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{triguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.}
 
+\item{spacing}{(\code{numeric}) The target spacing of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{triguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.}
+
 \item{sp}{(\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 should be added to the object when the grid is calculated. If set to \code{TRUE} the \code{SpPolygons()} function will be run with with the resolution parameter set to 25. The 
  resulting object will be stored in slot \code{@sp}. As the calculation of this object can substantially increase the grid creation time,

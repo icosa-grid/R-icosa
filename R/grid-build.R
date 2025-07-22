@@ -212,6 +212,8 @@ setMethod(
 #'	  increases the speed of lookup functions.
 #'
 #' @param deg (\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{triguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
+#'
+#' @param spacing (\code{numeric}) The target spacing of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{triguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
 #' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 #'	should be added to the object when the grid is calculated. If set to \code{TRUE} the \code{SpPolygons()} function will be run with with the resolution parameter set to 25. The 
 #'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can substantially increase the grid creation time,
@@ -257,10 +259,12 @@ trigrid<-setClass(
 setMethod(
 	"initialize",
 	signature="trigrid",
-	definition=function(.Object, tessellation=1, deg=NULL, sf=FALSE, sp=FALSE, graph=TRUE, radius=authRadius, center=origin, verbose=TRUE){
+	definition=function(.Object, tessellation=1, deg=NULL, spacing=NULL, sf=FALSE, sp=FALSE, graph=TRUE, radius=authRadius, center=origin, verbose=TRUE){
 		
 		# set tessellation based on approximation of edge length
-		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="trigrid", verbose=verbose) 
+		if(!is.null(deg) & !is.null(spacing)) stop("Both the 'deg' (edge length) and 'spacing' arguments were given.\n  Please provide only one.'")
+		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="trigrid", verbose=verbose, arg="deg")
+		if(!is.null(spacing)) tessellation <- gridLookUp(spacing, gr="trigrid", verbose=verbose, arg="spacing")
 
 		# trial variables
 	#	tessellation<-c(2,2,2,2)
@@ -559,6 +563,8 @@ setMethod(
 #'
 #' @param deg (\code{numeric}) The target edge length of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{hexguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
 #'
+#' @param spacing (\code{numeric}) The target spacing of the grid in degrees. If provided, the function will select the appropriate tessellation vector from the \code{\link{hexguide}}-table, which is closest to the target. Note that these are unlikely to be the exact matches.
+#'
 #' @param sp (\code{logical}) Flag indicating whether the \code{\link[sp]{SpatialPolygons}} class representation of the grid
 #'	should be added to the object when the grid is calculated. If set to true the \code{\link{SpPolygons}} function will be run with with the resolution parameter set to \code{25}. The 
 #'  resulting object will be stored in slot \code{@sp}. As the calculation of this object can increase the grid creation time substantially
@@ -591,10 +597,12 @@ hexagrid<-setClass(
 setMethod(
 	"initialize",
 	signature="hexagrid",
-	definition=function(.Object, tessellation=1, deg=NULL, sp=FALSE, sf=FALSE, graph=TRUE, center=origin, radius=authRadius, verbose=TRUE){
+	definition=function(.Object, tessellation=1, deg=NULL, spacing=NULL, sp=FALSE, sf=FALSE, graph=TRUE, center=origin, radius=authRadius, verbose=TRUE){
 			
 		# set tessellation based on approximation of edge length
-		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="hexagrid", verbose=verbose) 
+		if(!is.null(deg) & !is.null(spacing)) stop("Both the 'deg' (edge length) and 'spacing' arguments were given.\n  Please provide only one.'")
+		if(!is.null(deg)) tessellation <- gridLookUp(deg, gr="hexagrid", verbose=verbose, arg="deg")
+		if(!is.null(spacing)) tessellation <- gridLookUp(spacing, gr="hexagrid", verbose=verbose, arg="spacing")
 
 		tGrid<-trigrid(tessellation, radius=radius)
 		# v part of the skeleton and the active vertices
@@ -820,7 +828,17 @@ setMethod(
 
 
 
-gridLookUp <- function(deg, gr, verbose=TRUE){
+gridLookUp <- function(x, gr, verbose=TRUE, arg="deg"){
+	# switch
+	if(arg=="deg"){
+		compare <- "meanEdgeLength_deg"
+		showing <- "Mean edge length"
+	}
+	if(arg=="spacing"){
+		compare <- "meanSpacing_deg"
+		showing <- "Spacing"
+	}
+
 	if(gr=="hexagrid"){
 		data(hexguide, envir=environment(), package="icosa")
 		tessguide <- hexguide
@@ -829,18 +847,17 @@ gridLookUp <- function(deg, gr, verbose=TRUE){
 		data(triguide, envir=environment(), package="icosa")
 		tessguide <- triguide
 	}
-	if(!is.numeric(deg)) stop("The 'deg' argument has to be numeric.")
-	if(length(deg)!=1) stop("You must provide a single value as 'deg'.")
-	if(is.na(deg)) stop("The 'deg' argument cannot be NA.")
+	if(!is.numeric(x)) stop(paste0("The '",arg,"' argument has to be numeric."))
+	if(length(x)!=1) stop(paste0("You must provide a single value as '",arg,"'."))
+	if(is.na(x)) stop(paste0("The '",arg,"' argument cannot be NA."))
 
 	
 	# the difference of given and supplied
-	differences <- abs(tessguide$meanEdgeLength_deg-deg)
+	differences <- abs(tessguide[,compare]-x)
 
 	# select the coarser of the solutions
 	select <- which.min(differences)[1]
 
-	
 	# the full tessellation vector
 	fullVect <- as.numeric(tessguide[select, paste0("level", 1:4)])
 
@@ -855,14 +872,14 @@ gridLookUp <- function(deg, gr, verbose=TRUE){
 	}
 
 	if(select==length(differences))
-		stop(paste("'deg' is lower than then lowest resolution in the guide, given for tessellation = c(",paste0(vect, collapse=", "),
+		stop(paste("'",arg,"' is lower than the lowest resolution in the guide, given for tessellation = c(",paste0(vect, collapse=", "),
 			").\nPlease set the 'tessellation' argument manually."))
 
 	if(verbose) message(
 		paste0(
-			"Selecting ",gr," with tessellation vector: c(", paste0(vect, collapse=", "),").\nMean edge length: ", 
-			tessguide[select, "meanEdgeLength_deg"], " degrees."))
-	
+			"Selecting ",gr," with tessellation vector: c(", paste0(vect, collapse=", "),").\n",showing, ": ",
+			tessguide[select, compare], " degrees."))
+
 	return(vect)
 
 }
