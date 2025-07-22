@@ -4,15 +4,12 @@
 \alias{vertexradius}
 \title{Calculate the vertex radii of icosahedral grid faces}
 \usage{
-vertexradius(x, output = "deg")
+vertexradius(x, degree = TRUE)
 }
 \arguments{
 \item{x}{(\code{\link{trigrid}} or \code{\link{hexagrid}}) Object.}
 
-\item{output}{(\code{character}) The type of the output. \code{"distance"} will give back the distance
-in the metric that was fed to the function in the coordinates or the radius.
-\code{"deg"} will output the the distance in degrees, \code{"rad"} will do
-so in radians.}
+\item{degree}{(\code{logical}) Should the output be returned in degrees or in kóilometers?}
 }
 \value{
 A \code{numeric} matrix that matches in structure with the \code{@faces} slot of the provided grid \code{x}.
