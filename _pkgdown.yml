@@ -43,7 +43,9 @@ navbar:
       - href: news/index.html
         text: Changelog 
       - href: articles/archive.html
-        text: Package archive 
+        text: Package archive
+      - href: articles/icosa_grid_documentation.html
+        text: Grid technicals
     howtos:
       text: How-to guides on EvolvED
       href: "https://www.evolv-ed.net/"

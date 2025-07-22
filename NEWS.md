@@ -10,6 +10,7 @@
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
+- The `meanSpacing_deg` and `sdSpacing_deg` variables to the `hexguide` and `triguide` objects.
 
 
 ### Changed

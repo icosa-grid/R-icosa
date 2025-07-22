@@ -5,7 +5,7 @@
 \alias{triguide}
 \title{Tessellation guide to \code{\link{trigrid}} objects}
 \format{
-A \code{data.frame} with 120 observations and 18 variables:
+A \code{data.frame} with 120 observations and 20 variables:
 \describe{
 	\item{\code{total}}{The total tessellation of the grid, the number of points inserted between icosahedron vertices along an edge.}
 	\item{\code{level1}}{Level 1 tessellation.}
@@ -24,7 +24,9 @@ A \code{data.frame} with 120 observations and 18 variables:
 	\item{\code{time_sp}}{Time to compute grid with an Intel Xeon E-1650 prcessor, with the 'sp' member.}
 	\item{\code{size}}{The size of the grid in bytes.}
 	\item{\code{size_sp}}{The size of the grid object in bytes, with the 'sp' member.}
-	\item{\code{timeLocate_5000}}{Time to locate 5000 points with an Intel Xeon E-1650 processor in seconds.}
+	\item{\code{timeLocate_5000}}{Time to locate 5000 points with an Intel Xeon E-1650 in seconds (wall time).}
+	\item{\code{meanSpacing_deg}}{Mean spacing in degrees.}
+	\item{\code{sdSpacing_deg}}{Standard deviation of spacing in degrees.}
 }
 }
 \usage{
@@ -32,5 +34,8 @@ triguide
 }
 \description{
 The table includes basic properties of \code{\link{trigrid}}s described with specific tessellation parameters
+}
+\details{
+This is version 0.2, now including the spacing of the grids.
 }
 \keyword{datasets}
