@@ -13,7 +13,7 @@ An object of class \code{standardGeneric} of length 1.
 \usage{
 resample
 
-\S4method{resample}{SpatRaster,trigrid}(x, y, method = "near", na.rm = TRUE)
+\S4method{resample}{SpatRaster,trigrid}(x, y, method = "near", na.rm = TRUE, output = "numeric")
 
 \S4method{resample}{facelayer,trigrid}(x, y, method = NULL, res = 5)
 
@@ -27,6 +27,8 @@ resample
 \item{method}{(\code{character}) The name of the algorithm used for resampling.}
 
 \item{na.rm}{(\code{logical}) If a face contains a missing value, should its value be \code{NA} as well (\code{FALSE}) or calculate the mean anyway (\code{TRUE}).}
+
+\item{output}{(\code{character}) The output class of the resampling. Either \code{array} or \code{vector}.}
 
 \item{res}{(\code{numeric}) Value indicating the precision of area estimation during the upscaling (\code{facelayer}-method). In case the \code{"ebaa"} method is chosen, the variable indicate the number of breaking points on an edge.}
 }
@@ -45,13 +47,12 @@ This method is necessary to utilize rasterized data in the \code{\link{icosa}} p
 # create a grid
 g <- trigrid(c(4,4))
 # create a data layer
-fl <- facelayer(g)
-fl@values<-rnorm(length(fl))
+fl <- facelayer(g, rnorm(length(faces(g))))
 # target structure
 h <- trigrid(4)
 # resampling
 res <- resample(fl, h)
-fl2<-facelayer(h)
+fl2<-facelayer(h, res)
 fl2@values[] <- res
 
 }

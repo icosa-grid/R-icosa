@@ -31,10 +31,33 @@ setMethod("initialize", signature = "facelayer",
 		if(length(value)==1){
 			.Object@values <- rep(value, .Object@length)
 		}else{
-			if(length(value)==.Object@length){
-				.Object@values <- value
+			# ensure that this is a one dimensonal object
+			valDim <- dim(value)
+			if(!is.null(valDim)) if(length(valDim)>1) stop("Only one-dimensional values are supported.")
+
+			# if there are names
+			if(!is.null(names(value))){
+				# all of them have to be a valid face name
+				if(all(names(value)%in%.Object@names)){
+					# and then replace based on the names
+					almost <- value[.Object@names]
+
+					# omit one dimensionality
+					if(!is.null(valDim)) dim(almost) <- NULL
+
+					# simplify tables
+					if(inherits(almost,  "table")){
+						class(almost) <- "integer"
+					}
+					.Object@values <- almost
+				}
+			# unnamed value
 			}else{
-				stop("Length of input values does not equal facelayer length.")
+				if(length(value)==.Object@length){
+					.Object@values <- value
+				}else{
+					stop("Length of input values does not equal facelayer length.")
+				}
 			}
 
 		}

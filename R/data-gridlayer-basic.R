@@ -1,3 +1,4 @@
+setClassUnion("oneDim", c("vector", "table", "array"))
 
 #gridlayer basic class
 	#class definition
@@ -9,7 +10,7 @@
 			tessellation ="numeric",
 			gridclass = "character",
 			names = "character",
-			values= "vector",
+			values= "oneDim",
 			length= "integer"
 		)
 	

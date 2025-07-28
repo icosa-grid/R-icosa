@@ -1,5 +1,6 @@
 #' Add an igraph object to a predefined slot in an icosahedral grid
 #'
+
 #' @name newgraph
 #		
 #' @rdname newgraph

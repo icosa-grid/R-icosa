@@ -276,7 +276,7 @@ setMethod(
 			
 			
 			if(prod(x@tessellation)<16 & arcs){
-				res<-10
+				res<-20
 				edgeMat<-.Call(Cpp_icosa_expandEdges_, edgeMat, x@center, res)
 			}
 			edgeMatExp<-edgeMat

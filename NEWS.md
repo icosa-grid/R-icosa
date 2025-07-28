@@ -1,9 +1,10 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-6 - 2025-07-22
+# icosa 0.12.0-7 - 2025-07-24
 
 ### Added
 
+- The `grapply` function to iterate various functions using grid rotations.
 - The `spacing` function to measure the distance between face centers.
 - The `meanSpacing_deg` and `sdSpacing_deg` variables to the `hexguide` and `triguide` objects.
 - The `trigrid` and `hexagrid` functions gained a `spacing` argument, allowing the selection of grids based on the spacing in `triguide` and `hexguide`
@@ -12,6 +13,7 @@
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
+-  The `resample` methods that result in `trigrid` class gained the `output` argument, and default to `numeric`. Methods for `resample` with signature `x="SpatRaster", y="Facelayer"` are now added.
 
 
 ### Changed
@@ -22,10 +24,13 @@
 ### Fixed
 
 - The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
-- The `arcs` function returns broken arcs when missing value rows are included in the input matrix
+- The `arcs` function returned broken arcs when missing value rows are included in the input matrix
 - Documentation of the `surfacecentroid`, `surfacearea` and `trishape` functions.
 - Facelayer objects could not find the associated grid object in every frame.
 
+### Deprecated
+
+- The `gridensity` function is deprecated and is succeeeded by the more general `grapply`
 
 ### Known issues
 

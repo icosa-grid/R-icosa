@@ -22,13 +22,15 @@ if(requireNamespace("terra", quietly = TRUE)){
 
 # Resample method of trigrid
 #' @param na.rm (\code{logical}) If a face contains a missing value, should its value be \code{NA} as well (\code{FALSE}) or calculate the mean anyway (\code{TRUE}).
+#' @param output (\code{character}) The output class of the resampling. Either \code{array} or \code{vector}.
 #' @rdname resample
 #' @exportMethod resample
 setMethod(
 	"resample",
 	signature=c("SpatRaster", "trigrid"),
-	definition=function(x,y, method="near", na.rm=TRUE){
-		
+	definition=function(x,y, method="near", na.rm=TRUE, output="numeric"){
+
+		if(!output%in%c("numeric", "array")) stop("Invalid output option selected.")
 		if(!requireNamespace("terra", quietly = TRUE)) stop("Install the 'terra' package to run this function.")
 		
 		# copy the raster
@@ -65,8 +67,17 @@ setMethod(
 		
 		# the new values in the triangular grid
 		mVal<-tapply(INDEX=cells, X=terra::values(x3), mean, na.rm=na.rm)
-		
-		return(mVal)
+
+		if(output=="array"){
+			return(mVal)
+		}
+		if(output=="numeric"){
+			orig <- mVal
+			dim(mVal) <- NULL
+			names(mVal) <- names(orig)
+			return(mVal)
+		}
+
 	}
 	
 )
