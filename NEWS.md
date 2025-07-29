@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-7 - 2025-07-24
+# icosa 0.12.0-8 - 2025-07-29
 
 ### Added
 
@@ -14,6 +14,7 @@
 - `data.frame`-method for the `arcs` function.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
 -  The `resample` methods that result in `trigrid` class gained the `output` argument, and default to `numeric`. Methods for `resample` with signature `x="SpatRaster", y="Facelayer"` are now added.
+-  The `saveOBJ` function with methods that write the 3D face and vertex informaiton `trigrid` and `hexagrid` class objects as Wavefront .obj files (note the different behavior from `rgl::writeOBJ`!)
 
 
 ### Changed
@@ -35,6 +36,7 @@
 ### Known issues
 
 - Warnings are produced with some `trigrid` objects when the grid's sf representation is created.
+- The grid faces (vertices that make up the faces) do not have a consistent orientation (clockwise, counterclockwise). During .obj export this is corrected. 
 
 * * *
 

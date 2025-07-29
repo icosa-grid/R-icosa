@@ -23,6 +23,7 @@ Collate:
     grid-sp-polygons.R
     grid-sf-polygons.R
     grid-resample.R
+    grid-obj.R
     data-gridlayer-basic.R
     data-gridlayer-attributes.R
     data-gridlayer-groupgen.R

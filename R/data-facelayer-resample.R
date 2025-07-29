@@ -185,7 +185,7 @@ setMethod(
 
 })
 
-#' @rdname
+#' @rdname resample
 setMethod(
 	"resample",
 	signature=c("SpatRaster", "facelayer"),

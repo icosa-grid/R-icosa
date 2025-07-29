@@ -9,6 +9,7 @@ docs
 _pkgdown.yml
 pkgdown
 index.*
+vignettes/icosa_grid_documentation.Rmd
 vignettes/icosa_1_installation.Rmd
 vignettes/icosa_2_essentials.Rmd
 vignettes/icosa_3_grids.Rmd
