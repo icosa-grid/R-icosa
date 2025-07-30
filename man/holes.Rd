@@ -2,19 +2,19 @@
 % Please edit documentation in R/grid-graphs.R
 \name{holes}
 \alias{holes}
-\alias{holes,character,trigrid-method}
+\alias{holes,trigrid-method}
 \title{Holes of shapes on an icosahedral grid}
 \usage{
-holes(x, gridObj, ...)
+holes(x, ...)
 
-\S4method{holes}{character,trigrid}(x, gridObj, outside = FALSE)
+\S4method{holes}{trigrid}(x, y, outside = FALSE)
 }
 \arguments{
-\item{x}{(\code{character}) Horizontal shapes defined as a character vector of face names.}
-
-\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) An icosahedral grid or associated facelayer object.}
 
 \item{...}{Arguments passed to class-specific methods.}
+
+\item{y}{(\code{character}) Horizontal shapes defined as a character vector of face names.}
 
 \item{outside}{(\code{logical}) Should the set of faces that are outside the shape be returned as well?}
 }
@@ -44,7 +44,7 @@ gridlabs(hex)
 plot(hex, shape, col="#FF000055", add=TRUE)
 
 # calculate holes
-ho <- holes(shape, hex)
+ho <- holes(x=hex, y=shape)
 
 # plot both holes
 plot(hex, names(ho[ho==1]), add=TRUE, col="#00FF0055")

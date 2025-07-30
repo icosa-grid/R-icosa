@@ -2,17 +2,15 @@
 % Please edit documentation in R/grid-graphs.R
 \name{patches}
 \alias{patches}
-\alias{patches,character,trigrid-method}
+\alias{patches,trigrid-method}
 \title{Patches of shapes on an icosahedral grid}
 \usage{
-patches(x, gridObj, ...)
-
-\S4method{patches}{character,trigrid}(x, gridObj)
+\S4method{patches}{trigrid}(x, y)
 }
 \arguments{
-\item{x}{(\code{character}) Horizontal shapes defined as a character vector of face names.}
+\item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}} or \code{\link{facelayer}}) An icosahedral grid or associated facelayer object.}
 
-\item{gridObj}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) An icosahedral grid.}
+\item{y}{(\code{character}) Horizontal shapes defined as a character vector of face names.}
 
 \item{...}{Arguments passed to class-specific methods.}
 }
@@ -41,7 +39,7 @@ gridlabs(hex)
 plot(hex, shape, col="#FF000055", add=TRUE)
 
 # calculate holes
-pa <- patches(shape, hex)
+pa <- patches(x=hex, y=shape)
 
 # plot all patches (coloring borders)
 plot(hex, names(pa[pa==1]), add=TRUE, border="#00FF00", lwd=4)
