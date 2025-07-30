@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-8 - 2025-07-29
+# icosa 0.12.0-8 - 2025-07-30
 
 ### Added
 
@@ -9,7 +9,7 @@
 - The `meanSpacing_deg` and `sdSpacing_deg` variables to the `hexguide` and `triguide` objects.
 - The `trigrid` and `hexagrid` functions gained a `spacing` argument, allowing the selection of grids based on the spacing in `triguide` and `hexguide`
 - The `vertexradius` function to measure the distance between face centers and face vertices.
-- The `patches` and `holes` functions to analyze shape patterns.
+- The `patches` and `holes` functions to analyze shape patterns (methods for the `trigrid` (`hexagrid`) and `facelayer` classes.
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument

@@ -33,3 +33,55 @@ setMethod(
 	}
 )
 
+
+#' @rdname patches
+setMethod(
+	"patches",
+	signature=c(x="facelayer"),
+		definition=function(x){
+
+			if(inherits(values(x), "character") | inherits(values(x), "numeric") | inherits(values(x), "integer")){
+				# grab the cell ids for valid values of the facelayer
+				cells <- names(x)[!is.na(values(x))]
+
+			# logical
+			}
+			if(inherits(values(x), "logical")){
+				# grab the cell ids for TRUE values of the facelayer
+				# NA values are IGNORED!
+				cells <- names(x)[values(x)[!is.na(values(x))]]
+			}
+
+			# look up the patches (fall back to trigrid-method)
+			res <- patches(x=dynGet(x@grid, minframe=0L), y=cells )
+
+			return(res)
+
+	}
+)
+
+#' @rdname holes
+setMethod(
+	"holes",
+	signature=c(x="facelayer"),
+		definition=function(x){
+
+			if(inherits(values(x), "character") | inherits(values(x), "numeric") | inherits(values(x), "integer")){
+				# grab the cell ids for valid values of the facelayer
+				cells <- names(x)[!is.na(values(x))]
+
+			# logical
+			}
+			if(inherits(values(x), "logical")){
+				# grab the cell ids for TRUE values of the facelayer
+				# NA values are IGNORED!
+				cells <- names(x)[values(x)[!is.na(values(x))]]
+			}
+
+			# look up the patches (fall back to trigrid-method)
+			res <- holes(x=dynGet(x@grid, minframe=0L), y=cells )
+
+			return(res)
+
+	}
+)
