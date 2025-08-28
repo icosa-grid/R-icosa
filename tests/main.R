@@ -96,8 +96,8 @@ setwd(wd)
 # vertexradius
 	vertexradius <- run_test_file("icosa/tests/vertexradius/test_vertexradius.R")
 
-## # saveOBJ
-## 	saveOBJ <- run_test_file("icosa/tests/saveOBJ/test_saveOBJ.R")
+# saveOBJ
+	saveOBJ <- run_test_file("icosa/tests/saveOBJ/test_saveOBJ.R")
 
 ## # surfacecentroid
 ## 	surfaceCentroid <- run_test_file("icosa/tests/surfacecentroid/test_surfacecentroid.R")
