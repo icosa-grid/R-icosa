@@ -73,14 +73,14 @@ setwd(wd)
 	namespace_icosa <- run_test_file("icosa/tests/namespace/test_icosa-rgl-silentAttach.R")
 	namespace_plot3d <- run_test_file("icosa/tests/namespace/test_rgl-icosa-plot3d.R")
 
-## # newsf
-## # newsp
+# newsf
+# newsp
 
 ## # occupied
-## 	occupied_raster <- run_test_file("icosa/tests/occupied/test_occupied_raster.R")
-## 	occupied_natural_earth <- run_test_file("icosa/tests/occupied/test_ne_occupied_faces.R")
-## 	occupied_paleo_coastlines <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_paleocoastlines.R")
-## 	occupied_paleo_static <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_static_polygons.R")
+	occupied_raster <- run_test_file("icosa/tests/occupied/test_occupied_raster.R")
+	occupied_natural_earth <- run_test_file("icosa/tests/occupied/test_ne_occupied_faces.R")
+	occupied_paleo_coastlines <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_paleocoastlines.R")
+	occupied_paleo_static <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_static_polygons.R")
 
 ## # spherical bounds
 ## 	facelayer_extent <- run_test_file("icosa/tests/spherical_bounds/test_extents.R") # takes long
