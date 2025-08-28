@@ -88,10 +88,10 @@ setwd(wd)
 # resample
 	resample_from_raster_to_trigrid <- run_test_file("icosa/tests/resample/test_resample_raster.R") # to trigrid and hexagrid
 
-## # rotate
-## 	point_rotate_essential <- run_test_file("icosa/tests/rotate/test_point_rotate_essential.R")
-## 	point_rotate <- run_test_file("icosa/tests/rotate/test_point_rotate.R")
-## 	grid_rotate <- run_test_file("icosa/tests/rotate/test_grid_rotate.R")
+# rotate
+	point_rotate_essential <- run_test_file("icosa/tests/rotate/test_point_rotate_essential.R")
+	point_rotate <- run_test_file("icosa/tests/rotate/test_point_rotate.R")
+	grid_rotate <- run_test_file("icosa/tests/rotate/test_grid_rotate.R")
 
 ## # vertexradius
 ## 	vertexradius <- run_test_file("icosa/tests/vertexradius/test_vertexradius.R")
