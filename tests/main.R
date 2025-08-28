@@ -43,11 +43,11 @@ setwd(wd)
 # face2nb
 	face2nb_faces <- run_test_file("icosa/tests/face2nb/test_face2nb_faces.R")
 
-## # facelayer constructor
-## 	facelayer_logical <-  run_test_file("icosa/tests/facelayer/test_facelayer_logical.R")
-## 	facelayer_integer <-  run_test_file("icosa/tests/facelayer/test_facelayer_integer.R")
-## 	facelayer_numeric <-  run_test_file("icosa/tests/facelayer/test_facelayer_numeric.R")
-## 	facelayer_character <-  run_test_file("icosa/tests/facelayer/test_facelayer_character.R")
+# facelayer constructor
+	facelayer_logical <-  run_test_file("icosa/tests/facelayer/test_facelayer_logical.R")
+ 	facelayer_integer <-  run_test_file("icosa/tests/facelayer/test_facelayer_integer.R")
+ 	facelayer_numeric <-  run_test_file("icosa/tests/facelayer/test_facelayer_numeric.R")
+ 	facelayer_character <-  run_test_file("icosa/tests/facelayer/test_facelayer_character.R")
 
 ## # grapply/gridensity
 ## 	grapply_rasters <- run_test_file("icosa/tests/grapply/test_grapply_rasters.R")
