@@ -36,7 +36,7 @@ setwd(wd)
  	grid_faces <- run_test_file("icosa/tests/grids/test_faces.R")
  	grid_guide_lookup <- run_test_file("icosa/tests/grids/test_guide_lookup.R")
  	grid_rotate <- run_test_file("icosa/tests/grids/test_rotate.R")
-## 	grid_spacing <- run_test_file("icosa/tests/grids/test_spacing.R")
+ 	grid_spacing <- run_test_file("icosa/tests/grids/test_spacing.R")
 ## 	grid_surfacearea <- run_test_file("icosa/tests/grids/test_surfacearea.R")
 ## 	grid_plot <- run_test_file("icosa/tests/grids/test_grid_plot.R")
 
