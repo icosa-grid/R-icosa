@@ -82,8 +82,8 @@ setwd(wd)
 	occupied_paleo_coastlines <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_paleocoastlines.R")
 	occupied_paleo_static <- run_test_file("icosa/tests/occupied/test_occupied_paleomap_static_polygons.R")
 
-## # spherical bounds
-## 	facelayer_extent <- run_test_file("icosa/tests/spherical_bounds/test_extents.R") # takes long
+##  # subset
+ 	facelayer_subset <- run_test_file("icosa/tests/bracket_subset/test_extents.R") # takes long
 
 ## # resample
 ## 	resample_from_raster_to_trigrid <- run_test_file("icosa/tests/resample/test_resample_raster.R") # to trigrid and hexagrid
