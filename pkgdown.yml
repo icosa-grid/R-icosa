@@ -1,5 +1,5 @@
-pandoc: 3.2.1
-pkgdown: 2.0.7
+pandoc: 3.1.3
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   archive: archive.html
@@ -12,8 +12,8 @@ articles:
   icosa_7_grid_graph: icosa_7_grid_graph.html
   icosa_8_3d_plotting: icosa_8_3d_plotting.html
   icosa_cran: icosa_cran.html
-last_built: 2024-08-16T18:09Z
+  icosa_grid_documentation: icosa_grid_documentation.html
+last_built: 2025-08-28T16:39Z
 urls:
   reference: https://adamkocsis.github.io/icosa/reference
   article: https://adamkocsis.github.io/icosa/articles
-
