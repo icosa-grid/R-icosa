@@ -38,7 +38,6 @@ setwd(wd)
  	grid_rotate <- run_test_file("icosa/tests/grids/test_rotate.R")
  	grid_spacing <- run_test_file("icosa/tests/grids/test_spacing.R")
  	grid_surfacearea <- run_test_file("icosa/tests/grids/test_surfacearea.R")
- 	grid_plot <- run_test_file("icosa/tests/plot/test_grid_plot.R")
 
 # face2nb
 	face2nb_faces <- run_test_file("icosa/tests/face2nb/test_face2nb_faces.R")
@@ -65,8 +64,9 @@ setwd(wd)
 # locate
 	locate_points <- run_test_file("icosa/tests/locate/test_locate_points.R")
 
-## # plot
-## 	grid_data_plots <- run_test_file("icosa/tests/plotting/test_grid_data_plot.R") # grid via sf + data
+# plot
+ 	grid_plot <- run_test_file("icosa/tests/plot/test_grid_plot.R")
+	grid_data_plots <- run_test_file("icosa/tests/plot/test_grid_data_plot.R") # grid via sf + data
 
 ## # namespace
 ## 	namespace_rgl <- run_test_file("icosa/tests/namespace/test_rgl-icosa-silentAttach.R")
