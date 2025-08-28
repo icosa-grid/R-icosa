@@ -26,8 +26,8 @@ setwd(wd)
 # arcdistmat
 	point_arcdistmat <- run_test_file("icosa/tests/arcdistmat/test_arcdistmat.R")
 
-## # conversions: CarToPol and PolToCar
-## 	point_conversions <- run_test_file("icosa/tests/conversions/test_conversions.R")
+# conversions: CarToPol and PolToCar
+	point_conversions <- run_test_file("icosa/tests/conversions/test_conversions.R")
 
 ## # constructor argumentation
 ## # grids
