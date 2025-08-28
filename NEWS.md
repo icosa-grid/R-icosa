@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-8 - 2025-07-30
+# icosa 0.12.0-10 - 2025-08-28
 
 ### Added
 
@@ -12,6 +12,7 @@
 - The `patches` and `holes` functions to analyze shape patterns (methods for the `trigrid` (`hexagrid`) and `facelayer` classes.
 - General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
 - `data.frame`-method for the `arcs` function.
+- `matrix`- and `data.frame`-method for the `rotate` function, for 3d sequential and longitude-latitude rotations. The `trigrid` method gained the `projnote` flag.
 - Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
 -  The `resample` methods that result in `trigrid` class gained the `output` argument, and default to `numeric`. Methods for `resample` with signature `x="SpatRaster", y="Facelayer"` are now added.
 -  The `saveOBJ` function with methods that write the 3D face and vertex informaiton `trigrid` and `hexagrid` class objects as Wavefront .obj files (note the different behavior from `rgl::writeOBJ`!)
@@ -28,6 +29,7 @@
 - The `arcs` function returned broken arcs when missing value rows are included in the input matrix
 - Documentation of the `surfacecentroid`, `surfacearea` and `trishape` functions.
 - Facelayer objects could not find the associated grid object in every frame.
+- The `PolToCar` did not always copy over the rownames attribute of the input coordinate tables
 
 ### Deprecated
 

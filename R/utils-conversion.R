@@ -65,7 +65,10 @@ setMethod(
 		endRes[,1]<-endRes[,1]+origin[1]
 		endRes[,2]<-endRes[,2]+origin[2]
 		endRes[,3]<-endRes[,3]+origin[3]
-		
+
+		# rownames should be copied!
+		if(!is.null(rownames(x))) rownames(endRes) <- rownames(x)
+
 		return(endRes)
 
 	}
@@ -153,6 +156,9 @@ setMethod(
 	"CarToPol",
 	signature="matrix",
 	function(x, norad=FALSE, origin=c(0,0,0)){
+		# save original rownames
+		origRowNames <- rownames(x)
+
 		#ignore the NAs
 		boolNA<-(is.na(x[,1]) | is.na(x[,2]) | is.na(x[,3]))
 		x<-x[!boolNA,, drop=FALSE]
@@ -198,14 +204,14 @@ setMethod(
 		if(norad){
 			matLongLat<-matrix(NA, ncol=2, nrow=length(boolNA))
 			matLongLat[!boolNA,]<-cbind(long, lat)
-			rownames(matLongLat)<-rownames(x)
+			rownames(matLongLat)<-origRowNames
 			colnames(matLongLat)<-c("long", "lat")
 			return(matLongLat)
 			
 		}else{	
 			matLongLat<-matrix(NA, ncol=3, nrow=length(boolNA))
 			matLongLat[!boolNA,]<-cbind(long, lat, rho)
-			rownames(matLongLat)<-rownames(x)
+			rownames(matLongLat)<-origRowNames
 			colnames(matLongLat)<-c("long", "lat", "rho")
 			return(matLongLat)
 			

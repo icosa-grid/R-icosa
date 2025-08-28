@@ -3,9 +3,9 @@
 
 #' Faces occupied by the specified object
 #'
-#' This function will return a \code{\link{facelayer}} class object showing which faces are occupied by the input object.
+#' This function will return an object showing which faces are occupied by the input object.
 #'
-#' This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data. 
+#' This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data.
 #'
 #' @param gridObj (\code{\link{trigrid}} or \code{\link{hexagrid}}) An icoshedral grid.
 #' 
@@ -14,7 +14,7 @@
 #'
 #' @param ... Arguments passed to the class specific methods
 #'
-#' @return The function Returns a \code{\link{facelayer}}-class object. 
+#' @return The function returns a either a named \code{logical} vector or \code{\link{facelayer}}-class object.
 #'
 #' @examples
 #'	# create a grid

@@ -16,10 +16,10 @@ occupied(gridObj, data, out = "logical", ...)
 \item{...}{Arguments passed to the class specific methods}
 }
 \value{
-The function Returns a \code{\link{facelayer}}-class object.
+The function returns a either a named \code{logical} vector or \code{\link{facelayer}}-class object.
 }
 \description{
-This function will return a \code{\link{facelayer}} class object showing which faces are occupied by the input object.
+This function will return an object showing which faces are occupied by the input object.
 }
 \details{
 This is a wrapper function on the \code{OccupiedFaces} methods that are specific to grid class and input data.

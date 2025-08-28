@@ -25,7 +25,11 @@ setMethod(
 	f="values",
 	signature="gridlayer",
 	definition= function(x){
-		return(x@values)
+		# access names
+		ret <- x@values
+		# access names
+		names(ret) <- x@names
+		return(ret)
 	}
 )
 

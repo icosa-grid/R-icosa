@@ -377,8 +377,50 @@ setMethod(
 			 coords <- CarToPol(coords, norad=TRUE)
 		}
 
+		# coerce into matrix if dim is dropped
+		if(is.null(dim(coords))){
+			nam <- names(coords)
+			coords <- matrix(coords, nrow=1, byrow=TRUE)
+			# and copy over the original names
+			colnames(coords) <- nam
+		}
+
+		# in any case ensure rowname copying
+		rownames(coords) <- rownames(x)
+
 		return(coords)
 })
+
+
+#' @param coords (\code{character}) Rotation in degrees longitude. If given, \code{angles} will be ignored. (see Method 2 description for details!)
+#' @rdname rotate
+setMethod(
+	f="rotate",
+	signature="data.frame",
+	function(x,coords=NULL, ...){
+		if(is.null(coords)){
+			if(ncol(x)!= 2 & ncol(x) !=3){
+				stop("The data.frame 'x' has to have either 2 or 3 columns. \n  consider setting the 'coords' argument. ")
+			}
+		}else{
+			if(length(coords)!=2 | !inherits(coords, "character")) stop("The coords argument has to include two column names.")
+			# subset to it
+			x <- x[, coords]
+		}
+
+		# coerce into a matrix and run matrix method
+		res <- rotate(x=as.matrix(x), ...)
+
+		# the result
+		resDF <- as.data.frame(res)
+
+		# copy over the row id
+		rownames(resDF) <- rownames(x)
+
+		return(resDF)
+
+	}
+)
 
 
 
@@ -515,7 +557,6 @@ setMethod(
 	"surfacecentroid",
 	signature=c(x="matrix"), 
 	function(x, output="polar", center=c(0,0,0), radius=authRadius, w=NULL){
-		if(nrow(x)<2) return(x)
 		#data argument
 		# which formatting?
 		if(ncol(x)==2){
@@ -527,30 +568,37 @@ setMethod(
 			rad<-sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2)
 		}
 
-		#the 3d centroid of the point cloud
-		if(is.null(w)){
-			centroid3d<-apply(x, 2, mean, na.rm=TRUE)
+		# return as is
+		if(nrow(x)<2){
+			centroid3d <- x
+		# do something
 		}else{
-			# defend the weights
-			if(length(w)!=nrow(x)) stop("You need to provide as many weights as many points.")
-			if(!is.numeric(w)) stop("The weights need to be numeric.")
+			#the 3d centroid of the point cloud
+			if(is.null(w)){
+				centroid3d<-apply(x, 2, mean, na.rm=TRUE)
+			}else{
+				# defend the weights
+				if(length(w)!=nrow(x)) stop("You need to provide as many weights as many points.")
+				if(!is.numeric(w)) stop("The weights need to be numeric.")
 
-			# calculate centroid
-			centroid3d <- c(
-			 	weighted.mean(x=x[,1], w=w, na.rm=TRUE),
-			 	weighted.mean(x=x[,2], w=w, na.rm=TRUE),
-			 	weighted.mean(x=x[,3], w=w, na.rm=TRUE)
-			)
+				# calculate centroid
+				centroid3d <- c(
+					weighted.mean(x=x[,1], w=w, na.rm=TRUE),
+					weighted.mean(x=x[,2], w=w, na.rm=TRUE),
+					weighted.mean(x=x[,3], w=w, na.rm=TRUE)
+				)
 
-			# assign appropriate names
-			names(centroid3d) <- colnames(x)
+				# assign appropriate names
+				names(centroid3d) <- colnames(x)
 
-		}
-			if(output=="cartesian"){
-				radVec<-(centroid3d-center)
-				retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad
-				return(retCentroid)
 			}
+		}
+
+		if(output=="cartesian"){
+			radVec<-(centroid3d-center)
+			retCentroid<-centroid3d/(sqrt(radVec[1]^2+radVec[2]^2+radVec[3]^2))*rad
+			return(retCentroid)
+		}
 		
 		#transform back to spherical coordinates
 		if(output=="polar"){

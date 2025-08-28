@@ -3,15 +3,18 @@
 #'
 #' Multiple implementations of rotations for coordinate transformation.
 #'
-#' The function implements 3D rotations of various class of objects, that are ultimately reduced to individual points. Internally, point rotation is implemented with 3-axis rotations,
-#' that are implemented in the X-Y-Z order (note that 3d rotations are not commutative!). For this reason it is not recommended to re-rotate an already rotated grid, unless the purpose is to achieve random orientation.
-#' Method 2 parametrizes rotation with three arguments (\code{long}, \code{lat}, \code{reflong}), that can be easier to control. Longitudinal rotations are invariant to the position of the point cloud, but latitudinal
-#' rotation is not. A horizontal rotation axis will be set perpendicular to the reference longitude (\code{reflong})for latitude-oriented rotation
-#' (i.e. the latitude difference will equal the latitudinal rotation value only at the reference longitude). If this is not given, than the reference longitude will be the centroid of the point cloud.
+#' The function implements 3D rotations of various class of objects, that are ultimately reduced to individual points. Internally, point rotation is implemented with 3-axis rotations (Method 1),
+#' that are implemented in the X-Y-Z order (note that 3d rotations are not commutative!). For this reason it is not recommended to re-rotate an already rotated object, unless the purpose is to achieve random orientation.
+#'
+#' Method 2 parametrizes rotation with three arguments (\code{long}, \code{lat}, \code{reflong}), that can be easier to control. Longitudinal rotations are invariant to the position of the object, but latitudinal
+#' rotation is not. An axis in the equatorial plane will be set perpendicular to the reference longitude (\code{reflong})for latitude-based rotation
+#' (i.e. the latitude difference will equal the latitudinal rotation value only at the reference longitude). If this is not given, then the reference longitude will be that of the centroid of the point cloud.
+#' Note that latitudinal rotation is executed first and only then are the points rotated longitudinally.
 #'
 #' @param x (\code{matrix}, \code{\link{trigrid}}, \code{\link{hexagrid}}) Input coordinates or grid.
 #' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). Rotations are executed in X-Y-Z order.
 #' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
+#' @param projnote (\code{logical}): Should messages be shown to remind users to regenerate grid projections with 'sf' and 'sp'?
 #' @rdname rotate
 #' @return Same class object as \code{x}.
 #' @exportMethod rotate
@@ -23,7 +26,7 @@
 setMethod(	
 	f="rotate",
 	signature="trigrid",
-	definition= function(x, angles="random", pivot=NA){
+	definition= function(x, angles="random", pivot=NA, projnote=TRUE){
 		#origin<-F
 		#obj<-grid
 		#angles<-c(0.15,0.15,0.15)
@@ -48,13 +51,15 @@ setMethod(
 		}else{
 			orig<-x@center	
 		}
-		
-		if(suppressWarnings(!is.na(x@sp))){
-			message("Please rerun newsp() to regenerate the 2d representation!")
-		}
 
-		if(suppressWarnings(sum(is.na(x@sf))==0)){
-			message("Please rerun newsf() to regenerate the 2d representation!")
+		if(projnote){
+			if(suppressWarnings(!is.na(x@sp))){
+				message("Please rerun newsp() to regenerate the 2d representation with 'sp'!")
+			}
+
+			if(suppressWarnings(sum(is.na(x@sf))==0)){
+				message("Please rerun newsf() to regenerate the 2d representation with 'sf'!")
+			}
 		}
 		
 		

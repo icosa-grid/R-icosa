@@ -50,13 +50,15 @@ setMethod("initialize", signature = "facelayer",
 						class(almost) <- "integer"
 					}
 					.Object@values <- almost
+				}else{
+					stop("Invalid face names.")
 				}
 			# unnamed value
 			}else{
 				if(length(value)==.Object@length){
 					.Object@values <- value
 				}else{
-					stop("Length of input values does not equal facelayer length.")
+					stop("Length of unnamed input values does not equal facelayer length.")
 				}
 			}
 
