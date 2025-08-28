@@ -34,6 +34,8 @@ resample
 \item{output}{(\code{character}) The output class of the resampling. Either \code{array} or \code{vector}.}
 
 \item{res}{(\code{numeric}) Value indicating the precision of area estimation during the upscaling (\code{facelayer}-method). In case the \code{"ebaa"} method is chosen, the variable indicate the number of breaking points on an edge.}
+
+\item{...}{Arguments passed to class-specific methods.}
 }
 \value{
 A named \code{numeric} vector.

@@ -516,7 +516,7 @@ if(requireNamespace("terra", quietly = TRUE)){
 setMethod(
 	"patches",
 	signature=c(x="trigrid"),
-		definition=function(x, y){
+		definition=function(x, y, ...){
 
 		if(suppressWarnings(is.na(x@graph)[1])){
 			stop("Slot @graph of 'x' is empty. Use newgraph() to add an igraph respresentation. ")

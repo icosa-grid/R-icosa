@@ -54,6 +54,7 @@
 #' @importFrom methods callGeneric
 #' @importFrom methods new
 #' @importFrom stats dist
+#' @importFrom stats weighted.mean
 #' @importFrom stats rnorm
 #' @importFrom stats runif
 #' @importFrom utils combn

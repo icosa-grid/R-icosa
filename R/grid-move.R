@@ -13,8 +13,9 @@
 #'
 #' @param x (\code{matrix}, \code{\link{trigrid}}, \code{\link{hexagrid}}) Input coordinates or grid.
 #' @param angles (\code{numeric}): The \code{vector} of rotation in radians (three values in each dimension). If set to \code{"random"}, the rotation will be random (default). Rotations are executed in X-Y-Z order.
-#' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.
+#' @param pivot (\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. For \code{trigrid}-methods it defaults to \code{NA} indicating that the rotation will be around the center of the grid.
 #' @param projnote (\code{logical}): Should messages be shown to remind users to regenerate grid projections with 'sf' and 'sp'?
+#' @param ... Arguments passed to class-specific methods.
 #' @rdname rotate
 #' @return Same class object as \code{x}.
 #' @exportMethod rotate

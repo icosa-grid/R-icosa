@@ -15,6 +15,8 @@ saveOBJ(x, ...)
 \arguments{
 \item{x}{A \code{trigrid} class object.}
 
+\item{...}{Arguments of class-specific methods.}
+
 \item{file}{A \code{character} path to a file to write.}
 
 \item{scale}{A \code{logical} Should the grid vertices be scaled to unit diameter? Otherwise the values in kilometers will be exported.}
@@ -34,6 +36,6 @@ gr <- hexagrid(spacing=4)
 td <- tempdir()
 td
 # actual writing
-saveOBJ(gr, file=file.path(td, "hexagrid.obj")
+saveOBJ(gr, file=file.path(td, "hexagrid.obj"))
 
 }

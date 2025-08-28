@@ -6,7 +6,7 @@
 \alias{patches,facelayer-method}
 \title{Patches of shapes on an icosahedral grid}
 \usage{
-\S4method{patches}{trigrid}(x, y)
+\S4method{patches}{trigrid}(x, y, ...)
 
 \S4method{patches}{facelayer}(x)
 }

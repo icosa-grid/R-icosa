@@ -517,6 +517,7 @@ setMethod(
 #' @name spacing
 #' @param x (\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.
 #' @param degree (\code{logical}) Should the output be returned in degrees or in kóilometers?
+#' @param ... Arguments of class-specific methods.
 #'
 #' @examples
 #' h <- hexagrid(3)

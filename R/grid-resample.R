@@ -23,6 +23,7 @@ if(requireNamespace("terra", quietly = TRUE)){
 # Resample method of trigrid
 #' @param na.rm (\code{logical}) If a face contains a missing value, should its value be \code{NA} as well (\code{FALSE}) or calculate the mean anyway (\code{TRUE}).
 #' @param output (\code{character}) The output class of the resampling. Either \code{array} or \code{vector}.
+#' @param ... Arguments passed to class-specific methods.
 #' @rdname resample
 #' @exportMethod resample
 setMethod(

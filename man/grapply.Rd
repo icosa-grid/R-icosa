@@ -8,6 +8,7 @@
 \alias{grapply,matrix,SpatRaster-method}
 \alias{grapply,matrix,trigrid-method}
 \alias{grapply,data.frame,missing-method}
+\alias{grapply,matrix,missing-method}
 \title{Icosahedral grid-based density estimation
 Spatial density estimation algorithm based on rotation of icosahedral grids.}
 \usage{
@@ -48,6 +49,8 @@ grapply(x, out, ...)
 \S4method{grapply}{matrix,trigrid}(x, out, ...)
 
 \S4method{grapply}{data.frame,missing}(x, out, y, ...)
+
+\S4method{grapply}{matrix,missing}(x, out, y, ...)
 }
 \arguments{
 \item{x}{Matrix of longitude, latitude data, \code{\link[sf:sf]{sf}} class, or \code{\link[sp:SpatialPoints]{SpatialPoints}} Point cloud.}
@@ -60,7 +63,15 @@ grapply(x, out, ...)
 
 \item{FUN}{\code{function} The function to be applied on the iteration results. It defaults to the number of points, but it can be used to}
 
+\item{...}{Arguments passed to class-specific methods.}
+
+\item{coords}{\code{character} Column names to find longitude and latiude variables in \code{x}.}
+
+\item{iter}{\code{numeric} Value, the number of iterations.}
+
 \item{APP}{\code{function} The function to be applied on the iteration results. If set to \code{NULL}, it will return the stack of results for subsequent processing.}
+
+\item{miss}{\code{numeric} A single default value used in positions in \code{out} where no value is produced by \code{FUN} in an iteration trial.}
 
 \item{APP.args}{\code{list} Additional arguments passed to \code{APP}.}
 
@@ -111,7 +122,7 @@ yNew <- cbind(as.data.frame(x), cell=cell)
  points(x, pch=3, col="red")
 
  # for density estimation
- o <- grapply(x=x, out,y,  iter=7, FUN=CellCount, miss=0)
+ o <- grapply(x=x, out=out,y=gr,  iter=7, FUN=CellCount, miss=0)
 
  # visualize results
  terra::plot(o)

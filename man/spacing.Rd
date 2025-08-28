@@ -12,6 +12,8 @@ spacing(x, ...)
 \arguments{
 \item{x}{(\code{\link{trigrid}}, \code{\link{hexagrid}}) Object.}
 
+\item{...}{Arguments of class-specific methods.}
+
 \item{degree}{(\code{logical}) Should the output be returned in degrees or in kóilometers?}
 }
 \value{

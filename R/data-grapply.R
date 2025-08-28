@@ -42,6 +42,10 @@ gridensity <- function(x, y, out, trials=100, FUN=mean){
 #' @param APP \code{function} The function to be applied on the iteration results. If set to \code{NULL}, it will return the stack of results for subsequent processing.
 #' @param APP.args \code{list} Additional arguments passed to \code{APP}.
 #' @param counter \code{logical} Should a loop counter be shown?
+#' @param iter \code{numeric} Value, the number of iterations.
+#' @param miss \code{numeric} A single default value used in positions in \code{out} where no value is produced by \code{FUN} in an iteration trial.
+#' @param coords \code{character} Column names to find longitude and latiude variables in \code{x}.
+#' @param ... Arguments passed to class-specific methods.
 #' @examples
 #' # example to be run if terra is present
 #' if(requireNamespace("terra", quietly=TRUE)){
@@ -70,7 +74,7 @@ gridensity <- function(x, y, out, trials=100, FUN=mean){
 #'  points(x, pch=3, col="red")
 #'
 #'  # for density estimation
-#'  o <- grapply(x=x, out,y,  iter=7, FUN=CellCount, miss=0)
+#'  o <- grapply(x=x, out=out,y=gr,  iter=7, FUN=CellCount, miss=0)
 #'
 #'  # visualize results
 #'  terra::plot(o)
@@ -91,6 +95,8 @@ setMethod(
 	"grapply",
 	signature=c(x="data.frame", out="SpatRaster"),
 	definition=function(x, out, y, coords=c("long", "lat"), iter=100, FUN=function(x) table(x$cell), APP=mean, miss=NA, APP.args=NULL, counter=TRUE, FUN.args=NULL){
+
+		if(length(miss)>1) stop("The 'miss' argument must be a single numeric or NA.")
 
 		# function to iterate
 		ITER <- match.fun(FUN)
@@ -251,6 +257,7 @@ setMethod(
 		grapply(x, out=y, y=y, ... )
 })
 
+#' @rdname grapply
 setMethod(
 	"grapply",
 	signature=c(x="matrix", out="missing"),

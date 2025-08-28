@@ -17,7 +17,7 @@ An object of class \code{standardGeneric} of length 1.
   long = 0,
   lat = 0,
   reflong = NULL,
-  origin = c(0, 0, 0),
+  pivot = c(0, 0, 0),
   radius = authRadius,
   output = "polar"
 )
@@ -39,13 +39,15 @@ rotate
 
 \item{reflong}{(\code{numeric}) Reference longitude. If not given it will default to the centroid of the points as given by \code{\link{surfacecentroid}}. (see Method 2 description for details!)}
 
+\item{pivot}{(\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. For \code{trigrid}-methods it defaults to \code{NA} indicating that the rotation will be around the center of the grid.}
+
 \item{radius}{The radius of the sphere, relevant only if the \code{output="cartesian"} and \code{x} is a longitude-latitude matrix.}
 
 \item{output}{The output format of the rotations, either \code{"polar"} or \code{cartesian}.}
 
 \item{coords}{(\code{character}) Rotation in degrees longitude. If given, \code{angles} will be ignored. (see Method 2 description for details!)}
 
-\item{pivot}{(\code{numeric}): The pivot point of the rotation, \code{vector} of xyz coordinates. Defaults to \code{NA} indicating that the rotation will be around the center of the grid.}
+\item{...}{Arguments passed to class-specific methods.}
 
 \item{projnote}{(\code{logical}): Should messages be shown to remind users to regenerate grid projections with 'sf' and 'sp'?}
 }

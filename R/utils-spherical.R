@@ -317,7 +317,7 @@ if(requireNamespace("terra", quietly = TRUE)){
 setMethod(
 	f="rotate",
 	signature="matrix",
-	definition= function(x, angles="random", long=0, lat=0, reflong=NULL, origin=c(0,0,0), radius=authRadius, output="polar"){
+	definition= function(x, angles="random", long=0, lat=0, reflong=NULL, pivot=c(0,0,0), radius=authRadius, output="polar"){
 
 		# 1. argument defense and preparation
 		# for longitude-latitude data
@@ -337,7 +337,7 @@ setMethod(
 			# select random if not given
 			if(sum(angles=="random")) angles<-c(stats::runif(3,0,2*pi))
 
-			coords <- rotateMultiplePoints(x, angles=angles, origin=origin)
+			coords <- rotateMultiplePoints(x, angles=angles, origin=pivot)
 
 		# recursion: longlat rotation
 		}else{

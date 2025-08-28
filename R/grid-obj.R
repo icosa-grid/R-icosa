@@ -6,6 +6,7 @@
 #' @param x A \code{trigrid} class object.
 #' @param file A \code{character} path to a file to write.
 #' @param scale A \code{logical} Should the grid vertices be scaled to unit diameter? Otherwise the values in kilometers will be exported.
+#' @param ... Arguments of class-specific methods.
 #' @return The function has no return value.
 #' @rdname saveOBJ
 #' @exportMethod saveOBJ
@@ -15,7 +16,7 @@
 #' td <- tempdir()
 #' td
 #' # actual writing
-#' saveOBJ(gr, file=file.path(td, "hexagrid.obj")
+#' saveOBJ(gr, file=file.path(td, "hexagrid.obj"))
 #'
 setGeneric(
 	name="saveOBJ",
@@ -34,7 +35,7 @@ setMethod(
 		con <- file(file, "w")
 
 		# filename
-		filename <- unlist(lapply(strsplit(path, "/"), function(y) y[length(y)]))
+		filename <- unlist(lapply(strsplit(file, "/"), function(y) y[length(y)]))
 
 		cat("# ",filename,"\n", file=con)
 		#cat("\ng Object001\n\n",file=con)
@@ -86,7 +87,7 @@ setMethod(
 		con <- file(file, "w")
 
 		# filename
-		filename <- unlist(lapply(strsplit(path, "/"), function(y) y[length(y)]))
+		filename <- unlist(lapply(strsplit(file, "/"), function(y) y[length(y)]))
 
 		cat("# ",filename,"\n", file=con)
 		# cat("\ng Object001\n\n",file=con)
