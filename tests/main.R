@@ -68,10 +68,10 @@ setwd(wd)
  	grid_plot <- run_test_file("icosa/tests/plot/test_grid_plot.R")
 	grid_data_plots <- run_test_file("icosa/tests/plot/test_grid_data_plot.R") # grid via sf + data
 
-## # namespace
-## 	namespace_rgl <- run_test_file("icosa/tests/namespace/test_rgl-icosa-silentAttach.R")
-## 	namespace_icosa <- run_test_file("icosa/tests/namespace/test_icosa-rgl-silentAttach.R")
-## 	namespace_plot3d <- run_test_file("icosa/tests/namespace/test_rgl-icosa-plot3d.R")
+# namespace
+	namespace_rgl <- run_test_file("icosa/tests/namespace/test_rgl-icosa-silentAttach.R")
+	namespace_icosa <- run_test_file("icosa/tests/namespace/test_icosa-rgl-silentAttach.R")
+	namespace_plot3d <- run_test_file("icosa/tests/namespace/test_rgl-icosa-plot3d.R")
 
 ## # newsf
 ## # newsp
