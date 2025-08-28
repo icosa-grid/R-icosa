@@ -29,10 +29,10 @@ setwd(wd)
 # conversions: CarToPol and PolToCar
 	point_conversions <- run_test_file("icosa/tests/conversions/test_conversions.R")
 
-## # constructor argumentation
-## # grids
-## #	grid <- run_test_dir("icosa/tests/grids")
-## 	grid_args <- run_test_file("icosa/tests/grids/test_grid_args.R")
+# constructor argumentation
+# grids
+#	grid <- run_test_dir("icosa/tests/grids")
+	grid_args <- run_test_file("icosa/tests/grids/test_grid_args.R")
 ## 	grid_faces <- run_test_file("icosa/tests/grids/test_faces.R")
 ## 	grid_guide_lookup <- run_test_file("icosa/tests/grids/test_guide_lookup.R")
 ## 	grid_rotate <- run_test_file("icosa/tests/grids/test_rotate.R")
