@@ -1,6 +1,6 @@
 # Change log of the R package 'icosa'
 
-# icosa 0.12.0-10 - 2025-08-28
+# icosa 0.12.0 - 2025-08-28
 
 ### Added
 
@@ -22,10 +22,11 @@
 - The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
 - The `hexagrid`-method of the `surfacearea` function returns a named numeric instead of a named array (as it does for the `trigrid` class).
 - Increased the default resolution of sf-representations for coarse level grids (from 10 to 20 splits).
+- Completely reorganized unit testing suite.
 
 ### Fixed
 
-- The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (e.g. polygons and lines). 
+- The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (i.e. polygons and lines). 
 - The `arcs` function returned broken arcs when missing value rows are included in the input matrix
 - Documentation of the `surfacecentroid`, `surfacearea` and `trishape` functions.
 - Facelayer objects could not find the associated grid object in every frame.
@@ -38,7 +39,7 @@
 ### Known issues
 
 - Warnings are produced with some `trigrid` objects when the grid's sf representation is created.
-- The grid faces (vertices that make up the faces) do not have a consistent orientation (clockwise, counterclockwise). During .obj export this is corrected. 
+- The grid faces (vertices that make up the faces) do not have a consistent orientation (i. e. clockwise counterclockwise). During .obj export this is corrected.  
 
 * * *
 
