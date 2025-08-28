@@ -85,8 +85,8 @@ setwd(wd)
 ##  # subset
  	facelayer_subset <- run_test_file("icosa/tests/bracket_subset/test_extents.R") # takes long
 
-## # resample
-## 	resample_from_raster_to_trigrid <- run_test_file("icosa/tests/resample/test_resample_raster.R") # to trigrid and hexagrid
+# resample
+	resample_from_raster_to_trigrid <- run_test_file("icosa/tests/resample/test_resample_raster.R") # to trigrid and hexagrid
 
 ## # rotate
 ## 	point_rotate_essential <- run_test_file("icosa/tests/rotate/test_point_rotate_essential.R")
