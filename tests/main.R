@@ -62,8 +62,8 @@ setwd(wd)
 # holes
 	holes_faces <- run_test_file("icosa/tests/holes/test_holes.R")
 
-## # locate
-## 	locate_points <- run_test_file("icosa/tests/locate/test_locate_points.R")
+# locate
+	locate_points <- run_test_file("icosa/tests/locate/test_locate_points.R")
 
 ## # plot
 ## 	grid_data_plots <- run_test_file("icosa/tests/plotting/test_grid_data_plot.R") # grid via sf + data
