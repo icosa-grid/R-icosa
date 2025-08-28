@@ -1,7 +1,3 @@
-# functions that have tests here:
-diag <- FALSE
-#diag <- TRUE
-
 library(tinytest)
 library(icosa)
 
@@ -14,24 +10,23 @@ genericloc <- "icosa/tests/_methods/generic/"
 
 # grab 10 random tessellation vectors
 
-
 data(hexguide)
 testTess <- c(1:5, 10, 20, 30)
 
+
 # repeat for every grid pair
 for(i in 1:length(testTess)){
-	if(diag) message("Iteration ", i )
 	# get tessellation vector
 	tessel <- hexguide[testTess[i], 2:5]
 	tessel<- tessel[!is.na(tessel)]
 
 	#trigrid
 	expect_silent(gr  <- trigrid(tessel))
-	source(file.path(genericloc, "grid_attributes/surfacearea.R"), local=TRUE, print.eval=diag)
+	source(file.path(genericloc, "spacing/spacing.R"), local=TRUE)
 
 	# hexagrid
 	expect_silent(gr  <- hexagrid(tessel))
-	source(file.path(genericloc, "grid_attributes/surfacearea.R"), local=TRUE, print.eval=diag)
+	source(file.path(genericloc, "spacing/spacing.R"), local=TRUE)
 
 }
 
