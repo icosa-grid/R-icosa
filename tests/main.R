@@ -99,8 +99,8 @@ setwd(wd)
 # saveOBJ
 	saveOBJ <- run_test_file("icosa/tests/saveOBJ/test_saveOBJ.R")
 
-## # surfacecentroid
-## 	surfaceCentroid <- run_test_file("icosa/tests/surfacecentroid/test_surfacecentroid.R")
+# surfacecentroid
+	surfaceCentroid <- run_test_file("icosa/tests/surfacecentroid/test_surfacecentroid.R")
 
 # Finish
 # stopCluster(cl)
