@@ -93,8 +93,8 @@ setwd(wd)
 	point_rotate <- run_test_file("icosa/tests/rotate/test_point_rotate.R")
 	grid_rotate <- run_test_file("icosa/tests/rotate/test_grid_rotate.R")
 
-## # vertexradius
-## 	vertexradius <- run_test_file("icosa/tests/vertexradius/test_vertexradius.R")
+# vertexradius
+	vertexradius <- run_test_file("icosa/tests/vertexradius/test_vertexradius.R")
 
 ## # saveOBJ
 ## 	saveOBJ <- run_test_file("icosa/tests/saveOBJ/test_saveOBJ.R")
