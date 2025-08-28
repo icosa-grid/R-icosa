@@ -59,8 +59,8 @@ setwd(wd)
 # patches
 	patches_faces <- run_test_file("icosa/tests/patches/test_patches.R")
 
-## # holes
-## 	holes_faces <- run_test_file("icosa/tests/holes/test_holes.R")
+# holes
+	holes_faces <- run_test_file("icosa/tests/holes/test_holes.R")
 
 ## # locate
 ## 	locate_points <- run_test_file("icosa/tests/locate/test_locate_points.R")
