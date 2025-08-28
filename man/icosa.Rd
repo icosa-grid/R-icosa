@@ -14,7 +14,7 @@ using grids based on tessellated icosahedra. The procedures can be set to provid
    to allow 2D and 3D plotting, use raster and vector spatial data.
 }
 \details{
-This is still the Beta version. Notes about found bugs and suggestions are more than welcome!
+Note that similar to R, the package comes with absolutely no warranty. Notes about found bugs and suggestions are more than welcome!
 }
 \examples{
 # Create a triangular grid

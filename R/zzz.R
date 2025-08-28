@@ -7,7 +7,7 @@
 #'    are provided to position points (latitude-longitude data) on the grids,
 #'    to allow 2D and 3D plotting, use raster and vector spatial data.
 #' 
-#' This is still the Beta version. Notes about found bugs and suggestions are more than welcome!
+#' Note that similar to R, the package comes with absolutely no warranty. Notes about found bugs and suggestions are more than welcome!
 #'
 #' @author Adam T. Kocsis (adam.t.kocsis@gmail.com)
 #' @docType package
