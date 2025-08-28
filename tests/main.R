@@ -40,8 +40,8 @@ setwd(wd)
  	grid_surfacearea <- run_test_file("icosa/tests/grids/test_surfacearea.R")
  	grid_plot <- run_test_file("icosa/tests/plot/test_grid_plot.R")
 
-## # face2nb
-## 	face2nb_faces <- run_test_file("icosa/tests/face2nb/test_face2nb_faces.R")
+# face2nb
+	face2nb_faces <- run_test_file("icosa/tests/face2nb/test_face2nb_faces.R")
 
 ## # facelayer constructor
 ## 	facelayer_logical <-  run_test_file("icosa/tests/facelayer/test_facelayer_logical.R")
