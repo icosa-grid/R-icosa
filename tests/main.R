@@ -23,8 +23,8 @@ setwd(wd)
 # arcs
 	point_arcs <- run_test_file("icosa/tests/arcs/test_arcs.R")
 
-## # arcdistmat
-## 	point_arcdistmat <- run_test_file("icosa/tests/arcdistmat/test_arcdistmat.R")
+# arcdistmat
+	point_arcdistmat <- run_test_file("icosa/tests/arcdistmat/test_arcdistmat.R")
 
 ## # conversions: CarToPol and PolToCar
 ## 	point_conversions <- run_test_file("icosa/tests/conversions/test_conversions.R")
