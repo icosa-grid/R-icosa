@@ -74,6 +74,8 @@ reference:
   - centers
   - edgelength
   - surfacearea
+  - spacing
+  - vertexradius
   - trishape
   - pos
 - title: Grids as graphs
@@ -83,6 +85,9 @@ reference:
   contents:
   - gridgraph
   - vicinity
+  - holes
+  - patches
+  - face2nb
 - title: Grid operations
   desc: >
     Functions useful for modifying grid structure.
@@ -115,6 +120,7 @@ reference:
   - faces3d
   - gridlabs3d
   - guides3d
+  - saveOBJ
 - title: Interfacing
   desc: >
     Items needed for external data to interact with the grids. 
