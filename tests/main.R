@@ -38,7 +38,7 @@ setwd(wd)
  	grid_rotate <- run_test_file("icosa/tests/grids/test_rotate.R")
  	grid_spacing <- run_test_file("icosa/tests/grids/test_spacing.R")
  	grid_surfacearea <- run_test_file("icosa/tests/grids/test_surfacearea.R")
-## 	grid_plot <- run_test_file("icosa/tests/grids/test_grid_plot.R")
+ 	grid_plot <- run_test_file("icosa/tests/plot/test_grid_plot.R")
 
 ## # face2nb
 ## 	face2nb_faces <- run_test_file("icosa/tests/face2nb/test_face2nb_faces.R")
@@ -52,6 +52,9 @@ setwd(wd)
 ## # grapply/gridensity
 ## 	grapply_rasters <- run_test_file("icosa/tests/grapply/test_grapply_rasters.R")
 ## 	grapply_trigrid <- run_test_file("icosa/tests/grapply/test_grapply_trigrid.R")
+
+## gridlabs
+ 	gridlabs <- run_test_file("icosa/tests/gridlabs/test_gridlabs.R")
 
 ## # patches
 ## 	patches_faces <- run_test_file("icosa/tests/patches/test_patches.R")
@@ -69,6 +72,9 @@ setwd(wd)
 ## 	namespace_rgl <- run_test_file("icosa/tests/namespace/test_rgl-icosa-silentAttach.R")
 ## 	namespace_icosa <- run_test_file("icosa/tests/namespace/test_icosa-rgl-silentAttach.R")
 ## 	namespace_plot3d <- run_test_file("icosa/tests/namespace/test_rgl-icosa-plot3d.R")
+
+## # newsf
+## # newsp
 
 ## # occupied
 ## 	occupied_raster <- run_test_file("icosa/tests/occupied/test_occupied_raster.R")
