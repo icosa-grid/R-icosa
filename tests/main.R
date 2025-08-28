@@ -49,15 +49,15 @@ setwd(wd)
  	facelayer_numeric <-  run_test_file("icosa/tests/facelayer/test_facelayer_numeric.R")
  	facelayer_character <-  run_test_file("icosa/tests/facelayer/test_facelayer_character.R")
 
-## # grapply/gridensity
-## 	grapply_rasters <- run_test_file("icosa/tests/grapply/test_grapply_rasters.R")
-## 	grapply_trigrid <- run_test_file("icosa/tests/grapply/test_grapply_trigrid.R")
+# grapply/gridensity
+	grapply_rasters <- run_test_file("icosa/tests/grapply/test_grapply_rasters.R")
+ 	grapply_trigrid <- run_test_file("icosa/tests/grapply/test_grapply_trigrid.R")
 
 ## gridlabs
  	gridlabs <- run_test_file("icosa/tests/gridlabs/test_gridlabs.R")
 
-## # patches
-## 	patches_faces <- run_test_file("icosa/tests/patches/test_patches.R")
+# patches
+	patches_faces <- run_test_file("icosa/tests/patches/test_patches.R")
 
 ## # holes
 ## 	holes_faces <- run_test_file("icosa/tests/holes/test_holes.R")
