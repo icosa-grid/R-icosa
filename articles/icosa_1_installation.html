@@ -110,28 +110,46 @@ to look into alternative methods.</p>
 stable version are also available on GitHub. The
 <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function can be used to install this
 from source - but you will have to install dependencies of the package,
-and you have to have a compiler installed on your system</p>
+and you have to have a compiler installed on your system!</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>    <span class="st">"https://zenodo.org/records/13333485/files/icosa_0.11.1.tar.gz?download=1"</span>, </span>
+<span>    <span class="st">"https://zenodo.org/records/16992403/files/icosa_0.12.0.tar.gz?download=1"</span>, </span>
 <span>    repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="development-version---the-raw">Development version - the raw<a class="anchor" aria-label="anchor" href="#development-version---the-raw"></a>
+<h4 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h4>
 <p>If you encounter technical problems with the package that are not
 described anywhere, you might want to take a look at the <a href="https://github.com/icosa-grid/R-icosa/tree/devel" class="external-link">development
-version</a>.</p>
-<p>If you wish to install the development version, I recommend a manual
-installation:<br>
-1. Clone the repository to your local hard drive.<br>
-2. Make sure that you have the package dependencies, and a compiler
+version</a>. Note that you will still need to have a compiler
+installed!</p>
+<div class="section level5">
+<h5 id="development-version-using-devtools">Development version using <code>devtools</code><a class="anchor" aria-label="anchor" href="#development-version-using-devtools"></a>
+</h5>
+<p>The simplest way to install the in-development version is via the
+<code>devtools</code> package. You just have to indicate that you want
+to install from the in-development <code>devel</code> branch.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"icosa-grid/R-icosa@devel"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="manual-install">Manual install<a class="anchor" aria-label="anchor" href="#manual-install"></a>
+</h5>
+<p>You can also the install the package manually with the following
+steps:</p>
+<ol style="list-style-type: decimal">
+<li>Clone the repository to your local hard drive.<br>
+</li>
+<li>Make sure that you have the package dependencies, and a compiler
 installed: on Windows, <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">RTools</a> should
 include all the tools you need, on Mac, you will need to have <a href="https://developer.apple.com/xcode/" class="external-link">XCode</a> - if you use
 GNU/Linux, you have to go down deeper in the rabbit hole :).<br>
-3. Open a terminal and navigate to the directory where you cloned. The
+</li>
+<li>Open a terminal and navigate to the directory where you cloned. The
 <code>icosa</code> directory should be visible from there.<br>
-4. Run this line in the terminal</p>
+</li>
+<li>Run this line in the terminal</li>
+</ol>
 <pre><code>R CMD INSTALL icosa</code></pre>
 <ul>
 <li>
@@ -142,8 +160,8 @@ variable.</em><br>
 <li><em>If the R packages that <code>icosa</code> depend on are not
 installed, you have to install them manually, or you will get an
 error.</em></li>
-<li>You can also try <code><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">devtools::install_github()</a></code>.</li>
 </ul>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

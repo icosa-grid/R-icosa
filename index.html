@@ -87,9 +87,47 @@
 <hr>
 </div>
 <div class="section level3">
+<h3 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
+</h3>
+<p>The workflow of <code>icosa</code> uses a dedicated grid object that stores the spatial structure for grid cells or <code>faces</code>. Although there is an in-development, dedicated object class to hold associated data (<code>facelayer</code>-class), the simplest solution for working with associated data is to store it as named vectors, leveraging the power of base R programming.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(icosa)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># create a grid (with ~10 degree distance between face centers)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>hex <span class="ot">&lt;-</span> <span class="fu">hexagrid</span>(<span class="at">spacing=</span><span class="dv">10</span>, <span class="at">sf=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">## grab some point data (e.g. fossil occurrences from the Paleobiology Database)</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(divDyn) </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">data</span>(corals, <span class="at">package=</span><span class="st">"divDyn"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># the coordinatees</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>coords <span class="ot">&lt;-</span> corals[, <span class="fu">c</span>(<span class="st">"lng"</span>, <span class="st">"lat"</span>)]</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(coords)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co"># cell identifiers can be used in a general workflow</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>coords<span class="sc">$</span>cell<span class="ot">&lt;-</span> <span class="fu">locate</span>(hex, coords)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co"># for instance in tabulation</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co"># What is the number of fossil occurrences in a cell?</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>nOccs <span class="ot">&lt;-</span> <span class="fu">table</span>(coords<span class="sc">$</span>cell)</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co"># visualization through sf</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="fu">plot</span>(hex, nOccs, <span class="at">logz=</span><span class="cn">TRUE</span>, <span class="at">border=</span><span class="st">"white"</span>, <span class="at">reset=</span><span class="cn">FALSE</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"Density of fossil Scleractinian occurrences"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># putting a world map on it</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>ne <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="fu">file.path</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>    <span class="fu">system.file</span>(<span class="at">package=</span><span class="st">"icosa"</span>),<span class="st">"extdata/ne_110m_land.shx"</span> ), <span class="at">quiet=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="fu">plot</span>(ne<span class="sc">$</span>geometry, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"#55555555"</span>, <span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co"># The actual occurrences</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="fu">points</span>(coords, <span class="at">col=</span><span class="st">"#00FF00"</span>, <span class="at">pch=</span><span class="dv">3</span>, <span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="reference/figures/basic_workflow.png"></p>
+<hr>
+</div>
+<div class="section level3">
 <h3 id="similar-packages">Similar packages<a class="anchor" aria-label="anchor" href="#similar-packages"></a>
 </h3>
-<p>Implementations of similar grids are available in R with the <a href="https://h3geo.org/" class="external-link">H3 library</a> (<a href="https://obrl-soil.github.io/h3jsr/" class="external-link">h3-js</a>) and the <a href="https://github.com/r-barnes/dggridR" class="external-link">ddgridR</a> libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, 3D-based operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It also allows access to not only hexagonal, but triangular grids as well.</p>
+<p>Implementations of similar grids are available in R with the <a href="https://h3geo.org/" class="external-link">H3 library</a> (<a href="https://obrl-soil.github.io/h3jsr/" class="external-link">h3-js</a>) and the <a href="https://github.com/r-barnes/dggridR" class="external-link">ddgridR</a> libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, more efficient 3D operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It allows access to not only hexagonal, but triangular grids as well.</p>
 <hr>
 </div>
 <div class="section level3">
