@@ -1,0 +1,111 @@
+---
+title: "Grid technicals"
+description: >
+  Technical documentation of grid structures. 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Grid technicals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Class hierarchy
+
+The `trigrid` class represents the base class of icosahedral grids, which in turn inherit from the `icosahedron` class. The `trigrid` class normally represents triangular grids (which its constructor creates), but hexagonal grids are also derived from the `trigrid` class.
+
+
+## Grid memberrs
+
+Even though the constructors of both the `trigrid` and `hexagrid` classes are currently (v0.12) implemented as a mixture of RCpp and pure are code, and are represented by pure R S4 objects.
+
+
+### `trigrid` members
+
+The constructed objects include a diverse set of member data that describe the grid as a 3D object and provide additional functionality. 
+
+#### Construction parameters
+
+- `center`: Numeric vector of three values, the xyz coordinates of the grid's origin/center. Defaults to the origin of the Cartesian coordinate system: (0,0,0). 
+- `r`: Numeric value, the radius of the grid. Defaults to the R2 (authalic) radius of Earth, 6371.006. The value is given in kilometers.
+- `tessellation`: Integer vector, the tessellation vector. Defaults to 1, which returns the icosahedron (icosisphere) as a `trigrid`. object.
+- `orientation`: Numeric vector of three angles, the orientation in XYZ 3d space. Values in radian relative to the (0,0,0) direction. Three dimensional rotations are executed in the X->Y->Z order. Can be changed with the `rotate` function.
+
+#### 3D object descriptors 
+
+- `vertices`: Numeric matrix of the vertex XYZ coordinates. Its `rownames` attribute include vertex names (`P<X>`).
+- `faces`: Character matrix of the vertices forming the faces. Its `rownames` attribute include face names (`F<X>`). Since normal `trigrid` classes only have triangular faces, this object as three columns. 
+- `edges`: Character matrix of the vertices forming the edges. Its `rownames` attribute include edge names (`F<X>`). The object has two columns.
+- `faceCenters`: Numeric matrix of the XYZ coordinates of the centers of the faces on the surface of the sphere. Its `rownames` attribute include face names (`F<X>`).
+- `belts`: Integer vector indicating the belt the face belongs to, starting from `1`. The order of values matches the order of faces in `@faces`).
+
+#### Additional attributes
+
+- `edgeLength` Numeric vector, the mean length of an average edge in km and degrees. 
+- `div` Integer vector, contains the number of faces in a tessellation round (divison). `c(20, @tessellation^2)`
+- `length` integer vector of length=3. The number of vertices, edges and faces in this order. 
+- `crs` a CRS class object, by design this is the authalic sphere (ESRI:37008)
+skeleton data tables with sequential indexing for the C functions.
+
+
+#### Functional entities
+
+- `graph` an `igraph`-class object, the horizontal graph representation of the grid. The grid faces are represented as graph nodes, connection patterns are edge-neighboring faces (rook neighborhood on a rectangular grid). If missing or needs to be updated, it can be recalculated with `newgraph`. 
+- `sf`: An `sf` projection of the grid. If missing, it can be created with `newsf`.
+- `sp`: The `SpatialPolygons` projection of the grid. If missing, it can be created with `newsp`.
+
+### Grid skeleton
+
+The `skeleton` component is a `list` that includes basic three-dimensional descriptor data in a way that they are used by many of the grid's internal processes, such construction, projection, plotting and coordinate lookup. The grid `skeleton` is scheduled for factoring into the pure `C++` representation of the grid.
+
+Components are ordered in a way that is logically derived from the construction of the grid, representing an `inner` ordering scheme in constrast to the `outer`/`ui` (interface-level) ordering that users normally interact with.
+
+- `$v`: Vertices in `inner` order. Ordering by tessellation level (original icosahedron first), then those derived by subsequent levels of tessellation. Within rounds of tessellation, the vertices are grouped by faces. Includes the complete vertex structure of the grid, even when some faces are omitted.
+- `$uiV`: UI vertex index. Used as a numeric subscript to reorder the vertices into the outer (UI) order. Also includes the names of vertices as a `names` attribute.
+- `$aV`: Active vertex index, subscript to reorder `@vertices` to the inner order in `@skeleton$v`. Indicates whether a vertex is present in the grid after subsetting. `0` values indicate that vertices are deactivated.
+- `$e`: Edges made up by the `inner` vertex table. A two-column matrix, 0-indexed references to `@skeleton@v`.
+- `$aE`: Active edge index. A logical vector indicating whether the edge is active in the grid instance.
+- `$f`: Inner face representation, a numeric matrix, every row indicating a triangular face.  Includes faces of the original icosahedron, as well as all subsequent tessellation rounds. Similar to `@skeleton@v`, this table is oragnized by tessellation rounds. The first 3 columns are the `0`-indexed references to `@skeleton$v`, making up the three vertices of the face. The fourth column represents the tessellation round, rows with `-1` include baseline icosahedron's faces, `0` values indicate faces derived from the first tessellation round, `1` from the second, and so forth. The fifth column includes a reference to the parent face: its index in the same table in the previous tessellation round (0-indexed). For instance, The face that has a `2` in the fourth, and `5` in the fifth column, indicates that the face is derived in the third round of tessellation, and its parent is the sixth face that was derived in the second round of tessellation.
+- `$uiF`: UI face index. Used to reorder the highest tessellation subset of the inner face table (`@skeleton$f`). Can be used as a subscript for reordering, when added with `@skeleton$offset`. Includes the face names as the `names` attribute.
+- `$aF`: Active face index. 
+
+
+
+
+
+
+
+
+
+
+## Grid construction
+
+ This is scheduled to be moved to standalone C++ implementation using the standard template library.
+
+
+### `trigrid` construction
+
+
+
+
+### `hexagrid` construction
+
+
+# Limitations
+
+The current implementation does not allow the further tessellation of grids, or grid subsets.
+
+
+
+# Next doc:
+
+Grid procedures:
+- Subsetting
+- Face lookup (`locate`) 
+- Resampling

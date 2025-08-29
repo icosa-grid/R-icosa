@@ -135,7 +135,7 @@ plot(ne$geometry, col=NA, border="black", add=TRUE)
 
 The point counts have a similar latitudinal pattern as we saw with their distribution: as latitude increases, the cell sizes decrease and the expected number of points in them decreases.0
 
-One solution to this problem can be the use of a different projection. For instance the [Lambert's Cylindrical Equal Area](https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection) projection (`["EPSG:54034"](https://epsg.io/54034)`) can be used instead of the Equirectangular projection. This will, however distort the polar cells that will become more and more elongated with higher the latitude values - which might be a problem, or might not.   
+One solution to this problem can be the use of a different projection. For instance the [Lambert's Cylindrical Equal Area](https://en.wikipedia.org/wiki/Cylindrical_equal-area_projection) projection (["EPSG:54034"](https://epsg.io/54034)) can be used instead of the Equirectangular projection. This will, however distort the polar cells that will become more and more elongated with higher the latitude values - which might be a problem, or might not.   
 
 * * *
 

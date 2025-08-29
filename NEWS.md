@@ -4,37 +4,37 @@
 
 ### Added
 
-- The `grapply` function to iterate various functions using grid rotations.
-- The `spacing` function to measure the distance between face centers.
+- The `grapply()` function to iterate various functions using grid rotations.
+- The `spacing()` function to measure the distance between face centers.
 - The `meanSpacing_deg` and `sdSpacing_deg` variables to the `hexguide` and `triguide` objects.
-- The `trigrid` and `hexagrid` functions gained a `spacing` argument, allowing the selection of grids based on the spacing in `triguide` and `hexguide`
-- The `vertexradius` function to measure the distance between face centers and face vertices.
-- The `patches` and `holes` functions to analyze shape patterns (methods for the `trigrid` (`hexagrid`) and `facelayer` classes.
-- General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb` function can be used to generate neighborhood list of the icosahedral grids. 
-- `data.frame`-method for the `arcs` function.
-- `matrix`- and `data.frame`-method for the `rotate` function, for 3d sequential and longitude-latitude rotations. The `trigrid` method gained the `projnote` flag.
-- Weighted meaning for spherical centroid calculations: the `surfacearea` function has gained the `w` argument
--  The `resample` methods that result in `trigrid` class gained the `output` argument, and default to `numeric`. Methods for `resample` with signature `x="SpatRaster", y="Facelayer"` are now added.
--  The `saveOBJ` function with methods that write the 3D face and vertex informaiton `trigrid` and `hexagrid` class objects as Wavefront .obj files (note the different behavior from `rgl::writeOBJ`!)
+- The `trigrid()` and `hexagrid()` constructor functions gained a `spacing` argument, allowing the selection of grids based on the spacing in `triguide` and `hexguide`
+- The `vertexradius()` function to measure the distance between face centers and face vertices.
+- The `patches()` and `holes()` functions to analyze shape patterns (methods for the `trigrid` (`hexagrid`) and `facelayer` classes.
+- General support for spatial autocorrelation of data bound to the icosahedral grids using the `spdep` extension package. The `face2nb()` function can be used to generate neighborhood list of the icosahedral grids. 
+- `data.frame`-method for the `arcs()` function.
+- `matrix`- and `data.frame`-method for the `rotate()` function, for 3d sequential and longitude-latitude rotations. The `trigrid` method gained the `projnote` flag.
+- Weighted meaning for spherical centroid calculations: the `surfacecentroid()` function has gained the `w` argument
+-  The `resample()` methods that result in `trigrid` class gained the `output` argument, and default to `numeric`. Methods for `resample()` with signature `x="SpatRaster", y="Facelayer"` are now added.
+-  The `saveOBJ()` function with methods that write the 3D face and vertex informaiton `trigrid` and `hexagrid` class objects as Wavefront .obj files (note the different behavior from `rgl::writeOBJ()`!)
 
 
 ### Changed
-- The internals of grid rotation (function `rotate`) are moved to Rcpp for performance
-- The `hexagrid`-method of the `surfacearea` function returns a named numeric instead of a named array (as it does for the `trigrid` class).
-- Increased the default resolution of sf-representations for coarse level grids (from 10 to 20 splits).
+- The internals of grid rotation (function `rotate()`) are moved to Rcpp for performance
+- The `hexagrid`-method of the `surfacearea()` function returns a named numeric instead of a named array (as it does for the `trigrid` class).
+- Increased the default resolution of sf-representations for coarse level grids (from 10 to 20 splits) calculated with `newsf()`.
 - Completely reorganized unit testing suite.
 
 ### Fixed
 
-- The `occupied` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (i.e. polygons and lines). 
-- The `arcs` function returned broken arcs when missing value rows are included in the input matrix
-- Documentation of the `surfacecentroid`, `surfacearea` and `trishape` functions.
+- The `occupied()` function crashed when it was used to assess the coverage of spatial feature collections that had mixed type (i.e. polygons and lines). 
+- The `arcs()` function returned broken arcs when missing value rows are included in the input matrix
+- Documentation of the `surfacecentroid()`, `surfacearea()` and `trishape()` functions.
 - Facelayer objects could not find the associated grid object in every frame.
-- The `PolToCar` did not always copy over the rownames attribute of the input coordinate tables
+- The `PolToCar()` did not always copy over the rownames attribute of the input coordinate tables
 
 ### Deprecated
 
-- The `gridensity` function is deprecated and is succeeeded by the more general `grapply`
+- The `gridensity()` function is deprecated and is succeeeded by the more general `grapply()`
 
 ### Known issues
 
@@ -50,7 +50,7 @@
 ### Added 
 
 - The `arcs()` function to visualize great circle paths between multiple points.
-- missing support of `sfc`-class objects for the `occupied` function (`OccupiedFaces` method)
+- missing support of `sfc`-class objects for the `occupied()` function (`OccupiedFaces` method)
 - CITATION entry 
 
 ### Fixed 
@@ -71,13 +71,13 @@
 
 ### Added
 
-- `resample`,facelayer,SpatRaster-method
+- `resample()`,facelayer,SpatRaster-method
 - resolution based grid creation, e.g. `hexagrid(deg=5)`
 - Resolution guides for both the 'hexagrid' and 'trigrid' classes (`hexguide` and `triguide`, respectively), 120 grids each
 - Package webpage as URL in DESCRIPTION
 - Interface for the `sf` package. 
 - The `newsf()` function
-- `plot`,vector,trigrid-method for plotting data with sf's methods
+- `plot()`,vector,trigrid-method for plotting data with sf's methods
 - new example data: NaturalEarth land polygons
 - new slot for the `trigrid` class for sf-type representation
 - `occupied()` - support for 'sf'-type input
