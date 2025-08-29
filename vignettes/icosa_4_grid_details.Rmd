@@ -11,7 +11,12 @@ vignette: >
 
 # Slots
 
+# CRS slot
+When dealing with properly georeferenced data, the model ellipsoid (or in this case, the sphere) is to be taken into account when the data and the grid interact. Therefore a slot called ``crs`` is added to the grid object, which contains a CRS class string generated automatically from the input radius. With the default settings this is:
 
+```{r crs, rgl=TRUE,dev='png',dpi=300}
+#tri@crs
+```
 # The grid as `sp` and `sf` vector entity
 
 

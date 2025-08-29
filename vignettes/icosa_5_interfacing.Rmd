@@ -9,4 +9,7 @@ vignette: >
 
 # Location of points
 
-# Occupied faces 
+# Occupied faces sf objects
+
+# Raster objects 
+
