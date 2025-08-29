@@ -1,4 +1,4 @@
-url: https://adamkocsis.github.io/icosa
+url: https://icosa-grid.github.io/R-icosa/
 template:
   opengraph:
     image:
@@ -158,7 +158,7 @@ authors:
     href: "https://palaeobiology.nat.fau.de/people/instructors/kocsis/"
   Deutsche Forschungsgemeinschaft:
     href: https://www.dfg.de/en/index.jsp
-    html: <img src='https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/dfg.png?raw=true' alt='dfg' width='80' />
+    html: <img src='https://github.com/icosa-grid/R-icosa/blob/devel/pkgdown/assets/dfg.png?raw=true' alt='dfg' width='80' />
   FAU GeoZentrum Nordbayern:
     href: https://www.gzn.nat.fau.eu/
-    html: <img src='https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true' alt='geozentrum' width='80' />
+    html: <img src='https://github.com/icosa-grid/R-icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true' alt='geozentrum' width='80' />

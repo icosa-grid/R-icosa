@@ -40,18 +40,19 @@ library(icosa)
 # create a grid (with ~10 degree distance between face centers)
 hex <- hexagrid(spacing=10, sf=TRUE)
 
-## grab some point data (e.g. fossil occurrences from the Paleobiology Database)
-library(divDyn) 
+# grab some point data
+# (this case: fossil occurrences from the Paleobiology Database)
+library(divDyn) # another package on CRAN
 data(corals, package="divDyn")
 
-# the coordinatees
+# the coordinates
 coords <- corals[, c("lng", "lat")]
 coords <- na.omit(coords)
 
 # cell identifiers can be used in a general workflow
 coords$cell<- locate(hex, coords)
 
-# for instance in tabulation
+# ... for instance in tabulation:
 # What is the number of fossil occurrences in a cell?
 nOccs <- table(coords$cell)
 
@@ -90,14 +91,9 @@ not only hexagonal, but triangular grids as well.
 
 ### Plans
 
-#### Near
-
 - Finishing vignettes in **Tutorials**
 - Paper about the package (long overdue)
 - Moving internal vector-representation from `sp` to `sf`
-
-#### Distant
-
 - Customization of tesselation that allows tweaking of cell sizes and
   shapes - depending on needs
 - Writing a C++ library from the core functionality and porting it to

@@ -70,18 +70,19 @@ library(icosa)
 # create a grid (with ~10 degree distance between face centers)
 hex <- hexagrid(spacing=10, sf=TRUE)
 
-## grab some point data (e.g. fossil occurrences from the Paleobiology Database)
-library(divDyn) 
+# grab some point data
+# (this case: fossil occurrences from the Paleobiology Database)
+library(divDyn) # another package on CRAN
 data(corals, package="divDyn")
 
-# the coordinatees
+# the coordinates
 coords <- corals[, c("lng", "lat")]
 coords <- na.omit(coords)
 
 # cell identifiers can be used in a general workflow
 coords$cell<- locate(hex, coords)
 
-# for instance in tabulation
+# ... for instance in tabulation:
 # What is the number of fossil occurrences in a cell?
 nOccs <- table(coords$cell)
 
@@ -103,8 +104,6 @@ points(coords, col="#00FF00", pch=3, cex=0.1)
 * * *
 
 
-
-
 ### Similar packages
 
 Implementations of similar grids are available in R with the [H3 library](https://h3geo.org/) ([h3-js](https://obrl-soil.github.io/h3jsr/)) and the [ddgridR](https://github.com/r-barnes/dggridR) libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, more efficient 3D operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It allows access to not only hexagonal, but triangular grids as well. 
@@ -113,14 +112,10 @@ Implementations of similar grids are available in R with the [H3 library](https:
 
 ### Plans 
 
-#### Near
 
 - Finishing vignettes in **Tutorials**
 - Paper about the package (long overdue)
 - Moving internal vector-representation from `sp` to `sf`
-
-#### Distant
-
 - Customization of tesselation that allows tweaking of cell sizes and shapes - depending on needs
 - Writing a C++ library from the core functionality and porting it to Python and Julia
 
