@@ -24,9 +24,90 @@ These grids are often called icospheres, and have an important use in material d
 
 * * *
 
+### Basic workflow
+
+The workflow of `icosa` uses a dedicated grid object that stores the spatial structure for grid cells or `faces`. Although there is an in-development, dedicated object class to hold associated data (`facelayer`-class), the simplest solution for working with associated data is to store it as named vectors, leveraging the power of base R programming. 
+
+```{r, include=FALSE}
+library(icosa)
+
+# create a grid (with ~10 degree distance between face centers)
+hex <- hexagrid(spacing=10, sf=TRUE)
+
+## grab some point data (e.g. fossil occurrences from the Paleobiology Database)
+library(divDyn) 
+data(corals, package="divDyn")
+
+# the coordinatees
+coords <- corals[, c("lng", "lat")]
+coords <- na.omit(coords)
+
+# cell identifiers can be used in a general workflow
+coords$cell<- locate(hex, coords)
+
+# for instance in tabulation
+# What is the number of fossil occurrences in a cell?
+nOccs <- table(coords$cell)
+
+png("man/figures/basic_workflow.png", width=1400,height=800, pointsize=20)
+	par(mar=rep(0.1,4))
+	# visualization through sf
+	plot(hex, nOccs, logz=TRUE, border="white", reset=FALSE,
+		main="Density of fossil Scleractinian occurrences")
+
+	# putting a world map on it
+	ne <- sf::st_read(file.path(
+		system.file(package="icosa"),"extdata/ne_110m_land.shx" ), quiet=TRUE)
+	plot(ne$geometry, add=TRUE, col="#55555555", border=NA)
+	points(coords, col="#00FF00", pch=3, cex=0.1)
+dev.off()
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+library(icosa)
+
+# create a grid (with ~10 degree distance between face centers)
+hex <- hexagrid(spacing=10, sf=TRUE)
+
+## grab some point data (e.g. fossil occurrences from the Paleobiology Database)
+library(divDyn) 
+data(corals, package="divDyn")
+
+# the coordinatees
+coords <- corals[, c("lng", "lat")]
+coords <- na.omit(coords)
+
+# cell identifiers can be used in a general workflow
+coords$cell<- locate(hex, coords)
+
+# for instance in tabulation
+# What is the number of fossil occurrences in a cell?
+nOccs <- table(coords$cell)
+
+# visualization through sf
+plot(hex, nOccs, logz=TRUE, border="white", reset=FALSE
+	main="Density of fossil Scleractinian occurrences")
+
+# putting a world map on it
+ne <- sf::st_read(file.path(
+	system.file(package="icosa"),"extdata/ne_110m_land.shx" ), quiet=TRUE)
+plot(ne$geometry, add=TRUE, col="#55555555", border=NA)
+
+# The actual occurrences
+points(coords, col="#00FF00", pch=3, cex=0.1)
+```
+
+![](man/figures/basic_workflow.png)
+
+* * *
+
+
+
+
 ### Similar packages
 
-Implementations of similar grids are available in R with the [H3 library](https://h3geo.org/) ([h3-js](https://obrl-soil.github.io/h3jsr/)) and the [ddgridR](https://github.com/r-barnes/dggridR) libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, 3D-based operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It also allows access to not only hexagonal, but triangular grids as well. 
+Implementations of similar grids are available in R with the [H3 library](https://h3geo.org/) ([h3-js](https://obrl-soil.github.io/h3jsr/)) and the [ddgridR](https://github.com/r-barnes/dggridR) libraries. These other implementations are based on hierarchical organizations of grid cells, which allows very high-resolution. In contrast, the icosa package was optimized for coarser resolutions, providing a more gradual change of cells sizes, more efficient 3D operations (e.g. grid rotation), and to be used in the R environment for spatially isotropic analysis - especially when it comes to latitudinal patterns. It allows access to not only hexagonal, but triangular grids as well. 
 
 * * *
 

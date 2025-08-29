@@ -25,6 +25,53 @@ material design, architecture, computer graphics and chemistry.
 
 ------------------------------------------------------------------------
 
+### Basic workflow
+
+The workflow of `icosa` uses a dedicated grid object that stores the
+spatial structure for grid cells or `faces`. Although there is an
+in-development, dedicated object class to hold associated data
+(`facelayer`-class), the simplest solution for working with associated
+data is to store it as named vectors, leveraging the power of base R
+programming.
+
+``` r
+library(icosa)
+
+# create a grid (with ~10 degree distance between face centers)
+hex <- hexagrid(spacing=10, sf=TRUE)
+
+## grab some point data (e.g. fossil occurrences from the Paleobiology Database)
+library(divDyn) 
+data(corals, package="divDyn")
+
+# the coordinatees
+coords <- corals[, c("lng", "lat")]
+coords <- na.omit(coords)
+
+# cell identifiers can be used in a general workflow
+coords$cell<- locate(hex, coords)
+
+# for instance in tabulation
+# What is the number of fossil occurrences in a cell?
+nOccs <- table(coords$cell)
+
+# visualization through sf
+plot(hex, nOccs, logz=TRUE, border="white", reset=FALSE
+    main="Density of fossil Scleractinian occurrences")
+
+# putting a world map on it
+ne <- sf::st_read(file.path(
+    system.file(package="icosa"),"extdata/ne_110m_land.shx" ), quiet=TRUE)
+plot(ne$geometry, add=TRUE, col="#55555555", border=NA)
+
+# The actual occurrences
+points(coords, col="#00FF00", pch=3, cex=0.1)
+```
+
+![](man/figures/basic_workflow.png)
+
+------------------------------------------------------------------------
+
 ### Similar packages
 
 Implementations of similar grids are available in R with the [H3
@@ -34,10 +81,10 @@ library](https://h3geo.org/)
 implementations are based on hierarchical organizations of grid cells,
 which allows very high-resolution. In contrast, the icosa package was
 optimized for coarser resolutions, providing a more gradual change of
-cells sizes, 3D-based operations (e.g. grid rotation), and to be used in
-the R environment for spatially isotropic analysis - especially when it
-comes to latitudinal patterns. It also allows access to not only
-hexagonal, but triangular grids as well.
+cells sizes, more efficient 3D operations (e.g. grid rotation), and to
+be used in the R environment for spatially isotropic analysis -
+especially when it comes to latitudinal patterns. It allows access to
+not only hexagonal, but triangular grids as well.
 
 ------------------------------------------------------------------------
 
