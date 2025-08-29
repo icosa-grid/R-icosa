@@ -2,6 +2,8 @@
 
 # icosa 0.12.0 - 2025-08-28
 
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.16992403-blue.svg)](https://doi.org/10.5281/zenodo.16992403)
+
 ### Added
 
 - The `grapply()` function to iterate various functions using grid rotations.

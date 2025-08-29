@@ -31,19 +31,31 @@ If for some reason, the installlation from CRAN fails, you might need to look in
 
 #### Stable version from Zenodo (source)
 
-For the sake of completeness and simplicity, the sources of the stable version are also available on GitHub. The `install.packages()` function can be used to install this from source - but you will have to install dependencies of the package, and you have to have a compiler installed on your system 
+For the sake of completeness and simplicity, the sources of the stable version are also available on GitHub. The `install.packages()` function can be used to install this from source - but you will have to install dependencies of the package, and you have to have a compiler installed on your system! 
 
 ```{r stable, eval=FALSE}
 install.packages(
-	"https://zenodo.org/records/13333485/files/icosa_0.11.1.tar.gz?download=1", 
+	"https://zenodo.org/records/16992403/files/icosa_0.12.0.tar.gz?download=1", 
 	repos=NULL, type="source")
 ```
 
-#### Development version - the raw 
+#### Development version  
 
-If you encounter technical problems with the package that are not described anywhere, you might want to take a look at the [development version](https://github.com/icosa-grid/R-icosa/tree/devel).
+If you encounter technical problems with the package that are not described anywhere, you might want to take a look at the [development version](https://github.com/icosa-grid/R-icosa/tree/devel). Note that you will still need to have a compiler installed!
 
-If you wish to install the development version, I recommend a manual installation:  
+
+##### Development version using `devtools`
+
+The simplest way to install the in-development version is via the `devtools` package. You just have to indicate that you want to install from the in-development `devel` branch.
+
+```{r, eval=FALSE}
+devtools::install_github("icosa-grid/R-icosa@devel")
+```
+
+##### Manual install
+
+You can also the install the package manually with the following steps:
+
 1. Clone the repository to your local hard drive.  
 2. Make sure that you have the package dependencies, and a compiler installed: on Windows, [RTools](https://cran.r-project.org/bin/windows/Rtools/) should include all the tools you need, on Mac, you will need to have [XCode](https://developer.apple.com/xcode/) - if you use GNU/Linux, you have to go down deeper in the rabbit hole :).   
 3. Open a terminal and navigate to the directory where you cloned. The `icosa` directory should be visible from there.  
@@ -55,4 +67,3 @@ R CMD INSTALL icosa
 
 - *If you see an error suggesting that `R` is not found, you have to add it to your `PATH` environmental variable.*  
 - *If the R packages that `icosa` depend on are not installed, you have to install them manually, or you will get an error.*
-- You can also try `devtools::install_github()`. 

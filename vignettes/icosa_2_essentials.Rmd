@@ -28,7 +28,7 @@ hiddenplot <- function(...){
 
 The purpose of this tutorial is to demonstrate the basic usage of the ``icosa`` package. The primary targeted application of the package is in global biological sciences (e.g. in macroecological, biogeographical analyses), but other fields might find the structures and procedures relevant, given that they operate with point vector data and variables that depend on the density of such data. 
 
-Note that this is just a brief introduction to the package's capabilities. The complete documentation of the package and the rest of the tutorials will be made available on the [package website](https://adamkocsis.github.io/icosa/). Relevant how-to guides will be posted on the evolv-ED blog (https://www.evolv-ed.net/). 
+Note that this is just a brief introduction to the package's capabilities. The complete documentation of the package and the rest of the tutorials will be made available on the [package website](https://icosa-grid.github.io/R-icosa/). Relevant how-to guides will be posted on the evolv-ED blog (https://www.evolv-ed.net/). 
 
 * * *
 
