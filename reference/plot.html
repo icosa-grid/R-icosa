@@ -5,7 +5,7 @@ some misalignments can happen. If you want to use a differently sized window, us
 The function matches data referred to the grid and plots it with sf's plotting methods."><meta property="og:description" content="This function will invoke the plot method of the sf or the  SpatialPolygons class.
 The function passes arguments to the plot method of the SpatialPolygons class. In case a heatmap is plotted and the plotting device gets resized,
 some misalignments can happen. If you want to use a differently sized window, use x11 to set the height and width before running the function.
-The function matches data referred to the grid and plots it with sf's plotting methods."><meta property="og:image" content="https://adamkocsis.github.io/icosa/reference/figures/logo.png"><meta property="og:image:alt" content="The icosa sticker."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@atkocsis"><meta name="twitter:site" content="@atkocsis"></head><body>
+The function matches data referred to the grid and plots it with sf's plotting methods."><meta property="og:image" content="https://icosa-grid.github.io/R-icosa/reference/figures/logo.png"><meta property="og:image:alt" content="The icosa sticker."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@atkocsis"><meta name="twitter:site" content="@atkocsis"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -168,8 +168,8 @@ will apply to the data type.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># A simple grid, with sf-representation</span></span></span>
 <span class="r-in"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="hexagrid-class.html">hexagrid</a></span><span class="op">(</span><span class="fl">4</span>, sf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gr</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gr</span><span class="op">@</span><span class="va">faces</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">plot</span><span class="op">(</span>x<span class="op">=</span><span class="va">gr</span>, y<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
@@ -179,7 +179,7 @@ will apply to the data type.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/dfg.png?raw=true" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://github.com/adamkocsis/icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true" alt="geozentrum" width="80"></a>.</p>
+  <p>Developed by <a href="https://palaeobiology.nat.fau.de/people/instructors/kocsis/" class="external-link">Adam T. Kocsis</a>, <a href="https://www.dfg.de/en/index.jsp" class="external-link"><img src="https://github.com/icosa-grid/R-icosa/blob/devel/pkgdown/assets/dfg.png?raw=true" alt="dfg" width="80"></a>, <a href="https://www.gzn.nat.fau.eu/" class="external-link"><img src="https://github.com/icosa-grid/R-icosa/blob/devel/pkgdown/assets/GeoZentrum.svg?raw=true" alt="geozentrum" width="80"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
