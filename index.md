@@ -58,7 +58,7 @@ nOccs <- table(coords$cell)
 
 # visualization through sf
 plot(hex, nOccs, logz=TRUE, border="white", reset=FALSE
-    main="Density of fossil Scleractinian occurrences")
+    main="Density of fossil scleractinian occurrences")
 
 # putting a world map on it
 ne <- sf::st_read(file.path(
